@@ -59,10 +59,6 @@ export function Header() {
       title: t(translations.mainMenu.spotTrade),
     },
     {
-      to: '/lend',
-      title: t(translations.mainMenu.lend),
-    },
-    {
       to: '/borrow',
       title: t(translations.mainMenu.borrow),
     },
@@ -227,11 +223,6 @@ export function Header() {
               <NavPopover
                 content={
                   <BPMenu>
-                    <MenuItem
-                      text={t(translations.mainMenu.lend)}
-                      className="bp3-popover-dismiss"
-                      onClick={() => history.push('/lend')}
-                    />
                     <MenuItem
                       text={t(translations.mainMenu.borrow)}
                       className="bp3-popover-dismiss"
