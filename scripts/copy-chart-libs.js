@@ -17,16 +17,16 @@ async function copyDir(src, dest) {
 }
 
 async function copyLibs() {
-  if (!fs.existsSync('public/charting_library'))
-    await copyDir(
-      'node_modules/@distributedcollective/charting-library/public/charting_library',
-      'public/charting_library',
-    );
-  if (!fs.existsSync('public/datafeeds'))
-    await copyDir(
-      'node_modules/@distributedcollective/charting-library/public/datafeeds',
-      'public/datafeeds',
-    );
+  // if (!fs.existsSync('public/charting_library'))
+  //   await copyDir(
+  //     'node_modules/@distributedcollective/charting-library/public/charting_library',
+  //     'public/charting_library',
+  //   );
+  // if (!fs.existsSync('public/datafeeds'))
+  //   await copyDir(
+  //     'node_modules/@distributedcollective/charting-library/public/datafeeds',
+  //     'public/datafeeds',
+  //   );
 }
 
 module.exports = copyLibs;

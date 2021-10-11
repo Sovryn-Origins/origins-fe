@@ -7,12 +7,12 @@ import { Footer } from 'app/components/Footer';
 import { Dashboard } from './pages/Dashboard';
 import { SalesDay } from './pages/SalesDay';
 /* undo once Fish contract has active sale tier reset to 0 */
-//import { useGetActiveSaleTierId } from './hooks/useGetActiveSaleTierId';
+// import { useGetActiveSaleTierId } from './hooks/useGetActiveSaleTierId';
 
 export const OriginsLaunchpad: React.FC = () => {
   const { t } = useTranslation();
   /* undo once Fish contract has active sale tier reset to 0 */
-  const activeTierId = 0; //useGetActiveSaleTierId();
+  const activeTierId = 2; //useGetActiveSaleTierId();
 
   useEffect(() => {
     document.body.classList.add('originsLaunchpad');
