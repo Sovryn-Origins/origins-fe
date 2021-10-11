@@ -9,11 +9,6 @@ import { MenuItem, Menu as BPMenu, Position, Popover } from '@blueprintjs/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { translations } from 'locales/i18n';
-import {
-  reducer as lendBorrowReducer,
-  sliceKey as lendBorrowSlice,
-} from '../../pages/BorrowPage/slice';
-import { lendBorrowSovrynSaga } from '../../pages/BorrowPage/saga';
 import WalletConnector from '../../containers/WalletConnector';
 import { LanguageToggle } from '../LanguageToggle';
 import { currentNetwork } from 'utils/classifiers';
@@ -33,8 +28,6 @@ export function Header() {
   const node = useRef(null);
 
   usePageViews();
-  useInjectReducer({ key: lendBorrowSlice, reducer: lendBorrowReducer });
-  useInjectSaga({ key: lendBorrowSlice, saga: lendBorrowSovrynSaga });
 
   const Menu = ({ open, setOpen }) => {
     return <StyledMenu open={open}>{menuItems}</StyledMenu>;
@@ -57,10 +50,6 @@ export function Header() {
     {
       to: '/spot',
       title: t(translations.mainMenu.spotTrade),
-    },
-    {
-      to: '/borrow',
-      title: t(translations.mainMenu.borrow),
     },
     { to: '/yield-farm', title: t(translations.mainMenu.yieldFarm) },
     {
@@ -223,11 +212,6 @@ export function Header() {
               <NavPopover
                 content={
                   <BPMenu>
-                    <MenuItem
-                      text={t(translations.mainMenu.borrow)}
-                      className="bp3-popover-dismiss"
-                      onClick={() => history.push('/borrow')}
-                    />
                     <MenuItem
                       text={t(translations.mainMenu.yieldFarm)}
                       className="bp3-popover-dismiss"

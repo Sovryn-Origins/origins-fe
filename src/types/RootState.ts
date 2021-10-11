@@ -1,6 +1,5 @@
 import { WalletProviderState } from 'app/containers/WalletProvider/types';
 import { FastBtcFormState } from 'app/containers/FastBtcForm/types';
-import { LendBorrowSovrynState } from 'app/pages/BorrowPage/types';
 import { EventsStoreState } from '../store/global/events-store/types';
 import { TransactionsStoreState } from '../store/global/transactions-store/types';
 import { MaintenanceStoreState } from '../store/global/maintenance-store/types';
@@ -17,7 +16,6 @@ import { BridgeWithdrawPageState } from 'app/pages/BridgeWithdrawPage/types';
 export interface RootState {
   walletProvider?: WalletProviderState;
   fastBtcForm?: FastBtcFormState;
-  lendBorrowSovryn?: LendBorrowSovrynState;
   eventsState?: EventsStoreState;
   transactionsState?: TransactionsStoreState;
   maintenanceState?: MaintenanceStoreState;

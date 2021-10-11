@@ -721,9 +721,6 @@
       "title": "Obter empréstimos"
     }
   },
-  "activeUserBorrows": {
-    "text": "Você não tem empréstimos a devolver."
-  },
   "activeUserLoans": {
     "text": "Você não tem operações de compra ou venda abertas.",
     "info": {
@@ -757,17 +754,6 @@
       "history": "Devolvidos"
     },
     "walletNote": "A carteira precisa estar conectada."
-  },
-  "borrowHistory": {
-    "table": {
-      "headers": {
-        "borrowAmount": "Valor do empréstimo",
-        "collateralAmount": "Colateral",
-        "interestAPR": "Juros anual",
-        "timestamp": "Data"
-      }
-    },
-    "no_items": "Histórico vázio."
   },
   "rskConnectTutorial": {
     "browser_wallet": "Carteira de computador",
@@ -1152,15 +1138,6 @@
         "status": "Status"
       }
     }
-  },
-  "activeBorrowTable": {
-    "headers": {
-      "borrowAmount": "Quantidade",
-      "collateralAmount": "Colateral",
-      "interestAPR": "Juros anual",
-      "endTimestamp": "Devolver até"
-    },
-    "repayButton": "Devolver"
   },
   "repayPositionForm": {
     "title": "Devolver empréstimo",

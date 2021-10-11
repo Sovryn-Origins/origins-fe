@@ -727,9 +727,6 @@
       "title": "Borrow"
     }
   },
-  "activeUserBorrows": {
-    "text": "You do not have any active loans."
-  },
   "activeUserLoans": {
     "text": "You do not have any active trades.",
     "info": {
@@ -763,17 +760,6 @@
       "history": "Repaid"
     },
     "walletNote": "Connect your wallet first!"
-  },
-  "borrowHistory": {
-    "table": {
-      "headers": {
-        "borrowAmount": "Borrowed",
-        "collateralAmount": "Collateral",
-        "interestAPR": "Interest APY",
-        "timestamp": "Date"
-      }
-    },
-    "no_items": "Your borrow history is empty."
   },
   "wrongNetworkDialog": {
     "title": "Change to RSK Network",
@@ -1223,15 +1209,6 @@
         "status": "Status"
       }
     }
-  },
-  "activeBorrowTable": {
-    "headers": {
-      "borrowAmount": "Borrowed",
-      "collateralAmount": "Collateral",
-      "interestAPR": "Interest APY",
-      "endTimestamp": "Payback until"
-    },
-    "repayButton": "Repay"
   },
   "repayPositionForm": {
     "title": "Repay Loan",

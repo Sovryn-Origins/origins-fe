@@ -1,13 +1,4 @@
 {
-  "activeBorrowTable": {
-    "headers": {
-      "borrowAmount": "Emprunté",
-      "collateralAmount": "Collatéral",
-      "endTimestamp": "Remboursement jusqu'à",
-      "interestAPR": "Intérêt APR"
-    },
-    "repayButton": "Rembourser"
-  },
   "activeLoan": {
     "expandedRow": {
       "currentPrice": "Prix ​​actuel",
@@ -28,9 +19,6 @@
       "profit": "Perte / Profit",
       "startPrice": "Prix ​​de départ"
     }
-  },
-  "activeUserBorrows": {
-    "text": "Vous n'avez aucun prêt actif."
   },
   "activeUserLoans": {
     "info": {
@@ -59,17 +47,6 @@
     },
     "title": "Mes dettes",
     "walletNote": "Connectez d'abord votre portefeuille!"
-  },
-  "borrowHistory": {
-    "no_items": "Votre historique d'emprunt est vide.",
-    "table": {
-      "headers": {
-        "borrowAmount": "Emprunté",
-        "collateralAmount": "Collatéral",
-        "interestAPR": "Intérêt APR",
-        "timestamp": "Date"
-      }
-    }
   },
   "buySovPage": {
     "banner": {
