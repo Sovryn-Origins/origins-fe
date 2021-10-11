@@ -59,10 +59,6 @@ export function Header() {
       title: t(translations.mainMenu.spotTrade),
     },
     {
-      to: '/trade',
-      title: t(translations.mainMenu.marginTrade),
-    },
-    {
       to: '/lend',
       title: t(translations.mainMenu.lend),
     },
