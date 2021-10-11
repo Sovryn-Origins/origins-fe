@@ -40,7 +40,6 @@ import { LandingPage } from './pages/LandingPage/Loadable';
 import { BuySovPage } from './pages/BuySovPage/Loadable';
 
 import { LiquidityMiningPage } from './pages/LiquidityMining/Loadable';
-import { MarginTradePage } from './pages/MarginTradePage/Loadable';
 import { SpotTradingPage } from './pages/SpotTradingPage/Loadable';
 import { OriginsLaunchpadPage } from './pages/OriginsLaunchpad/Loadable';
 import { OriginsClaimPage } from './pages/OriginsClaimPage/Loadable';
@@ -79,7 +78,6 @@ export function App() {
           <Switch>
             <Route exact path="/" component={LandingPage} />
             <Route exact path="/buy-sov" component={BuySovPage} />
-            <Route exact path="/trade" component={MarginTradePage} />
             <Route exact path="/swap" component={SwapPage} />
             <Route exact path="/spot" component={SpotTradingPage} />
             <Route exact path="/lend" component={LendingPage} />
