@@ -1463,67 +1463,6 @@
       "placeholder": "Select item"
     }
   },
-  "liquidityMining": {
-    "deposit": "Deposit",
-    "withdraw": "Withdraw",
-    "meta": {
-      "title": "Yield Farm"
-    },
-    "explainer": {
-      "earnSOV": "Earn SOV by depositing liquidity into the USDT/BTC liquidity pool",
-      "startDate": "Start date: 1st April 2021, 12.00 UTC",
-      "endDate": "End date: 1st May 2021, 12.00 UTC",
-      "rewardPoolUSDT": "Reward pool for depositing USDT: 25,000 SOV",
-      "rewardPoolRBTC": "Reward pool for depositing RBTC: 25,000 SOV",
-      "yourShare": "Your share of the pool is calculated by:",
-      "yourShare_N": "liquidity added by you * number of blocks held",
-      "yourShare_D": "total liquidity added * number of blocks held",
-      "airDrop": "Rewards will be deposited into liquidity providers' wallets on or before 8th May 2021",
-      "comingSoon": "Coming Soon"
-    },
-    "historyTable": {
-      "title": "Liquidity History",
-      "emptyState": "History is empty.",
-      "tableHeaders": {
-        "time": "Date/Time",
-        "pool": "Pool",
-        "action": "Action",
-        "asset": "Asset",
-        "liquidityAmount": "Liquidity Amount",
-        "transactionHash": "Transaction Hash",
-        "status": "Status"
-      },
-      "txType": {
-        "added": "Added",
-        "removed": "Removed"
-      }
-    },
-    "rowTable": {
-      "noLiquidityProvided": "Add liquidity and earn income",
-      "tableHeaders": {
-        "totalEarned": "Total Earned",
-        "balance": "Balance",
-        "pl": "P/L",
-        "rewards": "Rewards"
-      }
-    },
-    "modals": {
-      "deposit": {
-        "title": "Deposit Liquidity",
-        "cta": "Deposit",
-        "amount": "Amount:"
-      },
-      "withdraw": {
-        "title": "Withdraw Liquidity",
-        "cta": "Withdraw",
-        "amount": "Amount:",
-        "reward": "Reward:"
-      }
-    },
-    "lootDropLink": "Learn more",
-    "chartOverlayText": "APY% Coming Soon!",
-    "recalibration": "Next recalibration on {{date}}"
-  },
   "landingPage": {
     "meta": {
       "title": "Welcome to Sovryn",

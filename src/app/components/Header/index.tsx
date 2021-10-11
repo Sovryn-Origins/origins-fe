@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import iconNewTab from 'assets/images/iconNewTab.svg';
 import { usePageViews } from 'app/hooks/useAnalytics';
-import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { MenuItem, Menu as BPMenu, Position, Popover } from '@blueprintjs/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
@@ -51,7 +50,6 @@ export function Header() {
       to: '/spot',
       title: t(translations.mainMenu.spotTrade),
     },
-    { to: '/yield-farm', title: t(translations.mainMenu.yieldFarm) },
     {
       to: 'https://bitocracy.sovryn.app',
       title: t(translations.mainMenu.governance),
@@ -205,28 +203,6 @@ export function Header() {
                 >
                   <span className="tw-mr-2 2xl:tw-mr-3 tw-cursor-pointer">
                     {t(translations.mainMenu.trade)}
-                  </span>
-                  <FontAwesomeIcon icon={faChevronDown} size="xs" />
-                </div>
-              </NavPopover>
-              <NavPopover
-                content={
-                  <BPMenu>
-                    <MenuItem
-                      text={t(translations.mainMenu.yieldFarm)}
-                      className="bp3-popover-dismiss"
-                      onClick={() => history.push('/yield-farm')}
-                    />
-                  </BPMenu>
-                }
-              >
-                <div
-                  className={`tw-flex-shrink-0 tw-flex tw-flex-row tw-items-center ${
-                    isSectionOpen(SECTION_TYPE.FINANCE) && 'tw-font-bold'
-                  }`}
-                >
-                  <span className="tw-mr-2 2xl:tw-mr-3 tw-cursor-pointer">
-                    {t(translations.mainMenu.finance)}
                   </span>
                   <FontAwesomeIcon icon={faChevronDown} size="xs" />
                 </div>
