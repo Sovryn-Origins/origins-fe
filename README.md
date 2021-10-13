@@ -57,11 +57,11 @@ To authenticate by adding your personal access token to your `~/.npmrc` file (**
 Note: this step is only required if yarn install fails for you because of missing access to charting-library repository.
 If yarn install fails after these steps please ask for read access to the charting-library repository (for external contributors please see the section below).
 
-#### External Contributors
+<!-- #### External Contributors
 
 Due to the terms of our licensing agreement with Trading View, we are unable to grant access to the charting-library repository to external contributors. In order to allow running of this repo locally, we have set up the `development_external` and `master_external` branches which exclude this dependency and is synched to the latest changes from `development`/`master` branches.
 
-Any new Pull Requests should target the non-external versions of these branches as outlined in the "Which Branch?" section below.
+Any new Pull Requests should target the non-external versions of these branches as outlined in the "Which Branch?" section below. -->
 
 ## Contributing
 
@@ -93,7 +93,7 @@ Informal discussion regarding bugs, new features, and implementation of existing
 
 ### Which Branch?
 
-**All** bug fixes should be sent to the latest stable (master) branch. Bug fixes should never be sent to the development branch unless they fix features that exist only in the upcoming release.
+**All** bug fixes should be sent to the latest stable (main) branch. Bug fixes should never be sent to the development branch unless they fix features that exist only in the upcoming release.
 
 **Minor** features that are fully backward compatible with the current release may be sent to the latest stable branch.
 
@@ -104,7 +104,8 @@ If you are unsure if your feature qualifies as a major or minor, please ask in t
 ### Working With UI
 
 All UI designs used for this repository should be available publically in [Google Drive folder as Adobe XD files](https://drive.google.com/drive/folders/1e_VljWpANJe0o4VmIkKU5Ewo56l9iMaM?usp=sharing)
-<!-- 
+
+<!--
 ## Security Vulnerabilities
 
 If you discover a security vulnerability within DApp, please submit your bug report to [Immunefi](https://immunefi.com/bounty/origins/) (there is bounty rewards). All security vulnerabilities will be promptly addressed. -->
