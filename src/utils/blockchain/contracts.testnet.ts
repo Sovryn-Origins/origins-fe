@@ -295,7 +295,7 @@ export const contracts = {
     abi: stakingRewardsProxyAbi,
   },
   FISH_token: {
-    address: '0xaa7038D80521351F243168FefE0352194e3f83C3',
+    address: '0x631e99d9209C5ab9d2D1471a376e7E2d04Da63Bf',
     abi: FISHTokenAbi,
   },
   FISH_amm: {
@@ -308,7 +308,7 @@ export const contracts = {
     blockNumber: 1218836,
   },
   originsBase: {
-    address: '0xef0CF4969a9c0F55716327a63E05BCF9c7a7b472',
+    address: '0x61a171Ae0DF18D3deF2913aE5BCD6c8fCBFADBc6',
     abi: OriginsBaseAbi,
   },
   lockedFund: {
