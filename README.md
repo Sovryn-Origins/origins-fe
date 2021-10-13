@@ -104,10 +104,10 @@ If you are unsure if your feature qualifies as a major or minor, please ask in t
 ### Working With UI
 
 All UI designs used for this repository should be available publically in [Google Drive folder as Adobe XD files](https://drive.google.com/drive/folders/1e_VljWpANJe0o4VmIkKU5Ewo56l9iMaM?usp=sharing)
-
+<!-- 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within DApp, please submit your bug report to [Immunefi](https://immunefi.com/bounty/origins/) (there is bounty rewards). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within DApp, please submit your bug report to [Immunefi](https://immunefi.com/bounty/origins/) (there is bounty rewards). All security vulnerabilities will be promptly addressed. -->
 
 ## Code of Conduct
 
