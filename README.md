@@ -1,4 +1,4 @@
-# Sovryn DApp
+# Origins DApp
 
 ---
 
@@ -65,32 +65,31 @@ Any new Pull Requests should target the non-external versions of these branches 
 
 ## Contributing
 
-<a href="https://github.com/DistributedCollective/Sovryn-frontend/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=DistributedCollective/Sovryn-frontend" />
+<a href="https://github.com/DistributedCollective/origins-fe/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=DistributedCollective/origins-fe" />
 </a>
 
 ### Bug Reports
 
-To foster active collaboration, Sovryn strongly encourages pull requests, not just bug reports. "Bug reports" may also be sent in the form of a pull request containing a failing test.
+To foster active collaboration, Origins strongly encourages pull requests, not just bug reports. "Bug reports" may also be sent in the form of a pull request containing a failing test.
 
 However, if you file a bug report, your issue should contain a title and a clear description of the issue. You should also include as much relevant information as possible. The goal of a bug report is to make it easy for yourself - and others - to replicate the bug and develop a fix.
 
-Remember, bug reports are created in the hope that others with the same problem will be able to collaborate with you on solving it. Do not expect that the bug report will automatically see any activity or that others will jump to fix it. Creating a bug report serves to help yourself and others start on the path of fixing the problem. If you want to chip in, you can help out by fixing any bugs listed in our [issue trackers](https://github.com/issues?q=is%3Aopen+is%3Aissue+label%3Abug+user%3Adistributedcollective).
+Remember, bug reports are created in the hope that others with the same problem will be able to collaborate with you on solving it. Do not expect that the bug report will automatically see any activity or that others will jump to fix it. Creating a bug report serves to help yourself and others start on the path of fixing the problem. If you want to chip in, you can help out by fixing any bugs listed in our [issue trackers]().
 
 ### Support Questions
 
-Sovryn's GitHub issue trackers are not intended to provide help or support. Instead, use one of the following channels:
+Origins's GitHub issue trackers are not intended to provide help or support. Instead, use one of the following channels:
 
-- [Discord](https://discord.gg/J22WS6z)
-- [Wiki Pages](https://wiki.sovryn.app)
-- [Sovryn Forum](https://forum.sovryn.app)
-- [Sovryn Blog](https://sovryn.app/blog/)
+- [Discord]()
+- [Wiki Pages]()
+- [Origins Forum]()
 
 ### Core Development Discussion
 
-You may propose new features or improvements of existing DApp behavior in the Sovryn Ideas issue board. If you propose a new feature, please be willing to implement at least some of the code that would be needed to complete the feature.
+You may propose new features or improvements of existing DApp behavior in the Origins Ideas issue board. If you propose a new feature, please be willing to implement at least some of the code that would be needed to complete the feature.
 
-Informal discussion regarding bugs, new features, and implementation of existing features takes place in the #sorcery channel of the Sovryn Discord server.
+Informal discussion regarding bugs, new features, and implementation of existing features takes place in the #sorcery channel of the Origins Discord server.
 
 ### Which Branch?
 
@@ -100,7 +99,7 @@ Informal discussion regarding bugs, new features, and implementation of existing
 
 **Major** new features should always be sent to the development branch, which contains the upcoming release.
 
-If you are unsure if your feature qualifies as a major or minor, please ask in the #sorcery channel of the Sovryn Discord server.
+If you are unsure if your feature qualifies as a major or minor, please ask in the #sorcery channel of the Origins Discord server.
 
 ### Working With UI
 
@@ -108,7 +107,7 @@ All UI designs used for this repository should be available publically in [Googl
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within DApp, please submit your bug report to [Immunefi](https://immunefi.com/bounty/sovryn/) (there is bounty rewards). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within DApp, please submit your bug report to [Immunefi](https://immunefi.com/bounty/origins/) (there is bounty rewards). All security vulnerabilities will be promptly addressed.
 
 ## Code of Conduct
 
@@ -116,4 +115,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 ## Licence
 
-The Sovryn DApp is open-sourced software licensed under the [MIT license](LICENSE).
+The Origins DApp is open-sourced software licensed under the [MIT license](LICENSE).
