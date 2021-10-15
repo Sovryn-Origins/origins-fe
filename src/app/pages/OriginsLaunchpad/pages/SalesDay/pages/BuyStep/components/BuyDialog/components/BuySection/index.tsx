@@ -1,13 +1,16 @@
-import { AmountInput } from 'app/components/Form/AmountInput';
-import { translations } from 'locales/i18n';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { AmountInput } from 'app/components/Form/AmountInput';
+import { TxDialog } from '../TxDialog';
+import { DepositLimit } from './components/DepositLimit';
+
+import { translations } from 'locales/i18n';
 import { Asset } from 'types';
 import { BuyWrapper, BuyButton } from './styled';
-import { useTranslation } from 'react-i18next';
 import imgArrowDown from 'assets/images/arrow-down.svg';
 import { useWeiAmount } from 'app/hooks/useWeiAmount';
 import { bignumber } from 'mathjs';
-import { TxDialog } from '../TxDialog';
 import { noop } from 'app/constants';
 import { useCanInteract } from 'app/hooks/useCanInteract';
 import { useApproveAndBuyToken } from 'app/pages/OriginsLaunchpad/hooks/useApproveAndBuyToken';
@@ -19,6 +22,7 @@ interface IBuySectionProps {
   sourceToken: Asset;
   tierId: number;
   maxAmount: string;
+  minAmount: string;
 }
 
 export const BuySection: React.FC<IBuySectionProps> = ({
@@ -27,6 +31,7 @@ export const BuySection: React.FC<IBuySectionProps> = ({
   sourceToken,
   tierId,
   maxAmount,
+  minAmount,
 }) => {
   const { t } = useTranslation();
   const connected = useCanInteract(true);
@@ -66,8 +71,13 @@ export const BuySection: React.FC<IBuySectionProps> = ({
   return (
     <BuyWrapper>
       <div className="tw-max-w-xs tw-mx-auto">
+        <DepositLimit
+          sourceToken={sourceToken}
+          minAmount={minAmount}
+          maxAmount={maxAmount}
+        />
         <div>
-          <div className="tw-text-sm tw-text-left tw-font-extralight tw-mb-2 tw-text-sov-white">
+          <div className="tw-text-sm tw-text-left tw-mb-2 tw-text-black tw-uppercase">
             {t(
               translations.originsLaunchpad.saleDay.buyStep.buyDialog
                 .enterAmount,
@@ -100,7 +110,7 @@ export const BuySection: React.FC<IBuySectionProps> = ({
         />
 
         <div>
-          <div className="tw-text-sm tw-text-left tw-font-extralight tw-mb-2 tw-text-sov-white">
+          <div className="tw-text-sm tw-text-left tw-mb-2 tw-text-black tw-uppercase">
             {t(
               translations.originsLaunchpad.saleDay.buyStep.buyDialog
                 .tokenReceived,

@@ -12,7 +12,7 @@ import { SalesDay } from './pages/SalesDay';
 export const OriginsLaunchpad: React.FC = () => {
   const { t } = useTranslation();
   /* undo once Fish contract has active sale tier reset to 0 */
-  const activeTierId = 2; //useGetActiveSaleTierId();
+  const activeTierId = 3; //useGetActiveSaleTierId();
 
   useEffect(() => {
     document.body.classList.add('originsLaunchpad');

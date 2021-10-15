@@ -353,7 +353,6 @@
       },
       "buyStep": {
         "buyInformationLabels": {
-          "depositLimits": "Deposit limits",
           "saleAllocation": "Pre-Sale Allocation",
           "allocationRemaining": "Allocation Remaining",
           "participatingWallets": "Participating Wallets",
@@ -366,7 +365,8 @@
           "tokenReceived": "{{token}} Received",
           "transactionFee": "Transaction Fee",
           "buyButton": "Buy {{token}}",
-          "isOverMaxLimit": "You cannot deposit more than max limit"
+          "isOverMaxLimit": "You cannot deposit more than max limit",
+          "depositLimits": "Deposit Limits"
         },
         "instructions": {
           "title": "Instructions",

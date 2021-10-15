@@ -23,6 +23,7 @@ export const BuyDialog: React.FC<IBuyDialogProps> = ({
       sourceToken={saleInformation.depositToken}
       tierId={tierId}
       maxAmount={saleInformation.maxAmount}
+      minAmount={saleInformation.minAmount}
     />
   </DialogWrapper>
 );
