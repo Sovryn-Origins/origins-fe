@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const BuyInformationWrapper = styled.div`
-  width: 36%;
+  width: 369px;
   height: 100%;
   padding: 24px;
 `;

@@ -2,6 +2,13 @@ import React from 'react';
 import { AssetRenderer } from '../AssetRenderer';
 import { AssetSelectItemWrapper } from './styled';
 import { Asset } from 'types/asset';
+const assets: Array<Asset> = [
+  Asset.RBTC,
+  Asset.RUSDT,
+  Asset.SOV,
+  Asset.ETH,
+  Asset.XUSD,
+];
 
 interface AssetListProps {
   selected: Asset;
@@ -11,15 +18,15 @@ interface AssetListProps {
 export const AssetList: React.FC<AssetListProps> = ({ selected, onSelect }) => {
   return (
     <ul className="tw-bg-white tw-rounded-lg">
-      {Object.keys(Asset)
-        .filter(key => Asset[key] !== selected)
-        .map((key, i) => (
+      {assets
+        .filter(asset => asset !== selected)
+        .map((asset, i) => (
           <AssetSelectItemWrapper
             className="tw-px-3 tw-py-1 tw-text-black"
-            onClick={() => (onSelect !== undefined ? onSelect(Asset[key]) : {})}
+            onClick={() => (onSelect !== undefined ? onSelect(asset) : {})}
             key={i}
           >
-            <AssetRenderer asset={Asset[key]} />
+            <AssetRenderer asset={asset} />
           </AssetSelectItemWrapper>
         ))}
     </ul>

@@ -1,16 +1,16 @@
 import React from 'react';
 import { AssetRenderer } from 'app/components/AssetRenderer';
 import { TruncatedWrapper } from '../../styled';
-import { Asset } from 'types/asset';
+import { AcceptedCurrencies } from 'types/asset';
 
 export const SimpleShow: React.FC = () => {
   return (
     <div>
       <TruncatedWrapper>
-        {Object.keys(Asset).map((key, i) => (
+        {AcceptedCurrencies.map((currency, i) => (
           <AssetRenderer
             className="tw-mr-2 tw-text-base"
-            asset={Asset[key]}
+            asset={currency}
             key={i}
           />
         ))}
