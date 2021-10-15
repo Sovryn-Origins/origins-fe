@@ -7,7 +7,7 @@ import { DepositLimit } from './components/DepositLimit';
 
 import { translations } from 'locales/i18n';
 import { Asset } from 'types';
-import { BuyWrapper, BuyButton } from './styled';
+import { BuyInnerWrapper, BuyWrapper, BuyButton } from './styled';
 import { useWeiAmount } from 'app/hooks/useWeiAmount';
 import { bignumber } from 'mathjs';
 import { noop } from 'app/constants';
@@ -70,75 +70,75 @@ export const BuySection: React.FC<IBuySectionProps> = ({
 
   return (
     <BuyWrapper>
-      <div className="tw-max-w-md tw-mx-auto">
-        <DepositLimit
-          sourceToken={sourceToken}
-          minAmount={minAmount}
-          maxAmount={maxAmount}
-        />
-        <div className="tw-mb-10">
-          <div className="tw-text-sm tw-text-left tw-mb-2 tw-text-black tw-uppercase">
-            {t(
-              translations.originsLaunchpad.saleDay.buyStep.buyDialog
-                .enterAmount,
-            )}
-            :
-          </div>
-          <AmountInput
-            value={amount}
-            onChange={value => setAmount(value)}
-            asset={sourceToken}
-            selectable={true}
-            onSelectAsset={asset => {
-              console.log('[BuySection]', asset);
-              setSourceToken(asset);
-            }}
+      <BuyInnerWrapper>
+        <div className="tw-max-w-md tw-mx-auto">
+          <DepositLimit
+            sourceToken={sourceToken}
+            minAmount={minAmount}
+            maxAmount={maxAmount}
           />
-          {isOverMaxLimit && (
-            <ErrorBadge
-              content={
-                <span>
-                  {t(
-                    translations.originsLaunchpad.saleDay.buyStep.buyDialog
-                      .isOverMaxLimit,
-                  )}
-                </span>
-              }
+          <div className="tw-mb-10">
+            <div className="tw-text-sm tw-text-left tw-mb-2 tw-text-black tw-uppercase">
+              {t(
+                translations.originsLaunchpad.saleDay.buyStep.buyDialog
+                  .enterAmount,
+              )}
+            </div>
+            <AmountInput
+              value={amount}
+              onChange={value => setAmount(value)}
+              asset={sourceToken}
+              selectable={true}
+              onSelectAsset={asset => setSourceToken(asset)}
+              theme="white"
             />
-          )}
-        </div>
-
-        <div>
-          <div className="tw-text-sm tw-text-left tw-mb-2 tw-text-black tw-uppercase">
-            {t(
-              translations.originsLaunchpad.saleDay.buyStep.buyDialog
-                .tokenReceived,
-              { token: saleName },
+            {isOverMaxLimit && (
+              <ErrorBadge
+                content={
+                  <span>
+                    {t(
+                      translations.originsLaunchpad.saleDay.buyStep.buyDialog
+                        .isOverMaxLimit,
+                    )}
+                  </span>
+                }
+              />
             )}
-            :
           </div>
-          <AmountInput
-            value={tokenAmount}
-            assetString={saleName}
-            readonly={true}
-            onChange={noop}
-          />
+
+          <div>
+            <div className="tw-text-sm tw-text-left tw-mb-2 tw-text-black tw-uppercase">
+              {t(
+                translations.originsLaunchpad.saleDay.buyStep.buyDialog
+                  .tokenReceived,
+                { token: saleName },
+              )}
+            </div>
+            <AmountInput
+              value={tokenAmount}
+              assetString={saleName}
+              readonly={true}
+              onChange={noop}
+              theme="white"
+            />
+          </div>
+
+          <BuyButton
+            disabled={buyTx.loading || !isValidAmount || !connected}
+            onClick={onBuyClick}
+          >
+            <span>
+              {t(
+                translations.originsLaunchpad.saleDay.buyStep.buyDialog
+                  .buyButton,
+                { token: saleName },
+              )}
+            </span>
+          </BuyButton>
+
+          <TxDialog tx={buyTx} />
         </div>
-
-        <BuyButton
-          disabled={buyTx.loading || !isValidAmount || !connected}
-          onClick={onBuyClick}
-        >
-          <span>
-            {t(
-              translations.originsLaunchpad.saleDay.buyStep.buyDialog.buyButton,
-              { token: saleName },
-            )}
-          </span>
-        </BuyButton>
-
-        <TxDialog tx={buyTx} />
-      </div>
+      </BuyInnerWrapper>
     </BuyWrapper>
   );
 };

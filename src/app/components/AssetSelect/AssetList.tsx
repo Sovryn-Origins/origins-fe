@@ -10,7 +10,7 @@ interface AssetListProps {
 
 export const AssetList: React.FC<AssetListProps> = ({ selected, onSelect }) => {
   return (
-    <ul className="tw-bg-white">
+    <ul className="tw-bg-white tw-rounded-lg">
       {Object.keys(Asset)
         .filter(key => Asset[key] !== selected)
         .map((key, i) => (

@@ -18,6 +18,7 @@ interface InputProps {
   min?: number;
   max?: number;
   step?: number;
+  leftDivider?: boolean;
 }
 
 export function Input({
@@ -55,7 +56,14 @@ export function Input({
         {...props}
       />
       {appendElem && (
-        <div className="tw-input-append tw-border-l-2 tw-border-solid tw-pl-2">
+        <div
+          className={cn(
+            'tw-input-append',
+            props.leftDivider
+              ? 'tw-border-l-2 tw-border-solid tw-pl-2 tw-append-selectable'
+              : '',
+          )}
+        >
           {appendElem}
         </div>
       )}

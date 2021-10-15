@@ -37,7 +37,7 @@ export const InformationSection: React.FC<IInformationSectionProps> = ({
             saleName={saleName}
           />
         }
-        className="tw-border-2 tw-border-solid tw-border-yellow-3 tw-rounded-lg tw-px-3 tw-py-5"
+        className="tw-border-2 tw-border-solid tw-border-yellow-3 tw-rounded-lg tw-px-5 tw-py-8"
       />
 
       <InfoItem

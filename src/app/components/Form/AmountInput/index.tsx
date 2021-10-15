@@ -1,5 +1,6 @@
 import { bignumber } from 'mathjs';
 import React, { useMemo } from 'react';
+import cn from 'classnames';
 
 import { Asset } from '../../../../types';
 import { fromWei } from '../../../../utils/blockchain/math-helpers';
@@ -24,6 +25,7 @@ interface Props {
   placeholder?: string;
   maxAmount?: string;
   readonly?: boolean;
+  theme?: 'dark' | 'white';
 }
 
 export function AmountInput({
@@ -38,6 +40,7 @@ export function AmountInput({
   subText,
   maxAmount,
   readonly,
+  theme = 'dark',
 }: Props) {
   return (
     <>
@@ -62,8 +65,9 @@ export function AmountInput({
             )
           ) : null
         }
-        className="tw-rounded-lg"
+        className={cn('tw-rounded-lg', `theme-${theme}`)}
         readOnly={readonly}
+        leftDivider={selectable}
       />
       {subText && (
         <div className="tw-text-xs tw-mt-1 tw-font-thin">{subText}</div>

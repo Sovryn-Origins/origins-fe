@@ -7,8 +7,12 @@ export const SimpleShow: React.FC = () => {
   return (
     <div>
       <TruncatedWrapper>
-        {Object.keys(Asset).map(key => (
-          <AssetRenderer className="tw-mr-2" asset={Asset[key]} />
+        {Object.keys(Asset).map((key, i) => (
+          <AssetRenderer
+            className="tw-mr-2 tw-text-base"
+            asset={Asset[key]}
+            key={i}
+          />
         ))}
       </TruncatedWrapper>
     </div>

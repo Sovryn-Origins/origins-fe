@@ -22,7 +22,9 @@ export const AcceptedCurrencies: React.FC<AcceptedCurrciesProps> = ({
           className="tw-cursor-pointer"
           onClick={() => setShowMore(!showMore)}
         >
-          <span className="tw-pr-3">{showMore ? 'LESS' : 'MORE'}</span>
+          <span className="tw-pr-3 tw-text-xs">
+            {showMore ? 'LESS' : 'MORE'}
+          </span>
           <img
             src={showMore ? chevronUp : chevronDown}
             alt="Toggle Show More/Less"
