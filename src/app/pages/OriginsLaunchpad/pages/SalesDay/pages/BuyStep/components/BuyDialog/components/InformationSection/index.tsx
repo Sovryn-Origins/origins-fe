@@ -1,8 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { AssetSymbolRenderer } from 'app/components/AssetSymbolRenderer';
-import { Asset } from 'types';
+import { AcceptedCurrencies } from 'app/components/AcceptedCurrencies';
 import { BuyInformationWrapper } from './styled';
 import { InfoItem } from './InfoItem';
 import { AllocationRemaining } from './AllocationRemaining';
@@ -38,7 +37,7 @@ export const InformationSection: React.FC<IInformationSectionProps> = ({
             saleName={saleName}
           />
         }
-        className="tw-text-primary"
+        className="tw-border-2 tw-border-solid tw-border-yellow-3 tw-rounded-lg tw-px-3 tw-py-5"
       />
 
       <InfoItem
@@ -80,7 +79,7 @@ export const InformationSection: React.FC<IInformationSectionProps> = ({
         )}
         value={
           <>
-            <AssetSymbolRenderer asset={info.depositToken} />
+            <AcceptedCurrencies />
           </>
         }
         isLastItem={true}

@@ -6,6 +6,7 @@ import { fromWei } from '../../../../utils/blockchain/math-helpers';
 import { AssetRenderer } from '../../AssetRenderer';
 import { useAssetBalanceOf } from '../../../hooks/useAssetBalanceOf';
 import { Input } from '../Input';
+import { AssetSelect } from 'app/components/AssetSelect';
 import {
   stringToFixedPrecision,
   toNumberFormat,
@@ -17,6 +18,8 @@ interface Props {
   decimalPrecision?: number;
   asset?: Asset;
   assetString?: string;
+  selectable?: boolean;
+  onSelectAsset?: (asset: Asset) => void;
   subText?: string;
   placeholder?: string;
   maxAmount?: string;
@@ -30,6 +33,8 @@ export function AmountInput({
   decimalPrecision = 6,
   asset,
   assetString,
+  selectable = false,
+  onSelectAsset,
   subText,
   maxAmount,
   readonly,
@@ -43,7 +48,18 @@ export function AmountInput({
         placeholder={placeholder}
         appendElem={
           asset || assetString ? (
-            <AssetRenderer asset={asset} assetString={assetString} />
+            selectable ? (
+              <AssetSelect
+                selected={asset || assetString}
+                onChange={onSelectAsset}
+              />
+            ) : (
+              <AssetRenderer
+                className="tw-text-black"
+                asset={asset}
+                assetString={assetString}
+              />
+            )
           ) : null
         }
         className="tw-rounded-lg"

@@ -353,7 +353,7 @@
       },
       "buyStep": {
         "buyInformationLabels": {
-          "saleAllocation": "Pre-Sale Allocation",
+          "saleAllocation": "Sale Allocation",
           "allocationRemaining": "Allocation Remaining",
           "participatingWallets": "Participating Wallets",
           "price": "Price",

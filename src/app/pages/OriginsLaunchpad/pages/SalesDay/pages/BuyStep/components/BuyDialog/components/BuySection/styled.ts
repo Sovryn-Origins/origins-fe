@@ -3,10 +3,10 @@ import styled, { css } from 'styled-components';
 export const BuyWrapper = styled.div`
   width: 64%;
   height: 100%;
-  border-radius: 1.25rem;
+  border-radius: 0.75rem;
   background-color: #ffffff;
   box-shadow: -11px 0px 25px #00000026;
-  padding: 4.75rem 2rem;
+  padding: 2.5rem 2rem;
 `;
 
 interface IBuyButtonProps {

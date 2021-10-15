@@ -54,7 +54,11 @@ export function Input({
         onChange={e => handleChange(e.currentTarget.value)}
         {...props}
       />
-      {appendElem && <div className="tw-input-append">{appendElem}</div>}
+      {appendElem && (
+        <div className="tw-input-append tw-border-l-2 tw-border-solid tw-pl-2">
+          {appendElem}
+        </div>
+      )}
     </div>
   );
 }

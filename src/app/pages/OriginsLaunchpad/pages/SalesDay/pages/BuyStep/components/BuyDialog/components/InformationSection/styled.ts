@@ -3,12 +3,12 @@ import styled from 'styled-components';
 export const BuyInformationWrapper = styled.div`
   width: 36%;
   height: 100%;
-  padding: 4.8125rem 1.5rem 4.1875rem 2.5625rem;
+  padding: 2.25rem 1.25rem;
 `;
 
 export const AllocationDiv = styled.div`
   width: 100%;
-  height: 5px;
+  height: 12px;
   background-color: var(--primary);
   border-radius: 0.75rem;
 `;

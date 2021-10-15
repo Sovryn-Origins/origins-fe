@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AssetSymbolRenderer } from 'app/components/AssetSymbolRenderer';
@@ -9,7 +9,7 @@ import {
 } from './styled';
 import { translations } from 'locales/i18n';
 import { Asset } from 'types';
-import { toNumberFormat, weiToNumberFormat } from 'utils/display-text/format';
+import { weiToNumberFormat } from 'utils/display-text/format';
 import arrowDownInRect from 'assets/images/arrow-down-rect.svg';
 import arrowUpInRect from 'assets/images/arrow-up-rect.svg';
 

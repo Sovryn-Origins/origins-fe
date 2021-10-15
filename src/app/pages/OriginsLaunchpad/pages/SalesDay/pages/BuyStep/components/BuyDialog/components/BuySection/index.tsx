@@ -8,7 +8,6 @@ import { DepositLimit } from './components/DepositLimit';
 import { translations } from 'locales/i18n';
 import { Asset } from 'types';
 import { BuyWrapper, BuyButton } from './styled';
-import imgArrowDown from 'assets/images/arrow-down.svg';
 import { useWeiAmount } from 'app/hooks/useWeiAmount';
 import { bignumber } from 'mathjs';
 import { noop } from 'app/constants';
@@ -28,7 +27,7 @@ interface IBuySectionProps {
 export const BuySection: React.FC<IBuySectionProps> = ({
   saleName,
   depositRate,
-  sourceToken,
+  sourceToken: initSourceToken,
   tierId,
   maxAmount,
   minAmount,
@@ -36,6 +35,7 @@ export const BuySection: React.FC<IBuySectionProps> = ({
   const { t } = useTranslation();
   const connected = useCanInteract(true);
 
+  const [sourceToken, setSourceToken] = useState<Asset>(initSourceToken);
   const [amount, setAmount] = useState('');
   const [isOverMaxLimit, setIsOverMaxLimit] = useState(false);
   const weiAmount = useWeiAmount(amount);
@@ -70,13 +70,13 @@ export const BuySection: React.FC<IBuySectionProps> = ({
 
   return (
     <BuyWrapper>
-      <div className="tw-max-w-xs tw-mx-auto">
+      <div className="tw-max-w-md tw-mx-auto">
         <DepositLimit
           sourceToken={sourceToken}
           minAmount={minAmount}
           maxAmount={maxAmount}
         />
-        <div>
+        <div className="tw-mb-10">
           <div className="tw-text-sm tw-text-left tw-mb-2 tw-text-black tw-uppercase">
             {t(
               translations.originsLaunchpad.saleDay.buyStep.buyDialog
@@ -87,7 +87,12 @@ export const BuySection: React.FC<IBuySectionProps> = ({
           <AmountInput
             value={amount}
             onChange={value => setAmount(value)}
-            asset={Asset.RBTC}
+            asset={sourceToken}
+            selectable={true}
+            onSelectAsset={asset => {
+              console.log('[BuySection]', asset);
+              setSourceToken(asset);
+            }}
           />
           {isOverMaxLimit && (
             <ErrorBadge
@@ -102,12 +107,6 @@ export const BuySection: React.FC<IBuySectionProps> = ({
             />
           )}
         </div>
-
-        <img
-          src={imgArrowDown}
-          alt="swap"
-          className="tw-h-8 tw-mx-auto tw-mt-10 tw-mb-8"
-        />
 
         <div>
           <div className="tw-text-sm tw-text-left tw-mb-2 tw-text-black tw-uppercase">
