@@ -41,18 +41,18 @@ const DepositLimitItem: React.FC<IDepositLimitItemProps> = ({
         />
       </DepositLimitIconWrapper>
       <DepositLimitContentWrapper className="tw-px-2">
-        <p className="tw-mb-3 tw-text-left tw-text-tiny tw-text-black">
+        <p className="tw-mb-3 tw-text-left tw-font-rowdies tw-text-sm tw-text-black">
           {label}
         </p>
         <div className="tw-flex tw-justify-between">
           <p
-            className="tw-mb-0 tw-text-xs tw-text-black tw-overflow-ellipsis"
+            className="tw-mb-0 tw-text-sm tw-font-rowdies tw-text-black tw-overflow-ellipsis"
             title={amount}
           >
             {weiToNumberFormat(amount, 4)}{' '}
           </p>
           <AssetSymbolRenderer
-            className="tw-text-black tw-text-xs"
+            className="tw-text-black tw-text-sm tw-font-rowdies"
             asset={sourceToken}
           />
         </div>
@@ -69,7 +69,7 @@ export const DepositLimit: React.FC<IDepositLimitProps> = ({
   const { t } = useTranslation();
   return (
     <div>
-      <div className="tw-text-sm tw-text-left tw-mb-2 tw-text-black tw-uppercase">
+      <div className="tw-text-base tw-text-left tw-font-rowdies tw-mb-2 tw-text-black tw-uppercase">
         {t(
           translations.originsLaunchpad.saleDay.buyStep.buyDialog.depositLimits,
         )}

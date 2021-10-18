@@ -26,6 +26,7 @@ module.exports = {
     fontFamily: {
       body: ['Montserrat', 'sans-serif'],
       orbitron: ['Orbitron', 'sans-serif'],
+      rowdies: ['Rowdies', 'sans-serif'],
     },
     fontSize: {
       tiny: '.625rem', //  10px

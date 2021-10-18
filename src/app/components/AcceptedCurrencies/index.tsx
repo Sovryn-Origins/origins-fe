@@ -22,7 +22,7 @@ export const AcceptedCurrencies: React.FC<AcceptedCurrciesProps> = ({
           className="tw-cursor-pointer"
           onClick={() => setShowMore(!showMore)}
         >
-          <span className="tw-pr-3 tw-text-xs tw-text-yellow-3">
+          <span className="tw-pr-3 tw-text-xs tw-font-rowdies tw-text-yellow-3">
             {showMore ? 'LESS' : 'MORE'}
           </span>
           <img

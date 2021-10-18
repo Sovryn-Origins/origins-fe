@@ -10,7 +10,7 @@ export const AllocationDiv = styled.div`
   width: 100%;
   height: 12px;
   background-color: var(--primary);
-  border-radius: 0.75rem;
+  border-radius: 8px;
 `;
 
 interface IAllocationPercentageProps {

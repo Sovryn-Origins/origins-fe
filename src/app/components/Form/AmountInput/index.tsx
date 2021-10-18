@@ -58,7 +58,7 @@ export function AmountInput({
               />
             ) : (
               <AssetRenderer
-                className="tw-text-black"
+                className="tw-text-black tw-font-rowdies tw-text-lg"
                 asset={asset}
                 assetString={assetString}
               />
@@ -137,7 +137,7 @@ export function AmountSelectorButton(props: AmountButtonProps) {
   return (
     <button
       onClick={props.onClick}
-      className="tw-text-secondary tw-bg-secondary tw-bg-opacity-0 tw-font-medium tw-text-xs tw-leading-none tw-px-4 tw-py-1 tw-text-center tw-w-full tw-transition hover:tw-bg-opacity-25"
+      className="tw-text-secondary tw-bg-secondary tw-bg-opacity-0 tw-font-medium tw-font-rowdies tw-text-xs tw-leading-none tw-px-4 tw-py-1 tw-text-center tw-w-full tw-transition hover:tw-bg-opacity-25"
     >
       {props.text}
     </button>

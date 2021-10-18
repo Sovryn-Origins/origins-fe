@@ -32,7 +32,10 @@ export const AssetSelect: React.FC<AssetSelectProps> = ({
         position={Position.BOTTOM_RIGHT}
       >
         <div className="tw-flex tw-justify-between tw-pr-2 tw-items-center">
-          <AssetRenderer className="tw-text-left" asset={selectedAsset} />
+          <AssetRenderer
+            className="tw-text-left tw-font-rowdies tw-text-base"
+            asset={selectedAsset}
+          />
           <ArrowUp />
         </div>
       </Popover>

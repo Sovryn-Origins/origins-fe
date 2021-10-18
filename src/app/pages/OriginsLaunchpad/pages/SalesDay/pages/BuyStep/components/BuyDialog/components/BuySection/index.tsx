@@ -78,7 +78,7 @@ export const BuySection: React.FC<IBuySectionProps> = ({
             maxAmount={maxAmount}
           />
           <div className="tw-mb-10">
-            <div className="tw-text-sm tw-text-left tw-mb-2 tw-text-black tw-uppercase">
+            <div className="tw-text-base tw-text-left tw-font-rowdies tw-mb-2 tw-text-black tw-uppercase">
               {t(
                 translations.originsLaunchpad.saleDay.buyStep.buyDialog
                   .enterAmount,
@@ -107,7 +107,7 @@ export const BuySection: React.FC<IBuySectionProps> = ({
           </div>
 
           <div>
-            <div className="tw-text-sm tw-text-left tw-mb-2 tw-text-black tw-uppercase">
+            <div className="tw-text-base tw-text-left tw-font-rowdies tw-mb-2 tw-text-black tw-uppercase">
               {t(
                 translations.originsLaunchpad.saleDay.buyStep.buyDialog
                   .tokenReceived,
@@ -127,7 +127,7 @@ export const BuySection: React.FC<IBuySectionProps> = ({
             disabled={buyTx.loading || !isValidAmount || !connected}
             onClick={onBuyClick}
           >
-            <span>
+            <span className="tw-font-rowdies">
               {t(
                 translations.originsLaunchpad.saleDay.buyStep.buyDialog
                   .buyButton,

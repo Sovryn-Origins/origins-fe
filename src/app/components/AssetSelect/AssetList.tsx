@@ -26,7 +26,10 @@ export const AssetList: React.FC<AssetListProps> = ({ selected, onSelect }) => {
             onClick={() => (onSelect !== undefined ? onSelect(asset) : {})}
             key={i}
           >
-            <AssetRenderer asset={asset} />
+            <AssetRenderer
+              className="tw-text-lg tw-font-rowdies"
+              asset={asset}
+            />
           </AssetSelectItemWrapper>
         ))}
     </ul>

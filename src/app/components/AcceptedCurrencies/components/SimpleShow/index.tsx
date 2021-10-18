@@ -9,7 +9,7 @@ export const SimpleShow: React.FC = () => {
       <TruncatedWrapper>
         {AcceptedCurrencies.map((currency, i) => (
           <AssetRenderer
-            className="tw-mr-2 tw-text-base"
+            className="tw-mr-2 tw-text-lg tw-font-rowdies"
             asset={currency}
             key={i}
           />

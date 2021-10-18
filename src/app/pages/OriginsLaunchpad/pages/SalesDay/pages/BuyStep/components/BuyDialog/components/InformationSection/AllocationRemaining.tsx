@@ -30,10 +30,10 @@ export const AllocationRemaining: React.FC<IAllocationRemainingProps> = ({
   return (
     <>
       <div className="tw-flex tw-justify-between tw-mb-3">
-        <span className="tw-text-base tw-font-body tw-font-medium tw-tracking-normal">
+        <span className="tw-text-lg tw-font-rowdies tw-font-normal tw-tracking-normal">
           {weiToNumberFormat(remainingTokens)} {saleName}
         </span>
-        <span className="tw-text-base tw-font-body tw-font-medium tw-tracking-normal">
+        <span className="tw-text-lg tw-font-rowdies tw-font-normal tw-tracking-normal">
           {remainingAllocation}%
         </span>
       </div>
