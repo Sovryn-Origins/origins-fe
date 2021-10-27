@@ -12,7 +12,13 @@ import WalletConnector from '../../containers/WalletConnector';
 import { LanguageToggle } from '../LanguageToggle';
 import { currentNetwork } from 'utils/classifiers';
 import styles from './index.module.scss';
-import { StyledBurger, StyledLogo, StyledMenu } from './styled';
+import {
+  StyledBurger,
+  StyledHeader,
+  StyledLogo,
+  StyledMenu,
+  StyledMenuWrapper,
+} from './styled';
 
 const bridgeURL =
   currentNetwork === 'mainnet'
@@ -119,20 +125,26 @@ export function Header() {
   };
 
   const SECTION_TYPE = {
-    TRADE: 'trade',
-    FINANCE: 'finance',
+    // TRADE: 'trade',
+    // FINANCE: 'finance',
+    // ORIGINS: 'origins',
     BITOCRACY: 'bitocracy',
-    ORIGINS: 'origins',
+    PORTFOLIO: 'portfolio',
+    LAUNCHPAD: 'launchpad',
+    CLAIM: 'claim',
   };
 
   const isSectionOpen = (section: string) => {
     const paths = {
-      [SECTION_TYPE.TRADE]: ['/buy-sov', '/trade', '/swap'],
-      [SECTION_TYPE.FINANCE]: ['/lend', '/yield-farm'],
+      // [SECTION_TYPE.TRADE]: ['/buy-sov', '/trade', '/swap'],
+      // [SECTION_TYPE.FINANCE]: ['/lend', '/yield-farm'],
+      // [SECTION_TYPE.ORIGINS]: ['/origins', '/origins/claim'],
       [SECTION_TYPE.BITOCRACY]: ['/stake'],
-      [SECTION_TYPE.ORIGINS]: ['/origins', '/origins/claim'],
+      [SECTION_TYPE.PORTFOLIO]: ['/wallet'],
+      [SECTION_TYPE.LAUNCHPAD]: ['/launchpad'],
+      [SECTION_TYPE.CLAIM]: ['/claim'],
     };
-    return section && paths[section].includes(location.pathname);
+    return !!section && paths[section].includes(location.pathname);
   };
 
   useEffect(() => {
@@ -154,8 +166,8 @@ export function Header() {
 
   return (
     <>
-      <header className={classNames(styles.header, open && styles.open)}>
-        <div className="tw-container tw-flex tw-justify-between tw-items-center tw-pt-2 tw-pb-2 tw-px-4 tw-mx-auto">
+      <StyledHeader className={classNames(styles.header, open && styles.open)}>
+        <div className="tw-container tw-flex tw-justify-between tw-items-center tw-pt-2 tw-pb-8 tw-px-4 tw-mx-auto">
           <div className="xl:tw-hidden">
             <div ref={node}>
               <Burger open={open} setOpen={setOpen} />
@@ -168,45 +180,7 @@ export function Header() {
                 <StyledLogo />
               </Link>
             </div>
-            <div className="tw-hidden xl:tw-flex tw-flex-row tw-flex-nowrap tw-space-x-4 2xl:tw-space-x-10">
-              <NavPopover
-                content={
-                  <BPMenu>
-                    <MenuItem
-                      text={t(translations.mainMenu.buySov)}
-                      className="bp3-popover-dismiss"
-                      onClick={() => {
-                        history.push('/buy-sov');
-                      }}
-                    />
-                    <MenuItem
-                      text={t(translations.mainMenu.swap)}
-                      className="bp3-popover-dismiss"
-                      onClick={() => {
-                        history.push('/swap');
-                      }}
-                    />
-                    <MenuItem
-                      text={t(translations.mainMenu.spotTrade)}
-                      className="bp3-popover-dismiss"
-                      onClick={() => {
-                        history.push('/spot');
-                      }}
-                    />
-                  </BPMenu>
-                }
-              >
-                <div
-                  className={`tw-flex-shrink-0 tw-flex tw-flex-row tw-items-center ${
-                    isSectionOpen(SECTION_TYPE.TRADE) && 'tw-font-bold'
-                  }`}
-                >
-                  <span className="tw-mr-2 2xl:tw-mr-3 tw-cursor-pointer">
-                    {t(translations.mainMenu.trade)}
-                  </span>
-                  <FontAwesomeIcon icon={faChevronDown} size="xs" />
-                </div>
-              </NavPopover>
+            <div className="tw-hidden xl:tw-flex tw-flex-row tw-flex-nowrap tw-space-x-4 2xl:tw-space-x-10 tw-ml-8">
               <NavPopover
                 content={
                   <BPMenu>
@@ -251,60 +225,50 @@ export function Header() {
                     isSectionOpen(SECTION_TYPE.BITOCRACY) && 'font-weight-bold'
                   }`}
                 >
-                  <span className="tw-mr-2 2xl:tw-mr-3 tw-cursor-pointer">
-                    {t(translations.mainMenu.bitocracy)}
-                  </span>
+                  <StyledMenuWrapper
+                    selected={isSectionOpen(SECTION_TYPE.BITOCRACY)}
+                    className="tw-mr-2 2xl:tw-mr-3"
+                  >
+                    <span className="tw-cursor-pointer tw-px-1 tw-uppercase">
+                      {t(translations.mainMenu.bitocracy)}
+                    </span>
+                  </StyledMenuWrapper>
                   <FontAwesomeIcon icon={faChevronDown} size="xs" />
                 </div>
               </NavPopover>
-              <NavLink
-                className="tw-header-link tw-mr-2 2xl:tw-mr-3"
-                to="/reward"
+              <StyledMenuWrapper
+                selected={isSectionOpen(SECTION_TYPE.PORTFOLIO)}
+                className="tw-mr-2 2xl:tw-mr-3"
               >
-                {t(translations.mainMenu.rewards)}
-              </NavLink>
-
-              <NavLink
-                className="tw-header-link tw-mr-2 2xl:tw-mr-3"
-                to="/wallet"
-              >
-                {t(translations.mainMenu.wallet)}
-              </NavLink>
-              <a
-                href={bridgeURL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="tw-header-link"
-              >
-                {t(translations.mainMenu.bridge)}
-              </a>
-              <NavPopover
-                content={
-                  <BPMenu>
-                    <MenuItem
-                      text={t(translations.mainMenu.launchpad)}
-                      className="bp3-popover-dismiss"
-                      onClick={() => history.push('/origins')}
-                    />
-                    <MenuItem
-                      text={t(translations.mainMenu.claim)}
-                      className="bp3-popover-dismiss"
-                      onClick={() => history.push('/origins/claim')}
-                    />
-                  </BPMenu>
-                }
-              >
-                <div
-                  className={`tw-flex-shrink-0 tw-flex tw-flex-row tw-items-center ${
-                    isSectionOpen(SECTION_TYPE.ORIGINS) && 'tw-font-bold'
-                  }`}
+                <NavLink
+                  className="tw-header-link tw-px-1 tw-uppercase"
+                  to="/wallet"
                 >
-                  <span className="tw-mr-2 2xl:tw-mr-3 tw-cursor-pointer">
-                    {t(translations.mainMenu.origins)}
-                  </span>
-                  <FontAwesomeIcon icon={faChevronDown} size="xs" />
-                </div>
-              </NavPopover>
+                  {t(translations.mainMenu.wallet)}
+                </NavLink>
+              </StyledMenuWrapper>
+              <StyledMenuWrapper
+                selected={isSectionOpen(SECTION_TYPE.LAUNCHPAD)}
+                className="tw-mr-2 2xl:tw-mr-3"
+              >
+                <NavLink
+                  className="tw-header-link tw-px-1 tw-uppercase"
+                  to="/launchpad"
+                >
+                  {t(translations.mainMenu.launchpad)}
+                </NavLink>
+              </StyledMenuWrapper>
+              <StyledMenuWrapper
+                selected={isSectionOpen(SECTION_TYPE.CLAIM)}
+                className="tw-mr-2 2xl:tw-mr-3"
+              >
+                <NavLink
+                  className="tw-header-link tw-px-1 tw-uppercase"
+                  to="/claim"
+                >
+                  {t(translations.mainMenu.claim)}
+                </NavLink>
+              </StyledMenuWrapper>
             </div>
           </div>
           <div className="tw-flex tw-justify-start tw-items-center">
@@ -322,7 +286,7 @@ export function Header() {
             <WalletConnector simpleView={false} />
           </div>
         </div>
-      </header>
+      </StyledHeader>
     </>
   );
 }

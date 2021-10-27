@@ -1,10 +1,28 @@
 import styled from 'styled-components/macro';
-import { ReactComponent as SovLogo } from '../../../assets/images/sovryn-logo-alpha.svg';
+import { ReactComponent as SovLogo } from '../../../assets/images/origins-logo.svg';
+import headerBG from '../../../assets/images/header-background.svg';
 import { media } from '../../../styles/media';
 
 type StyledProps = {
   open: boolean;
 };
+
+type MenuWrapperProps = {
+  selected: boolean;
+};
+
+export const StyledHeader = styled.header`
+  background-image: url(${headerBG});
+  background-repeat: no-repeat;
+  background-size: 101% auto;
+  background-position: left bottom;
+  background-origin: border-box;
+`;
+
+export const StyledMenuWrapper = styled.div<MenuWrapperProps>`
+  border-bottom: ${({ selected }) => (selected ? '4px solid #FEC004' : 'none')};
+  padding-bottom: 0.5rem;
+`;
 
 export const StyledMenu = styled.nav<StyledProps>`
   display: flex;

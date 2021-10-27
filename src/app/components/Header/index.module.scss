@@ -1,6 +1,5 @@
 .header {
-  @apply tw-fixed tw-top-0 tw-left-0 tw-right-0 tw-z-20
-    tw-bg-black;
+  @apply tw-fixed tw-top-0 tw-left-0 tw-right-0 tw-z-20;
 
   & > div:first-child {
     min-height: 70px;

@@ -74,15 +74,15 @@ export function App() {
           <NetworkRibbon />
           <Switch>
             <Route exact path="/" component={LandingPage} />
-            <Route exact path="/buy-sov" component={BuySovPage} />
+            {/* <Route exact path="/buy-sov" component={BuySovPage} />
             <Route exact path="/swap" component={SwapPage} />
-            <Route exact path="/spot" component={SpotTradingPage} />
+            <Route exact path="/spot" component={SpotTradingPage} /> */}
             <Route exact path="/stake" component={StakePage} />
             <Redirect exact from="/liquidity" to="/yield-farm" />
-            <Route exact path="/reward" component={RewardPage} />
+            {/* <Route exact path="/reward" component={RewardPage} /> */}
             <Route exact path="/wallet" component={WalletPage} />
-            <Route exact path="/origins" component={OriginsLaunchpadPage} />
-            <Route exact path="/origins/claim" component={OriginsClaimPage} />
+            <Route exact path="/launchpad" component={OriginsLaunchpadPage} />
+            <Route exact path="/claim" component={OriginsClaimPage} />
             <Route
               exact
               path="/cross-chain/deposit"
