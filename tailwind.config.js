@@ -27,6 +27,7 @@ module.exports = {
       body: ['Montserrat', 'sans-serif'],
       orbitron: ['Orbitron', 'sans-serif'],
       rowdies: ['Rowdies', 'sans-serif'],
+      consolas: ['Consolas', 'sans-serif'],
     },
     fontSize: {
       tiny: '.625rem', //  10px

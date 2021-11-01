@@ -50,7 +50,7 @@ const WalletConnectorContainer: React.FC<Props> = props => {
       {!connected && !address ? (
         <StyledButton
           onClick={() => connect()}
-          className="tw-flex tw-justify-center tw-items-center tw-bg-primary-25 hover:tw-opacity-75"
+          className="tw-flex tw-justify-center tw-items-center tw-bg-primary hover:tw-opacity-90"
         >
           {connecting && <Spinner size={22} />}
           {!connecting && (
@@ -117,7 +117,7 @@ export default WalletConnectorContainer;
 
 const StyledButton = styled.button.attrs(({ className }) => ({
   type: 'button',
-  className: classNames(className, 'xl:tw-text-primary'),
+  className: classNames(className, 'xl:tw-text-black tw-uppercase'),
 }))`
   border: none;
   background: none;
@@ -132,9 +132,9 @@ const StyledButton = styled.button.attrs(({ className }) => ({
     margin: 0;
     height: 40px;
     padding: 5px 26px;
-    font-weight: 100;
-    font-size: 1.125rem;
-    font-family: 'Montserrat';
+    font-weight: normal;
+    font-size: 1rem;
+    font-family: 'Rowdies';
     letter-spacing: -1px;
     text-transform: capitalize;
     transition: all .3s;

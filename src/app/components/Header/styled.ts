@@ -14,7 +14,7 @@ type MenuWrapperProps = {
 export const StyledHeader = styled.header`
   background-image: url(${headerBG});
   background-repeat: no-repeat;
-  background-size: 101% auto;
+  background-size: cover;
   background-position: left bottom;
   background-origin: border-box;
 `;

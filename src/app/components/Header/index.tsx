@@ -37,6 +37,7 @@ export function Header() {
   const Menu = ({ open, setOpen }) => {
     return <StyledMenu open={open}>{menuItems}</StyledMenu>;
   };
+
   const Burger = ({ open, setOpen }) => {
     return (
       <StyledBurger open={open} onClick={() => setOpen(!open)}>
@@ -46,34 +47,14 @@ export function Header() {
       </StyledBurger>
     );
   };
+
   const pages = [
-    { to: '/buy-sov', title: t(translations.mainMenu.buySov), exact: true },
-    {
-      to: '/swap',
-      title: t(translations.mainMenu.swap),
-    },
-    {
-      to: '/spot',
-      title: t(translations.mainMenu.spotTrade),
-    },
-    {
-      to: 'https://bitocracy.sovryn.app',
-      title: t(translations.mainMenu.governance),
-    },
     { to: '/stake', title: t(translations.mainMenu.staking) },
-    { to: '/reward', title: t(translations.mainMenu.reward) },
     { to: '/wallet', title: t(translations.mainMenu.wallet) },
-    {
-      to: bridgeURL,
-      title: t(translations.mainMenu.bridge),
-    },
-    { to: '/origins', title: t(translations.mainMenu.origins) },
-    { to: '/origins/claim', title: t(translations.mainMenu.originsClaim) },
-    {
-      to: 'https://wiki.sovryn.app/en/sovryn-dapp/faq-dapp',
-      title: t(translations.mainMenu.help),
-    },
+    { to: '/launchpad', title: t(translations.mainMenu.origins) },
+    { to: '/claim', title: t(translations.mainMenu.originsClaim) },
   ];
+
   const menuItems = pages.map((item, index) => {
     let link: {
       to: string;
@@ -276,11 +257,11 @@ export function Header() {
               href="https://wiki.sovryn.app/en/sovryn-dapp/faq-dapp"
               target="_blank"
               rel="noopener noreferrer"
-              className="tw-header-link tw-hidden xl:tw-block"
+              className="tw-header-link tw-hidden xl:tw-block tw-px-4 tw-uppercase"
             >
               {t(translations.mainMenu.help)}
             </a>
-            <div className="2xl:tw-mr-4">
+            <div className="2xl:tw-mr-4 tw-pr-4">
               <LanguageToggle />
             </div>
             <WalletConnector simpleView={false} />
