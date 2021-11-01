@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import imgTitle from 'assets/images/OriginsLaunchpad/FishSale/title_image.png';
-import { TitleContent, TitleImage } from './styled';
+// import imgTitle from 'assets/images/OriginsLaunchpad/FishSale/title_image.png';
+import { TitleContent } from './styled';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { EngageWalletStep } from './pages/EngageWalletStep/index';
@@ -20,7 +20,7 @@ export const SalesDay: React.FC<ISalesDayProps> = ({ tierId, saleName }) => {
   const connected = useIsConnected();
   const info = useGetSaleInformation(tierId);
 
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(2);
 
   const getActiveStep = (step: number) => {
     switch (step) {
@@ -50,10 +50,9 @@ export const SalesDay: React.FC<ISalesDayProps> = ({ tierId, saleName }) => {
 
   return (
     <div className="tw-mb-52">
-      <div className="tw-text-center tw-items-center tw-justify-center tw-flex tw-mb-12">
-        <TitleImage src={imgTitle} />
+      <div className="tw-text-center tw-items-center tw-justify-center tw-flex tw-mb-12 tw-mt-12">
         <TitleContent>
-          {t(translations.originsLaunchpad.saleDay.title, { token: saleName })}
+          {t(translations.originsLaunchpad.saleDay.title)}
         </TitleContent>
       </div>
 

@@ -6,10 +6,11 @@ export const TitleImage = styled.img`
 `;
 
 export const TitleContent = styled.div`
-  font-size: 2.5rem;
-  font-weight: 600;
-  line-height: 1;
+  color: #000000;
+  font-size: 1.25rem;
+  font-weight: normal;
+  font-family: Rowdies;
+  line-height: 1.5rem;
   letter-spacing: 0;
-  margin-left: 2rem;
   text-transform: uppercase;
 `;

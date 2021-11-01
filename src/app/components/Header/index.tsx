@@ -10,7 +10,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { translations } from 'locales/i18n';
 import WalletConnector from '../../containers/WalletConnector';
 import { LanguageToggle } from '../LanguageToggle';
-import { currentNetwork } from 'utils/classifiers';
+// import { currentNetwork } from 'utils/classifiers';
 import styles from './index.module.scss';
 import {
   StyledBurger,
@@ -20,10 +20,10 @@ import {
   StyledMenuWrapper,
 } from './styled';
 
-const bridgeURL =
-  currentNetwork === 'mainnet'
-    ? 'https://bridge.sovryn.app'
-    : 'https://bridge.test.sovryn.app/';
+// const bridgeURL =
+//   currentNetwork === 'mainnet'
+//     ? 'https://bridge.sovryn.app'
+//     : 'https://bridge.test.sovryn.app/';
 
 export function Header() {
   const { t } = useTranslation();
@@ -148,7 +148,7 @@ export function Header() {
   return (
     <>
       <StyledHeader className={classNames(styles.header, open && styles.open)}>
-        <div className="tw-container tw-flex tw-justify-between tw-items-center tw-pt-2 tw-pb-8 tw-px-4 tw-mx-auto">
+        <div className="tw-container tw-flex tw-justify-between tw-items-center tw-pt-2 tw-pb-6 tw-px-4 tw-mx-auto">
           <div className="xl:tw-hidden">
             <div ref={node}>
               <Burger open={open} setOpen={setOpen} />

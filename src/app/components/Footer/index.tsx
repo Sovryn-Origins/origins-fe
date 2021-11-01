@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { useTranslation } from 'react-i18next';
-import { discordInvite } from 'utils/classifiers';
+// import { discordInvite } from 'utils/classifiers';
 
 import OptOutDialog from 'app/components/OptOutDialog';
 import OriginsLogo from 'assets/images/origins-logo.svg';
-import footerLogo from 'assets/images/footer-logo.svg';
-import footerBackground from 'assets/images/footer-background.svg';
+// import footerLogo from 'assets/images/footer-logo.svg';
+// import footerBackground from 'assets/images/footer-background.svg';
 import discordIcon from 'assets/images/social-icon-discord.png';
 import linkedinIcon from 'assets/images/social-icon-linkedin.png';
 import twitterIcon from 'assets/images/social-icon-twitter.png';
@@ -15,8 +14,6 @@ import redditIcon from 'assets/images/social-icon-reddit.png';
 import { StyledFooterWrapper } from './styled';
 
 export const Footer: React.FC = () => {
-  const { t } = useTranslation();
-  const commitHash = process.env.REACT_APP_GIT_COMMIT_ID || '';
   const [optDialogOpen, setOptDialogOpen] = useState<boolean>(false);
 
   return (

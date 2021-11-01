@@ -1,5 +1,5 @@
 import React from 'react';
-import imgLargeNFT from 'assets/images/OriginsLaunchpad/FishSale/large_NFT.svg';
+// import imgLargeNFT from 'assets/images/OriginsLaunchpad/FishSale/large_NFT.svg';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { DialogTitle, DialogWrapper } from './styled';
@@ -22,7 +22,6 @@ export const AccessCodeVerificationStep: React.FC<IAccessCodeVerificationStepPro
 
   return (
     <>
-      <img src={imgLargeNFT} alt="Dialog NFT" />
       <DialogWrapper>
         <div className="tw-max-w-lg">
           <DialogTitle>

@@ -301,7 +301,7 @@
       }
     },
     "saleDay": {
-      "title": "{{token}} Origins Pre-Sale",
+      "title": "Buy Tokens",
       "engageWalletScreen": {
         "dialogTitle": "Welcome to the {{token}} Origins Pre-Sale",
         "buttonText": "Engage Wallet",
@@ -335,17 +335,12 @@
           "submitButtonText": "I Understand"
         },
         "publicSale": {
-          "title": "Important Information about the the FISH Public Pre-Sale Process and Terms",
+          "title": "Caution… No Really",
           "information": {
-            "1": "Welcome to the BabelFish FISH token pre-sale. Thank you kindly for your support!",
-            "2": "The amount of FISH available for purchase per wallet is 27,272 FISH at a maximum purchase price of 0.062 rBTC - Do not transfer more than this amount.",
-            "3": "It is highly recommended to send funds from an address directly owned by you (EOA).",
-            "4": "Amounts sent in excess of the limit will be automatically returned to the address from which they were sent. Please note that if you are sending funds from an Exchange address, you may not be able to access your purchased FISH tokens or any excess purchase amount that is automatically returned.",
-            "5": "Half the FISH purchased will vest (be liquid) upon completion of the pre-sale, the other half will vest linearly for approximately 10 consecutive months from the time they are claimed.",
-            "6": "IMPORTANT - You will need to actively claim your FISH tokens on the Origins interface, from August 28 at 14:00 UTC. Your vesting period will begin only once you have claimed your tokens.",
-            "7": "The FISH tokens that are immediately vested will be available for withdrawal from August 28, at 14:00 UTC.",
-            "8": "A FISH AMM pool will be available on Sovryn. FISH can be used to vote in BabelFish governance as soon as it begins to vest and after BabelFish governance has been launched.",
-            "9": "For any questions, please ask the community in Discord or Telegram channels."
+            "1": "Only you control and have access to your wealth, any actions you take could cause a potential loss of funds.",
+            "2": "Particularly please be sure to check all transaction fee prices before proceeding as third party wallets may automatically present high fees.",
+            "3": "Please visit our <0>{{FAQ}}</0> if you have any questions.",
+            "4": "If you’re new to DeFi, here is the <0>{{WIKI}}</0> on how to use SOVRYN origins."
           },
           "checkboxText": "I have read and understand that I am responsible for my own Sovrynity",
           "submitButtonText": "I Understand"

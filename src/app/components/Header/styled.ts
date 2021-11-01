@@ -21,7 +21,8 @@ export const StyledHeader = styled.header`
 
 export const StyledMenuWrapper = styled.div<MenuWrapperProps>`
   border-bottom: ${({ selected }) => (selected ? '4px solid #FEC004' : 'none')};
-  padding-bottom: 0.5rem;
+  /* padding-bottom: 0.5rem; */
+  padding-top: 0.5rem;
 `;
 
 export const StyledMenu = styled.nav<StyledProps>`

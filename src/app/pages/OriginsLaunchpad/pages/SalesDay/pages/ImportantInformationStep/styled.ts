@@ -1,30 +1,30 @@
 import styled from 'styled-components';
 
 export const DialogWrapper = styled.div`
-  background-color: #181818;
-  padding: 2.5rem 8.75rem 3.75rem 8.75rem;
-  border-radius: 1.25rem;
-  margin-left: 2.5rem;
-  width: 77.1875rem;
+  background-color: #1f1f1f;
+  padding: 3rem 3rem 2.5rem 3rem;
+  border-radius: 0.5rem;
+  width: 50rem;
+  -webkit-text-stroke: 0px currentcolor;
 `;
 
 export const DialogTitle = styled.div`
-  font-size: 1.75rem;
+  font-size: 2rem;
   letter-spacing: 0;
-  margin-bottom: 5rem;
 `;
 
 export const ListItem = styled.div`
-  display: flex;
   align-items: center;
   position: relative;
-  font-size: 0.875rem;
-  line-height: 1.25;
+  font-size: 1rem;
+  font-family: Rowdies;
+  line-height: 1.875;
   letter-spacing: 0;
-  font-weight: 100;
-  margin-bottom: 1rem;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
 
-  &:before {
+  /* &:before {
     width: 7px;
     height: 7px;
     border-radius: 50%;
@@ -35,5 +35,5 @@ export const ListItem = styled.div`
     position: absolute;
     left: -1rem;
     top: 0.25rem;
-  }
+  } */
 `;

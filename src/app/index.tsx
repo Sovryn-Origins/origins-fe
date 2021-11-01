@@ -30,14 +30,14 @@ import { NotFoundPage } from './components/NotFoundPage/Loadable';
 import { EmailPage } from './containers/EmailPage';
 import { WalletPage } from './containers/WalletPage/Loadable';
 
-import { SwapPage } from './containers/SwapPage/Loadable';
-import { RewardPage } from './pages/RewardPage/Loadable';
+// import { SwapPage } from './containers/SwapPage/Loadable';
+// import { RewardPage } from './pages/RewardPage/Loadable';
+// import { BuySovPage } from './pages/BuySovPage/Loadable';
+// import { SpotTradingPage } from './pages/SpotTradingPage/Loadable';
+
 import { StakePage } from './containers/StakePage/Loadable';
-
 import { LandingPage } from './pages/LandingPage/Loadable';
-import { BuySovPage } from './pages/BuySovPage/Loadable';
 
-import { SpotTradingPage } from './pages/SpotTradingPage/Loadable';
 import { OriginsLaunchpadPage } from './pages/OriginsLaunchpad/Loadable';
 import { OriginsClaimPage } from './pages/OriginsClaimPage/Loadable';
 import { usePriceFeeds_tradingPairRates } from './hooks/price-feeds/usePriceFeeds_tradingPairRates';
