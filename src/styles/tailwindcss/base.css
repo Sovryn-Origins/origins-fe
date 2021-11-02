@@ -5,7 +5,7 @@
   }
 
   body {
-    @apply tw-bg-gray-1 tw-text-sov-white tw-font-body tw-text-xs tw-leading-normal;
+    @apply tw-bg-white tw-text-sov-white tw-font-body tw-text-xs tw-leading-normal;
     font-variant-numeric: tabular-nums;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
