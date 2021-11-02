@@ -72,14 +72,11 @@ export const TxDialog: React.FC<ITxDialogProps> = ({ tx, onUserConfirmed }) => {
         tx.status,
       ) && (
         <>
-          <div className="tw-text-2xl tw-font-medium tw-tracking-normal tw-mx-auto">
-            {t(translations.buySovPage.txDialog.txStatus.title)}
-          </div>
           <StatusComponent status={tx.status} />
 
           {!!tx.txHash && (
-            <div className="tw-w-full tw-flex tw-justify-between tw-text-sm tw-font-extralight tw-tracking-normal">
-              <div>
+            <div className="tw-w-full tw-flex tw-justify-between tw-text-xs tw-font-extralight tw-tracking-normal tw-px-6">
+              <div className="tw-uppercase">
                 <div className="tw-mb-3.5">
                   {t(translations.originsLaunchpad.saleDay.txDialog.dateTime)}:
                 </div>
@@ -99,7 +96,7 @@ export const TxDialog: React.FC<ITxDialogProps> = ({ tx, onUserConfirmed }) => {
                 </div>
               </div>
 
-              <div>
+              <div className="tw-uppercase">
                 <div className="tw-mb-3.5">
                   <DisplayDate
                     timestamp={new Date(txData?.customData?.date)
@@ -147,7 +144,7 @@ export const TxDialog: React.FC<ITxDialogProps> = ({ tx, onUserConfirmed }) => {
             </>
           )}
 
-          <div className="tw-w-full">
+          <div className="tw-w-full tw-flex tw-justify-center">
             <ConfirmButton
               onClick={close}
               text={t(translations.common.close)}

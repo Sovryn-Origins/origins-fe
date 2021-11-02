@@ -13,12 +13,12 @@ interface Props extends BtnProps {
 
 const StyledButton = styled.button`
   height: 50px;
-  width: 100%;
-  margin-top: 40px;
+  margin: 40px auto 0 auto;
   border: 1px solid var(--primary);
   color: #000;
-  padding: 11px;
-  font-size: 1.25rem;
+  padding: 0.75rem 4rem;
+  font-size: 0.875rem;
+  font-family: 'Rowdies';
   font-weight: 900;
   background: var(--primary);
   border-radius: 0.75rem;

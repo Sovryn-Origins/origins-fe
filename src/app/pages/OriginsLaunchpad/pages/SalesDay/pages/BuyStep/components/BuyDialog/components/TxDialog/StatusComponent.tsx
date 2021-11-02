@@ -29,7 +29,7 @@ interface IStatusComponentProps {
 export const StatusComponent: React.FC<IStatusComponentProps> = ({
   status,
 }) => (
-  <div className="tw-text-center tw-mx-auto tw-my-8">
+  <div className="tw-text-center tw-mx-auto tw-my-4">
     <StatusImage
       src={getStatusImage(status)}
       className={cn(
@@ -39,7 +39,12 @@ export const StatusComponent: React.FC<IStatusComponentProps> = ({
       )}
       alt="Status"
     />
-    <p className="tw-text-base tw-tracking-normal tw-italic tw-mt-4">
+
+    <div className="tw-text-2xl tw-font-medium tw-tracking-normal tw-mx-auto tw-mt-14 tw-uppercase tw-font-rowdies">
+      <Trans i18nKey={translations.buySovPage.txDialog.txStatus.title} />
+    </div>
+
+    <p className="tw-text-base tw-uppercase tw-tracking-normal tw-mt-12">
       {getStatus(status)}
     </p>
   </div>
