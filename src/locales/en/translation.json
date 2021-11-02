@@ -375,6 +375,13 @@
         "amountSent": "Amount Sent",
         "amountReceived": "Amount Received",
         "txHash": "Tx Hash"
+      },
+      "saleSummary": {
+        "tabs": {
+          "upcoming": "UPCOMING SALES ON ORIGINS",
+          "live": "LIVE SALES ON ORIGINS",
+          "previous": "PREVIOUS SALES ON ORIGINS"
+        }
       }
     }
   },

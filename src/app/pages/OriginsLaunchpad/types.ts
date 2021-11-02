@@ -13,6 +13,29 @@ export interface ISaleInformation {
   totalSaleAllocation: number;
 }
 
+export enum SaleType {
+  upcoming = 'upcoming',
+  live = 'live',
+  previous = 'previous',
+}
+
+export interface ISaleSummary {
+  upcoming: ISaleDetails[];
+  live: ISaleDetails[];
+  previous: ISaleDetails[];
+}
+
+export interface ISaleDetails {
+  saleName: string;
+  saleAllocation: string;
+  totalRaised: string;
+  participatingWallets: string;
+  date: string;
+  saleDuration: string;
+  backgroundImage: string;
+  price: string;
+}
+
 export enum DepositType {
   RBTC = '0',
   Token = '1',

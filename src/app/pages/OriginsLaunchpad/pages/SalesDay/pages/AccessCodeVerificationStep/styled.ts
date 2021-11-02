@@ -4,8 +4,8 @@ export const DialogWrapper = styled.div`
   height: 37.25rem;
   background-color: #181818;
   padding: 3.125rem 8.25rem 1.5625rem 8.25rem;
-  border-radius: 1.25rem;
-  margin-left: 2.5rem;
+  border-radius: 0.5rem;
+  /* margin-left: 2.5rem; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;

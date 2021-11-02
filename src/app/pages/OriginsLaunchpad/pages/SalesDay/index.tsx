@@ -8,6 +8,7 @@ import { AccessCodeVerificationStep } from './pages/AccessCodeVerificationStep/i
 import { useIsConnected } from 'app/hooks/useAccount';
 import { ImportantInformationStep } from './pages/ImportantInformationStep';
 import { BuyStep } from './pages/BuyStep';
+import { SaleSummary } from './components/SaleSummary';
 import { useGetSaleInformation } from '../../hooks/useGetSaleInformation';
 
 interface ISalesDayProps {
@@ -20,7 +21,7 @@ export const SalesDay: React.FC<ISalesDayProps> = ({ tierId, saleName }) => {
   const connected = useIsConnected();
   const info = useGetSaleInformation(tierId);
 
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
 
   const getActiveStep = (step: number) => {
     switch (step) {
@@ -63,6 +64,7 @@ export const SalesDay: React.FC<ISalesDayProps> = ({ tierId, saleName }) => {
           getActiveStep(step)
         )}
       </div>
+      <SaleSummary saleInfo={info} className="tw-mt-56" />
     </div>
   );
 };
