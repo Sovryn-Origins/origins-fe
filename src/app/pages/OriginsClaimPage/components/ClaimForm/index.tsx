@@ -125,16 +125,15 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
           <FormGroup
             label={t(translations.originsClaim.claimForm.availble)}
             labelClassName="tw-text-sm tw-mb-4 tw-uppercase tw-font-rowdies"
-            className="tw-mb-12"
           >
             <Input
               value={weiToNumberFormat(balance, 4)}
               readOnly={false}
-              appendElem={<AssetRenderer asset={Asset.FISH} />}
+              appendElem={token ? <AssetRenderer asset={token} /> : undefined}
             />
           </FormGroup>
         </div>
-        <div className={!rewardsLocked ? 'tw-mt-10' : undefined}>
+        <div className={!rewardsLocked ? 'tw-mt-12' : undefined}>
           {rewardsLocked && (
             <ErrorBadge
               content={
@@ -155,23 +154,26 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
             />
           )}
           {!rewardsLocked && (
-            <Button
-              disabled={
-                parseFloat(balance) === 0 ||
-                !balance ||
-                rewardsLocked ||
-                new Date().getTime() < unlockTime
-              }
-              onClick={handleSubmit}
-              className="tw-w-full tw-mb-4"
-              text={t(translations.originsClaim.claimForm.cta)}
-            />
+            <div className="tw-flex tw-justify-center">
+              <Button
+                disabled={
+                  parseFloat(balance) === 0 ||
+                  !balance ||
+                  rewardsLocked ||
+                  new Date().getTime() < unlockTime
+                }
+                onClick={handleSubmit}
+                className="tw-mx-auto tw-mb-4"
+                text={t(translations.originsClaim.claimForm.cta)}
+              />
+            </div>
           )}
 
-          <div className="tw-text-tiny tw-font-thin">
-            {t(translations.originsClaim.claimForm.note, {
-              date: new Date(unlockTime).toLocaleString(),
-            })}
+          <div className="tw-text-tiny tw-font-thin tw-uppercase">
+            {token &&
+              t(translations.originsClaim.claimForm.note, {
+                date: new Date(unlockTime).toLocaleString(),
+              })}
             {parseFloat(getWaitedUnlockedBalance) > 0 && (
               <div className="tw-mt-1">
                 {t(translations.originsClaim.claimForm.unlockedNote, {
