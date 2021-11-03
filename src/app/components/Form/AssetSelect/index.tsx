@@ -40,7 +40,6 @@ export const AssetSelect: React.FC<IAssetSelectProps> = ({
       itemRenderer={renderItem}
       valueRenderer={valueRenderer}
       placeholder={placeholder}
-      // innerClasses="tw--ml-6"
       theme={theme}
     />
   );
