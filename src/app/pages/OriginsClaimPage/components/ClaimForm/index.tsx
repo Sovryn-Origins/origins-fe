@@ -1,10 +1,13 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import cn from 'classnames';
 import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Input } from 'app/components/Form/Input';
 import { AssetRenderer } from 'app/components/AssetRenderer';
-import { Asset } from 'types';
+import { AssetSelect } from 'app/components/Form/AssetSelect';
+import { FormGroup } from 'app/components/Form/FormGroup';
+import { Asset, Nullable } from 'types';
+import { Theme } from 'types/theme';
 import { Button } from 'app/components/Button';
 import { useSendContractTx } from '../../../../hooks/useSendContractTx';
 import { TxType } from 'store/global/transactions-store/types';
@@ -25,6 +28,7 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
   address,
 }) => {
   const { t } = useTranslation();
+  const [token, setToken] = useState<Nullable<Asset>>(null);
   const { checkMaintenance, States } = useMaintenance();
   const rewardsLocked = checkMaintenance(States.CLAIM_REWARDS);
 
@@ -93,22 +97,42 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
     <div
       className={cn(
         className,
-        'tw-trading-form-card tw-bg-black tw-rounded-3xl tw-p-8 tw-mx-auto xl:tw-mx-0 tw-flex tw-flex-col',
+        'tw-trading-form-card tw-bg-gray-3 tw-rounded-lg tw-py-8 tw-px-6 tw-mx-auto xl:tw-mx-0 tw-flex tw-flex-col',
       )}
     >
-      <div className="text-center tw-text-xl">
+      <div className="text-center tw-text-xl tw-uppercase tw-font-rowdies">
         {t(translations.originsClaim.claimForm.title)}
       </div>
-      <div className="tw-px-8 tw-mt-6 tw-flex-1 tw-flex tw-flex-col tw-justify-center">
+      <div className="tw-px-8 tw-mt-10 tw-flex-1 tw-flex tw-flex-col tw-justify-center">
         <div>
-          <div className="tw-text-sm tw-mb-1">
-            {t(translations.originsClaim.claimForm.availble)}
-          </div>
-          <Input
-            value={weiToNumberFormat(balance, 4)}
-            readOnly={true}
-            appendElem={<AssetRenderer asset={Asset.FISH} />}
-          />
+          <FormGroup
+            label={t(translations.originsClaim.claimForm.selectToken)}
+            labelClassName="tw-text-sm tw-mb-4 tw-uppercase tw-font-rowdies"
+            className="tw-mb-12"
+          >
+            <AssetSelect
+              value={token}
+              onChange={val => setToken(val)}
+              options={[Asset.SOV, Asset.RBTC]}
+              theme={Theme.LIGHT}
+              placeholder={
+                <div className="tw-text-left tw-font-inter tw-text-gray-6">
+                  Choose Token
+                </div>
+              }
+            />
+          </FormGroup>
+          <FormGroup
+            label={t(translations.originsClaim.claimForm.availble)}
+            labelClassName="tw-text-sm tw-mb-4 tw-uppercase tw-font-rowdies"
+            className="tw-mb-12"
+          >
+            <Input
+              value={weiToNumberFormat(balance, 4)}
+              readOnly={false}
+              appendElem={<AssetRenderer asset={Asset.FISH} />}
+            />
+          </FormGroup>
         </div>
         <div className={!rewardsLocked ? 'tw-mt-10' : undefined}>
           {rewardsLocked && (

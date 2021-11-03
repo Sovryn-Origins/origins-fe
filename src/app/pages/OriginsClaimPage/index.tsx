@@ -23,8 +23,8 @@ export const OriginsClaimPage: React.FC = () => {
 
       <Header />
 
-      <div className="tw-container tw-my-12 tw-mx-auto tw-px-6">
-        <div className="tw-mt-4 tw-items-center tw-flex tw-flex-col">
+      <div className="tw-container tw-mt-28 tw-mb-12 tw-mx-auto tw-px-6">
+        <div className="tw-max-w-screen-xl tw-mx-auto tw-py-20 tw-bg-gray-1 tw-items-center tw-flex tw-flex-col tw-rounded-lg tw-border-4 tw-border-solid tw-border-black">
           <ClaimForm address={userAddress} />
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+// import { useState } from 'react';
 import { ISaleSummary } from '../types';
 
 // for demo data
@@ -96,6 +96,6 @@ const saleSummary: ISaleSummary = {
 };
 
 export const useGetSaleSummary = () => {
-  const [summary, setSummary] = useState<ISaleSummary>(saleSummary);
-  return summary;
+  // const [summary, setSummary] = useState<ISaleSummary>(saleSummary);
+  return saleSummary;
 };

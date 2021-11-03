@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import { translations } from 'locales/i18n';
@@ -10,10 +9,6 @@ import { useGetSaleSummary } from '../../../../hooks/useGetSaleSummary';
 import saleListBackgrouond from 'assets/images/OriginsLaunchpad/sale-list-background.svg';
 import { Tab } from '../Tab';
 import { PreviousSalesCard } from '../../../Dashboard/components/PreviousSalesCard';
-import {
-  PreviousSalesRowWrapper,
-  PreviousSalesRow,
-} from '../../../Dashboard/components/PreviousSalesCardSection/styled';
 
 interface ISaleSummaryProps {
   saleInfo: ISaleInformation;
@@ -21,7 +16,7 @@ interface ISaleSummaryProps {
 }
 
 export const SaleSummary: React.FC<ISaleSummaryProps> = ({
-  saleInfo,
+  // saleInfo,
   className,
 }) => {
   const { t } = useTranslation();
@@ -38,7 +33,7 @@ export const SaleSummary: React.FC<ISaleSummaryProps> = ({
           : SaleType.previous,
       );
     }
-  }, [saleSummary]);
+  }, [activeTab, saleSummary]);
 
   const onSelectTab = (saleType: SaleType) => {
     setActiveTab(saleType);

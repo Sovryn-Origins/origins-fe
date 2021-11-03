@@ -28,6 +28,7 @@ module.exports = {
       orbitron: ['Orbitron', 'sans-serif'],
       rowdies: ['Rowdies', 'sans-serif'],
       consolas: ['Consolas', 'sans-serif'],
+      inter: ['Inter', 'sans-serif'],
     },
     fontSize: {
       tiny: '.625rem', //  10px

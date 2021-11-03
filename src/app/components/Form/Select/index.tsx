@@ -9,6 +9,7 @@ import { Option, Options } from './types';
 import { areOptionsEqual, renderItem, filterItem } from './renderers';
 import { ItemRenderer } from '@blueprintjs/select/lib/cjs';
 import { Nullable } from 'types';
+import { Theme } from 'types/theme';
 
 interface Props<K = string, V = string, P = any> {
   value: Nullable<K>;
@@ -22,6 +23,7 @@ interface Props<K = string, V = string, P = any> {
   innerClasses?: string;
   valueRenderer?: (item: Option<K, V, P>) => JSX.Element;
   itemRenderer: ItemRenderer<Option<K, V, P>>;
+  theme?: Theme;
 }
 
 const Selector = BP_Select.ofType<Option>();
@@ -33,11 +35,11 @@ export function Select<K = string, V = string, P = any>(props: Props<K, V, P>) {
   ]);
 
   const getSelected = useCallback(
-    () => props.options.find(item => item.key === props.value),
+    () => props.options.find(item => item.key === props.value) ?? null,
     [props.options, props.value],
   );
 
-  const [selected, setSelected] = useState<Option<K, V, P> | undefined>(
+  const [selected, setSelected] = useState<Option<K, V, P> | null>(
     getSelected(),
   );
 
@@ -47,7 +49,9 @@ export function Select<K = string, V = string, P = any>(props: Props<K, V, P>) {
 
   return (
     <Selector
-      className={classNames('tw-select-container', props.className)}
+      className={classNames('tw-select-container', props.className, {
+        'theme-light': props.theme === Theme.LIGHT,
+      })}
       items={props.options as any}
       filterable={props.filterable || false}
       inputProps={
@@ -69,7 +73,11 @@ export function Select<K = string, V = string, P = any>(props: Props<K, V, P>) {
       onItemSelect={onItemSelect}
       itemsEqual={areOptionsEqual as any}
     >
-      <div className={classNames('tw-select-origin', props.innerClasses)}>
+      <div
+        className={classNames('tw-select-origin', props.innerClasses, {
+          'theme-light': props.theme === Theme.LIGHT,
+        })}
+      >
         <div
           className={classNames(
             'tw-select-origin-content, tw-flex-grow tw-flex-shrink tw-w-full',
@@ -92,8 +100,8 @@ export function Select<K = string, V = string, P = any>(props: Props<K, V, P>) {
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="21.5"
-            height="13.276"
+            width="15"
+            height="9"
             viewBox="0 0 21.5 13.276"
           >
             <path
@@ -101,7 +109,7 @@ export function Select<K = string, V = string, P = any>(props: Props<K, V, P>) {
               data-name="Path 2912"
               d="M24.974,8.59,16.75,16.8,8.526,8.59,6,11.116l10.75,10.75L27.5,11.116Z"
               transform="translate(-6 -8.59)"
-              fill="#e8e8e8"
+              fill={props.theme === Theme.LIGHT ? '#000000' : '#e8e8e8'}
             />
           </svg>
         </div>

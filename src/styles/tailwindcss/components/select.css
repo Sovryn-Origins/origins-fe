@@ -17,6 +17,10 @@
     @apply tw-font-medium tw-text-base tw-text-sov-white;
   }
 
+  .tw-select-origin.theme-light {
+    @apply tw-bg-white tw-text-black;
+  }
+
   .tw-select-origin .tw-select-origin-content {
   }
 
@@ -39,6 +43,20 @@
     .bp3-popover-content {
     @apply tw-bg-gray-2;
   }
+  .tw-select-container.theme-light
+    .bp3-transition-container
+    .bp3-popover
+    .bp3-popover-content {
+    @apply tw-bg-white;
+  }
+  .tw-select-container.theme-light
+    .bp3-transition-container
+    .bp3-popover
+    .bp3-popover-content
+    .bp3-menu-item {
+    @apply tw-text-black;
+  }
+
 
   .tw-select-container
     .bp3-transition-container
