@@ -67,18 +67,18 @@ export function UserAssets() {
 
   return (
     <>
-      <div className="sovryn-border sovryn-table tw-pt-1 tw-pb-4 tw-pr-4 tw-pl-4 tw-mb-12">
+      <div className="sovryn-border sovryn-table tw-pt-6 tw-pb-4 tw-mb-12">
         <table className="tw-w-full">
           <thead>
             <tr>
               <th>{t(translations.userAssets.tableHeaders.asset)}</th>
-              <th className="tw-text-right">
+              <th className="tw-text-left">
                 {t(translations.userAssets.tableHeaders.totalBalance)}
               </th>
-              <th className="tw-text-right tw-hidden md:tw-table-cell">
+              <th className="tw-text-left tw-hidden md:tw-table-cell">
                 {t(translations.userAssets.tableHeaders.dollarBalance)}
               </th>
-              <th className="tw-text-right tw-hidden md:tw-table-cell">
+              <th className="tw-text-left tw-hidden md:tw-table-cell">
                 {t(translations.userAssets.tableHeaders.action)}
               </th>
             </tr>
@@ -241,16 +241,16 @@ function AssetRow({
       <td>
         <AssetRenderer asset={item.asset} showImage />
       </td>
-      <td className="tw-text-right">
+      <td className="tw-text-left">
         <LoadableValue value={weiToNumberFormat(tokens, 4)} loading={loading} />
       </td>
-      <td className="tw-text-right tw-hidden md:tw-table-cell">
+      <td className="tw-text-left tw-hidden md:tw-table-cell">
         <LoadableValue
           value={weiToUSD(dollarValue.value)}
           loading={dollarValue.loading}
         />
       </td>
-      <td className="tw-text-right tw-hidden md:tw-table-cell">
+      <td className="tw-text-left tw-hidden md:tw-table-cell">
         <div className="tw-w-full tw-flex tw-flex-row tw-space-x-4 tw-justify-end">
           {item.asset === Asset.RBTC && (
             <ActionButton

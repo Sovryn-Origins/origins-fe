@@ -1011,8 +1011,8 @@
       "description": "Information about connected wallet"
     },
     "tabs": {
-      "userAssets": "Assets",
-      "vestedAssets": "Vested Assets",
+      "unlocked": "Unlocked",
+      "vested": "Vested",
       "userNFTS": "NFTS"
     }
   },

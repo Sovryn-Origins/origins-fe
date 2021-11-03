@@ -6,7 +6,6 @@ import { translations } from '../../../locales/i18n';
 import { Footer } from '../../components/Footer';
 import { Header } from '../../components/Header';
 import { SkeletonRow } from '../../components/Skeleton/SkeletonRow';
-import { SovGenerationNFTS } from '../../components/SovGenerationNFTS';
 import { Tab } from '../../components/Tab';
 import { UserAssets } from '../../components/UserAssets';
 import { VestedAssets } from '../../components/UserAssets/VestedAssets';
@@ -43,52 +42,46 @@ export function WalletPage() {
         className="tw-container tw-mx-auto tw-px-4"
         style={{ maxWidth: 1200 }}
       >
-        <div className="tw-flex tw-flex-wrap tw-items-center tw-justify-center tw-mb-3">
-          <h2 className="tw-flex-shrink-0 tw-flex-grow-0 tw-mb-2 ">
+        <div className="tw-flex tw-flex-wrap tw-items-center tw-justify-center tw-mb-12 tw-mt-16">
+          <h2 className="tw-text-black tw-text-xl tw-flex-shrink-0 tw-flex-grow-0 tw-mb-0">
             {t(translations.userAssets.meta.title)}
           </h2>
         </div>
-        <div className="tw-flex tw-flex-row tw-items-center tw-justify-start">
-          <div className="tw-mr-2 tw-ml-2">
-            <Tab
-              text={t(translations.walletPage.tabs.userAssets)}
-              active={activeAssets === 0}
-              onClick={() => setActiveAssets(0)}
-            />
-          </div>
-          <div className="tw-mr-2 tw-ml-2">
-            <Tab
-              text={t(translations.walletPage.tabs.vestedAssets)}
-              active={activeAssets === 1}
-              onClick={() => setActiveAssets(1)}
-            />
-          </div>
-          <div>
-            <Tab
-              text={t(translations.walletPage.tabs.userNFTS)}
-              active={activeAssets === 2}
-              onClick={() => setActiveAssets(2)}
-            />
-          </div>
-        </div>
-        {connected && account ? (
-          <div className="tw-grid tw-gap-8 tw-grid-cols-12">
-            <div className="tw-col-span-12 tw-mt-2">
-              {activeAssets === 0 && <UserAssets />}
-              {activeAssets === 1 && <VestedAssets />}
-              {activeAssets === 2 && <SovGenerationNFTS />}
+        <div className="tw-bg-gray-1 tw-border-4 tw-border-solid tw-border-black tw-rounded-lg tw-pt-10 tw-px-6">
+          <div className="tw-flex tw-flex-row tw-items-center tw-justify-start tw-mb-8">
+            <div className="tw-mr-2 tw-ml-2">
+              <Tab
+                text={t(translations.walletPage.tabs.unlocked)}
+                active={activeAssets === 0}
+                onClick={() => setActiveAssets(0)}
+              />
             </div>
-          </div>
-        ) : (
-          <div className="tw-grid tw-gap-8 tw-grid-cols-12">
-            <div className="tw-col-span-12">
-              <SkeletonRow
-                loadingText={t(translations.topUpHistory.walletHistory)}
-                className="tw-mt-2"
+            <div className="tw-mr-2 tw-ml-2">
+              <Tab
+                text={t(translations.walletPage.tabs.vested)}
+                active={activeAssets === 1}
+                onClick={() => setActiveAssets(1)}
               />
             </div>
           </div>
-        )}
+          {connected && account ? (
+            <div className="tw-grid tw-gap-8 tw-grid-cols-12">
+              <div className="tw-col-span-12 tw-mt-2">
+                {activeAssets === 0 && <UserAssets />}
+                {activeAssets === 1 && <VestedAssets />}
+              </div>
+            </div>
+          ) : (
+            <div className="tw-grid tw-gap-8 tw-grid-cols-12">
+              <div className="tw-col-span-12">
+                <SkeletonRow
+                  loadingText={t(translations.topUpHistory.walletHistory)}
+                  className="tw-mt-2"
+                />
+              </div>
+            </div>
+          )}
+        </div>
       </div>
       {connected && account && (
         <div className="tw-container tw-mt-12">
