@@ -49,10 +49,10 @@ export function TopUpHistory() {
 
   return (
     <section>
-      <div className="sovryn-table tw-p-4 tw-mb-12">
+      <div className="sovryn-table tw-mb-12">
         <table className="tw-w-full">
           <thead>
-            <tr>
+            <tr className="tw-font-rowdies tw-text-lg">
               <th className="tw-text-left tw-hidden md:tw-table-cell">
                 {t(translations.topUpHistory.tableHeaders.time)}
               </th>
@@ -63,10 +63,10 @@ export function TopUpHistory() {
                 {t(translations.topUpHistory.tableHeaders.amount)}
               </th>
               <th className="tw-text-right">
-                <span className="tw-hidden md:tw-inline">
+                <span className="tw-hidden md:tw-inline tw-font-rowdies">
                   {t(translations.topUpHistory.tableHeaders.depositTx)}
                 </span>
-                <span className="tw-inline md:tw-hidden">
+                <span className="tw-inline md:tw-hidden tw-font-rowdies">
                   {t(translations.topUpHistory.tableHeaders.txHash)}
                 </span>
               </th>

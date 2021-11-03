@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 
 import { translations } from '../../../locales/i18n';
+import { Theme } from 'types/theme';
 import { Footer } from '../../components/Footer';
 import { Header } from '../../components/Header';
 import { SkeletonRow } from '../../components/Skeleton/SkeletonRow';
@@ -11,7 +12,6 @@ import { UserAssets } from '../../components/UserAssets';
 import { VestedAssets } from '../../components/UserAssets/VestedAssets';
 import { useAccount, useIsConnected } from '../../hooks/useAccount';
 import { TopUpHistory } from '../FastBtcDialog/components/TopUpHistory';
-import { SwapHistory } from '../SwapHistory';
 import { VestedHistory } from '../VestedHistory';
 import { OriginClaimBanner } from './components/OriginClaimBanner';
 
@@ -38,10 +38,7 @@ export function WalletPage() {
         <OriginClaimBanner />
       </div>
 
-      <div
-        className="tw-container tw-mx-auto tw-px-4"
-        style={{ maxWidth: 1200 }}
-      >
+      <div className="tw-container tw-mx-auto tw-px-4 tw-max-w-screen-xl">
         <div className="tw-flex tw-flex-wrap tw-items-center tw-justify-center tw-mb-12 tw-mt-16">
           <h2 className="tw-text-black tw-text-xl tw-flex-shrink-0 tw-flex-grow-0 tw-mb-0">
             {t(translations.userAssets.meta.title)}
@@ -84,34 +81,28 @@ export function WalletPage() {
         </div>
       </div>
       {connected && account && (
-        <div className="tw-container tw-mt-12">
+        <div className="tw-container tw-max-w-screen-xl tw-mt-16">
           <div className="tw-flex tw-flex-row tw-items-center tw-justify-start">
             <div className="tw-mr-2 tw-ml-2">
               <Tab
                 text={t(translations.topUpHistory.meta.title)}
                 active={activeHistory === 0}
                 onClick={() => setActiveHistory(0)}
-              />
-            </div>
-            <div className="tw-mr-2 tw-ml-2">
-              <Tab
-                text={t(translations.swapHistory.title)}
-                active={activeHistory === 1}
-                onClick={() => setActiveHistory(1)}
+                theme={Theme.LIGHT}
               />
             </div>
             <div className="tw-mr-2 tw-ml-2">
               <Tab
                 text={t(translations.vestedHistory.title)}
-                active={activeHistory === 2}
-                onClick={() => setActiveHistory(2)}
+                active={activeHistory === 1}
+                onClick={() => setActiveHistory(1)}
+                theme={Theme.LIGHT}
               />
             </div>
           </div>
-          <div className="tw-w-full">
+          <div className="tw-bg-gray-1 tw-border-4 tw-border-solid tw-border-black tw-rounded-lg tw-py-8 tw-px-6 tw-mt-6">
             {activeHistory === 0 && <TopUpHistory />}
-            {activeHistory === 1 && <SwapHistory />}
-            {activeHistory === 2 && <VestedHistory />}
+            {activeHistory === 1 && <VestedHistory />}
           </div>
         </div>
       )}
