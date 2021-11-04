@@ -1,6 +1,6 @@
 import { utils } from '@rsksmart/rsk3';
 import { bignumber } from 'mathjs';
-import { currentChainId } from './classifiers';
+import { blockTime, currentChainId } from './classifiers';
 import { gas } from './blockchain/gas-price';
 import { Asset } from '../types';
 import { ProviderType } from '@sovryn/wallet';
@@ -208,3 +208,24 @@ export const abbreviateNumber = (
 };
 
 export const isNullOrUndefined = val => val === undefined || val === null;
+
+export function printDate(timestamp: number) {
+  return new Date(timestamp).toLocaleString();
+}
+
+export function getSecondsBetweenBlocks(
+  startBlock: number,
+  endBlock: number,
+): number {
+  return (Number(endBlock) - Number(startBlock)) * blockTime;
+}
+
+export function dateByBlocks(
+  startTime: number,
+  startBlock: number,
+  endBlock: number,
+) {
+  return printDate(
+    (Number(startTime) + getSecondsBetweenBlocks(startBlock, endBlock)) * 1000,
+  );
+}

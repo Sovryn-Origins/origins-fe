@@ -385,7 +385,7 @@ const InnerStakePage: React.FC = () => {
       <Header />
       <main>
         <div className="tw-tracking-normal">
-          <div className="tw-container tw-mx-auto tw-px-6">
+          <div className="tw-container tw-mx-auto tw-px-6 tw-mb-44">
             <h2 className="tw-text-black tw-mt-16 tw-mb-6 tw-pl-10 tw-text-center tw-text-xl tw-font-rowdies tw-font-normal tw-uppercase">
               {t(translations.stake.title)}
             </h2>

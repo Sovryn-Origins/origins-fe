@@ -42,6 +42,11 @@ export const backendUrl = {
   31: 'https://api.test.sovryn.app',
 };
 
+export const rpcNodes = {
+  30: 'https://public-node.rsk.co',
+  31: 'https://public-node.testnet.rsk.co',
+};
+
 export const ethGenesisAddress = '0x0000000000000000000000000000000000000000';
 
 export const sovAnalyticsCookie = { name: 'SovAnalytics', value: 'optout' };
@@ -75,3 +80,6 @@ export const gasLimit = {
 };
 
 export const discordInvite = 'https://discord.gg/kBTNx4zjRf'; //unlimited use, no-expiry invite
+
+// Block time in seconds
+export const blockTime = 30;

@@ -36,6 +36,7 @@ import { WalletPage } from './containers/WalletPage/Loadable';
 // import { SpotTradingPage } from './pages/SpotTradingPage/Loadable';
 
 import { StakePage } from './containers/StakePage/Loadable';
+import { GovernancePage } from './containers/GovernancePage/Loadable';
 import { LandingPage } from './pages/LandingPage/Loadable';
 
 import { OriginsLaunchpadPage } from './pages/OriginsLaunchpad/Loadable';
@@ -78,6 +79,7 @@ export function App() {
             <Route exact path="/swap" component={SwapPage} />
             <Route exact path="/spot" component={SpotTradingPage} /> */}
             <Route exact path="/stake" component={StakePage} />
+            <Route exact path="/governance" component={GovernancePage} />
             <Redirect exact from="/liquidity" to="/yield-farm" />
             {/* <Route exact path="/reward" component={RewardPage} /> */}
             <Route exact path="/wallet" component={WalletPage} />

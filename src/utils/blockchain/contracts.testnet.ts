@@ -35,6 +35,8 @@ import LockedFundAbi from './abi/LockedFund.json';
 import BabelfishAggregatorAbi from './abi/BabelfishAggregator.json';
 import SwapsExternalAbi from './abi/SwapsExternalAbi.json';
 import nftAbi from './abi/nftAbi.json';
+import multicallABI from './abi/multicall.json';
+import GovernorAdminABI from './abi/GovernorAdmin.json';
 
 export const contracts = {
   sovrynProtocol: {
@@ -341,5 +343,17 @@ export const contracts = {
   sovrynNFT: {
     address: '0x576ae218aecfd4cbd2dbe07250b47e26060932b1', // todo
     abi: nftAbi,
+  },
+  multicall: {
+    address: '0x9e469e1fc7fb4c5d17897b68eaf1afc9df39f103',
+    abi: multicallABI,
+  },
+  governorAdmin: {
+    address: '0x1528f0341a1Ea546780caD690F54b4FBE1834ED4',
+    abi: GovernorAdminABI as any,
+  },
+  governorOwner: {
+    address: '0x058FD3F6a40b92b311B49E5e3E064300600021D7',
+    abi: GovernorAdminABI as any,
   },
 };

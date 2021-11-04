@@ -5,7 +5,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useMaintenance } from 'app/hooks/useMaintenance';
-import logoSvg from 'assets/images/tokens/sov.svg';
+// import logoSvg from 'assets/images/tokens/sov.svg';
 import { translations } from 'locales/i18n';
 import { getContract } from 'utils/blockchain/contract-helpers';
 import { weiTo4 } from 'utils/blockchain/math-helpers';

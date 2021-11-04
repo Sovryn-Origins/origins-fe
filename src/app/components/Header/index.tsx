@@ -50,6 +50,7 @@ export function Header() {
 
   const pages = [
     { to: '/stake', title: t(translations.mainMenu.staking) },
+    { to: '/governance', title: t(translations.mainMenu.governance) },
     { to: '/wallet', title: t(translations.mainMenu.wallet) },
     { to: '/launchpad', title: t(translations.mainMenu.origins) },
     { to: '/claim', title: t(translations.mainMenu.originsClaim) },
@@ -165,26 +166,18 @@ export function Header() {
               <NavPopover
                 content={
                   <BPMenu>
-                    <MenuItem
-                      text={t(translations.mainMenu.staking)}
-                      className="bp3-popover-dismiss"
-                      onClick={() => {
-                        history.push('/stake');
-                      }}
-                    />
-                    <MenuItem
-                      icon={
-                        <img
-                          src={iconNewTab}
-                          alt="newTab"
-                          className="tw-w-4 tw-h-4"
-                        />
-                      }
-                      href="https://bitocracy.sovryn.app/"
-                      target="_blank"
-                      text={t(translations.mainMenu.governance)}
-                      className="bp3-popover-dismiss"
-                    />
+                    <NavLink
+                      className="tw-block tw-header-link tw-px-1"
+                      to="/stake"
+                    >
+                      {t(translations.mainMenu.staking)}
+                    </NavLink>
+                    <NavLink
+                      className="tw-block tw-header-link tw-px-1"
+                      to="/governance"
+                    >
+                      {t(translations.mainMenu.governance)}
+                    </NavLink>
                     <MenuItem
                       icon={
                         <img

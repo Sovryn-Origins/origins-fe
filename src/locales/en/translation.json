@@ -621,6 +621,90 @@
     "loading": "Loading, please wait...",
     "nostake": "No stakes yet."
   },
+  "governance": {
+    "title": "Sovryn Bitocracy",
+    "meta": "Staking/Vesting",
+    "connect": "Please connect with your wallet to use bitocracy.",
+    "proposals": {
+      "mainTitle": "Governance Proposals",
+      "title": "Title",
+      "startBlock": "Start Block",
+      "voteStatus": "Vote Status",
+      "votingEnds": "Voting Ends",
+      "asset": "Asset",
+      "lockedAmount": "Locked Amount",
+      "votingDelegation": "Voting Delegation",
+      "stakingPeriod": "Staking Period",
+      "unlockDate": "Unlock Date"
+    },
+    "total": "Total Staked OG",
+    "votingPower": "Combined Voting Power",
+    "viewGovernance": "View Governance",
+    "addStake": "Add New Stakes",
+    "feeTitle": "Total earned fees Available",
+    "noUnlockedSov": "You don't have unlocked SOV",
+    "txFee": "Tx Fee",
+    "sov": "SOV",
+    "days": "days",
+    "staking": {
+      "title": "Stake SOV",
+      "amountToStake": "Amount to Stake",
+      "amountPlaceholder": "Enter amount",
+      "votingPowerReceived": "Voting Power received"
+    },
+    "extending": {
+      "title": "Extend SOV Stake",
+      "previousUntil": "Previous until",
+      "amountToStake": "Amount to Stake",
+      "votingPowerReceived": "Voting Power received",
+      "willAddedVote": "Will be added to your vote",
+      "balance": "Balance"
+    },
+    "history": {
+      "loading": "Loading...",
+      "title": "Staking History",
+      "asset": "Asset",
+      "action": "Action",
+      "stakedAmount": "Amount",
+      "stakingDate": "Date/Time",
+      "hash": "Transaction Hash",
+      "totalStaked": "Total Staked",
+      "viewHistory": "Click to view history",
+      "status": "Status",
+      "actions": {
+        "stake": "Stake",
+        "unstake": "Unstake",
+        "feeWithdraw": "Fee Withdraw",
+        "increase": "Increase",
+        "extend": "Extend",
+        "delegate": "Delegate",
+        "withdraw": "Withdraw"
+      }
+    },
+    "increase": {
+      "title": "Add to Stake",
+      "currentlyStaked": "Amount Currently Staked",
+      "amountToAdd": " Amount to Add",
+      "newVotingPower": "New Voting Power"
+    },
+    "actions": {
+      "title": "Actions",
+      "increase": "Increase",
+      "extend": "Extend",
+      "unstake": "Unstake",
+      "delegate": "Delegate",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "withdraw": "Withdraw"
+    },
+    "dateSelector": {
+      "noneAvailable": "No available dates.",
+      "selectDelegate": "Choose delegate period:",
+      "selectYear": "Select Year:"
+    },
+    "loading": "Loading, please wait...",
+    "nostake": "No stakes yet."
+  },
   "liquidity": {
     "title": "Liquidity",
     "meta": "Add liquidity",

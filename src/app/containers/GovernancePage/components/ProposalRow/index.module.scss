@@ -1,0 +1,26 @@
+.styledBar {
+  width: 100%;
+  max-width: 100px;
+  // display: flex;
+  height: 10px;
+  flex-wrap: nowrap;
+  margin: 5px 0 5px auto;
+  border-radius: 8px;
+  overflow: hidden;
+
+  .progress__blue {
+    width: 50%;
+    background: rgb(78, 205, 196);
+    background: linear-gradient(90deg,
+        rgba(78, 205, 196, 1) 0%,
+        rgba(0, 0, 0, 1) 100%);
+  }
+
+  .progress__red {
+    width: 50%;
+    background: rgb(0, 0, 0);
+    background: linear-gradient(90deg,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(205, 78, 78, 1) 100%);
+  }
+}
