@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { bignumber } from 'mathjs';
 import { Asset } from '../../../../types';
 import dayjs from 'dayjs';
-import logoSvg from 'assets/images/tokens/sov.svg';
+// import logoSvg from 'assets/images/tokens/sov.svg';
 import { useAccount } from '../../../hooks/useAccount';
 import { weiToUSD } from 'utils/display-text/format';
 import { StyledTable } from './StyledTable';
@@ -80,11 +80,11 @@ export const CurrentStakes: React.FC<ICurrentStakesProps> = props => {
 
   return (
     <>
-      <p className="tw-font-semibold tw-text-lg tw-ml-6 tw-mb-4 tw-mt-6">
+      <p className="tw-font-semibold tw-text-lg tw-mb-2 tw-mt-6 tw-uppercase">
         {t(translations.stake.currentStakes.title)}
       </p>
       <div className="tw-bg-gray-1 tw-rounded-b tw-shadow">
-        <div className="tw-sovryn-table tw-relative tw-rounded-lg tw-border tw-pt-1 tw-pb-0 tw-pr-5 tw-pl-5 tw-mb-5 tw-max-h-96 tw-overflow-y-auto">
+        <div className="tw-sovryn-table tw-relative tw-rounded-lg tw-pt-1 tw-pb-0 tw-mb-5 tw-max-h-96 tw-overflow-y-auto">
           {stakeLoad && (
             <Spinner
               size={20}
@@ -94,17 +94,14 @@ export const CurrentStakes: React.FC<ICurrentStakesProps> = props => {
           <StyledTable className="tw-w-full tw-text-sov-white">
             <thead>
               <tr>
-                <th className="tw-text-left assets">
-                  {t(translations.stake.currentStakes.asset)}
-                </th>
-                <th className="tw-text-left">
+                <th className="tw-text-left tw-pl-0">
                   {t(translations.stake.currentStakes.lockedAmount)}
                 </th>
                 <th className="tw-text-left tw-font-normal tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentStakes.votingPower)}
                 </th>
                 <th className="tw-text-left tw-font-normal tw-hidden lg:tw-table-cell">
-                  {t(translations.stake.currentStakes.votingDelegation)}
+                  {t(translations.stake.currentStakes.stakingDate)}
                 </th>
                 <th className="tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentStakes.stakingPeriod)}
@@ -199,16 +196,6 @@ const AssetRow: React.FC<IAssetRowProps> = ({
 
   return (
     <tr>
-      <td>
-        <div className="assetname tw-flex tw-items-center">
-          <div>
-            <img src={logoSvg} className="tw-ml-3 tw-mr-3" alt="sov" />
-          </div>
-          <div className="tw-text-sm tw-font-normal tw-hidden xl:tw-block tw-pl-3">
-            {t(translations.stake.sov)}
-          </div>
-        </div>
-      </td>
       <td className="tw-text-left tw-font-normal">
         {weiTo4(item.stakedAmount)} {t(translations.stake.sov)}
         <br />≈{' '}

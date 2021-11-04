@@ -19,17 +19,17 @@ export function CurrentVests(props: Props) {
 
   return (
     <>
-      <p className="tw-font-semibold tw-text-lg tw-ml-6 tw-mb-4 tw-mt-6">
+      <p className="tw-font-semibold tw-text-lg tw-uppercase tw-mb-2 tw-mt-12">
         {t(translations.stake.currentVests.title)}
       </p>
       <div className="tw-bg-gray-1 tw-rounded-b tw-shadow">
-        <div className="tw-rounded-lg tw-border sovryn-table tw-pt-1 tw-pb-0 tw-pr-5 tw-pl-5 tw-mb-5 max-h-96 tw-overflow-y-auto">
+        <div className="tw-rounded-lg sovryn-table tw-pt-1 tw-pb-0 tw-mb-5 max-h-96 tw-overflow-y-auto">
           <StyledTable className="tw-w-full">
             <thead>
               <tr>
-                <th className="tw-text-left assets">
+                {/* <th className="tw-text-left tw-pl-0 assets">
                   {t(translations.stake.currentVests.asset)}
-                </th>
+                </th> */}
                 <th className="tw-text-left">
                   {t(translations.stake.currentVests.lockedAmount)}
                 </th>
@@ -43,7 +43,7 @@ export function CurrentVests(props: Props) {
                   {t(translations.stake.currentVests.stakingDate)}
                 </th>
                 <th className="tw-text-left tw-hidden lg:tw-table-cell">
-                  {t(translations.stake.currentVests.fees)}
+                  {t(translations.stake.currentVests.revenue)}
                 </th>
                 <th className="tw-text-left tw-hidden md:tw-table-cell">
                   {t(translations.stake.actions.title)}

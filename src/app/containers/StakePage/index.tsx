@@ -384,22 +384,22 @@ const InnerStakePage: React.FC = () => {
       </Helmet>
       <Header />
       <main>
-        <div className="tw-bg-gray-1 tw-tracking-normal">
+        <div className="tw-tracking-normal">
           <div className="tw-container tw-mx-auto tw-px-6">
-            <h2 className="tw-text-sov-white tw-pt-8 tw-pb-5 tw-pl-10">
+            <h2 className="tw-text-black tw-mt-16 tw-mb-6 tw-pl-10 tw-text-center tw-text-xl tw-font-rowdies tw-font-normal tw-uppercase">
               {t(translations.stake.title)}
             </h2>
-            <div className="lg:tw-flex tw-items-stretch tw-justify-around tw-mt-2">
-              <div className="tw-staking-box tw-bg-gray-3 tw-p-8 tw-pb-6 tw-mb-5 tw-rounded-2xl lg:tw-w-1/3 lg:tw-mx-2 lg:tw-mb-0 2xl:tw-w-1/4">
-                <p className="tw-text-lg tw--mt-1">
+            <div className="lg:tw-flex tw-items-stretch tw-justify-around tw-mt-2 tw-py-8 tw-px-4 tw-bg-gray-1 tw-border-solid tw-border-4 tw-border-black tw-rounded-lg">
+              <div className="tw-staking-box tw-bg-gray-3 tw-p-8 tw-pb-6 tw-mb-5 tw-rounded-lg lg:tw-w-1/3 lg:tw-mx-2 lg:tw-mb-0 2xl:tw-w-1/4">
+                <p className="tw-text-base tw--mt-1 tw-mb-0 tw-font-rowdies tw-uppercase">
                   {t(translations.stake.total)}
                 </p>
-                <p className="xl:tw-text-4xl tw-text-3xl tw-mt-2 tw-mb-6">
-                  {weiTo4(balanceOf.value)} SOV
+                <div className="tw-text-3xl tw-uppercase tw-font-rowdies tw-mt-6 tw-mb-12">
+                  {weiTo4(balanceOf.value)} OG
                   {balanceOf.loading && (
                     <Spinner size={20} className="tw-inline-block tw-m-2" />
                   )}
-                </p>
+                </div>
                 <Modal
                   show={stakeForm}
                   content={
@@ -423,7 +423,7 @@ const InnerStakePage: React.FC = () => {
                 {sovBalance !== '0' && !stakingLocked ? (
                   <button
                     type="button"
-                    className="tw-bg-primary tw-font-normal tw-bg-opacity-10 hover:tw-text-primary focus:tw-outline-none focus:tw-bg-opacity-50 hover:tw-bg-opacity-40 tw-transition tw-duration-500 tw-ease-in-out tw-text-lg tw-text-primary tw-py-3 tw-px-8 tw-border tw-transition-colors tw-duration-300 tw-ease-in-out tw-border-primary tw-rounded-xl"
+                    className="tw-bg-primary tw-font-normal tw-bg-opacity-40 hover:tw-text-gray-1 focus:tw-outline-none focus:tw-bg-opacity-50 hover:tw-bg-opacity-40 tw-transition tw-duration-500 tw-ease-in-out tw-text-sm tw-text-black tw-py-3 tw-px-8 tw-border tw-transition-colors tw-duration-300 tw-ease-in-out tw-border-primary tw-rounded-lg tw-font-rowdies tw-uppercase"
                     onClick={() => {
                       setTimestamp(0);
                       setAmount('');
@@ -458,11 +458,11 @@ const InnerStakePage: React.FC = () => {
                   </Tooltip>
                 )}
               </div>
-              <div className="tw-staking-box tw-bg-gray-3 tw-p-8 tw-pb-6 tw-mb-5 tw-rounded-2xl tw-text-sm tw-w-full lg:tw-w-1/3 lg:tw-mb-0 lg:tw-mx-2 2xl:tw-w-1/4 ">
-                <p className="tw-text-lg tw--mt-1">
+              <div className="tw-staking-box tw-bg-gray-3 tw-p-8 tw-pb-6 tw-mb-5 tw-rounded-lg tw-text-sm tw-w-full lg:tw-w-1/3 lg:tw-mb-0 lg:tw-mx-2 2xl:tw-w-1/4 ">
+                <p className="tw-text-base tw--mt-1 tw-font-rowdies tw-uppercase">
                   {t(translations.stake.feeTitle)}
                 </p>
-                <p className="tw-text-4xl tw-mt-2 tw-mb-6">
+                <p className="tw-text-3xl tw-mt-2 tw-mb-6 tw-font-rowdies">
                   ≈ {numberToUSD(usdTotal)}
                 </p>
                 {assets.map((item, i) => {
@@ -476,23 +476,23 @@ const InnerStakePage: React.FC = () => {
                   );
                 })}
               </div>
-              <div className="tw-staking-box tw-bg-gray-3 tw-p-8 tw-pb-6 tw-mb-5 tw-rounded-2xl lg:tw-w-1/3 lg:tw-mx-2 lg:tw-mb-0 2xl:tw-w-1/4">
-                <p className="tw-text-lg tw--mt-1">
+              <div className="tw-staking-box tw-bg-gray-3 tw-p-8 tw-pb-6 tw-mb-5 tw-rounded-lg lg:tw-w-1/3 lg:tw-mx-2 lg:tw-mb-0 2xl:tw-w-1/4">
+                <p className="tw-text-base tw--mt-1 tw-font-rowdies tw-uppercase">
                   {t(translations.stake.votingPower)}
                 </p>
-                <p className="xl:tw-text-4xl tw-text-3xl tw-mt-2 tw-mb-6">
+                <div className="tw-text-3xl tw-mt-6 tw-mb-12 tw-font-rowdies tw-uppercase">
                   {weiTo4(voteBalance.value)}
                   {voteBalance.loading && (
                     <Spinner size={20} className="tw-inline-block tw-m-2" />
                   )}
-                </p>
+                </div>
                 <div className="tw-flex tw-flex-col tw-items-start">
-                  <div className="tw-bg-primary tw-font-normal tw-bg-opacity-10 tw-hover:text-primary tw-focus:outline-none tw-focus:bg-opacity-50 hover:tw-bg-opacity-40 tw-transition tw-duration-500 tw-ease-in-out tw-px-8 tw-py-3 tw-text-lg tw-text-primary tw-border tw-transition-colors tw-duration-300 tw-ease-in-out tw-border-primary tw-rounded-xl hover:tw-no-underline tw-no-underline tw-inline-block">
+                  <div className="tw-bg-primary tw-font-normal tw-bg-opacity-40 tw-hover:text-primary tw-focus:outline-none tw-focus:bg-opacity-50 hover:tw-bg-opacity-40 tw-transition tw-duration-500 tw-ease-in-out tw-px-8 tw-py-3 tw-text-sm tw-border tw-transition-colors tw-duration-300 tw-ease-in-out tw-border-primary tw-rounded-lg hover:tw-no-underline tw-no-underline tw-inline-block tw-uppercase">
                     <a
                       href="https://bitocracy.sovryn.app/"
                       rel="noopener noreferrer"
                       target="_blank"
-                      className="hover:tw-no-underline"
+                      className="tw-text-black tw-font-rowdies hover:tw-no-underline"
                     >
                       {t(translations.stake.viewGovernance)}
                     </a>
@@ -520,14 +520,16 @@ const InnerStakePage: React.FC = () => {
                 </>
               }
             />
-            <CurrentStakes
-              onDelegate={onDelegate}
-              onExtend={onExtend}
-              onIncrease={onIncrease}
-              onUnstake={onUnstake}
-            />
-            <CurrentVests onDelegate={onDelegateVest} />
-            <HistoryEventsTable />
+            <div className="tw-bg-gray-1 tw-rounded-lg tw-border-4 tw-border-sold tw-border-black tw-py-6 tw-px-4 tw-mt-16">
+              <CurrentStakes
+                onDelegate={onDelegate}
+                onExtend={onExtend}
+                onIncrease={onIncrease}
+                onUnstake={onUnstake}
+              />
+              <CurrentVests onDelegate={onDelegateVest} />
+              <HistoryEventsTable />
+            </div>
           </div>
           <TxDialog tx={increaseTx} />
           <TxDialog tx={stakeTx} />

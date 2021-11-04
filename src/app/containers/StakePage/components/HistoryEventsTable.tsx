@@ -61,14 +61,14 @@ export function HistoryEventsTable() {
   return (
     <>
       <div className="history-table tw-bg-gray-1 tw-rounded-b tw-mb-10">
-        <p className="tw-font-normal tw-text-lg tw-ml-6 tw-mb-1 tw-mt-16">
+        <p className="tw-font-normal tw-text-lg tw-font-rowdies tw-uppercase tw-mb-2 tw-mt-12">
           {t(translations.stake.history.title)}
         </p>
-        <div className="tw-rounded-lg tw-sovryn-table tw-pt-1 tw-pb-0 tw-pr-5 tw-pl-5 tw-mb-5">
+        <div className="tw-rounded-lg tw-sovryn-table tw-pt-1 tw-pb-0 tw-mb-5">
           <StyledTable className="tw-w-full">
             <thead>
-              <tr>
-                <th className="tw-text-left assets">
+              <tr className="tw-uppercase tw-font-consolos">
+                <th className="tw-text-left tw-pl-0 assets">
                   {t(translations.stake.history.stakingDate)}
                 </th>
                 <th className="tw-text-left">
@@ -111,7 +111,7 @@ export function HistoryEventsTable() {
                       <td colSpan={5} className="tw-text-center tw-font-normal">
                         <button
                           type="button"
-                          className="tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-no-underline hover:tw-bg-primary hover:tw-bg-opacity-30 tw-mr-1 xl:tw-mr-7 tw-px-4 tw-py-2 tw-transition tw-duration-500 tw-ease-in-out tw-rounded-full tw-border tw-border-primary tw-text-sm tw-font-light tw-font-body"
+                          className="tw-bg-primary tw-bg-opacity-40 tw-text-black tw-tracking-normal hover:tw-text-gray-1 hover:tw-no-underline hover:tw-bg-primary hover:tw-bg-opacity-30 tw-mr-1 xl:tw-mr-7 tw-px-4 tw-py-2 tw-transition tw-duration-500 tw-ease-in-out tw-rounded-lg tw-border tw-border-primary tw-text-sm tw-font-light tw-font-rowdies tw-uppercase"
                           onClick={getHistory}
                         >
                           {t(translations.stake.history.viewHistory)}

@@ -177,7 +177,7 @@ export function VestingContract(props: Props) {
       ) : (
         weiToNumberFormat(lockedAmount.value) !== '0' && (
           <tr>
-            <td>
+            {/* <td>
               <div className="assetname tw-flex tw-items-center">
                 <div>
                   <img src={logoSvg} className="tw-ml-3 tw-mr-3" alt="sov" />
@@ -186,7 +186,7 @@ export function VestingContract(props: Props) {
                   {t(translations.stake.currentVests.assetType[props.type])}
                 </div>
               </div>
-            </td>
+            </td> */}
             <td className="tw-text-left tw-font-normal">
               <p className={`tw-m-0 ${lockedAmount.loading && 'tw-skeleton'}`}>
                 {lockedAmount.value && (
