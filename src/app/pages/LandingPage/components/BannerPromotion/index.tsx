@@ -3,6 +3,7 @@ import classNames from 'classnames';
 
 import { AppSection, PromotionColor } from './types';
 import { PromotionCard } from './components/PromotionCard';
+import styles from './index.module.scss';
 
 interface IBannerPromotionProps {
   className?: string;
@@ -12,7 +13,7 @@ export const BannerPromotion: React.FC<IBannerPromotionProps> = ({
   className,
 }) => {
   return (
-    <div className={classNames('tw-flex tw-justify-around tw-z-10', className)}>
+    <div className={classNames(styles.wrapper, className)}>
       <PromotionCard
         appSection={AppSection.YieldFarm}
         title="15K SOV rewards"

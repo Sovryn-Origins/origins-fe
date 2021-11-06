@@ -1,0 +1,15 @@
+.wrapper {
+  @apply tw-flex tw-justify-around tw-z-10 tw-overflow-x-auto tw-pb-2;
+  &::-webkit-scrollbar {
+    height: 0.625rem;
+  }
+  &::-webkit-scrollbar-track {
+    @apply tw-bg-gray-1;
+    box-shadow: inset 0 0 5px rgb(71, 71, 71);
+    border-radius: 0.313rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    @apply tw-bg-black;
+    border-radius: 0.313rem;
+  }
+}

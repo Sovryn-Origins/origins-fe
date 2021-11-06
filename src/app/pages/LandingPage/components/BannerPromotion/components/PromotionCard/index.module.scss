@@ -1,11 +1,12 @@
 .wrapper {
-  @apply tw-bg-right-top tw-bg-no-repeat tw-rounded-lg tw-bg-gray-3 tw-pl-6 tw-pr-4;
+  @apply tw-bg-right-top tw-bg-no-repeat tw-rounded-lg tw-bg-gray-3 tw-pl-6 tw-pr-4 tw-mr-6 xl:tw-mr-0;
   padding-top: 19px;
   padding-bottom: 19px;
   min-width: 266px;
   height: 193px;
   background-size: 100% 100%;
   background-origin: border-box;
+  
 }
 
 .sectionTitle {
