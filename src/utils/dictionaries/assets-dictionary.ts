@@ -12,6 +12,7 @@ import mocIcon from 'assets/images/tokens/moc.svg';
 import fishIcon from 'assets/images/tokens/babelfish.svg';
 import rdoc from 'assets/images/tokens/rifd.svg';
 import rifToken from 'assets/images/tokens/rif.svg';
+import ogIcon from 'assets/images/tokens/og.png';
 
 import { AssetDetails } from '../models/asset-details';
 
@@ -105,6 +106,7 @@ export class AssetsDictionary {
         Asset.RIF,
         new AssetDetails(Asset.RIF, 'RIF', 'RIF', 18, rifToken, true),
       ],
+      [Asset.OG, new AssetDetails(Asset.OG, 'OG', 'OG', 18, ogIcon, true)],
     ],
   );
 

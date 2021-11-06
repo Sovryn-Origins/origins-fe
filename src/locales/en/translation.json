@@ -1558,7 +1558,7 @@
       "title": "Welcome to Sovryn",
       "description": "The Decentralized Bitcoin Trading And Lending Platform"
     },
-    "welcomeTitle": "Welcome to Sovryn",
+    "welcomeTitle": "Welcome to Sovryn Origins",
     "welcomeMessage": "The decentralized bitcoin trading and lending platform",
     "tradingVolume": {
       "dayVolumeTitle": "24 Hour Volume",
@@ -1596,6 +1596,9 @@
         "swap": "Swap",
         "spotTrading": "Spot Trading"
       }
+    },
+    "tokensTable": {
+      "title": "Tokens Listed On Sovryn Origins"
     },
     "lendBorrow": "LEND & BORROW ASSETS",
     "ammpool": {

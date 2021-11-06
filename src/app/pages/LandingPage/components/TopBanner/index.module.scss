@@ -1,0 +1,35 @@
+.wrapper {
+  @apply tw-relative tw-bg-gray-1 tw-rounded-lg tw-border-black tw-border-solid tw-pb-8;
+  border-width: 5px;
+}
+
+.sunPatternWrapper {
+  @apply tw-relative tw-w-full tw-flex tw-flex-col tw-justify-center tw-bg-left-top tw-bg-no-repeat tw-bg-cover;
+  padding-top: 32%;
+  min-height: 350px;
+  background-image: url('../../../../../assets/images/sun-pattern-bg.svg');
+  background-origin: border-box;
+}
+
+.VHCenter {
+  @apply tw-absolute tw-w-full tw-h-full tw-top-0 tw-left-0 tw-flex tw-flex-col tw-justify-center tw-text-center;
+}
+
+.welcomeTitle {
+  @apply tw-font-rowdies tw-text-white tw-uppercase md:tw-w-1/2 tw-mx-auto;
+  line-height: 4.188rem;
+  font-size: 2.5rem;
+  @screen lg {
+    font-size: 3.5rem;
+  }
+  @screen xl {
+    font-size: 4.5rem;
+  }
+}
+
+.rewardItem {
+  @apply tw-bg-right-top tw-bg-no-repeat tw-rounded-lg tw-bg-gray-3;
+  background-image: url('../../../../../assets/images/home/reward-bg-yellow.svg');
+  background-size: 100% 100%;
+  background-origin: border-box;
+}

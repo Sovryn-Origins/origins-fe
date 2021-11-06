@@ -37,6 +37,7 @@ import stakingRewardsProxyAbi from './abi/StakingRewards.json';
 import nftAbi from './abi/nftAbi.json';
 import multicallABI from './abi/multicall.json';
 import GovernorAdminABI from './abi/GovernorAdmin.json';
+import OGTokenAbi from './abi/OG.json';
 
 export const contracts = {
   sovrynProtocol: {
@@ -349,5 +350,9 @@ export const contracts = {
   governorOwner: {
     address: '0x6496DF39D000478a7A7352C01E0E713835051CcD',
     abi: GovernorAdminABI as any,
+  },
+  OG_token: {
+    address: '0x6979bd7aa099c6c0566c40e5B1FC88CB96D73254',
+    abi: OGTokenAbi,
   },
 };

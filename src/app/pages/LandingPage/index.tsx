@@ -20,6 +20,9 @@ import { LendingStats } from 'app/containers/StatsPage/components/LendingStats';
 import { Footer } from 'app/components/Footer';
 import { CryptocurrencyPrices } from './components/CryptocurrencyPrices';
 import { IPairsData, IAssets } from './components/CryptocurrencyPrices/types';
+import { TopBanner } from './components/TopBanner';
+import { TokenTable } from './components/TokenTable';
+import { BondingCurve } from './components/BondingCurve';
 
 const url = backendUrl[currentChainId];
 
@@ -124,6 +127,10 @@ export const LandingPage: React.FC<ILandingPageProps> = ({
       </Helmet>
       <Header />
       <div className="container tw-max-w-screen-2xl tw-mx-auto tw-mt-16 tw-px-4 2xl:tw-px-0 tw-w-full">
+        <TopBanner />
+        <TokenTable className="tw-mt-24" />
+        <BondingCurve className="tw-mt-36" />
+
         <div className="tw-tracking-normal">
           <WelcomeTitle>
             {t(translations.landingPage.welcomeTitle)}
