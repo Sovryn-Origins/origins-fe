@@ -11,10 +11,6 @@
   background-origin: border-box;
 }
 
-.VHCenter {
-  @apply tw-absolute tw-w-full tw-h-full tw-top-0 tw-left-0 tw-flex tw-flex-col tw-justify-center tw-text-center;
-}
-
 .welcomeTitle {
   @apply tw-font-rowdies tw-text-white tw-uppercase md:tw-w-1/2 tw-mx-auto;
   line-height: 4.188rem;
@@ -25,11 +21,4 @@
   @screen xl {
     font-size: 4.5rem;
   }
-}
-
-.rewardItem {
-  @apply tw-bg-right-top tw-bg-no-repeat tw-rounded-lg tw-bg-gray-3;
-  background-image: url('../../../../../assets/images/home/reward-bg-yellow.svg');
-  background-size: 100% 100%;
-  background-origin: border-box;
 }

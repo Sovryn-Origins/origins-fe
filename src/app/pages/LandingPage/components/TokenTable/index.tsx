@@ -4,20 +4,18 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Asset } from 'types/asset';
 import { AssetRenderer } from 'app/components/AssetRenderer';
-import { LoadableValue } from 'app/components/LoadableValue';
+// import { LoadableValue } from 'app/components/LoadableValue';
 import styles from './index.module.scss';
 
 interface ITokenTableProps {
   className?: string;
 }
 
-const assets = [Asset.RBTC, Asset.SOV, Asset.OG, Asset.FISH];
-
 interface ITokenRowProps {
   asset: Asset;
   price: string;
-  changeOfDay: number;
-  changeOf7Days: number;
+  percentOfDay: number;
+  percentOf7Days: number;
   marketCap: string;
   circulatingSupply: string;
 }
@@ -26,32 +24,32 @@ const TokenListData: ITokenRowProps[] = [
   {
     asset: Asset.RBTC,
     price: '97434140 STATS',
-    changeOfDay: 4.68,
-    changeOf7Days: 19.03,
+    percentOfDay: 4.68,
+    percentOf7Days: 19.03,
     marketCap: 'USD 131,311,852',
     circulatingSupply: '209,914',
   },
   {
     asset: Asset.SOV,
     price: '61268 STATS',
-    changeOfDay: 5.02,
-    changeOf7Days: 20.02,
+    percentOfDay: 5.02,
+    percentOf7Days: 20.02,
     marketCap: 'USD 3,382,886,198',
     circulatingSupply: '5,003,885',
   },
   {
     asset: Asset.OG,
     price: '20234 STATS',
-    changeOfDay: 4.61,
-    changeOf7Days: 17.5,
+    percentOfDay: 4.61,
+    percentOf7Days: 17.5,
     marketCap: 'USD 24,280,068',
     circulatingSupply: '309,914',
   },
   {
     asset: Asset.FISH,
     price: '1000 STATS',
-    changeOfDay: 0.178,
-    changeOf7Days: 0.55,
+    percentOfDay: 0.178,
+    percentOf7Days: 0.55,
     marketCap: 'USD 2,283,060',
     circulatingSupply: '109,914',
   },
@@ -68,15 +66,26 @@ export const TokenTable: React.FC<ITokenTableProps> = ({ className }) => {
         <table className="tw-w-full">
           <thead>
             <tr>
-              <td className="tw-pl-6 tw-font-rowdies tw-font-light">Asset</td>
-              <td className="tw-pl-6 tw-font-rowdies tw-font-light">Price</td>
-              <td className="tw-pl-6 tw-font-rowdies tw-font-light">24h%</td>
-              <td className="tw-pl-6 tw-font-rowdies tw-font-light">7d%</td>
               <td className="tw-pl-6 tw-font-rowdies tw-font-light">
-                Market Cap
+                {t(translations.landingPage.tokensTable.columns.asset)}
               </td>
               <td className="tw-pl-6 tw-font-rowdies tw-font-light">
-                Circulating Supply
+                {t(translations.landingPage.tokensTable.columns.price)}
+              </td>
+              <td className="tw-pl-6 tw-font-rowdies tw-font-light">
+                {t(translations.landingPage.tokensTable.columns.percentOfDay)}
+              </td>
+              <td className="tw-pl-6 tw-font-rowdies tw-font-light">
+                {t(translations.landingPage.tokensTable.columns.percentOf7Days)}
+              </td>
+              <td className="tw-pl-6 tw-font-rowdies tw-font-light">
+                {t(translations.landingPage.tokensTable.columns.marketCap)}
+              </td>
+              <td className="tw-pl-6 tw-font-rowdies tw-font-light">
+                {t(
+                  translations.landingPage.tokensTable.columns
+                    .circulatingSupply,
+                )}
               </td>
             </tr>
           </thead>
@@ -94,8 +103,8 @@ export const TokenTable: React.FC<ITokenTableProps> = ({ className }) => {
 const TokenRow: React.FC<ITokenRowProps> = ({
   asset,
   price,
-  changeOfDay,
-  changeOf7Days,
+  percentOfDay,
+  percentOf7Days,
   marketCap,
   circulatingSupply,
 }) => {
@@ -107,22 +116,22 @@ const TokenRow: React.FC<ITokenRowProps> = ({
       <td className="tw-font-inter">{price}</td>
       <td
         className={classNames('tw-text-left tw-font-inter', {
-          'tw-text-trade-long': changeOfDay > 0,
-          'tw-text-trade-short': changeOfDay < 0,
+          'tw-text-trade-long': percentOfDay > 0,
+          'tw-text-trade-short': percentOfDay < 0,
         })}
       >
-        {changeOfDay} %
+        {percentOfDay} %
       </td>
       <td
         className={classNames(
           'tw-text-left tw-font-inter tw-hidden md:tw-table-cell',
           {
-            'tw-text-trade-long': changeOf7Days > 0,
-            'tw-text-trade-short': changeOf7Days < 0,
+            'tw-text-trade-long': percentOf7Days > 0,
+            'tw-text-trade-short': percentOf7Days < 0,
           },
         )}
       >
-        {changeOf7Days} %
+        {percentOf7Days} %
       </td>
       <td className="tw-font-inter">{marketCap}</td>
       <td className="tw-font-inter">{circulatingSupply}</td>

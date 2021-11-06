@@ -1,0 +1,9 @@
+.wrapper {
+  @apply tw-overflow-hidden tw--mb-4;
+  margin-top: 8.125rem;
+}
+
+.image {
+  @apply tw-w-full;
+  margin-bottom: -15%;
+}

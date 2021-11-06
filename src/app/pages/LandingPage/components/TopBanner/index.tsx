@@ -10,25 +10,13 @@ export const TopBanner = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.sunPatternWrapper}>
-        <div className={styles.VHCenter}>
+        <div className="tw-absolute tw-w-full tw-h-full tw-top-0 tw-left-0 tw-flex tw-flex-col tw-justify-center tw-text-center">
           <p className={styles.welcomeTitle}>
             {t(translations.landingPage.welcomeTitle)}
           </p>
         </div>
       </div>
       <BannerPromotion />
-      {/* <div className="tw-bg-white tw--mt-10 tw-flex">
-        <div className={styles.rewardItem}>
-          <p>Yield farming</p>
-          <p>Yield farming</p>
-          <p>Yield farming</p>
-        </div>
-        <div className={styles.rewardItem}>
-          <p>Yield farming</p>
-          <p>Yield farming</p>
-          <p>Yield farming</p>
-        </div>
-      </div> */}
     </div>
   );
 };

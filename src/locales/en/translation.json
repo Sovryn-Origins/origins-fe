@@ -1559,6 +1559,29 @@
       "description": "The Decentralized Bitcoin Trading And Lending Platform"
     },
     "welcomeTitle": "Welcome to Sovryn Origins",
+    "promotions": {
+      "title": "Promotions",
+      "learnMore": "Learn more",
+      "sections": {
+        "lending": "Lending",
+        "borrowing": "Borrowing",
+        "yieldFarming": "Yield Farming",
+        "marginTrading": "Margin Trading",
+        "swap": "Swap",
+        "spotTrading": "Spot Trading"
+      }
+    },
+    "tokensTable": {
+      "title": "Tokens Listed On Sovryn Origins",
+      "columns": {
+        "asset": "Asset",
+        "price": "Price",
+        "percentOfDay": "24h%",
+        "percentOf7Days": "7d%",
+        "marketCap": "Market Cap",
+        "circulatingSupply": "Circulating Supply"
+      }
+    },
     "welcomeMessage": "The decentralized bitcoin trading and lending platform",
     "tradingVolume": {
       "dayVolumeTitle": "24 Hour Volume",
@@ -1584,21 +1607,6 @@
       "staked": "Bitocracy Staking Contract",
       "subtotal": "Sub total",
       "total": "Total"
-    },
-    "promotions": {
-      "title": "Promotions",
-      "learnMore": "Learn more",
-      "sections": {
-        "lending": "Lending",
-        "borrowing": "Borrowing",
-        "yieldFarming": "Yield Farming",
-        "marginTrading": "Margin Trading",
-        "swap": "Swap",
-        "spotTrading": "Spot Trading"
-      }
-    },
-    "tokensTable": {
-      "title": "Tokens Listed On Sovryn Origins"
     },
     "lendBorrow": "LEND & BORROW ASSETS",
     "ammpool": {

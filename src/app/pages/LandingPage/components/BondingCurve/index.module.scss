@@ -1,0 +1,38 @@
+.promotionText {
+  @apply tw-font-rowdies tw-text-base tw-text-center tw-uppercase tw-text-black tw-mt-2 tw-mb-0;
+  font-size: 3rem;
+  line-height: 4.563rem;
+}
+
+.title {
+  @apply tw-font-rowdies tw-text-base tw-text-center tw-uppercase tw-text-black tw-mt-24 tw-mb-6;
+  font-size: 2rem;
+  line-height: 3.5rem;
+}
+
+.description {
+  @apply tw-font-inter tw-font-medium tw-text-xl tw-text-center tw-text-black tw-mx-auto tw-mb-24;
+  line-height: 38px;
+  max-width: 731px;
+}
+
+.bctitle {
+  @apply tw-font-rowdies tw-text-center tw-uppercase tw-text-black tw-mt-24;
+  font-size: 2rem;
+  line-height: 3.5rem;
+}
+
+.itemTitle {
+  @apply tw-font-rowdies tw-text-lg tw-text-center tw-uppercase tw-text-black tw-mb-6;
+  line-height: 1.688rem;
+}
+
+.itemDescription {
+  @apply tw-font-inter tw-font-medium tw-text-xl tw-text-center tw-text-black tw-mb-0;
+  line-height: 2.375rem;
+}
+
+.bcExtraText {
+  @apply tw-font-inter tw-font-medium tw-text-xl tw-text-center tw-text-black tw-max-w-3xl tw-mx-auto tw-mb-0;
+  line-height: 2.375rem;
+}
