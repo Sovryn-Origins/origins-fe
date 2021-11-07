@@ -18,6 +18,16 @@ export interface XAxisProps {
 }
 
 export const Chart: React.FC = () => {
+  const tooltipFormatter = function (this: any) {
+    const d = new Date(this.x);
+    return `
+      <div>
+        <span style="color: #00D786; font-size: 1.5rem;">\u25CF</span><span style="color: #8CB8D8;">Price:</span><br/>
+        <span class="tw-font-inter tw-font-bold" style="font-size: 2rem; color: #fff;">2.7 SOV</span><br/>
+        <span style="color: #8CB8D8;">Supply :</span><span style="color: white;">6k</span>
+      <div>
+    `;
+  };
   const options: Highcharts.Options = {
     credits: {
       enabled: false,
@@ -87,9 +97,18 @@ export const Chart: React.FC = () => {
         data: [1, 2, 3].map(i => [i, i * i]),
         type: 'spline',
         color: '#17C3B2',
+        className: 'tw-px-1 tw-py-3',
         showInLegend: false,
       },
     ],
+    tooltip: {
+      shared: true,
+      backgroundColor: '#13222D',
+      borderWidth: 0,
+      borderRadius: 15,
+      padding: 16,
+      formatter: tooltipFormatter,
+    },
   };
 
   return (
