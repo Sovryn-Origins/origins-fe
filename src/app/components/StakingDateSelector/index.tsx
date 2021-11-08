@@ -7,6 +7,7 @@ import { MenuItem } from '@blueprintjs/core/lib/esm/components/menu/menuItem';
 import { ItemRenderer } from '@blueprintjs/select/lib/esm/common/itemRenderer';
 import { ItemPredicate } from '@blueprintjs/select/lib/esm/common/predicate';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 import { translations } from '../../../locales/i18n';
 
 interface DateItem {
@@ -15,6 +16,7 @@ interface DateItem {
   date: Date;
 }
 interface Props {
+  className?: string;
   title: string;
   kickoffTs: number;
   onClick: (value: number) => void;
@@ -157,23 +159,23 @@ export function StakingDateSelector(props: Props) {
     dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 6,
-    slidesToScroll: 6,
+    slidesToShow: 12,
+    slidesToScroll: 12,
     initialSlide: 0,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
 
   return (
-    <>
+    <div className={props.className}>
       {availableYears.length > 0 && (
-        <label className="tw-block tw-mt-8 tw-text-sov-white tw-text-md tw-font-medium tw-mb-2">
+        <label className="tw-block tw-mt-6 tw-text-sov-white tw-text-md tw-font-medium tw-uppercase tw-text-center tw-mb-6">
           {props.delegate
             ? t(translations.stake.dateSelector.selectDelegate)
             : t(translations.stake.dateSelector.selectYear)}
         </label>
       )}
-      <div className="tw-flex tw-flex-row">
+      <div className="tw-flex tw-flex-row tw-justify-center">
         {availableYears.map((year, i) => {
           return (
             <div className="tw-mr-3" key={i}>
@@ -183,9 +185,13 @@ export function StakingDateSelector(props: Props) {
                   getDatesByYear(year);
                   setSelectedYear(year);
                 }}
-                className={`tw-leading-7 tw-font-normal tw-rounded tw-border tw-border-secondary tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-secondary hover:tw-bg-opacity-30 md:tw-px-3 tw-px-2 tw-py-0 tw-text-center tw-border-r tw-text-md tw-text-secondary tw-tracking-tighter ${
-                  selectedYear === year && 'tw-bg-opacity-30 tw-bg-secondary'
-                }`}
+                className={classNames(
+                  'tw-leading-7 tw-font-normal tw-rounded-lg tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-opacity-30 tw-px-8 tw-py-3 tw-text-center tw-border-r tw-text-xl tw-tracking-tighter',
+                  {
+                    'tw-bg-gray-3 tw-text-primary': selectedYear !== year,
+                    'tw-bg-primary tw-text-black': selectedYear === year,
+                  },
+                )}
               >
                 {year}
               </button>
@@ -194,6 +200,11 @@ export function StakingDateSelector(props: Props) {
         })}
       </div>
       <div className="sliderMonth tw-mt-5 tw-pr-0">
+        {selectedYear && (
+          <p className="tw-font-rowdies tw-text-xl tw-font-light tw-text-center tw-uppercase tw-white tw-mt-12 tw-mb-6">
+            {t(translations.stake.dateSelector.selectNewStakingDate)}:
+          </p>
+        )}
         <Slider {...settingsSliderMonth}>
           {availableMonth.map((monthName: React.ReactNode, i) => {
             return (
@@ -210,11 +221,19 @@ export function StakingDateSelector(props: Props) {
                             setSelectedDay(dayjs(item.date).format('D'));
                             setSelectedMonth(dayjs(item.date).format('MMM'));
                           }}
-                          className={`tw-flex tw-items-center tw-justify-center tw-mr-1 tw-mb-1 tw-h-10 tw-leading-10 tw-rounded-lg tw-border tw-border-secondary tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-secondary hover:tw-bg-opacity-30 tw-px-5 tw-py-0 tw-text-center tw-border-r tw-text-md tw-text-secondary tw-tracking-tighter ${
-                            selectedDay === dayjs(item.date).format('D') &&
-                            selectedMonth === dayjs(item.date).format('MMM') &&
-                            'tw-bg-opacity-30 tw-bg-secondary'
-                          }`}
+                          className={classNames(
+                            'tw-w-12 tw-mr-1 tw-mb-1 tw-h-10 tw-leading-10 tw-rounded-lg tw-border tw-border-primary tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-primary hover:tw-bg-opacity-30 tw-px-1 tw-py-0 tw-text-center tw-border-r tw-text-md tw-tracking-tighter',
+                            {
+                              'tw-bg-primary tw-text-black':
+                                selectedDay === dayjs(item.date).format('D') &&
+                                selectedMonth ===
+                                  dayjs(item.date).format('MMM'),
+                              'tw-text-primary':
+                                selectedDay !== dayjs(item.date).format('D') ||
+                                selectedMonth !==
+                                  dayjs(item.date).format('MMM'),
+                            },
+                          )}
                         >
                           {dayjs(item.date)
                             .subtract(currentUserOffset, 'hour')
@@ -236,7 +255,7 @@ export function StakingDateSelector(props: Props) {
           {t(translations.stake.dateSelector.noneAvailable)}
         </p>
       )}
-    </>
+    </div>
   );
 }
 

@@ -93,7 +93,7 @@ export const StakePage: React.FC = () => {
 const InnerStakePage: React.FC = () => {
   const { t } = useTranslation();
   const account = useAccount();
-  const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState('0.000');
   const weiAmount = useWeiAmount(amount);
   const [weight, setWeight] = useState('');
   const kickoffTs = useStaking_kickoffTs();
@@ -103,7 +103,7 @@ const InnerStakePage: React.FC = () => {
   const balanceOf = useStaking_balanceOf(account);
   const WEIGHT_FACTOR = useStaking_WEIGHT_FACTOR();
   const [stakeAmount, setStakeAmount] = useState('0');
-  const [stakeForm, setStakeForm] = useState(false);
+  const [stakeForm, setStakeForm] = useState(true);
   const [extendForm, setExtendForm] = useState(false);
   const [until, setUntil] = useState(0);
   const [delegateForm, setDelegateForm] = useState(false);
@@ -401,6 +401,7 @@ const InnerStakePage: React.FC = () => {
                   )}
                 </div>
                 <Modal
+                  className="lg:tw-max-w-3xl"
                   show={stakeForm}
                   content={
                     <>

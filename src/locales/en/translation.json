@@ -511,6 +511,7 @@
     "noUnlockedSov": "You don't have unlocked SOV",
     "txFee": "Tx Fee",
     "sov": "SOV",
+    "og": "OG",
     "days": "days",
     "delegation": {
       "delegateTo": "Delegate To",
@@ -534,7 +535,7 @@
       "loading": "Loading..."
     },
     "staking": {
-      "title": "Stake SOV",
+      "title": "Stake OG",
       "amountToStake": "Amount to Stake",
       "amountPlaceholder": "Enter amount",
       "votingPowerReceived": "Voting Power received"
@@ -616,7 +617,8 @@
     "dateSelector": {
       "noneAvailable": "No available dates.",
       "selectDelegate": "Choose delegate period:",
-      "selectYear": "Select Year:"
+      "selectYear": "Select Year:",
+      "selectNewStakingDate": "Select New Staking Date"
     },
     "loading": "Loading, please wait...",
     "nostake": "No stakes yet."

@@ -19,7 +19,6 @@ export interface XAxisProps {
 
 export const Chart: React.FC = () => {
   const tooltipFormatter = function (this: any) {
-    const d = new Date(this.x);
     return `
       <div>
         <span style="color: #00D786; font-size: 1.5rem;">\u25CF</span><span style="color: #8CB8D8;">Price:</span><br/>
