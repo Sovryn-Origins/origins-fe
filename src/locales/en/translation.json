@@ -613,7 +613,8 @@
       "delegate": "Delegate",
       "confirm": "Confirm",
       "cancel": "Cancel",
-      "withdraw": "Withdraw"
+      "withdraw": "Withdraw",
+      "addToStake": "Add To Stake"
     },
     "dateSelector": {
       "noneAvailable": "No available dates.",

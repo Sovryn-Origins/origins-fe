@@ -543,6 +543,7 @@ const InnerStakePage: React.FC = () => {
               <>
                 {increaseForm === true && (
                   <Modal
+                    className="lg:tw-max-w-3xl"
                     show={increaseForm}
                     content={
                       <>

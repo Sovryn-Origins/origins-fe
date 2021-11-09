@@ -37,14 +37,14 @@ export function StakeForm(props: Props) {
   };
 
   return (
-    <div className="">
+    <div>
       <h3 className="tw-text-center tw-mb-10 tw-leading-10 tw-text-3xl">
         {t(translations.stake.staking.title)}
       </h3>
       <form onSubmit={props.handleSubmit}>
         <div className="tw-mb-9 tw-tracking-normal">
           <div className="tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-4">
-            <div className="">
+            <div>
               <label className="tw-block tw-font-rowdies tw-font-light tw-text-xl tw-uppercase tw-leading-7 tw-text-white tw-text-center">
                 {t(translations.stake.staking.amountToStake)}
               </label>
