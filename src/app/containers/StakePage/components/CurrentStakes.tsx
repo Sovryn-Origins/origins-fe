@@ -80,7 +80,7 @@ export const CurrentStakes: React.FC<ICurrentStakesProps> = props => {
 
   return (
     <>
-      <p className="tw-font-semibold tw-text-lg tw-mb-2 tw-mt-6 tw-uppercase">
+      <p className="tw-font-semibold tw-text-xl tw-uppercase">
         {t(translations.stake.currentStakes.title)}
       </p>
       <div className="tw-bg-gray-1 tw-rounded-b tw-shadow">
@@ -94,27 +94,27 @@ export const CurrentStakes: React.FC<ICurrentStakesProps> = props => {
           <StyledTable className="tw-w-full tw-text-sov-white">
             <thead>
               <tr>
-                <th className="tw-text-left tw-pl-0">
+                <th className="tw-font-rowdies tw-font-light tw-text-left tw-pl-0">
                   {t(translations.stake.currentStakes.lockedAmount)}
                 </th>
-                <th className="tw-text-left tw-font-normal tw-hidden lg:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentStakes.votingPower)}
                 </th>
-                <th className="tw-text-left tw-font-normal tw-hidden lg:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentStakes.stakingDate)}
                 </th>
-                <th className="tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentStakes.stakingPeriod)}
                 </th>
-                <th className="tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentStakes.unlockDate)}
                 </th>
-                <th className="tw-text-left tw-hidden md:tw-table-cell tw-w-1/5">
+                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden md:tw-table-cell tw-w-1/5">
                   {t(translations.stake.actions.title)}
                 </th>
               </tr>
             </thead>
-            <tbody className="tw-mt-5 tw-font-montserrat tw-text-xs">
+            <tbody className="tw-mt-5 tw-font-rowdies tw-text-xs">
               {!stakesArray?.length && (
                 <tr key="empty">
                   <td colSpan={99} className="tw-text-center tw-font-normal">
@@ -197,7 +197,7 @@ const AssetRow: React.FC<IAssetRowProps> = ({
   return (
     <tr>
       <td className="tw-text-left tw-font-normal">
-        {weiTo4(item.stakedAmount)} {t(translations.stake.sov)}
+        {weiTo4(item.stakedAmount)} {t(translations.stake.og)}
         <br />≈{' '}
         <LoadableValue
           value={weiToUSD(dollarValue)}
@@ -245,7 +245,7 @@ const AssetRow: React.FC<IAssetRowProps> = ({
               >
                 <button
                   type="button"
-                  className="tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-montserrat tw-bg-transparent hover:tw-bg-opacity-0 tw-opacity-50 tw-cursor-not-allowed hover:tw-bg-transparent"
+                  className="tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-rowdies tw-bg-transparent hover:tw-bg-opacity-0 tw-opacity-50 tw-cursor-not-allowed hover:tw-bg-transparent"
                 >
                   {t(translations.stake.actions.increase)}
                 </button>
@@ -259,7 +259,7 @@ const AssetRow: React.FC<IAssetRowProps> = ({
               >
                 <button
                   type="button"
-                  className="tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-montserrat tw-bg-transparent hover:tw-bg-opacity-0 tw-opacity-50 tw-cursor-not-allowed hover:tw-bg-transparent"
+                  className="tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-rowdies tw-bg-transparent hover:tw-bg-opacity-0 tw-opacity-50 tw-cursor-not-allowed hover:tw-bg-transparent"
                 >
                   {t(translations.stake.actions.extend)}
                 </button>
@@ -269,7 +269,7 @@ const AssetRow: React.FC<IAssetRowProps> = ({
             <>
               <button
                 type="button"
-                className={`tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-montserrat ${
+                className={`tw-border tw-border-primary tw-border-solid tw-rounded-lg tw-px-4 tw-py-2 tw-text-primary tw-text-sm tw-uppercase tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-rowdies ${
                   !locked &&
                   'tw-bg-transparent hover:tw-bg-opacity-0 tw-opacity-50 tw-cursor-not-allowed hover:tw-bg-transparent'
                 }`}
@@ -282,7 +282,7 @@ const AssetRow: React.FC<IAssetRowProps> = ({
               </button>
               <button
                 type="button"
-                className="tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-montserrat"
+                className="tw-border tw-border-primary tw-border-solid tw-rounded-lg tw-px-4 tw-py-2 tw-text-primary tw-text-sm tw-uppercase tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-rowdies"
                 onClick={() =>
                   onExtend(Number(item.stakedAmount), Number(item.unlockDate))
                 }
@@ -302,7 +302,7 @@ const AssetRow: React.FC<IAssetRowProps> = ({
             >
               <button
                 type="button"
-                className="tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-montserrat tw-bg-transparent hover:tw-bg-opacity-0 tw-opacity-50 tw-cursor-not-allowed hover:tw-bg-transparent"
+                className="tw-border tw-border-primary tw-border-solid tw-rounded-lg tw-px-4 tw-py-2 tw-text-primary tw-text-sm tw-uppercase tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-rowdies tw-bg-transparent hover:tw-bg-opacity-0 tw-opacity-50 tw-cursor-not-allowed hover:tw-bg-transparent"
               >
                 {t(translations.stake.actions.unstake)}
               </button>
@@ -310,7 +310,7 @@ const AssetRow: React.FC<IAssetRowProps> = ({
           ) : (
             <button
               type="button"
-              className="tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-montserrat"
+              className="tw-border tw-border-primary tw-border-solid tw-rounded-lg tw-px-4 tw-py-2 tw-text-primary tw-text-sm tw-uppercase tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-rowdies"
               onClick={() =>
                 onUnstake(item.stakedAmount, Number(item.unlockDate))
               }
@@ -329,14 +329,14 @@ const AssetRow: React.FC<IAssetRowProps> = ({
             >
               <button
                 type="button"
-                className="tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-montserrat tw-bg-transparent hover:tw-bg-opacity-0 tw-opacity-50 tw-cursor-not-allowed hover:tw-bg-transparent"
+                className="tw-border tw-border-primary tw-border-solid tw-rounded-lg tw-px-4 tw-py-2 tw-text-primary tw-text-sm tw-uppercase tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-rowdies tw-bg-transparent hover:tw-bg-opacity-0 tw-opacity-50 tw-cursor-not-allowed hover:tw-bg-transparent"
               >
                 {t(translations.stake.actions.delegate)}
               </button>
             </Tooltip>
           ) : (
             <button
-              className={`tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-montserrat ${
+              className={`tw-border tw-border-primary tw-border-solid tw-rounded-lg tw-px-4 tw-py-2 tw-text-primary tw-text-sm tw-uppercase tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-rowdies ${
                 !locked && 'tw-opacity-50 tw-cursor-not-allowed'
               }`}
               onClick={() =>
