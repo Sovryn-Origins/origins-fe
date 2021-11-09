@@ -30,27 +30,27 @@ export function CurrentVests(props: Props) {
                 {/* <th className="tw-text-left tw-pl-0 assets">
                   {t(translations.stake.currentVests.asset)}
                 </th> */}
-                <th className="tw-text-left">
+                <th className="tw-font-rowdies tw-font-light tw-text-left">
                   {t(translations.stake.currentVests.lockedAmount)}
                 </th>
-                <th className="tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentVests.votingPower)}
                 </th>
-                <th className="tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentVests.stakingPeriod)}
                 </th>
-                <th className="tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentVests.stakingDate)}
                 </th>
-                <th className="tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentVests.revenue)}
                 </th>
-                <th className="tw-text-left tw-hidden md:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden md:tw-table-cell">
                   {t(translations.stake.actions.title)}
                 </th>
               </tr>
             </thead>
-            <tbody className="tw-mt-5 tw-font-montserrat tw-text-xs">
+            <tbody className="tw-mt-5 tw-font-montserrat tw-text-base">
               {loading && !items.length && (
                 <tr>
                   <td colSpan={99} className="tw-text-center tw-font-normal">
