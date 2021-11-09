@@ -103,7 +103,7 @@ const InnerStakePage: React.FC = () => {
   const balanceOf = useStaking_balanceOf(account);
   const WEIGHT_FACTOR = useStaking_WEIGHT_FACTOR();
   const [stakeAmount, setStakeAmount] = useState('0');
-  const [stakeForm, setStakeForm] = useState(true);
+  const [stakeForm, setStakeForm] = useState(false);
   const [extendForm, setExtendForm] = useState(false);
   const [until, setUntil] = useState(0);
   const [delegateForm, setDelegateForm] = useState(false);
