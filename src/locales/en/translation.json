@@ -6,6 +6,7 @@
     "close": "Close",
     "for": "for",
     "confirm": "Confirm",
+    "executed": "Executed",
     "cancel": "Cancel",
     "fee": "Tx Fee: {{amount}} (r)BTC",
     "pending": "Pending",

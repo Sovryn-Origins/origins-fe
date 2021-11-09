@@ -1,19 +1,10 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import styled from 'styled-components/macro';
-import iconSuccess from 'assets/images/icon-success.svg';
-import iconRejected from 'assets/images/icon-rejected.svg';
-import iconPending from 'assets/images/icon-pending.svg';
 import { Pagination } from '../../../components/Pagination';
-import { Asset } from '../../../../types';
-import { useCachedAssetPrice } from '../../../hooks/trading/useCachedAssetPrice';
-import { weiToUSD } from 'utils/display-text/format';
-import { bignumber } from 'mathjs';
-import { AssetsDictionary } from 'utils/dictionaries/assets-dictionary';
-import { LoadableValue } from '../../../components/LoadableValue';
 import { numberFromWei } from 'utils/blockchain/math-helpers';
 import { StyledTable } from './StyledTable';
 import { LinkToExplorer } from '../../../components/LinkToExplorer';
@@ -165,34 +156,18 @@ const getActionName = action => {
 
 const HistoryTableAsset: React.FC<HistoryAsset> = ({ item }) => {
   const { t } = useTranslation();
-  const SOV = AssetsDictionary.get(Asset.SOV);
-  const dollars = useCachedAssetPrice(Asset.SOV, Asset.USDT);
-  const dollarValue = useMemo(() => {
-    if (!item.amount) return '';
-    return bignumber(item.amount)
-      .mul(dollars.value)
-      .div(10 ** SOV.decimals)
-      .toFixed(0);
-  }, [dollars.value, item.amount, SOV.decimals]);
   return (
     <tr>
       <td>
         {dayjs
           .tz(item.timestamp * 1e3, 'UTC')
           .tz(dayjs.tz.guess())
-          .format('L - LTS Z')}
+          .format('L - LTS')}
       </td>
       <td>{getActionName(item.action)}</td>
       <td className="tw-text-left tw-font-normal">
         {item.action !== t(translations.stake.actions.delegate) ? (
-          <>
-            {numberFromWei(item.amount)} SOV
-            <br />≈{' '}
-            <LoadableValue
-              value={weiToUSD(dollarValue)}
-              loading={dollars.loading}
-            />
-          </>
+          <>{numberFromWei(item.amount)} OG</>
         ) : (
           <>-</>
         )}
@@ -201,35 +176,20 @@ const HistoryTableAsset: React.FC<HistoryAsset> = ({ item }) => {
         <LinkToExplorer
           txHash={item.txHash}
           startLength={6}
-          className="tw-text-secondary hover:tw-underline"
+          className="hover:tw-underline"
         />
       </td>
       <td>
         <div className="tw-flex tw-items-center tw-justify-between lg:tw-w-5/6 tw-p-0">
           <div>
             {!item.status && (
-              <p className="tw-m-0">{t(translations.common.confirmed)}</p>
+              <p className="tw-m-0">{t(translations.common.executed)}</p>
             )}
             {item.status === TxStatus.FAILED && (
               <p className="tw-m-0">{t(translations.common.failed)}</p>
             )}
             {item.status === TxStatus.PENDING && (
               <p className="tw-m-0">{t(translations.common.pending)}</p>
-            )}
-            <LinkToExplorer
-              txHash={item.txHash}
-              className="tw-text-primary tw-font-normal tw-whitespace-nowrap"
-            />
-          </div>
-          <div>
-            {!item.status && (
-              <img src={iconSuccess} title="Confirmed" alt="Confirmed" />
-            )}
-            {item.status === TxStatus.FAILED && (
-              <img src={iconRejected} title="Failed" alt="Failed" />
-            )}
-            {item.status === TxStatus.PENDING && (
-              <img src={iconPending} title="Pending" alt="Pending" />
             )}
           </div>
         </div>
