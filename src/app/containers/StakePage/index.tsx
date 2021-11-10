@@ -591,6 +591,7 @@ const InnerStakePage: React.FC = () => {
                 )}
                 {withdrawForm === true && (
                   <Modal
+                    className="lg:tw-max-w-3xl"
                     show={withdrawForm}
                     content={
                       <>

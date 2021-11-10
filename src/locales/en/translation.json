@@ -523,6 +523,7 @@
     "withdraw": {
       "title": "Unstake SOV",
       "amountCurrentlyStaked": "Amount Currently Staked",
+      "votingPower": "Voting Power",
       "amountToUnstake": "Amount to Unstake",
       "receiveSovAt": "Receive SOV at",
       "unlockedSov": "Unlocked SOV",
