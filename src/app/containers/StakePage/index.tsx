@@ -564,6 +564,7 @@ const InnerStakePage: React.FC = () => {
                 )}
                 {extendForm === true && (
                   <Modal
+                    className="lg:tw-max-w-3xl"
                     show={extendForm}
                     content={
                       <>

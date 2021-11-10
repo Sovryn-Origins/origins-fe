@@ -546,6 +546,7 @@
       "previousUntil": "Previous until",
       "amountToStake": "Amount to Stake",
       "votingPowerReceived": "Voting Power received",
+      "amountCurrentlyStaked": "Amount Currently Staked",
       "willAddedVote": "Will be added to your vote",
       "balance": "Balance"
     },
