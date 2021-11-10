@@ -318,35 +318,6 @@ const AssetRow: React.FC<IAssetRowProps> = ({
               {t(translations.stake.actions.unstake)}
             </button>
           )}
-
-          {delegateStakesLocked ? (
-            <Tooltip
-              position="bottom"
-              hoverOpenDelay={0}
-              hoverCloseDelay={0}
-              interactionKind="hover"
-              content={<>{t(translations.maintenance.delegateStakes)}</>}
-            >
-              <button
-                type="button"
-                className="tw-border tw-border-primary tw-border-solid tw-rounded-lg tw-px-4 tw-py-2 tw-text-primary tw-text-sm tw-uppercase tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-rowdies tw-bg-transparent hover:tw-bg-opacity-0 tw-opacity-50 tw-cursor-not-allowed hover:tw-bg-transparent"
-              >
-                {t(translations.stake.actions.delegate)}
-              </button>
-            </Tooltip>
-          ) : (
-            <button
-              className={`tw-border tw-border-primary tw-border-solid tw-rounded-lg tw-px-4 tw-py-2 tw-text-primary tw-text-sm tw-uppercase tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-rowdies ${
-                !locked && 'tw-opacity-50 tw-cursor-not-allowed'
-              }`}
-              onClick={() =>
-                onDelegate(Number(item.stakedAmount), Number(item.unlockDate))
-              }
-              disabled={!locked}
-            >
-              {t(translations.stake.actions.delegate)}
-            </button>
-          )}
         </div>
       </td>
     </tr>
