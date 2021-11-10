@@ -155,14 +155,13 @@ const AssetRow: React.FC<IAssetRowProps> = ({
   onIncrease,
   onExtend,
   onUnstake,
-  onDelegate,
 }) => {
   const { t } = useTranslation();
   const { checkMaintenances, States } = useMaintenance();
   const {
     [States.STAKING]: stakingLocked,
     [States.UNSTAKING]: unstakingLocked,
-    [States.DELEGATE_STAKES]: delegateStakesLocked,
+    // [States.DELEGATE_STAKES]: delegateStakesLocked,
   } = checkMaintenances();
 
   const now = new Date();

@@ -79,7 +79,7 @@ export function App() {
             <Route exact path="/swap" component={SwapPage} />
             <Route exact path="/spot" component={SpotTradingPage} /> */}
             <Route exact path="/stake" component={StakePage} />
-            <Route exact path="/governance" component={GovernancePage} />
+            <Route path="/governance" component={GovernancePage} />
             <Redirect exact from="/liquidity" to="/yield-farm" />
             {/* <Route exact path="/reward" component={RewardPage} /> */}
             <Route exact path="/wallet" component={WalletPage} />
