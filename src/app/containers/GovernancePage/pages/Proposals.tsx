@@ -105,7 +105,7 @@ export function Proposals() {
           {total > items.length && (
             <div className="tw-text-center tw-mb-5">
               <Link
-                to="/proposals"
+                to={match.url}
                 className="tw-inline-block tw-text-center tw-px-3 tw-py-2 tw-text-lg tw-uppercase tw-font-light hover:tw-text-gold hover:tw-no-underline tw-tracking-normal"
               >
                 View All Proposals

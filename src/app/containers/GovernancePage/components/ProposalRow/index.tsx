@@ -6,7 +6,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { ProposalState } from 'types/Proposal';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 import Linkify from 'react-linkify';
 import { useGetProposalCreateEvent } from 'app/hooks/useGetProposalCreateEvent';
 import { useGetProposalState } from 'app/hooks/useGetProposalState';
@@ -29,6 +29,7 @@ export function ProposalRow({ proposal }: Props) {
   } = useGetProposalCreateEvent(proposal);
   const { loading: loadingState, state } = useGetProposalState(proposal);
   const location = useLocation();
+  const match = useRouteMatch();
   const [wasLoaded, setWasLoaded] = useState(false);
 
   useEffect(() => {
@@ -153,7 +154,7 @@ export function ProposalRow({ proposal }: Props) {
             <td className="tw-text-left">
               <Link
                 to={{
-                  pathname: `/proposals/${proposal.id}/${proposal.contractName}`,
+                  pathname: `${match.url}/proposal/${proposal.id}`,
                   state: { background: location },
                 }}
                 className="tw-text-gold hover:tw-text-gold hover:tw-underline tw-font-thin tw-font-montserrat tw-tracking-normal"

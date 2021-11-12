@@ -117,6 +117,16 @@ export function PageSkeleton() {
   );
 }
 
+export function RowSkeleton() {
+  return (
+    <div className="flex space-x-4">
+      <div className="skeleton w-1/3">Loading...</div>
+      <div className="skeleton w-1/3">Loading...</div>
+      <div className="skeleton w-1/3">Loading...</div>
+    </div>
+  );
+}
+
 interface Props {
   lines: number;
 }

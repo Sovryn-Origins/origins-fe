@@ -22,6 +22,14 @@ export const prettyTx = (
   return `${start} ··· ${end}`;
 };
 
+export const kFormatter = num => {
+  return Math.abs(num) > 999
+    ? `${Number(
+        Math.sign(num) * Math.floor(Math.abs(num) / 1000),
+      ).toLocaleString()}k`
+    : `${Number(Math.sign(num) * Math.abs(num)).toLocaleString()}`;
+};
+
 export const handleNumberInput = (value, onlyPositive = true) => {
   return handleNumber(value.currentTarget.value, onlyPositive);
 };
