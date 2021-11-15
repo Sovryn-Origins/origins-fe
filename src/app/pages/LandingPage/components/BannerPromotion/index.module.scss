@@ -1,5 +1,5 @@
 .wrapper {
-  @apply tw-flex tw-justify-around tw-z-10 tw-overflow-x-auto tw-pb-2;
+  @apply tw-relative tw-flex tw--mt-10 tw-justify-around tw-z-10 tw-overflow-x-auto tw-pb-2;
   &::-webkit-scrollbar {
     height: 0.625rem;
   }
