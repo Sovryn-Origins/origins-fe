@@ -52,7 +52,7 @@ export function TopUpHistory() {
       <div className="sovryn-table tw-mb-12">
         <table className="tw-w-full">
           <thead>
-            <tr className="tw-font-rowdies tw-text-lg">
+            <tr className="tw-text-lg">
               <th className="tw-text-left tw-hidden md:tw-table-cell">
                 {t(translations.topUpHistory.tableHeaders.time)}
               </th>

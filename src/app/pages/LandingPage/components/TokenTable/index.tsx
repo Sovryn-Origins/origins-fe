@@ -65,7 +65,7 @@ export const TokenTable: React.FC<ITokenTableProps> = ({ className }) => {
       <div className="sovryn-table tw-pt-6">
         <table className="tw-w-full">
           <thead>
-            <tr>
+            <tr className="tw-text-lg">
               <td className="tw-pl-6 tw-font-rowdies tw-font-light">
                 {t(translations.landingPage.tokensTable.columns.asset)}
               </td>
