@@ -4,7 +4,6 @@ import { useIsConnected } from 'app/hooks/useAccount';
 import { LinkToExplorer } from 'app/components/LinkToExplorer';
 import { contractWriter } from 'utils/sovryn/contract-writer';
 import { useAccount } from '../../../hooks/useAccount';
-// import { useContractCall } from '../../../hooks/useContractCall';
 import { useCacheCall } from 'app/hooks/useCacheCall';
 import { kFormatter } from 'utils/helpers';
 import { numberFromWei } from 'utils/blockchain/math-helpers';
@@ -49,7 +48,7 @@ export function VoteCaster(props: Props) {
         [props.proposalId, support, { from: account }],
         // { type: 'vote' },
       );
-      // setTxHash(tx);
+      setTxHash(tx as string);
       setLoading(false);
     },
     [account, props.proposalId, props.contractName],

@@ -1,14 +1,9 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { WalletContext } from '@sovryn/react-wallet';
-// import { Scrollbars } from 'react-custom-scrollbars';
-// import { useContractCall } from '../../../hooks/useContractCall';
 import { useCacheCall } from 'app/hooks/useCacheCall';
 import { blockExplorers, currentChainId } from 'utils/classifiers';
 import { RowSkeleton } from 'app/components/PageSkeleton';
-// import { selectBlockChainProvider } from '../../BlockChainProvider/selectors';
 import { ContractName } from 'utils/types/contracts';
-// import { functionsText } from '../../HomePage/functionsText';
 
 interface Props {
   proposalId: number;
@@ -39,9 +34,11 @@ export function ProposalActions(props: Props) {
   const [items, setItems] = useState<FormattedAction[]>([]);
   // const { chainId } = useSelector(selectBlockChainProvider);
   const { chainId } = useContext(WalletContext);
+
   const getUrl = useCallback(() => {
     return blockExplorers[currentChainId];
-  }, [chainId]);
+  }, []);
+
   const [url, setUrl] = useState(getUrl());
 
   useEffect(() => {
