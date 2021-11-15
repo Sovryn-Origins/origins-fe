@@ -255,7 +255,7 @@ export const contracts = {
     abi: VestingRegistryAbi,
   },
   staking: {
-    address: '0xc37A85e35d7eECC82c4544dcba84CF7E61e1F1a3',
+    address: '0xCdeB44220CDE4887F7e67FF66889a584c4fdDFAB',
     abi: StakingAbi,
     blockNumber: 1218836,
   },
@@ -301,11 +301,11 @@ export const contracts = {
     abi: LiquidityMiningAbi,
   },
   lockedSov: {
-    address: '0xC59a6aEF32b4C76c8CA989498eD230043f3D9ec0',
+    address: '0x7476d0245384C4106C2ebdF20b559a3Db85b1C6F',
     abi: LockedSovAbi,
   },
   feeSharingProxy: {
-    address: '0x740E6f892C0132D659Abcd2B6146D237A4B6b653',
+    address: '0xFAd185a605403d3F4e45C8b6605F035612B23AaE',
     abi: feeSharingProxyAbi,
   },
   stakingRewards: {
@@ -350,7 +350,7 @@ export const contracts = {
     abi: multicallABI,
   },
   governorAdmin: {
-    address: '0x1528f0341a1Ea546780caD690F54b4FBE1834ED4',
+    address: '0xEfB3E729DBC3B6872f4f5CE54d41E3685C182EB9',
     abi: GovernorAdminABI as any,
   },
   governorOwner: {
