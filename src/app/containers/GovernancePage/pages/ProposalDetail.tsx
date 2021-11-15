@@ -1,17 +1,16 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import classNames from 'classnames';
 import { WalletContext } from '@sovryn/react-wallet';
 import { Icon } from '@blueprintjs/core';
 import { useTranslation } from 'react-i18next';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Linkify from 'react-linkify';
-import styled from 'styled-components/macro';
 import { Classes, Tooltip2, Popover2 } from '@blueprintjs/popover2';
 
 import { useAccount, useBlockSync, useIsConnected } from 'app/hooks/useAccount';
 import { translations } from 'locales/i18n';
-import { media } from 'styles/media';
 import { toastSuccess } from 'utils/toaster';
 import { useGetProposalState } from 'app/hooks/useGetProposalState';
 import { MergedProposal } from 'app/hooks/useProposalList';
@@ -20,16 +19,17 @@ import { contractReader } from 'utils/sovryn/contract-reader';
 import { eventReader } from 'utils/sovryn/event-reader';
 import { dateByBlocks, kFormatter, prettyTx } from 'utils/helpers';
 import { numberFromWei } from 'utils/blockchain/math-helpers';
-import { Proposal, ProposalState } from '../../types';
+import { Proposal, ProposalState } from '../types';
 import { blockExplorers, currentChainId } from 'utils/classifiers';
-import { VoteCaster } from '../../components/VoteCaster';
-import { ProposalActions } from '../../components/ProposalActions';
-import { ProposalHistory } from '../../components/ProposalHistory';
+import { VoteCaster } from '../components/VoteCaster';
+import { ProposalActions } from '../components/ProposalActions';
+import { ProposalHistory } from '../components/ProposalHistory';
 import {
   governance_queue,
   governance_execute,
   governance_cancel,
-} from '../../functions';
+} from '../functions';
+import styles from './index.module.scss';
 
 // const governor = 'governorAdmin';
 
@@ -207,7 +207,7 @@ export const ProposalDetail: React.FC = () => {
               </p>
             </Tooltip2> */}
           </div>
-          <StyledBar>
+          <div className={styles.styledBar}>
             <div className="progress__blue" />
             <div className="progress__red" />
             {!isNaN(votesForProgressPercents) &&
@@ -217,7 +217,7 @@ export const ProposalDetail: React.FC = () => {
                   style={{ left: votesAgainstProgressPercents + '%' }}
                 />
               )}
-          </StyledBar>
+          </div>
           <div className="tw-ml-10">
             <span className="xl:tw-text-3xl tw-text-xl tw-font-semibold tw-leading-5 tw-tracking-normal">
               {(votesAgainstProgressPercents || 0).toLocaleString(undefined, {
@@ -420,7 +420,12 @@ function VotingTable(props: TableProps) {
   }, [props.items, props.showSupporters]);
 
   return (
-    <StyledTable className="w-full text-left table-small font-montserrat">
+    <table
+      className={classNames(
+        'w-full text-left table-small font-montserrat',
+        styles.styledTable,
+      )}
+    >
       <thead>
         <tr>
           <th>Addresses</th>
@@ -452,7 +457,7 @@ function VotingTable(props: TableProps) {
           </>
         )}
       </tbody>
-    </StyledTable>
+    </table>
   );
 }
 
@@ -591,185 +596,3 @@ function VotingRow({
     </tr>
   );
 }
-
-const StyledBar = styled.div`
-  width: 100%;
-  max-width: 60%;
-  position: relative;
-  top: -10px;
-  margin: 0 30px;
-  display: flex;
-  height: 34px;
-  flex-wrap: nowrap;
-  position: relative;
-  ${media.xl`
-      max-width: 750px;
-    `}
-  .progress {
-    &__circle {
-      width: 55px;
-      height: 55px;
-      border-radius: 100%;
-      display: block;
-      position: absolute;
-      top: -10px;
-      bottom: 0;
-      border: 11px solid white;
-      transition: all 0.3s;
-      margin: 0 -27.5px;
-    }
-    &__blue {
-      width: 50%;
-      border-radius: 24px 0 0 24px;
-      background: rgb(78, 205, 196);
-      margin-left: -27.5px;
-      background: linear-gradient(
-        90deg,
-        rgba(78, 205, 196, 1) 0%,
-        rgba(0, 0, 0, 1) 100%
-      );
-    }
-    &__red {
-      width: 50%;
-      border-radius: 0 24px 24px 0;
-      background: rgb(0, 0, 0);
-      margin-left: 55px;
-      margin-right: -27.5px;
-      background: linear-gradient(
-        90deg,
-        rgba(0, 0, 0, 1) 0%,
-        rgba(205, 78, 78, 1) 100%
-      );
-    }
-  }
-`;
-
-const StyledTable = styled.table`
-  font-weight: 100;
-  width: 100%;
-  font-size: 14px;
-  font-family: 'Work Sans';
-  letter-spacing: 0;
-
-  &.sovryn-table-mobile {
-    font-size: 12px;
-    @media (max-width: 335px) {
-      font-size: 11px;
-    }
-  }
-  .table-header div {
-    font-weight: 300;
-    color: white;
-    font-size: 16px;
-    padding: 0 22px;
-    height: 45px;
-  }
-  thead tr,
-  .table-header:not(.sub-header) {
-    height: 40px;
-    th {
-      font-weight: 300;
-      color: white;
-      font-size: 16px;
-      padding: 0 22px;
-      height: 45px;
-    }
-  }
-  tbody {
-    tr {
-      td {
-        background-color: #1f1f1f;
-
-        &:first-child {
-          border-radius: 6px 0 0 6px;
-        }
-
-        &:last-child {
-          border-radius: 0 6px 6px 0;
-        }
-
-        &:only-child {
-          border-radius: 6px;
-        }
-      }
-      &:nth-child(odd) {
-        td {
-          background-color: #1f1f1f;
-        }
-      }
-      &:nth-child(even) {
-        td {
-          background-color: #181818;
-        }
-      }
-    }
-  }
-  &.table-small {
-    thead tr {
-      height: 38px;
-      th {
-        height: 38px;
-        padding: 0 15px;
-      }
-    }
-    tbody tr {
-      height: 30px;
-      td {
-        padding: 0 15px;
-        font-weight: 100;
-        font-family: 'Work Sans';
-        a {
-          color: #fec004;
-          font-family: 'Work Sans';
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-      }
-      &:nth-child(even) {
-        td {
-          background-color: #101010;
-          &:first-child {
-            border-radius: 6px 0 0 6px;
-          }
-
-          &:last-child {
-            border-radius: 0 6px 6px 0;
-          }
-
-          &:only-child {
-            border-radius: 6px;
-          }
-        }
-      }
-    }
-  }
-  tbody tr,
-  .mobile-row {
-    height: 80px;
-
-    td {
-      padding: 0 30px;
-      color: white;
-    }
-
-    &:first-of-type {
-      border-top: none;
-    }
-
-    &.table-header {
-      height: 60%;
-
-      > td {
-        font-weight: 300;
-        color: white;
-        font-size: 16px;
-        height: 45px;
-        padding-top: 20px;
-      }
-    }
-  }
-  .mobile-row {
-    align-content: center;
-  }
-`;
