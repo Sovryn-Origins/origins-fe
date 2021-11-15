@@ -29,10 +29,38 @@ export const Footer: React.FC = () => {
         </h6>
         <div className="tw-relative tw-mt-16">
           <div className="tw-flex tw-justify-center">
-            <img className="tw-mx-4" src={discordIcon} alt="Discord" />
-            <img className="tw-mx-4" src={linkedinIcon} alt="LinkedIn" />
-            <img className="tw-mx-4" src={twitterIcon} alt="Twitter" />
-            <img className="tw-mx-4" src={redditIcon} alt="Reddit" />
+            <a
+              className="tw-mx-4"
+              target="_blank"
+              rel="noreferrer"
+              href="https://discord.gg/NrvH8NHU"
+            >
+              <img src={discordIcon} alt="Discord" />
+            </a>
+            <a
+              className="tw-mx-4"
+              target="_blank"
+              rel="noreferrer"
+              href="https://www.linkedin.com/company/originsxyz/"
+            >
+              <img src={linkedinIcon} alt="LinkedIn" />
+            </a>
+            <a
+              className="tw-mx-4"
+              target="_blank"
+              rel="noreferrer"
+              href="https://twitter.com/OriginsXYZ"
+            >
+              <img src={twitterIcon} alt="Twitter" />
+            </a>
+            <a
+              className="tw-mx-4"
+              target="_blank"
+              rel="noreferrer"
+              href="https://www.reddit.com/r/OriginsXYZ/"
+            >
+              <img src={redditIcon} alt="Reddit" />
+            </a>
           </div>
 
           <div className="tw-mt-8 md:tw-absolute md:tw-left-0 md:tw-bottom-0">
