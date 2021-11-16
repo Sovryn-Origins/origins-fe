@@ -19,7 +19,9 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({ className }) => {
         <img src={imgOGPromotion} alt="It's OG" />
       </div>
       <p className={styles.promotionText}>
-        {t(translations.landingPage.omgItsOG)}
+        <span className="tw-font-rowdies tw-font-semibold tw-mr-8">OMG</span>
+        {t(translations.landingPage.its)}
+        <span className="tw-font-rowdies tw-font-semibold tw-ml-8">OG</span>
       </p>
       <p className={styles.title}>
         {t(translations.landingPage.bondingCurve.bondingCurve)}
@@ -29,7 +31,7 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({ className }) => {
       </p>
       <Chart />
       <p className={styles.bctitle}>Why Bonding Curve?</p>
-      <div className="tw-grid tw-grid-cols-1 lg:tw-grid-cols-3 lg:tw-gap-4">
+      <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 md:tw-gap-4">
         {[0, 1, 2].map(i => (
           <CharacterItem
             key={i}

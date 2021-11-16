@@ -1533,7 +1533,8 @@
         "circulatingSupply": "Circulating Supply"
       }
     },
-    "omgItsOG": "OMG It's OG",
+    "omgItsOG": "OMG  It's  OG",
+    "its": "It's",
     "bondingCurve": {
       "bondingCurve": "Bonding Curve",
       "description": "OG Tokens are managed by bonding curve contracts. A bonding curve is a mathematical curve that defines a relationship between price and token supply. ie, the token price increases as the supply of the token increases and vice-versa.",

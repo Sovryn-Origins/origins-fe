@@ -2,10 +2,11 @@
   @apply tw-font-rowdies tw-text-base tw-text-center tw-uppercase tw-text-black tw-mt-2 tw-mb-0;
   font-size: 3rem;
   line-height: 4.563rem;
+  // word-spacing: 2.2rem;
 }
 
 .title {
-  @apply tw-font-rowdies tw-text-base tw-text-center tw-uppercase tw-text-black tw-mt-24 tw-mb-6;
+  @apply tw-font-rowdies tw-font-semibold tw-text-base tw-text-center tw-uppercase tw-text-black tw-mt-24 tw-mb-6;
   font-size: 2rem;
   line-height: 3.5rem;
 }
