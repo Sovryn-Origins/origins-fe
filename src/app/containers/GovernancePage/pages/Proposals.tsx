@@ -15,9 +15,7 @@ export function Proposals() {
   const location = useLocation();
   return (
     <main>
-      <h2 className="tw-text-black tw-text-center tw-font-rowdies tw-text-lg tw-pt-12 tw-uppercase tw-pb-12 tw-tracking-normal">
-        SOVRYN Bitocracy
-      </h2>
+      <h2 className={styles.title}>SOVRYN Bitocracy</h2>
       <div className="container tw-max-w-screen-2xl tw-mx-auto tw-mb-64 tw-px-4 tw-py-6 tw-bg-gray-1 tw-border-4 tw-border-solid tw-border-black tw-rounded-lg">
         <div className="tw-flex tw-justify-between tw-items-center">
           <h2 className="tw-font-normal tw-text-xl tw-font-rowdies tw-uppercase tw-mb-0 tw-tracking-normal">
@@ -29,7 +27,7 @@ export function Proposals() {
               pathname: `${match.url}/propose`,
               state: { background: location },
             }}
-            className="tw-inline-block tw-text-center tw-px-3 tw-py-2 tw-text-lg tw-font-light tw-bg-primary tw-bg-opacity-40 hover:tw-bg-opacity-80 tw-rounded-lg tw-border-2 tw-border-solid tw-border-primary tw-text-black hover:tw-no-underline tw-tracking-normal"
+            className="tw-inline-block tw-text-center tw-px-4 tw-py-2 tw-text-sm tw-font-rowdies tw-font-light tw-uppercase tw-bg-primary tw-bg-opacity-40 hover:tw-bg-opacity-80 tw-rounded-lg tw-border-2 tw-border-solid tw-border-primary tw-text-black hover:tw-no-underline tw-tracking-normal"
           >
             Propose
           </Link>
@@ -106,7 +104,7 @@ export function Proposals() {
             <div className="tw-text-center tw-mb-5">
               <Link
                 to={match.url}
-                className="tw-inline-block tw-text-center tw-px-3 tw-py-2 tw-text-lg tw-uppercase tw-font-light hover:tw-text-gold hover:tw-no-underline tw-tracking-normal"
+                className="tw-inline-block tw-text-center tw-px-3 tw-py-2 tw-text-sm tw-uppercase tw-font-rowdies tw-font-light hover:tw-text-gold hover:tw-no-underline tw-tracking-normal"
               >
                 View All Proposals
               </Link>

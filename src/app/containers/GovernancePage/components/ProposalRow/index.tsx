@@ -39,6 +39,8 @@ export function ProposalRow({ proposal }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingState, loadingState, created, state, wasLoaded]);
 
+  if (!created) return null;
+
   if (loadingState || loadingCreated || !created || !state) {
     return (
       <>
@@ -91,12 +93,12 @@ export function ProposalRow({ proposal }: Props) {
       <tr key={proposal.id}>
         {state === ProposalState.Active ? (
           <>
-            <td className="tw-font-inter tw-max-w-sm tw-truncate tw-pr-4">
+            <td className="tw-font-inter tw-max-w-sm tw-truncate tw-pr-4 tw-pl-5">
               <Linkify>
                 {String(proposal.id).padStart(3, '0')} • {created?.description}
               </Linkify>
             </td>
-            <td className="tw-text-left tw-hidden xl:tw-table-cell tw-truncate tw-pr-4">
+            <td className="tw-text-left tw-hidden xl:tw-table-cell tw-truncate tw-pr-4 tw-pl-4">
               #{proposal.startBlock}
             </td>
             <td className="tw-text-left tw-hidden xl:tw-table-cell tw-pr-4">
@@ -125,7 +127,7 @@ export function ProposalRow({ proposal }: Props) {
                   pathname: `/proposals/${proposal.id}/${proposal.contractName}`,
                   state: { background: location },
                 }}
-                className="tw-text-gold hover:tw-text-gold hover:tw-underline tw-font-thin tw-font-montserrat tw-tracking-normal"
+                className="tw-text-gold hover:tw-text-gold hover:tw-underline tw-font-thin tw-font-rowdies tw-tracking-normal tw-uppercase"
               >
                 View Proposal
               </Link>
@@ -133,7 +135,7 @@ export function ProposalRow({ proposal }: Props) {
           </>
         ) : (
           <>
-            <td className="tw-font-montserrat tw-max-w-sm tw-truncate tw-pr-4">
+            <td className="tw-font-montserrat tw-max-w-sm tw-truncate tw-pr-4 tw-pl-5">
               <Linkify>
                 {String(proposal.id).padStart(3, '0')} • {created?.description}
               </Linkify>
@@ -157,7 +159,7 @@ export function ProposalRow({ proposal }: Props) {
                   pathname: `${match.url}/proposal/${proposal.id}`,
                   state: { background: location },
                 }}
-                className="tw-text-gold hover:tw-text-gold hover:tw-underline tw-font-thin tw-font-montserrat tw-tracking-normal"
+                className="tw-text-gold hover:tw-text-gold hover:tw-underline tw-font-thin tw-font-rowdies tw-tracking-normal tw-uppercase"
               >
                 View Proposal
               </Link>

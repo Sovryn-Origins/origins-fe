@@ -26,7 +26,7 @@ export function ProposalRowStateBadge({ state }: Props) {
   return (
     <div className={styles.styledDiv}>
       <div
-        className={`proposal-state font-thin tracking-normal font-montserrat ${getStateClass(
+        className={`proposal-state tw-tracking-normal tw-font-inter ${getStateClass(
           state,
         )}`}
       >

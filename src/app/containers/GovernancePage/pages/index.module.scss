@@ -1,19 +1,14 @@
 .styledTable {
-  font-weight: 100;
-  width: 100%;
-  font-size: 14px;
-  font-family: 'Work Sans';
+  @apply tw-font-normal tw-font-inter tw-w-full;
 
   &.sovryn-table-mobile {
-    font-size: 12px;
+    @apply tw-text-xs;
     @media (max-width: 335px) {
       font-size: 11px;
     }
   }
   .table-header div {
-    font-weight: 300;
-    color: white;
-    font-size: 16px;
+    @apply tw-font-light tw-text-white tw-text-base;
     padding: 0 22px;
     height: 43px;
   }
@@ -21,19 +16,15 @@
   .table-header:not(.sub-header) {
     height: 40px;
     th {
-      font-weight: 300;
-      color: white;
-      font-size: 16px;
-      padding: 0 0px;
+      @apply tw-font-rowdies tw-font-light tw-text-lg tw-text-white tw-p-0 tw-tracking-normal;
       height: 45px;
-      line-height: 16px;
-      letter-spacing: 0;
+      line-height: 1.375rem;
     }
   }
   tbody {
     tr {
       td {
-        background-color: #1f1f1f;
+        @apply tw-font-inter tw-bg-gray-2;
 
         &:first-child {
           border-radius: 6px 0 0 6px;
@@ -49,7 +40,7 @@
       }
       &:nth-child(odd) {
         td {
-          background-color: #1f1f1f;
+          @apply tw-bg-gray-2;
         }
       }
       &:nth-child(even) {
@@ -95,17 +86,16 @@
     height: 80px;
 
     td {
+      @apply tw-text-white tw-text-base;
       padding: 10px 0px;
-      color: white;
-      font-size: 15px;
       line-height: 27px;
       &:first-child {
         a {
-          display: none;
+          @apply tw-hidden;
         }
       }
       a {
-        color: #fec004;
+        @apply tw-text-yellow-3;
       }
     }
 
@@ -117,16 +107,13 @@
       height: 60%;
 
       > td {
-        font-weight: 300;
-        color: white;
-        font-size: 16px;
+        @apply tw-font-light tw-text-white tw-text-base tw-pt-5;
         height: 45px;
-        padding-top: 20px;
       }
     }
   }
   .mobile-row {
-    align-content: center;
+    @apply tw-content-center;
   }
 }
 
@@ -175,4 +162,9 @@
       );
     }
   }
+}
+
+.title {
+  @apply tw-text-black tw-text-center tw-font-rowdies tw-text-xl tw-pt-12 tw-uppercase tw-pb-12 tw-tracking-normal;
+  line-height: 1.875rem;
 }
