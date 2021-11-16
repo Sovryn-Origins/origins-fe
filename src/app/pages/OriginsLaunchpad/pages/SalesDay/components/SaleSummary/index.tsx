@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import { translations } from 'locales/i18n';
 import { toNumberFormat } from 'utils/display-text/format';
@@ -9,6 +9,7 @@ import { useGetSaleSummary } from '../../../../hooks/useGetSaleSummary';
 import saleListBackgrouond from 'assets/images/OriginsLaunchpad/sale-list-background.svg';
 import { Tab } from '../Tab';
 import { PreviousSalesCard } from '../../../Dashboard/components/PreviousSalesCard';
+import styles from './index.module.scss';
 
 interface ISaleSummaryProps {
   saleInfo: ISaleInformation;
@@ -40,7 +41,12 @@ export const SaleSummary: React.FC<ISaleSummaryProps> = ({
   };
 
   return (
-    <SaleSummaryWrapper className={className}>
+    <div
+      className={classNames(
+        'tw-max-w-screen-2xl tw-mx-auto tw-w-max',
+        className,
+      )}
+    >
       <div className="tw-flex tw-justify-center">
         {Object.keys(SaleType).map(saleType => (
           <Tab
@@ -54,7 +60,10 @@ export const SaleSummary: React.FC<ISaleSummaryProps> = ({
         ))}
       </div>
 
-      <SaleListPane className="tw-mt-14">
+      <div
+        className={classNames(styles.saleListPane, 'tw-mt-14')}
+        style={{ backgroundImage: `url(${saleListBackgrouond})` }}
+      >
         {activeTab &&
           saleSummary[activeTab] &&
           saleSummary[activeTab].map((sale: ISaleDetails) => (
@@ -71,41 +80,7 @@ export const SaleSummary: React.FC<ISaleSummaryProps> = ({
               className="tw-my-4 xl:tw-my-0"
             />
           ))}
-      </SaleListPane>
-    </SaleSummaryWrapper>
+      </div>
+    </div>
   );
 };
-
-const SaleSummaryWrapper = styled.div`
-  max-width: 1800px;
-  margin: auto;
-`;
-
-const SaleListPane = styled.div`
-  background-image: url(${saleListBackgrouond});
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-origin: border-box;
-  background-color: #1f1f1f;
-  border: 5px solid #000000;
-  border-radius: 0.5rem;
-  display: flex;
-  justify-content: center;
-  padding: 1.5rem 1rem;
-  flex-direction: column;
-  align-items: center;
-
-  @media (min-width: 576px) {
-    padding: 2.5rem 1rem;
-  }
-
-  @media (min-width: 1200px) {
-    flex-direction: row;
-    padding: 1rem;
-  }
-
-  @media (min-width: 1768px) {
-    padding: 2.5rem;
-  }
-`;

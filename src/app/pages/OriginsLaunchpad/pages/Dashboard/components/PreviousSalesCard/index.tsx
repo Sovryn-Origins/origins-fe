@@ -2,8 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { InfoRow } from './InfoRow';
-import { CardImage } from './styled';
 import cn from 'classnames';
+import styles from './index.module.scss';
 
 interface IPreviousSalesCardProps {
   saleName: string;
@@ -34,21 +34,20 @@ export const PreviousSalesCard: React.FC<IPreviousSalesCardProps> = ({
   return (
     <div
       className={cn(
-        'tw-flex tw-min-w-100 tw-flex-col tw-items-center sm:tw-flex-row xl:tw-max-w-50',
+        'tw-flex tw-min-w-100 tw-flex-col tw-items-center sm:tw-flex-row xl:tw-max-w-screen-xl tw-px-3',
         className,
       )}
     >
-      <CardImage
+      <div
         style={{ backgroundImage: `url(${backgroundImage})` }}
-        className={cn(cardClassName)}
-      />
-      <div className="tw-flex tw-flex-col tw-justify-center tw-ml-6 xl:tw-ml-4 2xl:tw-ml-11">
+        className={cn(styles.cardImage, cardClassName)}
+      ></div>
+      <div className="tw-flex tw-flex-col tw-justify-center tw-ml-6 xl:tw-ml-4">
         <InfoRow
           label={t(
             translations.originsLaunchpad.previousSales.projectCard.date,
           )}
           value={date}
-          className="tw-mb-4"
         />
 
         <InfoRow
@@ -56,7 +55,6 @@ export const PreviousSalesCard: React.FC<IPreviousSalesCardProps> = ({
             translations.originsLaunchpad.previousSales.projectCard.saleName,
           )}
           value={saleName}
-          className="tw-mb-4"
         />
 
         <InfoRow
@@ -65,7 +63,6 @@ export const PreviousSalesCard: React.FC<IPreviousSalesCardProps> = ({
               .saleAllocation,
           )}
           value={saleAllocation}
-          className="tw-mb-4"
         />
 
         <InfoRow
@@ -73,7 +70,6 @@ export const PreviousSalesCard: React.FC<IPreviousSalesCardProps> = ({
             translations.originsLaunchpad.previousSales.projectCard.price,
           )}
           value={price}
-          className="tw-mb-4"
         />
 
         <InfoRow
@@ -81,7 +77,6 @@ export const PreviousSalesCard: React.FC<IPreviousSalesCardProps> = ({
             translations.originsLaunchpad.previousSales.projectCard.totalRaised,
           )}
           value={totalRaised}
-          className="tw-mb-4"
         />
 
         <InfoRow
@@ -90,7 +85,6 @@ export const PreviousSalesCard: React.FC<IPreviousSalesCardProps> = ({
               .participatingWallets,
           )}
           value={participatingWallets}
-          className="tw-mb-4"
         />
 
         <InfoRow
