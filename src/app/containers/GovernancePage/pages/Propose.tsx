@@ -101,7 +101,7 @@ export const Propose: React.FC = () => {
   };
 
   return (
-    <div className="container tw-max-w-screen-2xl tw-mx-auto tw-mb-64 tw-mt-24 tw-px-6 tw-py-8 tw-bg-gray-1 tw-border-4 tw-border-solid tw-border-black tw-rounded-lg">
+    <div className="container tw-max-w-screen-2xl tw-w-full tw-mx-auto tw-mb-64 tw-mt-24 tw-px-6 tw-py-8 tw-bg-gray-1 tw-border-4 tw-border-solid tw-border-black tw-rounded-lg">
       <form onSubmit={handleSubmit}>
         <div className="tw-relative tw-flex tw-flex-col md:tw-flex-row tw-items-start md:tw-items-center">
           <label className="tw-text-sm md:tw-text-base tw-font-rowdies tw-uppercase">
@@ -127,13 +127,13 @@ export const Propose: React.FC = () => {
         {rows.map((row, i) => {
           return (
             <div
-              className="tw-relative tw-mt-2 tw-border tw-border-white tw-rounded-lg tw-pb-2 tw-pt-6"
+              className="tw-relative tw-mt-2 tw-border tw-border-white tw-rounded-lg tw-pb-4 tw-pt-10 tw-px-4"
               key={i}
             >
               <Icon
                 onClick={() => removeRow(i)}
                 className={
-                  'tw-absolute tw-top-1 tw-right-2' +
+                  'tw-absolute tw-top-2 tw-right-4' +
                   (rows.length < 2 ? ' tw-opacity-50' : ' tw-cursor-pointer')
                 }
                 icon="remove"
@@ -142,14 +142,14 @@ export const Propose: React.FC = () => {
               />
               <div className="tw-flex tw-flex-col md:tw-flex-row tw-items-center tw-mb-2 tw-px-2 md:tw-px-0">
                 <input
-                  className="tw-mx-2 tw-appearance-none tw-border tw-text-sm tw-font-medium tw-font-inter tw-text-center tw-h-10 tw-rounded-lg tw-w-full tw-mb-2 md:tw-mb-0 tw-py-2 tw-px-2 md:tw-px-14 tw-bg-theme-white tw-text-black tw-tracking-normal focus:tw-outline-none focus:tw-shadow-outline"
+                  className="tw-mr-2 tw-appearance-none tw-border tw-text-sm tw-font-medium tw-font-inter tw-text-center tw-h-10 tw-rounded-lg tw-w-full tw-mb-2 md:tw-mb-0 tw-py-2 tw-px-2 md:tw-px-14 tw-bg-theme-white tw-text-black tw-tracking-normal focus:tw-outline-none focus:tw-shadow-outline"
                   type="text"
                   value={row.target}
                   onChange={e => updateRow(e.target.value, 'target', i)}
                   placeholder="Target"
                 />
                 <input
-                  className="tw-mx-2 tw-appearance-none tw-border tw-text-sm tw-font-medium tw-font-inter tw-text-center tw-h-10 tw-rounded-lg tw-w-full tw-py-2 tw-px-2 md:tw-px-14 tw-bg-theme-white tw-text-black tw-tracking-normal focus:tw-outline-none focus:tw-shadow-outline"
+                  className="tw-ml-2 tw-appearance-none tw-border tw-text-sm tw-font-medium tw-font-inter tw-text-center tw-h-10 tw-rounded-lg tw-w-full tw-py-2 tw-px-2 md:tw-px-14 tw-bg-theme-white tw-text-black tw-tracking-normal focus:tw-outline-none focus:tw-shadow-outline"
                   type="text"
                   value={row.value}
                   onChange={e => updateRow(e.target.value, 'value', i)}
@@ -158,14 +158,14 @@ export const Propose: React.FC = () => {
               </div>
               <div className="tw-flex tw-flex-col md:tw-flex-row tw-items-center tw-px-2 md:tw-px-0">
                 <input
-                  className="tw-mx-2 tw-appearance-none tw-border tw-text-sm tw-font-medium tw-font-inter tw-text-center tw-h-10 tw-rounded-lg tw-w-full tw-mb-2 md:tw-mb-0 tw-py-2 tw-px-2 md:tw-px-14 tw-bg-theme-white tw-text-black tw-tracking-normal focus:tw-outline-none focus:tw-shadow-outline"
+                  className="tw-mr-2 tw-appearance-none tw-border tw-text-sm tw-font-medium tw-font-inter tw-text-center tw-h-10 tw-rounded-lg tw-w-full tw-mb-2 md:tw-mb-0 tw-py-2 tw-px-2 md:tw-px-14 tw-bg-theme-white tw-text-black tw-tracking-normal focus:tw-outline-none focus:tw-shadow-outline"
                   type="text"
                   value={row.signature}
                   onChange={e => updateRow(e.target.value, 'signature', i)}
                   placeholder="Signature"
                 />
                 <input
-                  className="tw-mx-2 tw-appearance-none tw-border tw-text-sm tw-font-medium tw-font-inter tw-text-center tw-h-10 tw-rounded-lg tw-w-full tw-py-2 tw-px-2 md:tw-px-14 tw-bg-theme-white tw-text-black tw-tracking-normal focus:tw-outline-none focus:tw-shadow-outline"
+                  className="tw-ml-2 tw-appearance-none tw-border tw-text-sm tw-font-medium tw-font-inter tw-text-center tw-h-10 tw-rounded-lg tw-w-full tw-py-2 tw-px-2 md:tw-px-14 tw-bg-theme-white tw-text-black tw-tracking-normal focus:tw-outline-none focus:tw-shadow-outline"
                   type="text"
                   value={row.calldata}
                   onChange={e => updateRow(e.target.value, 'calldata', i)}
@@ -180,7 +180,7 @@ export const Propose: React.FC = () => {
           <Icon
             onClick={() => addRow()}
             className={
-              'tw-mt-8 tw-mb-8 tw-mx-auto tw-cursor-pointer' +
+              'tw-mt-2 tw-mb-8 tw-mx-auto tw-cursor-pointer' +
               (invalidRows() ? ' tw-opacity-50' : '')
             }
             icon="add"
@@ -189,7 +189,7 @@ export const Propose: React.FC = () => {
           />
         </div>
 
-        <div className="tw-grid tw-grid-rows-1 tw-grid-flow-col tw-gap-4">
+        <div className="tw-grid tw-grid-rows-1 tw-grid-flow-col tw-gap-4 tw-max-w-3xl tw-mx-auto">
           <button
             type="submit"
             className={`tw-uppercase tw-w-full tw-text-black tw-bg-primary tw-text-base tw-font-normal tw-font-rowdies tw-px-4 hover:tw-bg-opacity-80 tw-py-2 tw-rounded-lg tw-transition tw-duration-500 tw-ease-in-out ${
