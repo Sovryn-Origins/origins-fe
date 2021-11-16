@@ -74,12 +74,12 @@ export const StakePage: React.FC = () => {
       </Helmet>
       <Header />
       <main>
-        <div className="tw-bg-gray-1 tw-tracking-normal">
-          <div className="tw-container tw-mx-auto tw-px-6">
-            <h2 className="tw-text-sov-white tw-pt-8 tw-pb-5 tw-pl-10">
+        <div className="tw-tracking-normal">
+          <div className="tw-container tw-mx-auto tw-px-6 tw-mb-44">
+            <h2 className="tw-text-black tw-mt-16 tw-mb-6 tw-pl-10 tw-text-center tw-text-xl tw-font-rowdies tw-font-normal tw-uppercase">
               {t(translations.stake.title)}
             </h2>
-            <div className="tw-w-full tw-bg-gray-1 tw-text-center tw-rounded-b tw-shadow tw-p-3">
+            <div className="tw-w-full tw-text-black tw-text-center tw-rounded-b tw-p-3">
               <i>{t(translations.stake.connect)}</i>
             </div>
           </div>
