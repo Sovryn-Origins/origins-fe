@@ -80,7 +80,7 @@ export const CurrentStakes: React.FC<ICurrentStakesProps> = props => {
 
   return (
     <>
-      <p className="tw-font-semibold tw-text-xl tw-uppercase">
+      <p className="tw-font-rowdies tw-text-xl tw-uppercase">
         {t(translations.stake.currentStakes.title)}
       </p>
       <div className="tw-bg-gray-1 tw-rounded-b tw-shadow">
@@ -94,22 +94,22 @@ export const CurrentStakes: React.FC<ICurrentStakesProps> = props => {
           <StyledTable className="tw-w-full tw-text-sov-white">
             <thead>
               <tr>
-                <th className="tw-font-rowdies tw-font-light tw-text-left tw-pl-0">
+                <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left tw-pl-0">
                   {t(translations.stake.currentStakes.lockedAmount)}
                 </th>
-                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentStakes.votingPower)}
                 </th>
-                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentStakes.stakingDate)}
                 </th>
-                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentStakes.stakingPeriod)}
                 </th>
-                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentStakes.unlockDate)}
                 </th>
-                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden md:tw-table-cell tw-w-1/5">
+                <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left tw-hidden md:tw-table-cell tw-w-1/5">
                   {t(translations.stake.actions.title)}
                 </th>
               </tr>
@@ -117,7 +117,10 @@ export const CurrentStakes: React.FC<ICurrentStakesProps> = props => {
             <tbody className="tw-mt-5 tw-font-rowdies tw-text-xs">
               {!stakesArray?.length && (
                 <tr key="empty">
-                  <td colSpan={99} className="tw-text-center tw-font-normal">
+                  <td
+                    colSpan={99}
+                    className="tw-text-center tw-font-rowdies tw-font-normal tw-text-base"
+                  >
                     {t(translations.stake.nostake)}
                   </td>
                 </tr>

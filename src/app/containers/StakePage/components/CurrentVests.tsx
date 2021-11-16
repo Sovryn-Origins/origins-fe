@@ -19,7 +19,7 @@ export function CurrentVests(props: Props) {
 
   return (
     <>
-      <p className="tw-font-semibold tw-text-lg tw-uppercase tw-mb-2 tw-mt-12">
+      <p className="tw-font-rowdies tw-text-xl tw-uppercase tw-mb-2 tw-mt-12">
         {t(translations.stake.currentVests.title)}
       </p>
       <div className="tw-bg-gray-1 tw-rounded-b tw-shadow">
@@ -30,22 +30,22 @@ export function CurrentVests(props: Props) {
                 {/* <th className="tw-text-left tw-pl-0 assets">
                   {t(translations.stake.currentVests.asset)}
                 </th> */}
-                <th className="tw-font-rowdies tw-font-light tw-text-left">
+                <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left">
                   {t(translations.stake.currentVests.lockedAmount)}
                 </th>
-                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentVests.votingPower)}
                 </th>
-                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentVests.stakingPeriod)}
                 </th>
-                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentVests.stakingDate)}
                 </th>
-                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentVests.revenue)}
                 </th>
-                <th className="tw-font-rowdies tw-font-light tw-text-left tw-hidden md:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left tw-hidden md:tw-table-cell">
                   {t(translations.stake.actions.title)}
                 </th>
               </tr>

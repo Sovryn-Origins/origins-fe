@@ -51,27 +51,27 @@ export function HistoryEventsTable() {
 
   return (
     <>
-      <div className="history-table tw-bg-gray-1 tw-rounded-b tw-mb-10">
-        <p className="tw-font-normal tw-text-lg tw-font-rowdies tw-uppercase tw-mb-2 tw-mt-12">
+      <div className="history-table tw-max-w-none tw-bg-gray-1 tw-rounded-b tw-mb-10">
+        <p className="tw-font-normal tw-text-xl tw-font-rowdies tw-uppercase tw-mb-2 tw-mt-12">
           {t(translations.stake.history.title)}
         </p>
         <div className="tw-rounded-lg tw-sovryn-table tw-pt-1 tw-pb-0 tw-mb-5">
           <StyledTable className="tw-w-full">
             <thead>
               <tr className="tw-uppercase tw-font-consolos">
-                <th className="tw-text-left tw-pl-0 assets">
+                <th className="tw-font-bold tw-font-consolas tw-text-left tw-text-lg tw-pl-0 assets">
                   {t(translations.stake.history.stakingDate)}
                 </th>
-                <th className="tw-text-left">
+                <th className="tw-font-bold tw-font-consolas tw-text-left tw-text-lg">
                   {t(translations.stake.history.action)}
                 </th>
-                <th className="tw-text-left">
+                <th className="tw-font-bold tw-font-consolas tw-text-left tw-text-lg">
                   {t(translations.stake.history.stakedAmount)}
                 </th>
-                <th className="tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-font-bold tw-font-consolas tw-text-left tw-text-lg tw-hidden lg:tw-table-cell">
                   {t(translations.stake.history.hash)}
                 </th>
-                <th className="tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-font-bold tw-font-consolas tw-text-left tw-text-lg tw-hidden lg:tw-table-cell">
                   {t(translations.stake.history.status)}
                 </th>
               </tr>
