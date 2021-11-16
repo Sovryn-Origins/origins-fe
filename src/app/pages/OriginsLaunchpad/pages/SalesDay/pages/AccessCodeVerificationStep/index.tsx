@@ -42,6 +42,7 @@ export const AccessCodeVerificationStep: React.FC<IAccessCodeVerificationStepPro
               : t(
                   translations.originsLaunchpad.saleDay
                     .accessCodeVerificationStep.notVerified,
+                  { token: saleName },
                 )}
           </div>
 
