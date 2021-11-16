@@ -97,7 +97,7 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
     <div
       className={cn(
         className,
-        'tw-trading-form-card tw-bg-gray-3 tw-rounded-lg tw-py-8 tw-px-6 tw-mx-auto xl:tw-mx-0 tw-flex tw-flex-col',
+        'tw-trading-form-card tw-max-w-xl tw-bg-gray-3 tw-rounded-lg tw-py-8 tw-px-6 tw-mx-auto xl:tw-mx-0 tw-flex tw-flex-col',
       )}
     >
       <div className="text-center tw-text-xl tw-uppercase tw-font-rowdies">
@@ -127,6 +127,7 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
             labelClassName="tw-text-sm tw-mb-4 tw-uppercase tw-font-rowdies"
           >
             <Input
+              className="tw-max-w-none"
               value={weiToNumberFormat(balance, 4)}
               readOnly={false}
               appendElem={token ? <AssetRenderer asset={token} /> : undefined}
@@ -163,13 +164,13 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
                   new Date().getTime() < unlockTime
                 }
                 onClick={handleSubmit}
-                className="tw-mx-auto tw-mb-4"
+                className="tw-mx-auto tw-uppercase"
                 text={t(translations.originsClaim.claimForm.cta)}
               />
             </div>
           )}
 
-          <div className="tw-text-tiny tw-font-thin tw-uppercase">
+          <div className="tw-text-sm tw-font-light tw-font-rowdies tw-uppercase tw-mt-8">
             {token &&
               t(translations.originsClaim.claimForm.note, {
                 date: new Date(unlockTime).toLocaleString(),
