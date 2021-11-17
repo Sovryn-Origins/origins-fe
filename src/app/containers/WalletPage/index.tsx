@@ -40,7 +40,7 @@ export function WalletPage() {
 
       <div className="tw-container tw-mx-auto tw-px-4 tw-max-w-screen-xl">
         <div className="tw-flex tw-flex-wrap tw-items-center tw-justify-center tw-mb-12 tw-mt-16">
-          <h2 className="tw-text-black tw-text-xl tw-flex-shrink-0 tw-flex-grow-0 tw-mb-0">
+          <h2 className="tw-text-black tw-text-xl tw-flex-shrink-0 tw-flex-grow-0 tw-mb-0 tw-uppercase">
             {t(translations.userAssets.meta.title)}
           </h2>
         </div>
@@ -69,7 +69,7 @@ export function WalletPage() {
               </div>
             </div>
           ) : (
-            <div className="tw-grid tw-gap-8 tw-grid-cols-12">
+            <div className="tw-grid tw-gap-8 tw-grid-cols-12 tw-pb-6">
               <div className="tw-col-span-12">
                 <SkeletonRow
                   loadingText={t(translations.topUpHistory.walletHistory)}
