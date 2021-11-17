@@ -22,7 +22,7 @@ export function GovernancePage() {
         <Route exact path={`${match.url}/propose`} component={Propose} />
         <Route
           exact
-          path={`${match.url}/proposal/:id`}
+          path={`${match.url}/proposal/:id/:contractName`}
           component={ProposalDetail}
         />
         <Redirect to={match.url} />
