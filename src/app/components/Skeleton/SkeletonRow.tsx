@@ -24,7 +24,7 @@ export function SkeletonRow({ loadingText, className }: Props) {
         <div className="tw-col-span-3">
           <div className="bp3-skeleton">&nbsp;</div>
         </div>
-        <div className="tw-col-span-1">
+        <div className="tw-col-span-3">
           <div className="bp3-skeleton">&nbsp;</div>
         </div>
       </div>
