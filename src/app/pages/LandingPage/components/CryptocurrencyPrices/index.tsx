@@ -8,7 +8,7 @@ import { IPairs, IAssets, IAssetData } from './types';
 import { AssetsDictionary } from 'utils/dictionaries/assets-dictionary';
 import { AssetSymbolRenderer } from 'app/components/AssetSymbolRenderer';
 import {
-  btcToSatoshi,
+  // btcToSatoshi,
   numberToUSD,
   toNumberFormat,
 } from 'utils/display-text/format';
@@ -114,7 +114,7 @@ export const CryptocurrencyPrices: React.FC<ICryptocurrencyPricesProps> = ({
                       assetDetails={rbtcDetails}
                       price24h={-pair.price_change_percent_24h}
                       priceWeek={-pair.price_change_week}
-                      lastPrice={1}
+                      lastPrice={1 / pair.last_price}
                       assetData={assetData && assetData[pair?.quote_id]}
                       assetLoading={assetLoading}
                     />
@@ -129,7 +129,7 @@ export const CryptocurrencyPrices: React.FC<ICryptocurrencyPricesProps> = ({
                         assetDetails={assetDetails}
                         price24h={pair.price_change_percent_24h_usd}
                         priceWeek={pair.price_change_week_usd}
-                        lastPrice={pair.last_price}
+                        lastPrice={pair.last_price_usd}
                         assetData={assetData && assetData[pair?.base_id]}
                         assetLoading={assetLoading}
                       />
@@ -179,7 +179,7 @@ export const Row: React.FC<IRowProps> = ({
         </td>
 
         <td className="tw-text-left tw-text-sm tw-font-inter tw-whitespace-nowrap">
-          {btcToSatoshi(lastPrice || 0)} SATS
+          {numberToUSD(lastPrice || 0)}
         </td>
 
         <td className={'tw-text-left tw-text-sm tw-whitespace-nowrap'}>

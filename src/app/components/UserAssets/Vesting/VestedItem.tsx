@@ -13,7 +13,6 @@ import { useMaintenance } from '../../../hooks/useMaintenance';
 import { FullVesting } from './useListOfUserVestings';
 import { useDollarValue } from '../../../hooks/useDollarValue';
 import { useGetVesting } from './useGetVesting';
-import styles from './index.module.scss';
 
 type VestedItemProps = {
   vesting: FullVesting;

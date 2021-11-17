@@ -13,7 +13,7 @@ import { VestedAssets } from '../../components/UserAssets/VestedAssets';
 import { useAccount, useIsConnected } from '../../hooks/useAccount';
 import { TopUpHistory } from '../FastBtcDialog/components/TopUpHistory';
 import { VestedHistory } from '../VestedHistory';
-import { OriginClaimBanner } from './components/OriginClaimBanner';
+// import { OriginClaimBanner } from './components/OriginClaimBanner';
 
 import './_overlay.scss';
 
