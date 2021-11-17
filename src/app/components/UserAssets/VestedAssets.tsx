@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 import { translations } from 'locales/i18n';
 import { useAccount, useIsConnected } from '../../hooks/useAccount';
 import { Skeleton } from '../PageSkeleton';
@@ -10,6 +11,7 @@ import {
 import { VestedItem } from './Vesting/VestedItem';
 import { VestingWithdrawDialog } from './Vesting/VestingWithdrawDialog';
 import type { Nullable } from 'types';
+import styles from './index.module.scss';
 
 export function VestedAssets() {
   const { t } = useTranslation();
@@ -38,18 +40,30 @@ export function VestedAssets() {
 
   return (
     <>
-      <div className="sovryn-border sovryn-table tw-pt-6 tw-pb-4 tw-pr-4 tw-pl-4 tw-mb-12">
+      <div className="sovryn-border sovryn-table tw-pt-6 tw-pb-4 tw-pr-4 tw-pl-4">
         <table className="tw-w-full">
           <thead>
             <tr>
-              <th>{t(translations.userAssets.tableHeaders.asset)}</th>
-              <th className="tw-text-right">
+              <th className={styles.headCell}>
+                {t(translations.userAssets.tableHeaders.asset)}
+              </th>
+              <th className={styles.headCell}>
                 {t(translations.userAssets.tableHeaders.lockedAmount)}
               </th>
-              <th className="tw-text-right tw-hidden md:tw-table-cell">
+              <th
+                className={classNames(
+                  styles.headCell,
+                  'tw-hidden md:tw-table-cell',
+                )}
+              >
                 {t(translations.userAssets.tableHeaders.dollarBalance)}
               </th>
-              <th className="tw-text-right">
+              <th
+                className={classNames(
+                  styles.headCell,
+                  'tw-hidden md:tw-table-cell',
+                )}
+              >
                 {t(translations.userAssets.tableHeaders.action)}
               </th>
             </tr>

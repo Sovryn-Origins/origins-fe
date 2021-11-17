@@ -7,9 +7,10 @@ import { Asset } from 'types';
 
 interface Props {
   asset: Asset;
+  textClassName?: string;
 }
 
-export function BridgeLink({ asset }: Props) {
+export function BridgeLink({ asset, textClassName }: Props) {
   const receiver = useAccount();
   const { t } = useTranslation();
   return (
@@ -21,7 +22,7 @@ export function BridgeLink({ asset }: Props) {
           state: { receiver, asset },
         }}
       >
-        <span>{t(translations.common.deposit)}</span>
+        <span className={textClassName}>{t(translations.common.deposit)}</span>
       </Link>
       <Link
         className="tw-btn-action"
@@ -30,7 +31,7 @@ export function BridgeLink({ asset }: Props) {
           state: { receiver, asset },
         }}
       >
-        <span>{t(translations.common.withdraw)}</span>
+        <span className={textClassName}>{t(translations.common.withdraw)}</span>
       </Link>
     </>
   );

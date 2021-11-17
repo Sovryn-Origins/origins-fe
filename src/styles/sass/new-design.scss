@@ -5,7 +5,7 @@
 }
 
 @mixin table-header {
-  @apply tw-text-base tw-text-sov-white;
+  @apply tw-text-lg tw-text-sov-white;
   font-family: inherit;
   font-weight: inherit;
   padding: 0 22px;

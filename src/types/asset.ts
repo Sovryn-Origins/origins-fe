@@ -15,6 +15,8 @@ export enum Asset {
   FISH = 'FISH',
   RIF = 'RIF',
   OG = 'OG',
+  MYNT = 'MYNT',
+  ZERO = 'ZERO',
 }
 
 export const AcceptedCurrencies: Array<Asset> = [
