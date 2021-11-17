@@ -19,7 +19,7 @@
   }
 
   * {
-    @apply tw-font-body;
+    @apply tw-font-rowdies;
   }
 
   *:focus {

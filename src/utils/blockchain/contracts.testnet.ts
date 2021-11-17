@@ -313,7 +313,7 @@ export const contracts = {
     abi: stakingRewardsProxyAbi,
   },
   FISH_token: {
-    address: '0x631e99d9209C5ab9d2D1471a376e7E2d04Da63Bf',
+    address: '0xaa7038D80521351F243168FefE0352194e3f83C3',
     abi: FISHTokenAbi,
   },
   FISH_amm: {
