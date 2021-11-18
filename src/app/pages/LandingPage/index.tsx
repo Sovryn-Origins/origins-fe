@@ -93,7 +93,10 @@ export const LandingPage: React.FC<ILandingPageProps> = ({
         />
       </Helmet>
       <Header />
-      <div className="container tw-max-w-screen-2xl tw-mx-auto tw-mt-16 tw-px-4 2xl:tw-px-0 tw-w-full">
+      <div
+        className="container tw-max-w-screen-2xl tw-mx-auto tw-px-4 2xl:tw-px-0 tw-w-full"
+        style={{ marginTop: '4.5rem' }}
+      >
         <TopBanner />
 
         <div className="tw-w-full tw-overflow-auto">

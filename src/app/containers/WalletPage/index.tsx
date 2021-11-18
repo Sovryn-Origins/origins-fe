@@ -38,8 +38,11 @@ export function WalletPage() {
         <OriginClaimBanner />
       </div> */}
 
-      <div className="tw-container tw-pt-11 tw-mx-auto tw-px-4 tw-max-w-screen-xl">
-        <div className="tw-flex tw-flex-wrap tw-items-center tw-justify-center tw-mb-12 tw-mt-16">
+      <div className="tw-container tw-mx-auto tw-px-4 tw-max-w-screen-xl">
+        <div
+          className="tw-flex tw-flex-wrap tw-items-center tw-justify-center tw-mb-12"
+          style={{ marginTop: '4.5rem' }}
+        >
           <h2 className="tw-text-black tw-text-xl tw-flex-shrink-0 tw-flex-grow-0 tw-mb-0 tw-uppercase tw-font-semibold">
             {t(translations.userAssets.meta.title)}
           </h2>

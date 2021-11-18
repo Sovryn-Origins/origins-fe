@@ -51,7 +51,7 @@ export const SalesDay: React.FC<ISalesDayProps> = ({ tierId, saleName }) => {
 
   return (
     <div className="tw-mb-52">
-      <div className="tw-text-center tw-items-center tw-justify-center tw-flex tw-mb-12 tw-mt-12">
+      <div className="tw-text-center tw-items-center tw-justify-center tw-flex tw-mb-12">
         <TitleContent>
           {t(translations.originsLaunchpad.saleDay.title)}
         </TitleContent>
