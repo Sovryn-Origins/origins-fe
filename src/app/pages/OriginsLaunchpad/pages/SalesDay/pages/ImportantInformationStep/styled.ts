@@ -2,10 +2,9 @@ import styled from 'styled-components';
 
 export const DialogWrapper = styled.div`
   background-color: #1f1f1f;
-  padding: 3rem 3rem 2.5rem 3rem;
+  padding: 3rem 3.875rem 2rem 3.875rem;
   border-radius: 0.5rem;
-  width: 50rem;
-  -webkit-text-stroke: 0px currentcolor;
+  width: 47.813rem;
 `;
 
 export const DialogTitle = styled.div`
@@ -21,7 +20,6 @@ export const ListItem = styled.div`
   line-height: 1.875;
   letter-spacing: 0;
   font-weight: 300;
-  margin-bottom: 1.5rem;
   text-transform: uppercase;
 
   /* &:before {

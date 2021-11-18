@@ -45,39 +45,6 @@ export const ImportantInformationStep: React.FC<IImportantInformationStepProps> 
 
         <div className="tw-text-left">
           <ListItem>{t(baseTranslations.information[1])}</ListItem>
-          <ListItem>{t(baseTranslations.information[2])}</ListItem>
-          <ListItem>
-            <Trans
-              i18nKey={baseTranslations.information[3]}
-              components={[
-                <a
-                  className="tw-text-primary tw-font-rowdies"
-                  href="http://discord.com/invite/J22WS6z"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  x
-                </a>,
-              ]}
-              tOptions={{ FAQ: 'FAQ' }}
-            />
-          </ListItem>
-          <ListItem>
-            <Trans
-              i18nKey={baseTranslations.information[4]}
-              components={[
-                <a
-                  className="tw-text-primary tw-font-rowdies"
-                  href="http://discord.com/invite/J22WS6z"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  x
-                </a>,
-              ]}
-              tOptions={{ WIKI: 'WIKI' }}
-            />
-          </ListItem>
         </div>
 
         <div className="tw-mt-12 tw-flex tw-flex-col">
@@ -91,7 +58,7 @@ export const ImportantInformationStep: React.FC<IImportantInformationStepProps> 
           <ActionButton
             text={t(baseTranslations.submitButtonText)}
             onClick={onSubmit}
-            className="tw-block tw-h-10 tw-px-10 tw-mt-6 tw-mx-auto tw-rounded-lg tw-bg-primary tw-max-w-xs"
+            className="tw-block tw-h-10 tw-px-10 tw-mt-24 tw-mx-auto tw-rounded-lg tw-bg-primary tw-max-w-xs"
             textClassName="tw-text-sm tw-text-black tw-uppercase tw-font-rowdies tw-tracking-normal tw-font-normal tw-leading-snug"
             disabled={!checked}
           />
