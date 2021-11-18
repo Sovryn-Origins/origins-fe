@@ -46,7 +46,9 @@ import { BridgeDepositPage } from './pages/BridgeDepositPage/Loadable';
 import { BridgeWithdrawPage } from './pages/BridgeWithdrawPage/Loadable';
 
 const title =
-  currentNetwork !== 'mainnet' ? `Origins ${currentNetwork}` : 'Origins';
+  currentNetwork !== 'mainnet'
+    ? `Sovryn Origins ${currentNetwork}`
+    : 'Sovryn Origins';
 
 export function App() {
   useAppTheme();
