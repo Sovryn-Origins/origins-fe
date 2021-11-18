@@ -514,6 +514,10 @@
     "sov": "SOV",
     "og": "OG",
     "days": "days",
+    "connectWalletWarning": {
+      "title": "staking/vesting",
+      "alert": "please connect with your wallet to use staking"
+    },
     "delegation": {
       "delegateTo": "Delegate To",
       "delegatedTo": "Delegated To",

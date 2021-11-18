@@ -56,6 +56,7 @@ import { useMaintenance } from 'app/hooks/useMaintenance';
 import { ContractName } from 'utils/types/contracts';
 import { AssetDetails } from 'utils/models/asset-details';
 import { getUSDSum } from '../../../utils/helpers';
+import { ConnectWalletWarning } from './components/ConnectWalletWarning';
 
 const now = new Date();
 
@@ -76,12 +77,7 @@ export const StakePage: React.FC = () => {
       <main>
         <div className="tw-tracking-normal">
           <div className="tw-container tw-mx-auto tw-px-6 tw-mb-44">
-            <h2 className="tw-text-black tw-mt-16 tw-mb-6 tw-pl-10 tw-text-center tw-text-xl tw-font-rowdies tw-font-normal tw-uppercase">
-              {t(translations.stake.title)}
-            </h2>
-            <div className="tw-w-full tw-text-black tw-text-center tw-rounded-b tw-p-3">
-              <i>{t(translations.stake.connect)}</i>
-            </div>
+            <ConnectWalletWarning className="tw-mt-16" />
           </div>
         </div>
       </main>
