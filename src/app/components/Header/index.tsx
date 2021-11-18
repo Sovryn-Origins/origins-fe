@@ -72,12 +72,14 @@ export function Header() {
           href={link.to}
           target="_blank"
           rel="noreferrer noopener"
+          className="tw-font-normal tw-uppercase"
         />
       );
     }
 
     return (
       <MenuItem
+        className="tw-font-normal tw-uppercase"
         key={index}
         text={link.title}
         onClick={() => {
@@ -167,13 +169,13 @@ export function Header() {
                 content={
                   <BPMenu>
                     <NavLink
-                      className="tw-block tw-header-link tw-px-1"
+                      className="tw-block tw-header-link tw-px-1 tw-uppercase"
                       to="/stake"
                     >
                       {t(translations.mainMenu.staking)}
                     </NavLink>
                     <NavLink
-                      className="tw-block tw-header-link tw-px-1"
+                      className="tw-block tw-header-link tw-px-1 tw-uppercase"
                       to="/governance"
                     >
                       {t(translations.mainMenu.governance)}
@@ -189,7 +191,7 @@ export function Header() {
                       href="https://forum.sovryn.app/"
                       target="_blank"
                       text={t(translations.mainMenu.forum)}
-                      className="bp3-popover-dismiss"
+                      className="bp3-popover-dismiss tw-uppercase"
                     />
                   </BPMenu>
                 }
