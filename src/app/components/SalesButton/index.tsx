@@ -5,18 +5,20 @@ import { Spinner } from '@blueprintjs/core';
 
 export const StyledButton = styled.button.attrs(_ => ({
   type: 'button',
-  className: 'tw-flex tw-flex-row tw-justify-center tw-items-center',
+  className:
+    'tw-flex tw-flex-row tw-justify-center tw-items-center tw-uppercase',
 }))`
   border: 1px solid var(--primary);
-  background: var(--primary-10);
-  border-radius: 0.75rem;
-  color: var(--primary);
+  background: var(--primary);
+  border-radius: 0.5rem;
+  color: black;
   min-width: 48px;
   height: 48px;
-  font-family: 'Montserrat';
-  font-weight: 300;
+  font-family: 'Rowdies';
+  font-weight: 400;
   letter-spacing: 0px;
-  font-size: 1.125rem;
+  font-size: 0.875rem;
+  line-height: 1.875rem;
   text-align: center;
   text-transform: inherit;
   transition: background 0.3s;
@@ -31,8 +33,8 @@ export const StyledButton = styled.button.attrs(_ => ({
     color: var(--primary);
   }
   ${media.xl`
-    min-width: 240px;
-    height: 50px;
+    min-width: 180px;
+    height: 44px;
     padding: 2px 20px 2px 20px;
 
     &:hover, &:focus {
