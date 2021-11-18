@@ -8,7 +8,7 @@ export const TitleImage = styled.img`
 export const TitleContent = styled.div`
   color: #000000;
   font-size: 1.25rem;
-  font-weight: normal;
+  font-weight: 600;
   font-family: Rowdies;
   line-height: 1.5rem;
   letter-spacing: 0;
