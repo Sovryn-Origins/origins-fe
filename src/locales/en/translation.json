@@ -643,6 +643,13 @@
       "stakingPeriod": "Staking Period",
       "unlockDate": "Unlock Date"
     },
+    "proposalDetail": {
+      "proposedBy": "Proposed By",
+      "proposedOn": "Proposed On",
+      "deadline": "Deadline",
+      "verifyOnGithub": "Verify On Github",
+      "resolved": "Resolved"
+    },
     "actions": {
       "title": "Actions",
       "increase": "Increase",

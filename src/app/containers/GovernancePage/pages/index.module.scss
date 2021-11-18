@@ -40,12 +40,12 @@
       }
       &:nth-child(odd) {
         td {
-          @apply tw-bg-gray-2;
+          @apply tw-bg-gray-3;
         }
       }
       &:nth-child(even) {
         td {
-          background-color: #181818;
+          @apply tw-bg-gray-1;
         }
       }
     }
@@ -83,7 +83,7 @@
   }
   tbody tr,
   .mobile-row {
-    height: 80px;
+    height: 50px;
 
     td {
       @apply tw-text-white tw-text-base;
@@ -127,41 +127,41 @@
   @screen xl {
     max-width: 750px;
   }
+}
 
-  .progress {
-    &__circle {
-      @apply tw-absolute tw-block tw-bottom-0;
-      width: 3.438rem;
-      height: 3.438rem;
-      border-radius: 100%;
-      top: -10px;
-      border: 11px solid white;
-      transition: all 0.3s;
-      margin: 0 -27.5px;
-    }
-    &__blue {
-      @apply tw-w-1/2;
-      border-radius: 1.5rem 0 0 1.5rem;
-      background: rgb(78, 205, 196);
-      margin-left: -27.5px;
-      background: linear-gradient(
-        90deg,
-        rgba(78, 205, 196, 1) 0%,
-        rgba(0, 0, 0, 1) 100%
-      );
-    }
-    &__red {
-      @apply tw-w-1/2 tw-bg-black;
-      border-radius: 0 24px 24px 0;
-      margin-left: 3.438rem;
-      margin-right: -1.719rem;
-      background: linear-gradient(
-        90deg,
-        rgba(0, 0, 0, 1) 0%,
-        rgba(205, 78, 78, 1) 100%
-      );
-    }
-  }
+.progressCircle {
+  @apply tw-absolute tw-block tw-bottom-0;
+  width: 3.438rem;
+  height: 3.438rem;
+  border-radius: 100%;
+  top: -10px;
+  border: 11px solid white;
+  transition: all 0.3s;
+  margin: 0 -27.5px;
+}
+
+.progressBlue {
+  @apply tw-w-full;
+  border-radius: 1.5rem 0 0 1.5rem;
+  background: rgb(78, 205, 196);
+  margin-left: -27.5px;
+  background: linear-gradient(
+    90deg,
+    rgba(78, 205, 196, 1) 0%,
+    #6CAEA7 100%
+  );
+}  
+
+.progressRed {
+  @apply tw-w-1/2 tw-bg-black;
+  border-radius: 0 24px 24px 0;
+  // margin-left: 3.438rem;
+  margin-right: -1.719rem;
+  background: linear-gradient(
+    90deg,
+    #6CAEA7 0%,
+    rgba(205, 78, 78, 1) 100%
+  );
 }
 
 .title {

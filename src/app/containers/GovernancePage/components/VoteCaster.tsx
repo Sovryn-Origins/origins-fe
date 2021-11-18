@@ -60,12 +60,12 @@ export function VoteCaster(props: Props) {
 
   if (txHash) {
     return (
-      <div className="text-white px-3 py-2 w-2/3 mt-2">
-        <div className="text-xs text-gray-500">Vote Cast</div>
-        <div className={`truncate text-sm ${loading && 'skeleton'}`}>
+      <div className="tw-text-white tw-px-3 tw-py-2 tw-w-2/3 tw-mt-2">
+        <div className="tw-text-xs tw-text-gray-500">Vote Cast</div>
+        <div className={`tw-truncate tw-text-sm ${loading && 'tw-skeleton'}`}>
           <LinkToExplorer
             txHash={txHash}
-            className="text-white hover:text-gold"
+            className="tw-text-white hover:tw-text-gold"
           />
         </div>
       </div>
@@ -75,13 +75,13 @@ export function VoteCaster(props: Props) {
   if ((receipt?.value as any)?.hasVoted) {
     const d = receipt.value as any;
     return (
-      <div className="xl:flex items-center justify-between mt-20">
+      <div className="xl:tw-flex tw-items-center tw-justify-between tw-mt-20">
         {d.support ? (
-          <div className="tracking-normal vote__success rounded-xl bg-turquoise bg-opacity-30 bg-opacity-30 mb-4 xl:mb-0 border xl:px-12 px-3 py-3 text-center xl:text-lg text-sm text-turquoise border-turquoise">
+          <div className="tw-tracking-normal vote__success tw-rounded-xl tw-bg-turquoise tw-bg-opacity-30 tw-mb-4 xl:tw-mb-0 tw-border xl:tw-px-12 tw-px-3 tw-py-3 tw-text-center xl:tw-text-lg tw-text-sm tw-text-turquoise tw-border-turquoise">
             You Voted {kFormatter(numberFromWei(d.votes))} for
           </div>
         ) : (
-          <div className="tracking-normal vote__danger rounded-xl bg-red bg-opacity-30 border xl:px-12 px-3 py-3 text-center xl:text-lg text-sm text-red border-red">
+          <div className="tw-tracking-normal vote__danger tw-rounded-xl tw-bg-red tw-bg-opacity-30 tw-border xl:tw-px-12 tw-px-3 tw-py-3 tw-text-center xl:tw-text-lg tw-text-sm tw-text-red tw-border-red">
             You Voted {kFormatter(numberFromWei(d.votes))} against
           </div>
         )}
@@ -90,7 +90,7 @@ export function VoteCaster(props: Props) {
   }
 
   return (
-    <div className="xl:flex items-center justify-between mt-10">
+    <div className="xl:tw-flex tw-items-center tw-justify-between tw-mt-10">
       <Popover2
         interactionKind="hover"
         minimal={true}
@@ -103,9 +103,9 @@ export function VoteCaster(props: Props) {
           </>
         }
       >
-        <p className="text-gold p-0 m-0 duration-300 hover:opacity-70 transition cursor-pointer">
+        <p className="tw-text-gold tw-p-0 tw-m-0 tw-duration-300 hover:tw-opacity-70 tw-transition tw-cursor-pointer">
           <button
-            className="tracking-normal vote__success w-full xl:w-auto bg-turquoise focus:bg-opacity-50 hover:bg-opacity-40 focus:outline-none transition duration-500 ease-in-out bg-opacity-30 rounded-xl mb-4 xl:mb-0 border xl:px-12 px-3 py-3 text-center xl:text-lg text-sm text-turquoise border-turquoise"
+            className="tw-tracking-normal vote__success tw-w-full xl:tw-w-auto tw-bg-turquoise focus:tw-bg-opacity-50 hover:tw-bg-opacity-40 focus:tw-outline-none tw-transition tw-duration-500 tw-ease-in-out tw-bg-opacity-30 tw-rounded-xl tw-mb-4 xl:tw-mb-0 tw-border xl:tw-px-12 tw-px-3 tw-py-3 tw-text-center xl:tw-text-lg tw-text-sm tw-text-turquoise tw-border-turquoise"
             type="button"
             onClick={() => handleVote(true)}
           >
@@ -125,9 +125,9 @@ export function VoteCaster(props: Props) {
           </>
         }
       >
-        <p className="text-gold p-0 m-0 duration-300 hover:opacity-70 transition cursor-pointer">
+        <p className="tw-text-gold tw-p-0 tw-m-0 tw-duration-300 hover:tw-opacity-70 tw-transition tw-cursor-pointer">
           <button
-            className="tracking-normal vote__danger w-full xl:w-auto bg-red focus:bg-opacity-50 hover:bg-opacity-40 focus:outline-none transition duration-500 ease-in-out bg-opacity-30 rounded-xl border xl:px-12 px-3 py-3 text-center xl:text-lg text-sm text-red border-red"
+            className="tw-tracking-normal vote__danger tw-w-full xl:tw-w-auto tw-bg-red focus:tw-bg-opacity-50 hover:tw-bg-opacity-40 focus:tw-outline-none tw-transition tw-duration-500 tw-ease-in-out tw-bg-opacity-30 tw-rounded-xl tw-border xl:tw-px-12 tw-px-3 tw-py-3 tw-text-center xl:tw-text-lg tw-text-sm tw-text-red tw-border-red"
             type="button"
             onClick={() => handleVote(false)}
           >

@@ -4,17 +4,14 @@ import classNames from 'classnames';
 import { WalletContext } from '@sovryn/react-wallet';
 import { Icon } from '@blueprintjs/core';
 import { useTranslation } from 'react-i18next';
-import { Scrollbars } from 'react-custom-scrollbars';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import Linkify from 'react-linkify';
 import { Classes, Tooltip2, Popover2 } from '@blueprintjs/popover2';
 
-import { useAccount, useBlockSync, useIsConnected } from 'app/hooks/useAccount';
+import { useBlockSync, useIsConnected } from 'app/hooks/useAccount';
 import { translations } from 'locales/i18n';
 import { toastSuccess } from 'utils/toaster';
 import { useGetProposalState } from 'app/hooks/useGetProposalState';
 import { MergedProposal } from 'app/hooks/useProposalList';
-import { useCacheCallWithValue } from 'app/hooks/useCacheCallWithValue';
 import { contractReader } from 'utils/sovryn/contract-reader';
 import { eventReader } from 'utils/sovryn/event-reader';
 import { dateByBlocks, kFormatter, prettyTx } from 'utils/helpers';
@@ -22,34 +19,14 @@ import { numberFromWei } from 'utils/blockchain/math-helpers';
 import { Proposal, ProposalState } from '../types';
 import { blockExplorers, currentChainId } from 'utils/classifiers';
 import { VoteCaster } from '../components/VoteCaster';
-import { ProposalActions } from '../components/ProposalActions';
 import { ProposalHistory } from '../components/ProposalHistory';
-import {
-  governance_queue,
-  governance_execute,
-  governance_cancel,
-} from '../functions';
+import imgInterface from 'assets/images/governance/example-interface.png';
 import styles from './index.module.scss';
 
-// const governor = 'governorAdmin';
-
-// const initRow = {
-//   target: '',
-//   value: '',
-//   signature: '',
-//   calldata: '',
-// };
-
 export const ProposalDetail: React.FC = () => {
+  const { t } = useTranslation();
   const { id, contractName } = useParams<any>();
-  const account = useAccount();
   const blockSync = useBlockSync();
-
-  const { value: guardian } = useCacheCallWithValue(
-    contractName,
-    'guardian',
-    '',
-  );
 
   const [votes, setVotes] = useState<
     { support: boolean; voter: string; votes: number; txs: string }[]
@@ -62,7 +39,6 @@ export const ProposalDetail: React.FC = () => {
   const [data, setData] = useState<MergedProposal>(null as any);
   const { state } = useGetProposalState(data);
   const [proposalLoading, setProposalLoading] = useState(false);
-  const isGaurdian = account.toLowerCase() === guardian.toLowerCase();
 
   const votesForProgressPercents =
     (numberFromWei(data?.forVotes || 0) /
@@ -128,47 +104,23 @@ export const ProposalDetail: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(data), blockSync]);
 
-  const governanceQueue = async () => {
-    try {
-      await governance_queue(contractName, data.id, account);
-    } catch (error) {
-      console.log('error:', error);
-    }
-  };
-
-  const governanceExecute = async () => {
-    try {
-      await governance_execute(contractName, data.id, account);
-    } catch (error) {
-      console.log('error:', error);
-    }
-  };
-
-  const governanceCancel = async () => {
-    try {
-      await governance_cancel(contractName, data.id, account);
-    } catch (error) {
-      console.log('error:', error);
-    }
-  };
-
   return (
-    <div className="container tw-max-w-screen-xl tw-w-full tw-mx-auto tw-mb-64 tw-mt-24 tw-px-6 tw-py-8 tw-bg-gray-1 tw-border-4 tw-border-solid tw-border-black tw-rounded-lg">
+    <div className="container tw-max-w-screen-xl tw-w-full tw-mx-auto tw-mb-64 tw-mt-24 tw-px-4 tw-pt-16 tw-pb-2 tw-bg-gray-1 tw-border-4 tw-border-solid tw-border-black tw-rounded-lg">
       <div className="proposap-detail">
         <div className="xl:tw-flex tw-justify-between tw-items-start">
-          <h3
-            className={`proposal__title tw-font-semibold tw-break-all tw-w-2/3 tw-mt-2 tw-overflow-hidden tw-max-h-24 tw-leading-12 tw-truncate ${
-              createdEventLoading && 'tw-skeleton'
-            }`}
-          >
-            <Linkify>
-              {createdEvent?.returnValues?.description || 'No description'}
-            </Linkify>
-          </h3>
-          <div className="tw-text-right tw-font-semibold">
+          <div className="tw-text-2xl tw-text-white tw-font-normal tw-uppercase">
+            <p className={`tw-mb-4 ${createdEventLoading && 'tw-skeleton'}`}>
+              {createdEvent?.returnValues?.description.split(':')[0]}:
+            </p>
+            <p className={`tw-mb-0 ${createdEventLoading && 'tw-skeleton'}`}>
+              {createdEvent?.returnValues?.description.split(':')[1]}
+            </p>
+          </div>
+
+          <div className="tw-text-base tw-text-white tw-font-normal tw-uppercase">
             <p
-              className={`tw-mt-2 tw-text-lg tw-leading-6 tw-tracking-normal ${
-                createdEventLoading && 'skeleton'
+              className={`tw-mb-4 tw-text-right ${
+                createdEventLoading && 'tw-skeleton'
               }`}
             >
               Voting ends:{' '}
@@ -178,222 +130,176 @@ export const ProposalDetail: React.FC = () => {
                 data?.endBlock,
               )}
             </p>
+            <p
+              className={`tw-mb-0 tw-text-right ${
+                createdEventLoading && 'tw-skeleton'
+              }`}
+            >
+              #{createdEvent?.blockNumber}
+            </p>
           </div>
         </div>
+
         <div
-          className={`tw-flex tw-justify-center xl:tw-mt-20 tw-mt-10
-        ${proposalLoading && 'skeleton'}`}
+          className={`tw-flex tw-justify-center tw-items-center xl:tw-mt-20 tw-mt-10 ${
+            proposalLoading && 'tw-skeleton'
+          }`}
         >
-          <div className="tw-mr-10 tw-text-right">
-            <span className="xl:tw-text-3xl tw-text-xl tw-font-semibold tw-leading-5 tw-tracking-normal">
+          <div className="tw-mr-4 tw-text-right">
+            <span className="tw-text-xl tw-font-normal tw-leading-5 tw-tracking-normal">
               {(votesForProgressPercents || 0).toLocaleString(undefined, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}
               %
             </span>
-            {/* <Tooltip2
+            <Tooltip2
               className={Classes.TOOLTIP2_INDICATOR}
               minimal={true}
               content={
-                <p className="tw-text-white tw-text-sm tw-tracking-normal">
+                <p className="tw-text-white tw-text-sm tw-tracking-normal tw-mb-0">
                   {numberFromWei(data?.forVotes || 0)} votes
                 </p>
               }
               placement="top"
             >
-              <p className="xl:tw-text-lg tw-text-sm tw-font-light tw-tracking-normal">
-                {kFormatter(numberFromWei(data?.forVotes || 0))} votes
+              <p className="tw-text-xl tw-font-light tw-tracking-normal tw-uppercase">
+                {numberFromWei(data?.forVotes || 0)} votes
               </p>
-            </Tooltip2> */}
+            </Tooltip2>
           </div>
           <div className={styles.styledBar}>
-            <div className="progress__blue" />
-            <div className="progress__red" />
+            <div className={styles.progressBlue} />
+            <div className={styles.progressRed} />
             {!isNaN(votesForProgressPercents) &&
               !isNaN(votesAgainstProgressPercents) && (
                 <div
-                  className="progress__circle"
+                  className={styles.progressCircle}
                   style={{ left: votesAgainstProgressPercents + '%' }}
                 />
               )}
           </div>
-          <div className="tw-ml-10">
-            <span className="xl:tw-text-3xl tw-text-xl tw-font-semibold tw-leading-5 tw-tracking-normal">
+          <div className="tw-ml-4">
+            <span className="tw-text-xl tw-font-normal tw-leading-5 tw-tracking-normal">
               {(votesAgainstProgressPercents || 0).toLocaleString(undefined, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}
               %
             </span>
-            {/* <Tooltip2
+            <Tooltip2
               className={Classes.TOOLTIP2_INDICATOR}
               minimal={true}
               content={
-                <p className="text-white text-sm tracking-normal">
+                <p className="tw-text-white tw-text-sm tw-tracking-normal tw-mb-0">
                   {numberFromWei(data?.againstVotes || 0)} votes
                 </p>
               }
               placement="top"
             >
-              <p className="xl:text-lg text-sm font-light tracking-normal">
-                {kFormatter(numberFromWei(data?.againstVotes || 0))} votes
+              <p className="tw-text-xl tw-font-light tw-tracking-normal tw-uppercase">
+                {numberFromWei(data?.againstVotes || 0).toFixed(0)} votes
               </p>
-            </Tooltip2> */}
+            </Tooltip2>
           </div>
         </div>
 
-        {data?.id &&
-          isConnected &&
-          state !== ProposalState.Active &&
-          !proposalLoading && (
-            <div className="xl:tw-flex tw-items-center tw-justify-between tw-mt-16">
-              <div className="tw-tracking-normal vote__success tw-rounded-xl tw-bg-opacity-30 tw-bg-turquoise tw-mb-4 xl:tw-mb-0 tw-border xl:tw-px-12 tw-px-3 tw-py-3 tw-text-center xl:tw-text-lg tw-text-sm tw-text-turquoise tw-border-turquoise">
-                {kFormatter(numberFromWei(data?.forVotes || 0))} Votes For
-              </div>
-              <div className="tw-tracking-normal vote__danger tw-rounded-xl tw-bg-opacity-30 tw-bg-red tw-border xl:tw-px-12 tw-px-3 tw-py-3 tw-text-center xl:tw-text-lg tw-text-sm tw-text-white tw-border-red">
-                {kFormatter(numberFromWei(data?.againstVotes || 0))} Votes
-                Against
-              </div>
-            </div>
+        <div className="tw-bg-white tw-px-4 tw-pt-11 tw-pb-0 tw-rounded-lg">
+          <button className="tw-bg-primary tw-border tw-border-black tw-text-black tw-text-sm tw-uppercase tw-px-6 tw-py-3 tw-rounded-lg tw-ml-6 tw-mb-12">
+            I Understand
+          </button>
+
+          {data?.id && isConnected && state === ProposalState.Active && (
+            <VoteCaster
+              votesFor={data.forVotes}
+              votesAgainst={data.againstVotes}
+              proposalId={data.id}
+              proposal={data}
+              contractName={data.contractName}
+            />
           )}
 
-        {data?.id && isConnected && state === ProposalState.Active && (
-          <VoteCaster
-            votesFor={data.forVotes}
-            votesAgainst={data.againstVotes}
-            proposalId={data.id}
-            proposal={data}
-            contractName={data.contractName}
-          />
-        )}
-
-        <div className="xl:tw-flex tw--mx-2 tw-mt-8">
-          <Scrollbars
-            className="tw-rounded-2xl tw-border tw-mb-4 xl:tw-mb-0 xl:tw-w-2/4 sovryn-table tw-pt-1 tw-pb-3 tw-pr-3 tw-pl-3 tw-mx-2 tw-overflow-y-auto tw-h-48"
-            style={{ height: 195 }}
-          >
-            <div className="tw-mx-4">
+          <div className="xl:tw-flex tw--mx-2 tw-mt-8">
+            <div className="tw-bg-gray-1 tw-rounded-lg tw-border tw-mb-4 xl:tw-mb-0 xl:tw-w-2/4 sovryn-table tw-p-4 tw-mx-2 tw-overflow-y-auto">
               <VotingTable
                 items={votes}
                 showSupporters={true}
                 loading={votesLoading}
               />
             </div>
-          </Scrollbars>
-          <Scrollbars
-            className="tw-rounded-2xl tw-border xl:tw-w-2/4 sovryn-table tw-pt-1 tw-pb-3 tw-pr-3 tw-pl-3 tw-mx-2 tw-overflow-y-auto tw-h-48"
-            style={{ height: 195 }}
-          >
-            <div className="mx-4">
+            <div className="tw-bg-gray-1 tw-rounded-lg tw-border xl:tw-w-2/4 sovryn-table tw-p-4 tw-mx-2 tw-overflow-y-auto">
               <VotingTable
                 items={votes}
                 showSupporters={false}
                 loading={votesLoading}
               />
             </div>
-          </Scrollbars>
-        </div>
-        <div className="xl:tw-flex tw-mt-10">
-          <div className="xl:tw-w-3/4 tw-w-full tw-mb-5 xl:tw-mb-0">
-            <div className="tw-bg-gray-100 xl:tw-py-8 tw-py-4 xl:tw-px-20 tw-px-4 tw-rounded-2xl">
-              {/*<h4 className="mb-8 font-semibold xl:text-2xl text-xl tracking-widest">*/}
-              {/*  {createdEvent.description}*/}
-              {/*</h4>*/}
-              <p className="tw-break-all tw-mt-8">
-                <Linkify>
-                  {createdEvent?.returnValues?.description || 'No description'}
-                </Linkify>
-              </p>
-              {/* <p className="text-sm">Resolved:</p>
-            <ol className="list-decimal text-sm pl-5 leading-6">
-              <li>
-                The Sovryn protocol will issue up to 2,000,000 cSOV tokens.
-                This represent a 200,000 increase from 1,800,000 of SIP 0002.
-              </li>
-              <li>
-                cSOV tokens will provide a pre-reservation mechanism for
-                community members to stake funds in order to receive the right
-                to SOV tokens, on a 1:1 basis with cSOV tokens subject to a
-                vote by SOV holders.
-              </li>
-              <li>
-                These cSOV tokens will be distributed to stakers who have the
-                early community NFTS.
-              </li>
-              <li>The required stake per cSOV token will be 2500 Satoshis</li>
-              <li>
-                Any cSOV tokens converted to SOV will be subject to 10 months
-                linear vesting (with 1/10 of the total amount released on a
-                monthly basis) from the date of the end of the SOV public
-                sale.
-              </li>
-              <li>
-                Any cSOV holder that does not actively convert their cSOV to
-                SOV within a two month period after TGE will be able to
-                receive their staked funds.
-              </li>
-            </ol>
-            <p className="font-semibold text-md mt-5 break-words">
-              sha256:{' '}
-              63817f1519ef0bf4699899acd747ef7a856ddbda1bba7a20ec75eb9da89650b7
-            </p> */}
-              <ProposalActions
-                proposalId={data?.id}
-                contractName={data?.contractName}
-              />
-            </div>
           </div>
-          <div className="xl:tw-w-1/4 tw-w-full tw-px-6 tw-pr-0">
-            <ProposalHistory proposal={data} createdEvent={createdEvent} />
-            {/* <a
-            href="#!"
-            className="border rounded-xl bg-gold bg-opacity-10 text-center hover:bg-opacity-40 transition duration-500 ease-in-out text-gold hover:text-gold hover:no-underline text-lg px-6 xl:inline-block block py-3 border-gold"
-          >
-            Verify on Github
-          </a> */}
-            <p
-              className={`tw-text-gold tw-text-sm tw-tracking-normal tw-leading-3 tw-pt-3 ${
-                proposalLoading && 'tw-skeleton'
-              }`}
-            >
-              Proposal id: {String(data?.id).padStart(3, '0')}
+
+          <ProposalHistory proposal={data} createdEvent={createdEvent} />
+
+          <div className="tw-bg-gray-1 tw-rounded-lg tw-px-4 tw-pb-10 tw-pt-12 tw-mt-8">
+            <p className="tw-text-white tw-text-xl tw-uppercase tw-mb-4">
+              {createdEvent?.returnValues?.description.split(':')[1]}
             </p>
 
-            <div className="tw-flex tw-mt-5 tw-items-center tw-justify-around">
-              {data?.id &&
-                isConnected &&
-                state !== ProposalState.Executed &&
-                isGaurdian && (
-                  <button
-                    onClick={governanceCancel}
-                    type="button"
-                    className="tw-text-gold tw-tracking-normal hover:tw-text-gold hover:tw-no-underline hover:tw-bg-gold hover:tw-bg-opacity-30 tw-mx-1 tw-px-5 tw-py-2 tw-bordered tw-transition tw-duration-500 tw-ease-in-out tw-rounded-full tw-border tw-border-gold tw-text-sm tw-font-light tw-font-montserrat"
-                  >
-                    Cancel
-                  </button>
-                )}
-              {data?.id && isConnected && state === ProposalState.Succeeded && (
-                <button
-                  onClick={governanceQueue}
-                  type="button"
-                  className="tw-text-gold tw-tracking-normal hover:tw-text-gold hover:tw-no-underline hover:tw-bg-gold hover:tw-bg-opacity-30 tw-mx-1 tw-px-5 tw-py-2 tw-bordered tw-transition tw-duration-500 tw-ease-in-out tw-rounded-full tw-border tw-border-gold tw-text-sm tw-font-light tw-font-montserrat"
+            <div>
+              <p className="tw-uppercase tw-font-inter tw-leaning-7 tw-mb-0">
+                {t(translations.governance.proposalDetail.resolved)}
+              </p>
+              <ol className="tw-list-decimal tw-pl-5 tw-w-1/2">
+                <li className="tw-font-inter tw-uppercase tw-leading-7">
+                  The Origins protocol will issue up to 2,000,000 OG tokens.
+                  This represent a 200,000 increase from 1,800,000 of OIP 0002.
+                </li>
+                <li className="tw-font-inter tw-uppercase tw-leading-7">
+                  The Sovryn protocol will issue up to 2,000,000 cSOV tokens.
+                  This represent a 200,000 increase from 1,800,000 of SIP 0002.
+                </li>
+              </ol>
+            </div>
+
+            <p className="tw-mt-24 tw-font-inter tw-text-base tw-uppercase tw-leading-7 tw-mb-0">
+              sha256:{' '}
+              63817f1519ef0bf4699899acd747ef7a856ddbda1bba7a20ec75eb9da89650b7
+            </p>
+
+            <div className="tw-mt-8">
+              <p className="tw-uppercase tw-text-xl tw-leading-7 tw-mb-6">
+                Function to invoke:{' '}
+                <span
+                  className={classNames({
+                    'tw-skeleton tw-w-32 tw-h-4': createdEventLoading,
+                  })}
                 >
-                  Queue
-                </button>
-              )}
-              {data?.id &&
-                isConnected &&
-                state === ProposalState.Queued &&
-                data.eta <= new Date().getTime() / 1000 && (
-                  <button
-                    onClick={governanceExecute}
-                    type="button"
-                    className="tw-text-gold tw-tracking-normal hover:tw-text-gold hover:tw-no-underline hover:tw-bg-gold hover:tw-bg-opacity-30 tw-mx-1 tw-px-5 tw-py-2 tw-bordered tw-transition tw-duration-500 tw-ease-in-out tw-rounded-full tw-border tw-border-gold tw-text-sm tw-font-light tw-font-montserrat"
-                  >
-                    Execute
-                  </button>
-                )}
+                  {createdEvent?.returnValues.signatures[0]}
+                </span>
+              </p>
+              <p className="tw-font-inter tw-uppercase tw-text-base tw-leadning-7">
+                <span
+                  className={classNames({
+                    'tw-skeleton tw-w-32 tw-h-4': createdEventLoading,
+                  })}
+                >
+                  {createdEvent?.returnValues.calldatas[0]}
+                </span>
+              </p>
+              <p className="tw-font-inter tw-uppercase tw-text-base tw-leadning-7">
+                Contract Address:{' '}
+                <span
+                  className={classNames({
+                    'tw-skeleton tw-w-32 tw-h-4': createdEventLoading,
+                  })}
+                >
+                  {createdEvent?.returnValues.targets[0]}
+                </span>
+              </p>
+              <p className="tw-font-inter tw-uppercase tw-text-base tw-leadning-7 tw-mb-6">
+                Amount to transfer: 0 (r)BTC
+              </p>
+              <div className="tw-w-full lg:tw-w-2/3 tw-rounded-lg tw-bg-gray-3 tw-px-2 tw-pb-4 tw-pt-2">
+                <img src={imgInterface} alt="Interface Reference" />
+              </div>
             </div>
           </div>
         </div>
@@ -415,7 +321,9 @@ function VotingTable(props: TableProps) {
 
   useEffect(() => {
     setItems(
-      (props.items || []).filter(item => item.support === props.showSupporters),
+      (props.items || []).filter(
+        item => !!item.support === props.showSupporters,
+      ),
     );
   }, [props.items, props.showSupporters]);
 
@@ -427,10 +335,11 @@ function VotingTable(props: TableProps) {
       )}
     >
       <thead>
-        <tr>
-          <th>Addresses</th>
-          <th className="hidden md:table-cell">Tx Hash</th>
-          <th>Votes</th>
+        <tr className="tw-uppercase">
+          <th className="tw-text-base">username</th>
+          <th className="tw-text-base">Addresses</th>
+          <th className="tw-text-base hidden md:table-cell">Tx Hash</th>
+          <th className="tw-text-base">Votes</th>
         </tr>
       </thead>
       <tbody className="mt-5">
@@ -488,9 +397,12 @@ function VotingRow({
   if (loading) {
     return (
       <tr>
-        <td className="skeleton">--------------</td>
-        <td className="skeleton tw-hidden md:tw-table-cell">--------------</td>
-        <td className="skeleton">--------------</td>
+        <td className="tw-skeleton tw-pl-4">--------------</td>
+        <td className="tw-skeleton">--------------</td>
+        <td className="tw-skeleton tw-hidden md:tw-table-cell">
+          --------------
+        </td>
+        <td className="tw-skeleton">--------------</td>
       </tr>
     );
   }
@@ -498,6 +410,7 @@ function VotingRow({
   if (!voter && !votes) {
     return (
       <tr>
+        <td className="tw-pl-4">-</td>
         <td>-</td>
         <td className="tw-hidden md:tw-table-cell">-</td>
         <td>-</td>
@@ -507,6 +420,7 @@ function VotingRow({
 
   return (
     <tr>
+      <td className="tw-uppercase tw-pl-4">LOREUM</td>
       <td>
         <Popover2
           minimal={true}
@@ -538,7 +452,7 @@ function VotingRow({
             </div>
           }
         >
-          <p className="tw-text-gold tw-p-0 tw-m-0 tw-duration-300 hover:tw-opacity-70 tw-transition tw-cursor-pointer">
+          <p className="tw-uppercase tw-font-inter tw-p-0 tw-m-0 tw-duration-300 hover:tw-opacity-70 tw-transition tw-cursor-pointer">
             {prettyTx(voter as string)}
           </p>
         </Popover2>
@@ -574,7 +488,7 @@ function VotingRow({
             </div>
           }
         >
-          <p className="tw-text-gold tw-p-0 tw-m-0 tw-duration-300 hover:tw-opacity-70 tw-transition tw-cursor-pointer">
+          <p className="tw-uppercase tw-font-inter tw-p-0 tw-m-0 tw-duration-300 hover:tw-opacity-70 tw-transition tw-cursor-pointer">
             {prettyTx(txs as string)}
           </p>
         </Popover2>
@@ -590,7 +504,7 @@ function VotingRow({
           }
           placement="top"
         >
-          {kFormatter(votes)}
+          <span className="tw-font-inter">{kFormatter(votes)}</span>
         </Tooltip2>
       </td>
     </tr>
