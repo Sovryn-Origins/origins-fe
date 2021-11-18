@@ -159,7 +159,7 @@ export function ProposalRow({ proposal }: Props) {
                   pathname: `${match.url}/proposal/${proposal.id}/${proposal.contractName}`,
                   state: { background: location },
                 }}
-                className="tw-text-gold hover:tw-text-gold hover:tw-underline tw-font-thin tw-font-rowdies tw-tracking-normal tw-uppercase"
+                className="tw-text-primary tw-text-sm hover:tw-underline tw-font-thin tw-font-rowdies tw-tracking-normal tw-uppercase"
               >
                 View Proposal
               </Link>

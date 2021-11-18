@@ -1,0 +1,13 @@
+.styledClose {
+  @apply tw-absolute tw-p-0 tw-transition-transform tw-transform tw-duration-300 tw-ease-in-out tw-z-10;
+  width: 35px;
+  height: 35px;
+  top: 1.8rem;
+  right: 2rem;
+  &:hover {
+    @apply  tw-transform tw-rotate-180;
+  }
+  &:focus {
+    @apply tw-outline-none;
+  }
+}

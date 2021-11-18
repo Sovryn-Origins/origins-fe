@@ -101,19 +101,12 @@ export const Propose: React.FC = () => {
   };
 
   return (
-    <div className="container tw-max-w-screen-2xl tw-w-full tw-mx-auto tw-mb-64 tw-mt-24 tw-px-6 tw-py-8 tw-bg-gray-1 tw-border-4 tw-border-solid tw-border-black tw-rounded-lg">
+    <div className="container tw-max-w-screen-2xl tw-w-full tw-mx-auto tw-px-6 tw-py-8 tw-bg-gray-1 tw-rounded-lg">
       <form onSubmit={handleSubmit}>
         <div className="tw-relative tw-flex tw-flex-col md:tw-flex-row tw-items-start md:tw-items-center">
           <label className="tw-text-sm md:tw-text-base tw-font-rowdies tw-uppercase">
             Send proposal:
           </label>
-          <Icon
-            className="tw-absolute tw-top-1 tw-right-2 tw-cursor-pointer hover:tw-opacity-50"
-            onClick={() => history.goBack()}
-            icon="cross"
-            iconSize={25}
-            color="white"
-          />
         </div>
 
         <textarea

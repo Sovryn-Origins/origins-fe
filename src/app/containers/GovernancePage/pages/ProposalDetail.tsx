@@ -105,7 +105,7 @@ export const ProposalDetail: React.FC = () => {
   }, [JSON.stringify(data), blockSync]);
 
   return (
-    <div className="container tw-max-w-screen-xl tw-w-full tw-mx-auto tw-mb-64 tw-mt-24 tw-px-4 tw-pt-16 tw-pb-2 tw-bg-gray-1 tw-border-4 tw-border-solid tw-border-black tw-rounded-lg">
+    <div className="container tw-max-w-screen-xl tw-w-full tw-mx-auto tw-px-4 tw-pt-16 tw-pb-2 tw-bg-gray-1 tw-rounded-lg">
       <div className="proposap-detail">
         <div className="xl:tw-flex tw-justify-between tw-items-start">
           <div className="tw-text-2xl tw-text-white tw-font-normal tw-uppercase">
