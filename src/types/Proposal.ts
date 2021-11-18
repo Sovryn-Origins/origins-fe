@@ -60,7 +60,7 @@ export const getStatus = (state: ProposalState) => {
     '0': 'Pending',
     '1': 'Active',
     '2': 'Canceled',
-    '3': 'Defeated',
+    '3': 'Rejected',
     '4': 'Succeeded',
     '5': 'Queued',
     '6': 'Expired',
