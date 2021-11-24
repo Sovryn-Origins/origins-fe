@@ -113,7 +113,7 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
             <AssetSelect
               value={token}
               onChange={val => setToken(val)}
-              options={[Asset.SOV, Asset.RBTC]}
+              options={[Asset.FISH]}
               theme={Theme.LIGHT}
               placeholder={
                 <div className="tw-text-left tw-font-inter tw-text-gray-6">
