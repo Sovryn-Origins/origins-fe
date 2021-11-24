@@ -22,12 +22,14 @@ export const useGetSaleInformation = (tierId: number) => {
     depositType: DepositType.RBTC,
     verificationType: VerificationType.None,
     totalSaleAllocation: 0,
+    isSaleActive: false,
   });
 
   useEffect(() => {
     contractReader
       .call('originsBase', 'readTierPartA', [tierId])
       .then(result => {
+        const currentTS = Math.floor(Date.now() / 1000);
         setSaleInfo(prevValue => ({
           ...prevValue,
           minAmount: result['_minAmount'],
@@ -35,6 +37,9 @@ export const useGetSaleInformation = (tierId: number) => {
           remainingTokens: result['_remainingTokens'],
           saleStart: result['_saleStartTS'],
           saleEnd: timestampToString(result['_saleEnd']),
+          isSaleActive:
+            currentTS > Number(result['_saleStartTS']) &&
+            currentTS < Number(result['_saleEnd']),
           depositRate: result['_depositRate'],
         }));
       });

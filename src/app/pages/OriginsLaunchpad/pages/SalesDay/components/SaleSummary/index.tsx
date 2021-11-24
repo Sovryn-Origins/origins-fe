@@ -17,11 +17,11 @@ interface ISaleSummaryProps {
 }
 
 export const SaleSummary: React.FC<ISaleSummaryProps> = ({
-  // saleInfo,
+  saleInfo,
   className,
 }) => {
   const { t } = useTranslation();
-  const saleSummary = useGetSaleSummary();
+  const saleSummary = useGetSaleSummary(saleInfo.isSaleActive);
   const [activeTab, setActiveTab] = useState<SaleType>();
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export const SaleSummary: React.FC<ISaleSummaryProps> = ({
           : SaleType.previous,
       );
     }
-  }, [activeTab, saleSummary]);
+  }, [activeTab, saleSummary, saleInfo]);
 
   const onSelectTab = (saleType: SaleType) => {
     setActiveTab(saleType);
@@ -48,16 +48,21 @@ export const SaleSummary: React.FC<ISaleSummaryProps> = ({
       )}
     >
       <div className="tw-flex tw-justify-center">
-        {Object.keys(SaleType).map(saleType => (
-          <Tab
-            key={saleType}
-            label={t(
-              translations.originsLaunchpad.saleDay.saleSummary.tabs[saleType],
-            )}
-            selected={SaleType[saleType] === activeTab}
-            onSelect={() => onSelectTab(SaleType[saleType])}
-          />
-        ))}
+        {Object.keys(SaleType).map(
+          saleType =>
+            saleSummary[saleType].length > 0 && (
+              <Tab
+                key={saleType}
+                label={t(
+                  translations.originsLaunchpad.saleDay.saleSummary.tabs[
+                    saleType
+                  ],
+                )}
+                selected={SaleType[saleType] === activeTab}
+                onSelect={() => onSelectTab(SaleType[saleType])}
+              />
+            ),
+        )}
       </div>
 
       <div

@@ -95,7 +95,7 @@ const saleSummary: ISaleSummary = {
   ],
 };
 
-export const useGetSaleSummary = () => {
+export const useGetSaleSummary = (isSaleActive: boolean) => {
   // const [summary, setSummary] = useState<ISaleSummary>(saleSummary);
-  return saleSummary;
+  return isSaleActive ? saleSummary : { ...saleSummary, live: [] };
 };

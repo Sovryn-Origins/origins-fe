@@ -11,6 +11,7 @@ export interface ISaleInformation {
   depositType: DepositType;
   verificationType: VerificationType;
   totalSaleAllocation: number;
+  isSaleActive: boolean;
 }
 
 export enum SaleType {
@@ -19,11 +20,9 @@ export enum SaleType {
   previous = 'previous',
 }
 
-export interface ISaleSummary {
-  upcoming: ISaleDetails[];
-  live: ISaleDetails[];
-  previous: ISaleDetails[];
-}
+export type ISaleSummary = {
+  [key in SaleType]: ISaleDetails[];
+};
 
 export interface ISaleDetails {
   saleName: string;

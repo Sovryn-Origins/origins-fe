@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import classNames from 'classnames';
 // import imgTitle from 'assets/images/OriginsLaunchpad/FishSale/title_image.png';
 import { TitleContent } from './styled';
 import { useTranslation } from 'react-i18next';
@@ -51,20 +52,25 @@ export const SalesDay: React.FC<ISalesDayProps> = ({ tierId, saleName }) => {
 
   return (
     <div className="tw-mb-52">
-      <div className="tw-text-center tw-items-center tw-justify-center tw-flex tw-mb-12">
-        <TitleContent>
-          {t(translations.originsLaunchpad.saleDay.title)}
-        </TitleContent>
-      </div>
+      {info.isSaleActive && (
+        <div className="tw-text-center tw-items-center tw-justify-center tw-flex tw-mb-12">
+          <TitleContent>
+            {t(translations.originsLaunchpad.saleDay.title)}
+          </TitleContent>
+        </div>
+      )}
 
       <div className="tw-justify-center tw-flex tw-text-center">
         {!connected ? (
           <EngageWalletStep saleName={saleName} />
         ) : (
-          getActiveStep(step)
+          info.isSaleActive && getActiveStep(step)
         )}
       </div>
-      <SaleSummary saleInfo={info} className="tw-mt-56" />
+      <SaleSummary
+        saleInfo={info}
+        className={classNames({ 'tw-mt-56': info.isSaleActive })}
+      />
     </div>
   );
 };
