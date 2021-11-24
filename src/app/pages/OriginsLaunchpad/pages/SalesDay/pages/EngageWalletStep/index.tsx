@@ -2,9 +2,9 @@ import React, { useCallback } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useWalletContext } from '@sovryn/react-wallet';
-import { DialogTitle, EngageButton, EngageWalletDialogWrapper } from './styled';
 import imgLargeNFT from 'assets/images/OriginsLaunchpad/FishSale/large_NFT.svg';
 import { Spinner } from '@blueprintjs/core';
+import styles from './index.module.scss';
 
 interface IEngageWalletStepProps {
   saleName: string;
@@ -21,20 +21,17 @@ export const EngageWalletStep: React.FC<IEngageWalletStepProps> = ({
   return (
     <>
       <img src={imgLargeNFT} alt="Dialog NFT" />
-      <EngageWalletDialogWrapper>
+      <div className={styles.engageWalletDialogWrapper}>
         <div>
-          <DialogTitle>
+          <div className={styles.dialogTitle}>
             {t(
               translations.originsLaunchpad.saleDay.engageWalletScreen
                 .dialogTitle,
               { token: saleName },
             )}
-          </DialogTitle>
+          </div>
 
-          <EngageButton
-            onClick={onEngageClick}
-            className="tw-flex tw-justify-center tw-items-center"
-          >
+          <button className={styles.engageButton} onClick={onEngageClick}>
             {connecting && <Spinner size={22} />}
             {!connecting && (
               <span className="xl:tw-inline tw-truncate">
@@ -44,7 +41,7 @@ export const EngageWalletStep: React.FC<IEngageWalletStepProps> = ({
                 )}
               </span>
             )}
-          </EngageButton>
+          </button>
         </div>
 
         <div className="tw-max-w-md tw-mx-auto">
@@ -86,7 +83,7 @@ export const EngageWalletStep: React.FC<IEngageWalletStepProps> = ({
             />
           </div>
         </div>
-      </EngageWalletDialogWrapper>
+      </div>
     </>
   );
 };
