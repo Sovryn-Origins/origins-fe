@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import { translations } from 'locales/i18n';
-import { Chart } from './Chart';
 import { ChartD3 } from './ChartD3';
 import imgOGPromotion from 'assets/images/home/og-promotion.png';
 import styles from './index.module.scss';
@@ -31,7 +30,6 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({ className }) => {
         {t(translations.landingPage.bondingCurve.description)}
       </p>
       <ChartD3 />
-      <Chart />
       <p className={styles.bctitle}>Why Bonding Curve?</p>
       <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 md:tw-gap-4">
         {[0, 1, 2].map(i => (

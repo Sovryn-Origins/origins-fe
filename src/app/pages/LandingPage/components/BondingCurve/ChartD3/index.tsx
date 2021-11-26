@@ -19,13 +19,14 @@ interface IProps {
 class Graphic {
   m = 0.000014999999999999999;
   n = 1.5;
+  xDomain = 200;
   container: SVGSVGElement;
   dimension: IDimension;
   svg: D3Selection;
 
   padding: IPadding = {
     top: 20,
-    left: 80,
+    left: 85,
     bottom: 60,
     right: 20,
   };
@@ -36,7 +37,7 @@ class Graphic {
       height: 15,
     },
     rect: {
-      width: 160,
+      width: 170,
       height: 100,
     },
     padding: {
@@ -47,7 +48,7 @@ class Graphic {
     },
     font: {
       small: 12,
-      large: 32,
+      large: 28,
     },
     radius: 5,
   };
@@ -69,17 +70,12 @@ class Graphic {
     const { width, height } = this.dimension;
 
     const svg = this.svg;
-    // const RR = 0.4;
-    // const bootstrapPrice = 0.015;
+    const bootstrapPrice = 0.015;
     const finalPrice = 0.0173053459948075;
-    // const bootstrapOG = 60;
 
-    // const initialSupply = 100;
-    // const totalMinted = 110;
-    // const maxMinted = Math.max(totalMinted, bootstrapOG);
-    // const maxMintedMargin = maxMinted * (1.01 + (0.2 - maxMinted / 1000));
+    const initialSupply = 100;
 
-    const xDomain = 200;
+    const xDomain = this.xDomain;
     const yDomain = Math.max(this.getValue(xDomain), finalPrice);
     const pointNum = 500;
 
@@ -115,30 +111,6 @@ class Graphic {
       .attr('fill', 'none')
       .attr('stroke-width', 1.792)
       .attr('stroke', '#DBDBDB');
-
-    // svg
-    //   .append('text')
-    //   .attr('id', 'sov-per-og-token')
-    //   .attr('x', 100)
-    //   .attr('y', 100)
-    //   .attr('text-anchor', 'start')
-    //   .style('fill', '#000')
-    //   .style('font-size', 46)
-    //   .style('font-weight', 300)
-    //   .style('font-family', 'Rowdies')
-    //   .text('0.300 SOV');
-
-    // svg
-    //   .append('text')
-    //   .attr('id', 'sov-per-og-token')
-    //   .attr('x', 100)
-    //   .attr('y', 125)
-    //   .attr('text-anchor', 'start')
-    //   .style('fill', '#17C3B2')
-    //   .style('font-size', 16)
-    //   .style('font-weight', 500)
-    //   .style('font-family', 'Inter')
-    //   .text('per OG Token');
 
     const line = d3
       .line()
@@ -184,7 +156,8 @@ class Graphic {
       .attr('x', width / 2)
       .attr('y', height - 10)
       .attr('text-anchor', 'middle')
-      .text('OG TOKENS SUPPLY(1=1x100)');
+      .style('text-transform', 'uppercase')
+      .text('OG Token Supply (in Millions)');
 
     svg
       .append('text')
@@ -195,85 +168,45 @@ class Graphic {
       .attr('x', -height / 2)
       .attr('y', 20)
       .attr('text-anchor', 'middle')
+      .style('text-transform', 'uppercase')
       .text('TOKEN PRICE IN SOV');
 
     // bootstrap price line
-    // svg
-    //   .append('svg:line')
-    //   .attr('x1', this.padding.left)
-    //   .attr('x2', xScale(xDomain))
-    //   .attr('y1', yScale(bootstrapPrice))
-    //   .attr('y2', yScale(bootstrapPrice))
-    //   .style('stroke', 'rgb(50, 50, 189)')
-    //   .style('stroke-dasharray', '6,3');
+    svg
+      .append('svg:line')
+      .attr('id', 'initial-supply-line-x')
+      .attr('x1', this.padding.left)
+      .attr('x2', xScale(xDomain))
+      .attr('y1', yScale(this.getValue(initialSupply)))
+      .attr('y2', yScale(this.getValue(initialSupply)))
+      .style('stroke', 'rgb(50, 50, 189)')
+      .style('stroke-dasharray', '6,3');
 
     // bootstrap supply line
-    // svg
-    //   .append('svg:line')
-    //   .attr('x1', xScale(bootstrapOG))
-    //   .attr('x2', xScale(bootstrapOG))
-    //   .attr('y1', height - this.padding.bottom)
-    //   .attr('y2', yScale(bootstrapPrice))
-    //   .style('stroke', 'rgb(50, 50, 189)')
-    //   .style('stroke-dasharray', '6,3');
-
-    // svg
-    //   .append('text')
-    //   .attr('x', width - this.padding.right - 100)
-    //   .attr('y', yScale(bootstrapPrice) - 10)
-    //   .attr('text-anchor', 'end')
-    //   .text('Bootstrap price: ' + bootstrapPrice);
+    svg
+      .append('svg:line')
+      .attr('x1', xScale(initialSupply))
+      .attr('x2', xScale(initialSupply))
+      .attr('y1', height - this.padding.bottom)
+      .attr('y2', yScale(this.getValue(initialSupply)))
+      .style('stroke', 'rgb(50, 50, 189)')
+      .style('stroke-dasharray', '6,3');
 
     // bootstrap point
-    // svg
-    //   .append('circle')
-    //   .attr('cx', xScale(bootstrapOG))
-    //   .attr('cy', yScale(bootstrapPrice))
-    //   .attr('r', 4)
-    //   .style('stroke', '#663399')
-    //   .style('fill', '#50FF70');
+    svg
+      .append('circle')
+      .attr('cx', xScale(initialSupply))
+      .attr('cy', yScale(this.getValue(initialSupply)))
+      .attr('r', 4)
+      .style('stroke', '#663399')
+      .style('fill', '#50FF70');
 
-    // bootstrap price line
-    // svg
-    //   .append('svg:line')
-    //   .attr('x1', this.padding.left)
-    //   .attr('x2', xScale(totalMinted))
-    //   .attr('y1', yScale(finalPrice))
-    //   .attr('y2', yScale(finalPrice))
-    //   .style('stroke', 'rgb(50, 50, 189)')
-    //   .style('stroke-dasharray', '6,3');
-
-    // bootstrap supply line
-    // svg
-    //   .append('svg:line')
-    //   .attr('x1', xScale(totalMinted))
-    //   .attr('x2', xScale(totalMinted))
-    //   .attr('y1', height - this.padding.bottom)
-    //   .attr('y2', yScale(finalPrice))
-    //   .style('stroke', 'rgb(50, 50, 189)')
-    //   .style('stroke-dasharray', '6,3');
-
-    // bonding curve last point
-    // svg
-    //   .append('circle')
-    //   .attr('cx', xScale(totalMinted))
-    //   .attr('cy', yScale(finalPrice))
-    //   .attr('r', 4)
-    //   // .style('stroke', '#663399')
-    //   .style('fill', '#17c3b2')
-    //   .style('fill-opacity', 0.4);
-
-    // svg
-    //   .append('text')
-    //   .attr('x', xScale(totalMinted) + 10)
-    //   .attr('y', yScale(finalPrice) - 10)
-    //   .attr('text-anchor', 'end')
-    //   .text(
-    //     'Rate at OG ' +
-    //       totalMinted +
-    //       'M total supply: ' +
-    //       finalPrice.toFixed(5),
-    //   );
+    svg
+      .append('text')
+      .attr('x', width - this.padding.right - 100)
+      .attr('y', yScale(bootstrapPrice) - 10)
+      .attr('text-anchor', 'end')
+      .text('Bootstrap price: ' + bootstrapPrice);
 
     const tooltip = this.addTooltip();
 
@@ -300,13 +233,39 @@ class Graphic {
           { xScale, yScale },
         );
       })
-      .on('mouseout', () => {
+      .on('mouseout', event => {
+        const [mx, my] = d3.pointer(event, this.container);
+
+        if (
+          mx >= this.padding.left &&
+          mx <= width - this.padding.right &&
+          my >= this.padding.top &&
+          my <= height - this.padding.bottom
+        ) {
+          return;
+        }
+
         tooltip.style('display', 'none');
+        this.svg.select('#guide-line-x').style('display', 'none');
+        this.svg.select('#guide-line-y').style('display', 'none');
       });
   }
 
   addTooltip(): D3Selection {
     const { rect, triangle, padding, radius, font } = this.tooltip;
+
+    // guide lines
+    this.svg
+      .append('svg:line')
+      .attr('id', 'guide-line-x')
+      .style('stroke', 'rgb(50, 50, 189)')
+      .style('stroke-dasharray', '6,3');
+
+    this.svg
+      .append('svg:line')
+      .attr('id', 'guide-line-y')
+      .style('stroke', 'rgb(50, 50, 189)')
+      .style('stroke-dasharray', '6,3');
 
     const tooltip = this.svg
       .append('g')
@@ -402,13 +361,6 @@ class Graphic {
       .style('font-family', 'Inter, sans-serif')
       .text('2.7 SOV');
 
-    // guide lines
-    this.svg
-      .append('svg:line')
-      .attr('class', 'guide-line-x')
-      .style('stroke', 'rgb(50, 50, 189)')
-      .style('stroke-dasharray', '6,3');
-
     return tooltip;
   }
 
@@ -423,7 +375,7 @@ class Graphic {
     const { rect, triangle, padding, font } = this.tooltip;
     const [mx] = mousePosition;
     const [x, y] = coordinate;
-    const { width } = this.dimension;
+    const { width, height } = this.dimension;
 
     // positioning
     const limitCoord = {
@@ -499,11 +451,11 @@ class Graphic {
           ? -(triangle.height + padding.bottom)
           : triangle.height + rect.height - padding.bottom,
       )
-      .text('6k');
+      .text(`${x.toFixed()}m`);
 
     tooltip
       .select('#tooltip-sov-amount')
-      .text(`${x.toFixed(x < 100 ? 1 : 0)} SOV`)
+      .text(`${y.toFixed(3)} SOV`)
       .attr(
         'y',
         isUpside
@@ -517,6 +469,29 @@ class Graphic {
             )
           : triangle.height + padding.top + font.small + 8 + font.large,
       );
+
+    // guide lines
+    const limitedMx = Math.min(mx, width - this.padding.right);
+    this.svg
+      .select('#guide-line-x')
+      .attr('x1', this.padding.left)
+      .attr('y1', myForMx)
+      .attr('x2', Math.max(limitedMx, this.padding.left))
+      .attr('y2', myForMx)
+      .style('display', 'unset');
+
+    this.svg
+      .select('#guide-line-y')
+      .attr('x1', limitedMx)
+      .attr('y1', height - this.padding.bottom)
+      .attr('x2', limitedMx)
+      .attr('y2', myForMx)
+      .style('display', 'unset');
+
+    // initial supply price line
+    this.svg
+      .select('#initial-supply-line-x')
+      .attr('x2', x < 100 ? xScale(100) : xScale(this.xDomain));
   }
 }
 
