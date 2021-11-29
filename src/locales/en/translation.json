@@ -354,7 +354,8 @@
           "participatingWallets": "Participating Wallets",
           "price": "Price",
           "acceptedCurrencies": "Accepted currencies",
-          "tokenSaleEndTime": "Token Pre-Sale End Time"
+          "tokenSaleEndTime": "Token Pre-Sale End Time",
+          "totalDepositReceived": "Total Deposit Received"
         },
         "buyDialog": {
           "enterAmount": "Enter Amount",

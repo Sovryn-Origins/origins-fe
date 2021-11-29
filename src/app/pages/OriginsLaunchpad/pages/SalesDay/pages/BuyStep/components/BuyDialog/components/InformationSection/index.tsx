@@ -2,12 +2,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { AcceptedCurrencies } from 'app/components/AcceptedCurrencies';
-import { BuyInformationWrapper } from './styled';
+import { AssetRenderer } from 'app/components/AssetRenderer';
 import { InfoItem } from './InfoItem';
-import { AllocationRemaining } from './AllocationRemaining';
 import { toNumberFormat, weiToNumberFormat } from 'utils/display-text/format';
 import { ISaleInformation } from '../../../../../../../../types';
 import { btcInSatoshis } from 'app/constants';
+import styles from './index.module.scss';
 
 interface IInformationSectionProps {
   saleName: string;
@@ -24,18 +24,19 @@ export const InformationSection: React.FC<IInformationSectionProps> = ({
   const { t } = useTranslation();
 
   return (
-    <BuyInformationWrapper>
+    <div className={styles.buyInformationWrapper}>
       <InfoItem
         label={t(
           translations.originsLaunchpad.saleDay.buyStep.buyInformationLabels
-            .allocationRemaining,
+            .totalDepositReceived,
         )}
         value={
-          <AllocationRemaining
-            totalSaleAllocation={info.totalSaleAllocation}
-            remainingTokens={info.remainingTokens}
-            saleName={saleName}
-          />
+          <>
+            <span className="tw-pr-4">
+              {weiToNumberFormat(info.totalDepositReceived)}
+            </span>
+            <AssetRenderer assetString={saleName} />
+          </>
         }
         className="tw-border-2 tw-border-solid tw-border-yellow-3 tw-rounded-lg tw-px-5 tw-py-8"
       />
@@ -84,6 +85,6 @@ export const InformationSection: React.FC<IInformationSectionProps> = ({
         }
         isLastItem={true}
       />
-    </BuyInformationWrapper>
+    </div>
   );
 };

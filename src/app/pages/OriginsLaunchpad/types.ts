@@ -12,6 +12,7 @@ export interface ISaleInformation {
   verificationType: VerificationType;
   totalSaleAllocation: number;
   isSaleActive: boolean;
+  totalDepositReceived: string;
 }
 
 export enum SaleType {

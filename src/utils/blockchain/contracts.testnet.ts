@@ -358,7 +358,7 @@ export const contracts = {
     abi: GovernorAdminABI as any,
   },
   OG_token: {
-    address: '0x6979bd7aa099c6c0566c40e5B1FC88CB96D73254',
+    address: '0x010C233B4F94d35CaDb71D12D7058aAb58789e8f',
     abi: OGTokenAbi,
   },
 };

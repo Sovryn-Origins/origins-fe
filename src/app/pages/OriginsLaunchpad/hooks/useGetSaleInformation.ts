@@ -23,12 +23,14 @@ export const useGetSaleInformation = (tierId: number) => {
     verificationType: VerificationType.None,
     totalSaleAllocation: 0,
     isSaleActive: false,
+    totalDepositReceived: '0',
   });
 
   useEffect(() => {
     contractReader
       .call('originsBase', 'readTierPartA', [tierId])
       .then(result => {
+        console.log('[readTierPartA]', result);
         const currentTS = Math.floor(Date.now() / 1000);
         setSaleInfo(prevValue => ({
           ...prevValue,
@@ -81,6 +83,17 @@ export const useGetSaleInformation = (tierId: number) => {
         setSaleInfo(prevValue => ({
           ...prevValue,
           totalSaleAllocation: result,
+        }));
+      });
+  }, [tierId]);
+
+  useEffect(() => {
+    contractReader
+      .call<string>('originsBase', 'getTokensSoldPerTier', [tierId])
+      .then(result => {
+        setSaleInfo(prevValue => ({
+          ...prevValue,
+          totalDepositReceived: result,
         }));
       });
   }, [tierId]);
