@@ -2,26 +2,22 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AssetSymbolRenderer } from 'app/components/AssetSymbolRenderer';
-import {
-  DepositLimitIconWrapper,
-  DepositLimitContentWrapper,
-  DepositLimitDivider,
-} from './styled';
 import { translations } from 'locales/i18n';
 import { Asset } from 'types';
 import { weiToNumberFormat } from 'utils/display-text/format';
 import arrowDownInRect from 'assets/images/arrow-down-rect.svg';
 import arrowUpInRect from 'assets/images/arrow-up-rect.svg';
+import styles from './index.module.scss';
 
 interface IDepositLimitItemProps {
   direction: string;
   label: string;
-  sourceToken: Asset;
   amount: string;
+  depositToken: Asset;
 }
 
 interface IDepositLimitProps {
-  sourceToken: Asset;
+  depositToken: Asset;
   minAmount: string;
   maxAmount: string;
 }
@@ -30,18 +26,18 @@ const DepositLimitItem: React.FC<IDepositLimitItemProps> = ({
   direction,
   label,
   amount,
-  sourceToken,
+  depositToken,
 }) => {
   return (
     <div className="tw-flex tw-justify-between tw-items-center">
-      <DepositLimitIconWrapper>
+      <div className="tw-w-12">
         <img
           src={direction === 'down' ? arrowDownInRect : arrowUpInRect}
           alt={`Deposit Limit: ${label}`}
         />
-      </DepositLimitIconWrapper>
-      <DepositLimitContentWrapper className="tw-px-2">
-        <p className="tw-mb-3 tw-text-left tw-font-rowdies tw-text-sm tw-text-black">
+      </div>
+      <div className={styles.depositLimitContentWrapper}>
+        <p className="tw-mb-1 tw-text-left tw-font-rowdies tw-text-sm tw-text-black">
           {label}
         </p>
         <div className="tw-flex tw-justify-between">
@@ -53,16 +49,16 @@ const DepositLimitItem: React.FC<IDepositLimitItemProps> = ({
           </p>
           <AssetSymbolRenderer
             className="tw-text-black tw-text-sm tw-font-rowdies"
-            asset={sourceToken}
+            asset={depositToken}
           />
         </div>
-      </DepositLimitContentWrapper>
+      </div>
     </div>
   );
 };
 
 export const DepositLimit: React.FC<IDepositLimitProps> = ({
-  sourceToken,
+  depositToken,
   minAmount,
   maxAmount,
 }) => {
@@ -80,16 +76,16 @@ export const DepositLimit: React.FC<IDepositLimitProps> = ({
             direction="down"
             label="MIN"
             amount={minAmount}
-            sourceToken={sourceToken}
+            depositToken={depositToken}
           />
           <DepositLimitItem
             direction="up"
             label="MAX"
             amount={maxAmount}
-            sourceToken={sourceToken}
+            depositToken={depositToken}
           />
         </div>
-        <DepositLimitDivider />
+        <div className="tw-border tw-border-black tw-border-solid" />
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ import styles from './index.module.scss';
 interface IBuySectionProps {
   saleName: string;
   depositRate: number;
-  sourceToken: Asset;
+  depositToken: Asset;
   tierId: number;
   maxAmount: string;
   minAmount: string;
@@ -27,7 +27,7 @@ interface IBuySectionProps {
 export const BuySection: React.FC<IBuySectionProps> = ({
   saleName,
   depositRate,
-  sourceToken: initSourceToken,
+  depositToken,
   tierId,
   maxAmount,
   minAmount,
@@ -35,7 +35,7 @@ export const BuySection: React.FC<IBuySectionProps> = ({
   const { t } = useTranslation();
   const connected = useCanInteract(true);
 
-  const [sourceToken, setSourceToken] = useState<Asset>(initSourceToken);
+  const [sourceToken, setSourceToken] = useState<Asset>(depositToken);
   const [amount, setAmount] = useState('');
   const [isOverMaxLimit, setIsOverMaxLimit] = useState(false);
   const weiAmount = useWeiAmount(amount);
@@ -73,7 +73,7 @@ export const BuySection: React.FC<IBuySectionProps> = ({
       <div className={styles.buyInnerWrapper}>
         <div className="tw-max-w-md tw-mx-auto">
           <DepositLimit
-            sourceToken={sourceToken}
+            depositToken={depositToken}
             minAmount={minAmount}
             maxAmount={maxAmount}
           />
