@@ -7,13 +7,13 @@ import { DepositLimit } from './components/DepositLimit';
 
 import { translations } from 'locales/i18n';
 import { Asset } from 'types';
-import { BuyInnerWrapper, BuyWrapper, BuyButton } from './styled';
 import { useWeiAmount } from 'app/hooks/useWeiAmount';
 import { bignumber } from 'mathjs';
 import { noop } from 'app/constants';
 import { useCanInteract } from 'app/hooks/useCanInteract';
 import { useApproveAndBuyToken } from 'app/pages/OriginsLaunchpad/hooks/useApproveAndBuyToken';
 import { ErrorBadge } from 'app/components/Form/ErrorBadge';
+import styles from './index.module.scss';
 
 interface IBuySectionProps {
   saleName: string;
@@ -69,8 +69,8 @@ export const BuySection: React.FC<IBuySectionProps> = ({
   );
 
   return (
-    <BuyWrapper>
-      <BuyInnerWrapper>
+    <div className={styles.buyWrapper}>
+      <div className={styles.buyInnerWrapper}>
         <div className="tw-max-w-md tw-mx-auto">
           <DepositLimit
             sourceToken={sourceToken}
@@ -123,7 +123,8 @@ export const BuySection: React.FC<IBuySectionProps> = ({
             />
           </div>
 
-          <BuyButton
+          <button
+            className={styles.buyButton}
             disabled={buyTx.loading || !isValidAmount || !connected}
             onClick={onBuyClick}
           >
@@ -134,11 +135,11 @@ export const BuySection: React.FC<IBuySectionProps> = ({
                 { token: saleName },
               )}
             </span>
-          </BuyButton>
+          </button>
 
           <TxDialog tx={buyTx} />
         </div>
-      </BuyInnerWrapper>
-    </BuyWrapper>
+      </div>
+    </div>
   );
 };
