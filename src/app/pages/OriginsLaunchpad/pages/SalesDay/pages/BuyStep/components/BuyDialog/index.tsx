@@ -24,6 +24,7 @@ export const BuyDialog: React.FC<IBuyDialogProps> = ({
       tierId={tierId}
       maxAmount={saleInformation.maxAmount}
       minAmount={saleInformation.minAmount}
+      myTotalDeposit={saleInformation.myTotalDeposit}
     />
   </DialogWrapper>
 );

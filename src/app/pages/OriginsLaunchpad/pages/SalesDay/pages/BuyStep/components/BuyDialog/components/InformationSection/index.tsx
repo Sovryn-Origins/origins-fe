@@ -4,18 +4,14 @@ import { translations } from 'locales/i18n';
 import { AcceptedCurrencies } from 'app/components/AcceptedCurrencies';
 import { AssetRenderer } from 'app/components/AssetRenderer';
 import { InfoItem } from './InfoItem';
-import { toNumberFormat, weiToNumberFormat } from 'utils/display-text/format';
+import { weiToNumberFormat } from 'utils/display-text/format';
 import { ISaleInformation } from '../../../../../../../../types';
-import { btcInSatoshis } from 'app/constants';
 import styles from './index.module.scss';
 
 interface IInformationSectionProps {
   saleName: string;
   info: ISaleInformation;
 }
-
-const depositRateToSatoshis = (depositRate: number) =>
-  toNumberFormat(btcInSatoshis / depositRate);
 
 export const InformationSection: React.FC<IInformationSectionProps> = ({
   saleName,
@@ -55,14 +51,6 @@ export const InformationSection: React.FC<IInformationSectionProps> = ({
             .participatingWallets,
         )}
         value={`${info.participatingWallets}`}
-      />
-
-      <InfoItem
-        label={t(
-          translations.originsLaunchpad.saleDay.buyStep.buyInformationLabels
-            .price,
-        )}
-        value={`${depositRateToSatoshis(info.depositRate)} Sats`}
       />
 
       <InfoItem

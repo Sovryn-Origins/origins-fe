@@ -7,9 +7,10 @@ import { DepositLimit } from './components/DepositLimit';
 
 import { translations } from 'locales/i18n';
 import { Asset } from 'types';
+import { weiToNumberFormat } from 'utils/display-text/format';
+import { AssetRenderer } from 'app/components/AssetRenderer';
 import { useWeiAmount } from 'app/hooks/useWeiAmount';
 import { bignumber } from 'mathjs';
-import { noop } from 'app/constants';
 import { useCanInteract } from 'app/hooks/useCanInteract';
 import { useApproveAndBuyToken } from 'app/pages/OriginsLaunchpad/hooks/useApproveAndBuyToken';
 import { ErrorBadge } from 'app/components/Form/ErrorBadge';
@@ -22,6 +23,7 @@ interface IBuySectionProps {
   tierId: number;
   maxAmount: string;
   minAmount: string;
+  myTotalDeposit: string;
 }
 
 export const BuySection: React.FC<IBuySectionProps> = ({
@@ -31,6 +33,7 @@ export const BuySection: React.FC<IBuySectionProps> = ({
   tierId,
   maxAmount,
   minAmount,
+  myTotalDeposit,
 }) => {
   const { t } = useTranslation();
   const connected = useCanInteract(true);
@@ -77,7 +80,21 @@ export const BuySection: React.FC<IBuySectionProps> = ({
             minAmount={minAmount}
             maxAmount={maxAmount}
           />
-          <div className="tw-mb-10">
+          <div>
+            <div className="tw-text-base tw-text-left tw-font-rowdies tw-mb-2 tw-text-black tw-uppercase">
+              {t(
+                translations.originsLaunchpad.saleDay.buyStep.buyDialog
+                  .yourTotalDeposit,
+              )}
+            </div>
+            <div className="tw-text-left tw-text-xl tw-text-black">
+              <span className="tw-mr-2">
+                {weiToNumberFormat(myTotalDeposit)}
+              </span>
+              <AssetRenderer asset={Asset.RBTC} />
+            </div>
+          </div>
+          <div className="tw-mt-32 tw-mb-10">
             <div className="tw-text-base tw-text-left tw-font-rowdies tw-mb-2 tw-text-black tw-uppercase">
               {t(
                 translations.originsLaunchpad.saleDay.buyStep.buyDialog
@@ -91,6 +108,7 @@ export const BuySection: React.FC<IBuySectionProps> = ({
               selectable={true}
               onSelectAsset={asset => setSourceToken(asset)}
               theme="white"
+              showAmountSelector={false}
             />
             {isOverMaxLimit && (
               <ErrorBadge
@@ -104,23 +122,6 @@ export const BuySection: React.FC<IBuySectionProps> = ({
                 }
               />
             )}
-          </div>
-
-          <div>
-            <div className="tw-text-base tw-text-left tw-font-rowdies tw-mb-2 tw-text-black tw-uppercase">
-              {t(
-                translations.originsLaunchpad.saleDay.buyStep.buyDialog
-                  .tokenReceived,
-                { token: saleName },
-              )}
-            </div>
-            <AmountInput
-              value={tokenAmount}
-              assetString={saleName}
-              readonly={true}
-              onChange={noop}
-              theme="white"
-            />
           </div>
 
           <button

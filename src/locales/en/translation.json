@@ -363,7 +363,8 @@
           "transactionFee": "Transaction Fee",
           "buyButton": "Buy {{token}}",
           "isOverMaxLimit": "You cannot deposit more than max limit",
-          "depositLimits": "Deposit Limits"
+          "depositLimits": "Deposit Limits",
+          "yourTotalDeposit": "Your Total Deposit"
         },
         "instructions": {
           "title": "Instructions",

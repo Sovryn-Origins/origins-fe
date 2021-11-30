@@ -13,6 +13,7 @@ export interface ISaleInformation {
   totalSaleAllocation: number;
   isSaleActive: boolean;
   totalDepositReceived: string;
+  myTotalDeposit: string;
 }
 
 export enum SaleType {

@@ -70,7 +70,7 @@ export const DepositLimit: React.FC<IDepositLimitProps> = ({
           translations.originsLaunchpad.saleDay.buyStep.buyDialog.depositLimits,
         )}
       </div>
-      <div className="tw-mb-20">
+      <div className="tw-mb-6">
         <div className="tw-grid tw-grid-cols-2 tw-gap-4 tw-mb-5">
           <DepositLimitItem
             direction="down"

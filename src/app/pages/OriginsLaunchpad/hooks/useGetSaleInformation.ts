@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Asset } from 'types';
+import { useAccount } from 'app/hooks/useAccount';
 import { assetByTokenAddress } from 'utils/blockchain/contract-helpers';
 import { contractReader } from 'utils/sovryn/contract-reader';
 import { DepositType, ISaleInformation, VerificationType } from '../types';
@@ -11,6 +12,8 @@ const timestampToString = (timestamp: number) =>
   });
 
 export const useGetSaleInformation = (tierId: number) => {
+  const account = useAccount();
+
   const [saleInfo, setSaleInfo] = useState<ISaleInformation>({
     minAmount: '0',
     maxAmount: '0',
@@ -24,6 +27,7 @@ export const useGetSaleInformation = (tierId: number) => {
     totalSaleAllocation: 0,
     isSaleActive: false,
     totalDepositReceived: '0',
+    myTotalDeposit: '0',
   });
 
   useEffect(() => {
@@ -97,6 +101,21 @@ export const useGetSaleInformation = (tierId: number) => {
         }));
       });
   }, [tierId]);
+
+  useEffect(() => {
+    if (!account) return;
+    contractReader
+      .call<string>('originsBase', 'getTokensBoughtByAddressOnTier', [
+        account,
+        tierId,
+      ])
+      .then(result => {
+        setSaleInfo(prevValue => ({
+          ...prevValue,
+          myTotalDeposit: result,
+        }));
+      });
+  }, [account, tierId]);
 
   return saleInfo;
 };

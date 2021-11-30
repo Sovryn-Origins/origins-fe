@@ -26,6 +26,7 @@ interface Props {
   maxAmount?: string;
   readonly?: boolean;
   theme?: 'dark' | 'white';
+  showAmountSelector?: boolean;
 }
 
 export function AmountInput({
@@ -41,6 +42,7 @@ export function AmountInput({
   maxAmount,
   readonly,
   theme = 'dark',
+  showAmountSelector = true,
 }: Props) {
   return (
     <>
@@ -72,13 +74,15 @@ export function AmountInput({
       {subText && (
         <div className="tw-text-xs tw-mt-1 tw-font-thin">{subText}</div>
       )}
-      {!readonly && (asset || maxAmount !== undefined) && (
-        <AmountSelector
-          asset={asset}
-          maxAmount={maxAmount}
-          onChange={onChange}
-        />
-      )}
+      {showAmountSelector &&
+        !readonly &&
+        (asset || maxAmount !== undefined) && (
+          <AmountSelector
+            asset={asset}
+            maxAmount={maxAmount}
+            onChange={onChange}
+          />
+        )}
     </>
   );
 }
