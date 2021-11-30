@@ -34,7 +34,6 @@ export const useGetSaleInformation = (tierId: number) => {
     contractReader
       .call('originsBase', 'readTierPartA', [tierId])
       .then(result => {
-        console.log('[readTierPartA]', result);
         const currentTS = Math.floor(Date.now() / 1000);
         setSaleInfo(prevValue => ({
           ...prevValue,

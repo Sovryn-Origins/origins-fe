@@ -91,7 +91,7 @@ export const BuySection: React.FC<IBuySectionProps> = ({
               <span className="tw-mr-2">
                 {weiToNumberFormat(myTotalDeposit)}
               </span>
-              <AssetRenderer asset={Asset.RBTC} />
+              <AssetRenderer asset={Asset.OG} />
             </div>
           </div>
           <div className="tw-mt-32 tw-mb-10">

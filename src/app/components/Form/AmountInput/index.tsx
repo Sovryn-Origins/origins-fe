@@ -55,7 +55,8 @@ export function AmountInput({
           asset || assetString ? (
             selectable ? (
               <AssetSelect
-                selected={asset || assetString}
+                selected={asset}
+                selectedAssetString={assetString}
                 onChange={onSelectAsset}
               />
             ) : (
