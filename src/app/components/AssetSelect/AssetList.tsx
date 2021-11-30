@@ -6,8 +6,8 @@ import { useDetectOutsideClick } from './hooks/useClickedOutside';
 const assets: Asset[] = [
   Asset.RBTC,
   Asset.SOV,
-  Asset.XUSD,
   Asset.ETH,
+  Asset.XUSD,
   Asset.BNB,
 ];
 
