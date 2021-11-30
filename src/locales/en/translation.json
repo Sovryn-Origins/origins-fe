@@ -399,7 +399,8 @@
       "availble": "Available",
       "cta": "Claim",
       "note": "Withdrawal will be available at {{date}}.",
-      "unlockedNote": "You will instantly receive {{amount}} FISH tokens to your wallet."
+      "unlockedNote": "You will instantly receive {{amount}} FISH tokens to your wallet.",
+      "chooseToken": "Choose Token"
     },
     "vestForm": {
       "title": "Locked Balance",

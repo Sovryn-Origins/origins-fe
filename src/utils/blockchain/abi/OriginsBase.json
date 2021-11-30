@@ -163,6 +163,31 @@
         "type": "address"
       },
       {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_tierID",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_tokensBought",
+        "type": "uint256"
+      }
+    ],
+    "name": "PoolClaimed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_initiator",
+        "type": "address"
+      },
+      {
         "indexed": true,
         "internalType": "address",
         "name": "_receiver",
@@ -294,6 +319,31 @@
       },
       {
         "indexed": false,
+        "internalType": "enum OriginsStorage.SaleType",
+        "name": "_saleType",
+        "type": "uint8"
+      }
+    ],
+    "name": "TierSaleTypeUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_initiator",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_tierID",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
         "name": "_updatedMaxAmount",
         "type": "uint256"
@@ -319,6 +369,55 @@
       }
     ],
     "name": "TierSaleUpdatedMinimum",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_initiator",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_tierID",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_minStake",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_maxStake",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "_blockNumber",
+        "type": "uint256[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256[]",
+        "name": "_date",
+        "type": "uint256[]"
+      },
+      {
+        "indexed": true,
+        "internalType": "contract IStaking",
+        "name": "_stakeAddr",
+        "type": "address"
+      }
+    ],
+    "name": "TierStakeConditionUpdated",
     "type": "event"
   },
   {
@@ -661,6 +760,32 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "_tierID",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_userAddress",
+        "type": "address"
+      }
+    ],
+    "name": "checkStakesByTier",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
         "internalType": "address",
         "name": "_addr",
         "type": "address"
@@ -681,6 +806,26 @@
   {
     "constant": false,
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tierID",
+        "type": "uint256"
+      }
+    ],
+    "name": "claimPooled",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_minAmount",
+        "type": "uint256"
+      },
       {
         "internalType": "uint256",
         "name": "_maxAmount",
@@ -718,16 +863,6 @@
       },
       {
         "internalType": "uint256",
-        "name": "_depositRate",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_depositType",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "_verificationType",
         "type": "uint256"
       },
@@ -739,6 +874,11 @@
       {
         "internalType": "uint256",
         "name": "_transferType",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_saleType",
         "type": "uint256"
       }
     ],
@@ -801,6 +941,21 @@
   },
   {
     "constant": true,
+    "inputs": [],
+    "name": "getParticipatingWalletCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
     "inputs": [
       {
         "internalType": "uint256",
@@ -844,6 +999,27 @@
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_addr",
+        "type": "address"
+      }
+    ],
+    "name": "getTokensBoughtByAddress",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "payable": false,
@@ -1201,6 +1377,66 @@
       },
       {
         "internalType": "uint256",
+        "name": "_saleType",
+        "type": "uint256"
+      }
+    ],
+    "name": "setTierSaleType",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tierID",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_minStake",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_maxStake",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_blockNumber",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_date",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "contract IStaking",
+        "name": "_stakeAddr",
+        "type": "address"
+      }
+    ],
+    "name": "setTierStakeCondition",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tierID",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
         "name": "_saleStartTS",
         "type": "uint256"
       },
@@ -1233,6 +1469,11 @@
         "internalType": "uint256",
         "name": "_remainingTokens",
         "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_sendTokens",
+        "type": "bool"
       }
     ],
     "name": "setTierTokenAmount",
