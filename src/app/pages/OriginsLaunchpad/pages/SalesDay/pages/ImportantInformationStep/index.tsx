@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import { DialogTitle, DialogWrapper, ListItem } from './styled';
 import { Trans, useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
 import { Checkbox } from '@blueprintjs/core';
+import { translations } from 'locales/i18n';
 import { ActionButton } from 'app/components/Form/ActionButton';
 import OriginsLogo from 'assets/images/sovryn-origin-logo-dark.png';
+import styles from './index.module.scss';
 
 interface IImportantInformationStepProps {
   tierId: number;
@@ -32,21 +32,23 @@ export const ImportantInformationStep: React.FC<IImportantInformationStepProps> 
 
   return (
     <>
-      <DialogWrapper>
+      <div className={styles.dialogWrapper}>
         <div className="tw-flex tw-items-center">
           <img src={OriginsLogo} alt="Sovryn Origins" />
           <span className="tw-ml-5 tw-text-lg tw-font-consolas tw-uppercase">
             Sovryn Origins
           </span>
         </div>
-        <DialogTitle className="tw-font-rowdies tw-uppercase tw-my-11">
-          {t(baseTranslations.title)}
-        </DialogTitle>
+        <div className={styles.dialogTitle}>{t(baseTranslations.title)}</div>
 
         <div className="tw-text-left">
-          <ListItem>{t(baseTranslations.information[1])}</ListItem>
-          <ListItem>{t(baseTranslations.information[2])}</ListItem>
-          <ListItem>
+          <div className={styles.listItem}>
+            {t(baseTranslations.information[1])}
+          </div>
+          <div className={styles.listItem}>
+            {t(baseTranslations.information[2])}
+          </div>
+          <div className={styles.listItem}>
             <Trans
               i18nKey={baseTranslations.information[3]}
               components={[
@@ -61,8 +63,8 @@ export const ImportantInformationStep: React.FC<IImportantInformationStepProps> 
               ]}
               tOptions={{ FAQ: 'FAQ' }}
             />
-          </ListItem>
-          <ListItem>
+          </div>
+          <div className={styles.listItem}>
             <Trans
               i18nKey={baseTranslations.information[4]}
               components={[
@@ -77,7 +79,7 @@ export const ImportantInformationStep: React.FC<IImportantInformationStepProps> 
               ]}
               tOptions={{ WIKI: 'WIKI' }}
             />
-          </ListItem>
+          </div>
         </div>
 
         <div className="tw-mt-12 tw-flex tw-flex-col">
@@ -96,7 +98,7 @@ export const ImportantInformationStep: React.FC<IImportantInformationStepProps> 
             disabled={!checked}
           />
         </div>
-      </DialogWrapper>
+      </div>
     </>
   );
 };

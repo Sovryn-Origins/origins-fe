@@ -85,7 +85,7 @@ export function App() {
             <Redirect exact from="/liquidity" to="/yield-farm" />
             {/* <Route exact path="/reward" component={RewardPage} /> */}
             <Route exact path="/wallet" component={WalletPage} />
-            <Route exact path="/launchpad" component={OriginsLaunchpadPage} />
+            <Route path="/launchpad" component={OriginsLaunchpadPage} />
             <Route exact path="/claim" component={OriginsClaimPage} />
             <Route
               exact

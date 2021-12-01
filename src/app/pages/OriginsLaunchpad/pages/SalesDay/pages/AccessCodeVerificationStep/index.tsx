@@ -2,9 +2,9 @@ import React from 'react';
 // import imgLargeNFT from 'assets/images/OriginsLaunchpad/FishSale/large_NFT.svg';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { DialogTitle, DialogWrapper } from './styled';
 import { ActionButton } from 'app/components/Form/ActionButton';
 import { useIsAddressVerified } from 'app/pages/OriginsLaunchpad/hooks/useIsAddressVerified';
+import styles from './index.module.scss';
 
 interface IAccessCodeVerificationStepProps {
   tierId: number;
@@ -22,15 +22,15 @@ export const AccessCodeVerificationStep: React.FC<IAccessCodeVerificationStepPro
 
   return (
     <>
-      <DialogWrapper>
+      <div className={styles.dialogWrapper}>
         <div className="tw-max-w-lg">
-          <DialogTitle>
+          <div className={styles.dialogTitle}>
             {t(
               translations.originsLaunchpad.saleDay.accessCodeVerificationStep
                 .dialogTitle,
               { token: saleName },
             )}
-          </DialogTitle>
+          </div>
           <div className="tw-text-xl tw-font-extralight tw-mb-32">
             {isVerified
               ? t(
@@ -81,7 +81,7 @@ export const AccessCodeVerificationStep: React.FC<IAccessCodeVerificationStepPro
             />
           </div>
         )} */}
-      </DialogWrapper>
+      </div>
     </>
   );
 };

@@ -15,7 +15,7 @@ export const BuyStep: React.FC<IBuyStepProps> = ({
   tierId,
 }) => (
   <>
-    <div className="tw-flex">
+    <div className="tw-flex tw-justify-center">
       <BuyDialog
         tierId={tierId}
         saleInformation={saleInformation}

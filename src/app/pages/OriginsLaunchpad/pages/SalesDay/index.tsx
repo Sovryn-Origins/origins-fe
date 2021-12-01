@@ -1,4 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import {
+  Switch,
+  Route,
+  Redirect,
+  useHistory,
+  useRouteMatch,
+  useLocation,
+} from 'react-router-dom';
 import classNames from 'classnames';
 // import imgTitle from 'assets/images/OriginsLaunchpad/FishSale/title_image.png';
 import { TitleContent } from './styled';
@@ -11,6 +19,7 @@ import { ImportantInformationStep } from './pages/ImportantInformationStep';
 import { BuyStep } from './pages/BuyStep';
 import { SaleSummary } from './components/SaleSummary';
 import { useGetSaleInformation } from '../../hooks/useGetSaleInformation';
+import saleStorage from './storage';
 
 interface ISalesDayProps {
   tierId: number;
@@ -19,36 +28,26 @@ interface ISalesDayProps {
 
 export const SalesDay: React.FC<ISalesDayProps> = ({ tierId, saleName }) => {
   const { t } = useTranslation();
+  const { url } = useRouteMatch();
+  const location = useLocation();
+  const history = useHistory();
   const connected = useIsConnected();
   const info = useGetSaleInformation(tierId);
 
-  const [step, setStep] = useState(1);
-
-  const getActiveStep = (step: number) => {
-    switch (step) {
-      case 1:
-        return (
-          <AccessCodeVerificationStep
-            tierId={tierId}
-            saleName={saleName}
-            onVerified={() => setStep(2)}
-          />
-        );
-      case 2:
-        return (
-          <ImportantInformationStep
-            tierId={tierId}
-            onSubmit={() => setStep(3)}
-          />
-        );
-      case 3:
-        return (
-          <BuyStep tierId={tierId} saleInformation={info} saleName={saleName} />
-        );
-      default:
-        return <EngageWalletStep saleName={saleName} />;
-    }
+  // const [step, setStep] = useState(1);
+  const setStep = (step: number) => {
+    saleStorage.saveData({ step });
+    history.push(`${url}/${step}`);
   };
+
+  useEffect(() => {
+    const { step } = saleStorage.getData();
+    if (connected) {
+      history.push(`${url}/${step}`);
+    } else {
+      history.push(`${url}/engage-wallet`);
+    }
+  }, [connected, location.pathname, history, url]);
 
   return (
     <div className="tw-mb-52">
@@ -60,13 +59,36 @@ export const SalesDay: React.FC<ISalesDayProps> = ({ tierId, saleName }) => {
         </div>
       )}
 
-      <div className="tw-justify-center tw-flex tw-text-center">
+      <Switch>
+        <Route exact path={`${url}/engage-wallet`}>
+          <EngageWalletStep saleName={saleName} />
+        </Route>
+        <Route exact path={`${url}/1`}>
+          <AccessCodeVerificationStep
+            tierId={tierId}
+            saleName={saleName}
+            onVerified={() => setStep(2)}
+          />
+        </Route>
+        <Route exact path={`${url}/2`}>
+          <ImportantInformationStep
+            tierId={tierId}
+            onSubmit={() => setStep(3)}
+          />
+        </Route>
+        <Route exact path={`${url}/3`}>
+          <BuyStep tierId={tierId} saleInformation={info} saleName={saleName} />
+        </Route>
+        <Redirect to={`${url}/1`} />
+      </Switch>
+
+      {/* <div className="tw-justify-center tw-flex tw-text-center">
         {!connected ? (
           <EngageWalletStep saleName={saleName} />
         ) : (
           info.isSaleActive && getActiveStep(step)
         )}
-      </div>
+      </div> */}
       <SaleSummary
         saleInfo={info}
         className={classNames({ 'tw-mt-56': info.isSaleActive })}
