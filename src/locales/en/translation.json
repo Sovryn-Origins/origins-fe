@@ -1306,10 +1306,10 @@
   },
   "notifyDialog": {
     "heading": "Disclaimer",
-    "acceptTerms": "I have read and understand that I am responsible for my own Sovrynity",
+    "acceptTerms": "I HAVE READ AND UNDERSTAND THAT I AM RESPONSIBLE FOR MY OWN SOVEREIGNTY",
     "salesBtn": "I Understand",
     "generalAlert": {
-      "p1": "Sovryn Origins is a decentralized launchpad enabling protocols / platforms to kickstart their communities and raise Bitcoin native community funding. Only you control and have access to your wealth, any actions you take could cause a potential loss of funds. Make sure to check all transaction fee prices before proceeding as third-party wallets may automatically present high fees."
+      "p1": "SOVRYN ORIGINS IS A DECENTRALIZED LAUNCHPAD ENABLING PROTOCOLS / PLATFORMS TO KICKSTART THEIR COMMUNITIES AND RAISE BITCOIN NATIVE COMMUNITY FUNDING. ONLY YOU CONTROL AND HAVE ACCESS TO YOUR WEALTH, ANY ACTIONS YOU TAKE COULD CAUSE A POTENTIAL LOSS OF FUNDS. MAKE SURE TO CHECK ALL TRANSACTION FEE PRICES BEFORE PROCEEDING AS THIRD-PARTY WALLETS MAY AUTOMATICALLY PRESENT HIGH FEES."
     },
     "metamaskAlert": {
       "p1": "We noticed you have MetaMask installed.",
