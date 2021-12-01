@@ -38,6 +38,7 @@ import nftAbi from './abi/nftAbi.json';
 import multicallABI from './abi/multicall.json';
 import GovernorAdminABI from './abi/GovernorAdmin.json';
 import OGTokenAbi from './abi/OG.json';
+import OGMarketMakerAbi from './abi/OGMarketMaker.json';
 
 export const contracts = {
   sovrynProtocol: {
@@ -360,5 +361,9 @@ export const contracts = {
   OG_token: {
     address: '0x010C233B4F94d35CaDb71D12D7058aAb58789e8f',
     abi: OGTokenAbi,
+  },
+  OGMarketMaker: {
+    address: '',
+    abi: OGMarketMakerAbi,
   },
 };
