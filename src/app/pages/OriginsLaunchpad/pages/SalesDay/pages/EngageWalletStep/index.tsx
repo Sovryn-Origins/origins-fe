@@ -19,7 +19,7 @@ export const EngageWalletStep: React.FC<IEngageWalletStepProps> = ({
   const onEngageClick = useCallback(() => connect(), [connect]);
 
   return (
-    <>
+    <div className="tw-flex tw-justify-center">
       <img src={imgLargeNFT} alt="Dialog NFT" />
       <div className={styles.engageWalletDialogWrapper}>
         <div>
@@ -84,6 +84,6 @@ export const EngageWalletStep: React.FC<IEngageWalletStepProps> = ({
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
