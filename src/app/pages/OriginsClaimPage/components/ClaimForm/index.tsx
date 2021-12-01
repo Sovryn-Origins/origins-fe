@@ -1,24 +1,21 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import cn from 'classnames';
+import { bignumber } from 'mathjs';
 import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Input } from 'app/components/Form/Input';
 import { AssetRenderer } from 'app/components/AssetRenderer';
-// import { AssetSelect } from 'app/components/Form/AssetSelect';
 import { FormGroup } from 'app/components/Form/FormGroup';
-import { Asset } from 'types';
-// import { Theme } from 'types/theme';
 import { Button } from 'app/components/Button';
-import { useSendContractTx } from '../../../../hooks/useSendContractTx';
-import { TxType } from 'store/global/transactions-store/types';
+import { Asset } from 'types';
 import { useCacheCallWithValue } from 'app/hooks/useCacheCallWithValue';
 import { TxDialog } from 'app/components/Dialogs/TxDialog';
 import { weiToNumberFormat } from '../../../../../utils/display-text/format';
 import { useMaintenance } from 'app/hooks/useMaintenance';
-import { useGetDepositAmount } from '../../hooks/useGetDepositAmount';
 import { ErrorBadge } from 'app/components/Form/ErrorBadge';
-import { discordInvite, gasLimit } from 'utils/classifiers';
-import { bignumber } from 'mathjs';
+import { discordInvite } from 'utils/classifiers';
+import { useGetSaleStats } from '../../hooks/useGetSaleStats';
+import { useClaimAndWithdraw } from '../../hooks/useClaimAndWithdraw';
 
 interface IClaimFormProps {
   address: string;
@@ -45,7 +42,24 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
   const [tierId, setTierId] = useState(0);
   const { checkMaintenance, States } = useMaintenance();
   const rewardsLocked = checkMaintenance(States.CLAIM_REWARDS);
-  const depositAmount = useGetDepositAmount(tierId);
+  const saleStats = useGetSaleStats(tierId);
+
+  const availableAmount = useMemo(() => {
+    const {
+      totalTokenOnTier,
+      tokenSoldPerTier,
+      tokenBoughtByAddress,
+    } = saleStats;
+    if (bignumber(tokenSoldPerTier).equals('0')) return '0';
+
+    const distributedAmount = bignumber(totalTokenOnTier)
+      .mul(tokenBoughtByAddress)
+      .div(tokenSoldPerTier);
+
+    return bignumber(tokenBoughtByAddress).lessThan(distributedAmount)
+      ? tokenBoughtByAddress
+      : distributedAmount;
+  }, [saleStats]);
 
   const { value: getWaitedTS } = useCacheCallWithValue(
     'lockedFund',
@@ -74,39 +88,7 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
 
   const unlockTime = useMemo(() => Number(getWaitedTS) * 1000, [getWaitedTS]);
 
-  const [fn, args] = useMemo(() => {
-    let fn = 'withdrawWaitedUnlockedBalance';
-    let args: string[] = [address];
-    if (
-      parseFloat(getVestedBalance) > 0 &&
-      parseFloat(getWaitedUnlockedBalance) > 0
-    ) {
-      fn = 'withdrawAndStakeTokens';
-      args = [address];
-    } else if (parseFloat(getWaitedUnlockedBalance) > 0) {
-      fn = 'withdrawWaitedUnlockedBalance';
-      args = [address];
-    } else if (parseFloat(getVestedBalance) > 0) {
-      fn = 'createVestingAndStake';
-      args = [];
-    }
-    return [fn, args];
-  }, [getVestedBalance, getWaitedUnlockedBalance, address]);
-
-  const { send, ...tx } = useSendContractTx('lockedFund', fn);
-
-  const handleSubmit = useCallback(() => {
-    send(
-      args,
-      {
-        from: address,
-        gas: gasLimit[TxType.LOCKED_FUND_WAITED_CLAIM],
-      },
-      {
-        type: TxType.LOCKED_FUND_WAITED_CLAIM,
-      },
-    );
-  }, [args, address, send]);
+  const { send, ...tx } = useClaimAndWithdraw({ tierId, address });
 
   return (
     <div
@@ -153,7 +135,7 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
           >
             <Input
               className="tw-max-w-none"
-              value={weiToNumberFormat(depositAmount, 4)}
+              value={weiToNumberFormat(availableAmount, 4)}
               readOnly={false}
               appendElem={token ? <AssetRenderer asset={token} /> : undefined}
             />
@@ -182,13 +164,8 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
           {!rewardsLocked && (
             <div className="tw-flex tw-justify-center">
               <Button
-                disabled={
-                  parseFloat(balance) === 0 ||
-                  !balance ||
-                  rewardsLocked ||
-                  new Date().getTime() < unlockTime
-                }
-                onClick={handleSubmit}
+                disabled={!tierId || availableAmount === '0'}
+                onClick={send}
                 className="tw-mx-auto tw-uppercase"
                 text={t(translations.originsClaim.claimForm.cta)}
               />
