@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Asset } from 'types';
-import { useAccount } from 'app/hooks/useAccount';
+import { useAccount, useBlockSync } from 'app/hooks/useAccount';
 import { assetByTokenAddress } from 'utils/blockchain/contract-helpers';
 import { contractReader } from 'utils/sovryn/contract-reader';
 import { DepositType, ISaleInformation, VerificationType } from '../types';
@@ -13,6 +13,7 @@ const timestampToString = (timestamp: number) =>
 
 export const useGetSaleInformation = (tierId: number) => {
   const account = useAccount();
+  const blockSync = useBlockSync();
 
   const [saleInfo, setSaleInfo] = useState<ISaleInformation>({
     minAmount: '0',
@@ -61,7 +62,7 @@ export const useGetSaleInformation = (tierId: number) => {
           participatingWallets: result,
         })),
       );
-  }, [tierId]);
+  }, [tierId, blockSync]);
 
   useEffect(() => {
     contractReader
@@ -88,7 +89,7 @@ export const useGetSaleInformation = (tierId: number) => {
           totalSaleAllocation: result,
         }));
       });
-  }, [tierId]);
+  }, [tierId, blockSync]);
 
   useEffect(() => {
     contractReader
@@ -99,7 +100,7 @@ export const useGetSaleInformation = (tierId: number) => {
           totalDepositReceived: result,
         }));
       });
-  }, [tierId]);
+  }, [tierId, blockSync]);
 
   useEffect(() => {
     if (!account) return;
@@ -114,7 +115,7 @@ export const useGetSaleInformation = (tierId: number) => {
           myTotalDeposit: result,
         }));
       });
-  }, [account, tierId]);
+  }, [account, tierId, blockSync]);
 
   return saleInfo;
 };

@@ -326,11 +326,11 @@ export const contracts = {
     blockNumber: 1218836,
   },
   originsBase: {
-    address: '0x26969E45895018283bC38E5AcF5F1f28c6c2E475',
+    address: '0x2269aCc85288c23E29B79A373240681eed66F82E',
     abi: OriginsBaseAbi,
   },
   lockedFund: {
-    address: '0xF5655Fb1d8A97828dF5Ab095DF81789db03B8dC0',
+    address: '0xF43f43aA08E93b9ec4A4c7009108b6c5BDcd148F',
     abi: LockedFundAbi,
   },
   vestingRegistryFISH: {
