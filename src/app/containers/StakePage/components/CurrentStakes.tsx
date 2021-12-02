@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { bignumber } from 'mathjs';
-import { Asset } from '../../../../types';
 import dayjs from 'dayjs';
-// import logoSvg from 'assets/images/tokens/sov.svg';
+import type { RevertInstructionError } from 'web3-core-helpers';
+import { Tooltip, Spinner } from '@blueprintjs/core';
 import { useAccount } from '../../../hooks/useAccount';
 import { weiToUSD } from 'utils/display-text/format';
 import { StyledTable } from './StyledTable';
@@ -11,15 +10,12 @@ import { AddressBadge } from '../../../components/AddressBadge';
 import { contractReader } from 'utils/sovryn/contract-reader';
 import { LoadableValue } from '../../../components/LoadableValue';
 import { useTranslation } from 'react-i18next';
-import { AssetsDictionary } from 'utils/dictionaries/assets-dictionary';
-import { useCachedAssetPrice } from '../../../hooks/trading/useCachedAssetPrice';
+import { useDollarValueOg } from '../../../hooks/useDollarValueOg';
 import { useStaking_getStakes } from '../../../hooks/staking/useStaking_getStakes';
 import { useStaking_WEIGHT_FACTOR } from '../../../hooks/staking/useStaking_WEIGHT_FACTOR';
 import { weiTo4 } from 'utils/blockchain/math-helpers';
 import { useStaking_computeWeightByDate } from '../../../hooks/staking/useStaking_computeWeightByDate';
 import { useMaintenance } from 'app/hooks/useMaintenance';
-import { Tooltip, Spinner } from '@blueprintjs/core';
-import type { RevertInstructionError } from 'web3-core-helpers';
 
 interface StakeItem {
   stakedAmount: string;
@@ -180,12 +176,8 @@ const AssetRow: React.FC<IAssetRowProps> = ({
     Math.round(now.getTime() / 1e3),
   );
 
-  const SOV = AssetsDictionary.get(Asset.SOV);
-  const dollars = useCachedAssetPrice(Asset.SOV, Asset.USDT);
-  const dollarValue = bignumber(Number(item.stakedAmount))
-    .mul(dollars.value)
-    .div(10 ** SOV.decimals)
-    .toFixed(0);
+  const dollarValue = useDollarValueOg(item.stakedAmount);
+
   useEffect(() => {
     setWeight(getWeight.value);
     if (Number(WEIGHT_FACTOR.value) && Number(weight)) {
@@ -202,8 +194,8 @@ const AssetRow: React.FC<IAssetRowProps> = ({
         {weiTo4(item.stakedAmount)} {t(translations.stake.og)}
         <br />≈{' '}
         <LoadableValue
-          value={weiToUSD(dollarValue)}
-          loading={dollars.loading}
+          value={weiToUSD(dollarValue.value)}
+          loading={dollarValue.loading}
         />
       </td>
       <td className="tw-text-left tw-hidden lg:tw-table-cell tw-font-normal">
