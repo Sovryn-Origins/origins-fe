@@ -45,7 +45,7 @@ export const EngageWalletStep: React.FC<IEngageWalletStepProps> = ({
         </div>
 
         <div className="tw-max-w-md tw-mx-auto">
-          <div>
+          <div className="tw-text-center">
             <Trans
               i18nKey={
                 translations.originsLaunchpad.saleDay.engageWalletScreen
@@ -64,7 +64,7 @@ export const EngageWalletStep: React.FC<IEngageWalletStepProps> = ({
             />
           </div>
 
-          <div className="tw-mt-6">
+          <div className="tw-mt-6 tw-text-center">
             <Trans
               i18nKey={
                 translations.originsLaunchpad.saleDay.engageWalletScreen
