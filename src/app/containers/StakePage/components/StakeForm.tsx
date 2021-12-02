@@ -19,7 +19,7 @@ interface Props {
   timestamp?: number;
   onChangeAmount: (value: string) => void;
   onChangeTimestamp: (value: number) => void;
-  sovBalance: string;
+  ogBalance: string;
   isValid: boolean;
   kickoff: CacheCallResponse;
   stakes: string[];

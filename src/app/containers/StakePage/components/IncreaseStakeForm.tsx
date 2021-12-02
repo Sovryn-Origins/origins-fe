@@ -18,7 +18,7 @@ interface Props {
   amount: string;
   timestamp?: number;
   onChangeAmount: (value: string) => void;
-  sovBalance: string;
+  ogBalance: string;
   balanceOf: CacheCallResponse;
   isValid: boolean;
   votePower?: number;
@@ -37,7 +37,7 @@ export function IncreaseStakeForm(props: Props) {
 
   useEffect(() => {
     //setting the max value for staking by default
-    if (initialStep) props.onChangeAmount(fromWei(props.sovBalance));
+    if (initialStep) props.onChangeAmount(fromWei(props.ogBalance));
     setInitialStep(false);
   }, [props, initialStep]);
 
@@ -114,7 +114,7 @@ export function IncreaseStakeForm(props: Props) {
           <div className="tw-flex tw-justify-between tw-rounded tw-mt-4 tw-mb-2">
             <div
               onClick={() =>
-                props.onChangeAmount(fromWei(Number(props.sovBalance) / 4))
+                props.onChangeAmount(fromWei(Number(props.ogBalance) / 4))
               }
               className="tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-primary hover:tw-bg-opacity-30 tw-w-1/5 tw-py-3 tw-text-center tw-text-xl tw-text-primary tw-tracking-tighter tw-bg-gray-3 tw-rounded-lg"
             >
@@ -122,7 +122,7 @@ export function IncreaseStakeForm(props: Props) {
             </div>
             <div
               onClick={() =>
-                props.onChangeAmount(fromWei(Number(props.sovBalance) / 2))
+                props.onChangeAmount(fromWei(Number(props.ogBalance) / 2))
               }
               className="tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-primary hover:tw-bg-opacity-30 tw-w-1/5 tw-py-3 tw-text-center tw-text-xl tw-text-primary tw-tracking-tighter tw-bg-gray-3 tw-rounded-lg"
             >
@@ -130,16 +130,14 @@ export function IncreaseStakeForm(props: Props) {
             </div>
             <div
               onClick={() =>
-                props.onChangeAmount(
-                  fromWei((Number(props.sovBalance) / 4) * 3),
-                )
+                props.onChangeAmount(fromWei((Number(props.ogBalance) / 4) * 3))
               }
               className="tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-primary hover:tw-bg-opacity-30 tw-w-1/5 tw-py-3 tw-text-center tw-text-xl tw-text-primary tw-tracking-tighter tw-bg-gray-3 tw-rounded-lg"
             >
               75%
             </div>
             <div
-              onClick={() => props.onChangeAmount(fromWei(props.sovBalance))}
+              onClick={() => props.onChangeAmount(fromWei(props.ogBalance))}
               className="tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-primary hover:tw-bg-opacity-30 tw-w-1/5 tw-py-3 tw-text-center tw-text-xl tw-text-primary tw-tracking-tighter tw-bg-gray-3 tw-rounded-lg"
             >
               100%

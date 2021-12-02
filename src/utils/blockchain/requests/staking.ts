@@ -3,14 +3,14 @@ import { contractWriter } from 'utils/sovryn/contract-writer';
 import { contractReader } from 'utils/sovryn/contract-reader';
 
 export function staking_approve(weiAmount: string) {
-  return contractWriter.send('SOV_token', 'approve', [
+  return contractWriter.send('OG_token', 'approve', [
     getContract('staking').address,
     weiAmount,
   ]);
 }
 
 export function staking_allowance(account: string) {
-  return contractReader.call('SOV_token', 'allowance', [
+  return contractReader.call('OG_token', 'allowance', [
     account,
     getContract('staking').address,
   ]);

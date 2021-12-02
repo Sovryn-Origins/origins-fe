@@ -127,8 +127,8 @@ const InnerStakePage: React.FC = () => {
     assetsUsd,
   ]);
   const assets = AssetsDictionary.list();
-  const { value: sovBalance, loading: sovBalanceLoading } = useAssetBalanceOf(
-    Asset.SOV,
+  const { value: ogBalance, loading: ogBalanceLoading } = useAssetBalanceOf(
+    Asset.OG,
   );
   const { increase, ...increaseTx } = useStakeIncrease();
   const { stake, ...stakeTx } = useStakeStake();
@@ -172,8 +172,8 @@ const InnerStakePage: React.FC = () => {
     const num = toWei(amount);
     if (!num || bignumber(num).lessThanOrEqualTo(0)) return false;
     if (!timestamp || timestamp < Math.round(now.getTime() / 1e3)) return false;
-    return bignumber(num).lessThanOrEqualTo(sovBalance);
-  }, [loading, amount, sovBalance, timestamp, stakeTx.loading]);
+    return bignumber(num).lessThanOrEqualTo(ogBalance);
+  }, [loading, amount, ogBalance, timestamp, stakeTx.loading]);
 
   const validateDelegateForm = useCallback(() => {
     if (loading) return false;
@@ -185,8 +185,8 @@ const InnerStakePage: React.FC = () => {
     if (loading || increaseTx.loading) return false;
     const num = toWei(amount);
     if (!num || bignumber(num).lessThanOrEqualTo(0)) return false;
-    return bignumber(num).lessThanOrEqualTo(sovBalance);
-  }, [loading, amount, sovBalance, increaseTx.loading]);
+    return bignumber(num).lessThanOrEqualTo(ogBalance);
+  }, [loading, amount, ogBalance, increaseTx.loading]);
 
   const validateWithdrawForm = useCallback(
     amount => {
@@ -236,7 +236,7 @@ const InnerStakePage: React.FC = () => {
         let nonce = await contractReader.nonce(account);
         const allowance = (await staking_allowance(account)) as string;
         if (bignumber(allowance).lessThan(weiAmount)) {
-          await staking_approve(sovBalance);
+          await staking_approve(ogBalance);
           nonce += 1;
         }
         if (!stakeTx.loading) {
@@ -251,7 +251,7 @@ const InnerStakePage: React.FC = () => {
     },
     [
       weiAmount,
-      sovBalance,
+      ogBalance,
       account,
       timestamp,
       stakeForm,
@@ -410,7 +410,7 @@ const InnerStakePage: React.FC = () => {
                         timestamp={timestamp}
                         onChangeAmount={e => setAmount(e)}
                         onChangeTimestamp={e => setTimestamp(e)}
-                        sovBalance={sovBalance}
+                        ogBalance={ogBalance}
                         isValid={validateStakeForm()}
                         kickoff={kickoffTs}
                         stakes={dates}
@@ -420,7 +420,7 @@ const InnerStakePage: React.FC = () => {
                     </>
                   }
                 />
-                {sovBalance !== '0' && !stakingLocked ? (
+                {ogBalance !== '0' && !stakingLocked ? (
                   <button
                     type="button"
                     className="tw-bg-primary tw-font-normal tw-bg-opacity-40 hover:tw-text-gray-1 focus:tw-outline-none focus:tw-bg-opacity-50 hover:tw-bg-opacity-40 tw-transition tw-duration-500 tw-ease-in-out tw-text-sm tw-text-black tw-py-3 tw-px-8 tw-border tw-transition-colors tw-duration-300 tw-ease-in-out tw-border-primary tw-rounded-lg tw-font-rowdies tw-uppercase"
@@ -551,7 +551,7 @@ const InnerStakePage: React.FC = () => {
                           amount={amount}
                           timestamp={timestamp}
                           onChangeAmount={e => setAmount(e)}
-                          sovBalance={sovBalance}
+                          ogBalance={ogBalance}
                           isValid={validateIncreaseForm()}
                           balanceOf={balanceOf}
                           votePower={votingPower}
@@ -573,8 +573,8 @@ const InnerStakePage: React.FC = () => {
                             amount={amount}
                             timestamp={0}
                             onChangeTimestamp={e => setTimestamp(e)}
-                            sovBalance={sovBalance}
-                            isSovBalanceLoading={sovBalanceLoading}
+                            ogBalance={ogBalance}
+                            isOgBalanceLoading={ogBalanceLoading}
                             kickoff={kickoffTs}
                             isValid={validateExtendTimeForm()}
                             stakes={dates}
