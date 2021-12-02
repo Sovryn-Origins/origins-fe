@@ -110,7 +110,7 @@ export const CurrentStakes: React.FC<ICurrentStakesProps> = props => {
                 </th>
               </tr>
             </thead>
-            <tbody className="tw-mt-5 tw-font-rowdies tw-text-xs">
+            <tbody className="tw-mt-5 tw-font-inter tw-text-base">
               {!stakesArray?.length && (
                 <tr key="empty">
                   <td
@@ -190,7 +190,7 @@ const AssetRow: React.FC<IAssetRowProps> = ({
 
   return (
     <tr>
-      <td className="tw-text-left tw-font-normal">
+      <td className="tw-text-left tw-font-normal tw-font-inter">
         {weiTo4(item.stakedAmount)} {t(translations.stake.og)}
         <br />≈{' '}
         <LoadableValue
@@ -198,7 +198,7 @@ const AssetRow: React.FC<IAssetRowProps> = ({
           loading={dollarValue.loading}
         />
       </td>
-      <td className="tw-text-left tw-hidden lg:tw-table-cell tw-font-normal">
+      <td className="tw-text-left tw-hidden lg:tw-table-cell tw-font-normal tw-font-inter">
         {weiTo4(votingPower)}
       </td>
       <td className="tw-text-left tw-hidden lg:tw-table-cell tw-font-normal">
@@ -206,24 +206,24 @@ const AssetRow: React.FC<IAssetRowProps> = ({
           <AddressBadge
             txHash={item.delegate}
             startLength={6}
-            className="tw-text-secondary"
+            className="tw-text-secondary tw-font-inter"
           />
         )}
         {!item.delegate && (
-          <p className="tw-m-0">
+          <p className="tw-m-0 tw-font-inter">
             {t(translations.stake.delegation.noDelegate)}
           </p>
         )}
       </td>
-      <td className="tw-text-left tw-hidden lg:tw-table-cell tw-font-normal">
+      <td className="tw-text-left tw-hidden lg:tw-table-cell tw-font-normal tw-font-inter">
         {locked && t(translations.common.unit.day, { count: stakingPeriod })}
       </td>
       <td className="tw-text-left tw-hidden lg:tw-table-cell tw-font-normal">
-        <p className="tw-m-0">
+        <p className="tw-m-0 tw-font-inter">
           {dayjs
             .tz(parseInt(item.unlockDate) * 1e3, 'UTC')
             .tz(dayjs.tz.guess())
-            .format('L - LTS Z')}
+            .format('L - LTS')}
         </p>
       </td>
       <td className="md:tw-text-left lg:tw-text-right tw-hidden md:tw-table-cell">
