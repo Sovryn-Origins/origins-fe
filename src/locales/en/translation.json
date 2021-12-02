@@ -1611,7 +1611,7 @@
       }
     },
     "cryptocurrencyPrices": {
-      "title": "Tokens Listed On Origins",
+      "title": "Tokens Listed On Sovryn Origins",
       "asset": "Asset",
       "price": "Price",
       "24h": "24h%",
