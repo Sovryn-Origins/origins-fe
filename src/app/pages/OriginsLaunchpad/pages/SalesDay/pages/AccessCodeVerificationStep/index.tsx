@@ -24,14 +24,13 @@ export const AccessCodeVerificationStep: React.FC<IAccessCodeVerificationStepPro
     <>
       <div className={styles.dialogWrapper}>
         <div className="tw-max-w-lg">
-          <div className={styles.dialogTitle}>
+          <div className="tw-text-3xl tw-tracking-normal tw-mb-20 tw-text-center tw-uppercase">
             {t(
               translations.originsLaunchpad.saleDay.accessCodeVerificationStep
                 .dialogTitle,
-              { token: saleName },
             )}
           </div>
-          <div className="tw-text-xl tw-font-extralight tw-mb-32">
+          <div className="tw-text-xl tw-font-extralight tw-mb-32 tw-text-center">
             {isVerified
               ? t(
                   translations.originsLaunchpad.saleDay
@@ -60,27 +59,6 @@ export const AccessCodeVerificationStep: React.FC<IAccessCodeVerificationStepPro
             </div>
           )}
         </div>
-
-        {/* {!isVerified && (
-          <div>
-            <Trans
-              i18nKey={
-                translations.originsLaunchpad.saleDay.accessCodeVerificationStep
-                  .notVerifiedFooter
-              }
-              components={[
-                <a
-                  href="#!"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="tw-text-secondary tw-text-underline"
-                >
-                  Don't have a code?
-                </a>,
-              ]}
-            />
-          </div>
-        )} */}
       </div>
     </>
   );

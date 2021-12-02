@@ -310,10 +310,10 @@
         "dialogFooter2": "Don’t have a wallet? Sovryn Origins recommends <0>Liquality wallet</0>"
       },
       "accessCodeVerificationStep": {
-        "dialogTitle": "Welcome to the {{token}} Origins Pre-Sale",
+        "dialogTitle": "Welcome to the Sovryn Origins SOV Stakers Pre-Sale",
         "verified": {
-          "privateSale": "You have been given whitelist access to participate in the FISH Origins pre-sale.",
-          "publicSale": "You have been given access to participate in the FISH Origins pre-sale."
+          "privateSale": "You have been given whitelist access to participate in Sovryn Origins SOV Stakers Pre-Sale",
+          "publicSale": "You have been given access to participate in the Sovryn Origins SOV Stakers Pre-Sale"
         },
         "notVerified": "The {{token}} public pre-sale will open at 14:00 UTC, get your RBTC ready!",
         "cta": "Continue",
@@ -321,18 +321,14 @@
       },
       "importantInformationStep": {
         "privateSale": {
-          "title": "Important Information about the the FISH Private Pre-Sale Process and Terms",
+          "title": "IMPORTANT INFORMATION ABOUT THE SOVRYN ORIGINS SOV STAKERS  PRE-SALE PROCESS AND TERMS",
           "information": {
-            "1": "You have been whitelisted for the Blockchain Whispers' Private FISH pre-sale! Welcome and thanks for your support!",
-            "2": "The amount of FISH available for purchase per wallet is 28,571 FISH at a maximum purchase price of 0.041 rBTC - Do not transfer more than this amount.",
-            "3": "It is highly recommended to send funds from an address directly owned by you (EOA).",
-            "4": "Amounts sent in excess of the limit will be automatically returned to the address from which they were sent. Please note that if you are sending funds from an Exchange address, you may not be able to access your purchased FISH tokens or any excess purchase amount that is automatically returned.",
-            "5": "FISH tokens purchased as part of this private pre-sale, will vest linearly for approximately 10 months from the time they are claimed.",
-            "6": "IMPORTANT - You will need to actively claim your FISH tokens on the Origins interface, from August 28 at 14:00 UTC. Your vesting period will begin only once you have claimed your tokens.",
-            "7": "A FISH AMM pool will be available on Sovryn. FISH can be used to vote in BabelFish governance as soon as it begins to vest and after BabelFish governance has been launched.",
-            "8": "For any questions, please ask the community in Discord or Telegram channels."
+            "1": "YOU HAVE BEEN WHITELISTED FOR THE SOVRYN ORIGINS SOV STAKERS  PRE-SALE! WELCOME AND THANKS FOR YOUR SUPPORT!",
+            "2": "THE AMOUNT OF OG TOKEN AVAILABLE FOR PURCHASE PER WALLET IS {{amount}} {{token}} AT A MAXIMUM PURCHASE PRICE OF 5K USD - DO NOT TRANSFER MORE THAN THIS AMOUNT.",
+            "3": "IT IS HIGHLY RECOMMENDED TO SEND FUNDS FROM AN ADDRESS DIRECTLY OWNED BY YOU (EOA).",
+            "4": "AMOUNTS SENT IN EXCESS OF THE LIMIT WILL BE AUTOMATICALLY RETURNED TO THE ADDRESS FROM WHICH THEY WERE SENT. PLEASE NOTE THAT IF YOU ARE SENDING FUNDS FROM AN EXCHANGE ADDRESS, YOU MAY NOT BE ABLE TO ACCESS YOUR PURCHASED OG TOKENS OR ANY EXCESS PURCHASE AMOUNT THAT IS AUTOMATICALLY RETURNED."
           },
-          "checkboxText": "I have read and understand that I am responsible for my own Sovrynity",
+          "checkboxText": "I HAVE READ AND UNDERSTAND THAT I AM RESPONSIBLE FOR MY OWN SOVEREIGNTY",
           "submitButtonText": "I Understand"
         },
         "publicSale": {

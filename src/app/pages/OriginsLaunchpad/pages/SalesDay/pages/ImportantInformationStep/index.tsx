@@ -7,11 +7,13 @@ import OriginsLogo from 'assets/images/sovryn-origin-logo-dark.png';
 import styles from './index.module.scss';
 
 interface IImportantInformationStepProps {
+  saleName: string;
   tierId: number;
   onSubmit?: () => void;
 }
 
 export const ImportantInformationStep: React.FC<IImportantInformationStepProps> = ({
+  saleName,
   tierId,
   onSubmit,
 }) => {
@@ -33,20 +35,25 @@ export const ImportantInformationStep: React.FC<IImportantInformationStepProps> 
   return (
     <>
       <div className={styles.dialogWrapper}>
-        <div className="tw-flex tw-items-center">
+        <div className="tw-flex tw-justify-center tw-items-center">
           <img src={OriginsLogo} alt="Sovryn Origins" />
           <span className="tw-ml-5 tw-text-lg tw-font-consolas tw-uppercase">
             Sovryn Origins
           </span>
         </div>
-        <div className={styles.dialogTitle}>{t(baseTranslations.title)}</div>
+        <div className="tw-tracking-normal tw-font-rowdies tw-uppercase tw-my-11 tw-text-center tw-text-2xl">
+          {t(baseTranslations.title)}
+        </div>
 
         <div className="tw-text-left">
           <div className={styles.listItem}>
             {t(baseTranslations.information[1])}
           </div>
           <div className={styles.listItem}>
-            {t(baseTranslations.information[2])}
+            {t(baseTranslations.information[2], {
+              amount: '22,727',
+              token: saleName,
+            })}
           </div>
           <div className={styles.listItem}>
             <Trans

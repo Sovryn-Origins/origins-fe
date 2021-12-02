@@ -34,7 +34,6 @@ export const SalesDay: React.FC<ISalesDayProps> = ({ tierId, saleName }) => {
   const connected = useIsConnected();
   const info = useGetSaleInformation(tierId);
 
-  // const [step, setStep] = useState(1);
   const setStep = (step: number) => {
     saleStorage.saveData({ step });
     history.push(`${url}/${step}`);
@@ -72,6 +71,7 @@ export const SalesDay: React.FC<ISalesDayProps> = ({ tierId, saleName }) => {
         </Route>
         <Route exact path={`${url}/2`}>
           <ImportantInformationStep
+            saleName={saleName}
             tierId={tierId}
             onSubmit={() => setStep(3)}
           />
@@ -82,13 +82,6 @@ export const SalesDay: React.FC<ISalesDayProps> = ({ tierId, saleName }) => {
         <Redirect to={`${url}/1`} />
       </Switch>
 
-      {/* <div className="tw-justify-center tw-flex tw-text-center">
-        {!connected ? (
-          <EngageWalletStep saleName={saleName} />
-        ) : (
-          info.isSaleActive && getActiveStep(step)
-        )}
-      </div> */}
       <SaleSummary
         saleInfo={info}
         className={classNames({ 'tw-mt-56': info.isSaleActive })}

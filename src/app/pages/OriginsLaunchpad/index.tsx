@@ -14,15 +14,14 @@ import { Footer } from 'app/components/Footer';
 import { Dashboard } from './pages/Dashboard';
 import { SalesDay } from './pages/SalesDay';
 /* undo once Fish contract has active sale tier reset to 0 */
-// import { useGetActiveSaleTierId } from './hooks/useGetActiveSaleTierId';
-
-const activeTierId = 1; //useGetActiveSaleTierId();
+import { useGetActiveSaleTierId } from './hooks/useGetActiveSaleTierId';
 
 export const OriginsLaunchpad: React.FC = () => {
   const { t } = useTranslation();
   const { url } = useRouteMatch();
   const history = useHistory();
   /* undo once Fish contract has active sale tier reset to 0 */
+  const activeTierId = useGetActiveSaleTierId();
 
   useEffect(() => {
     document.body.classList.add('originsLaunchpad');
@@ -30,7 +29,7 @@ export const OriginsLaunchpad: React.FC = () => {
       history.push(`${url}/sales`);
     }
     return () => document.body.classList.remove('originsLaunchpad');
-  }, [history, url]);
+  }, [history, url, activeTierId]);
 
   return (
     <>

@@ -4,11 +4,6 @@
   -webkit-text-stroke: 0px currentcolor;
 }
 
-.dialogTitle {
-  @apply tw-tracking-normal tw-font-rowdies tw-uppercase tw-my-11;
-  font-size: 2rem;
-}
-
 .listItem {
   @apply tw-items-center tw-relative tw-text-base tw-font-rowdies tw-font-light tw-uppercase tw-tracking-normal tw-mb-6;
   line-height: 1.875;

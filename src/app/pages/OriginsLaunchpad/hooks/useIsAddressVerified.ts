@@ -10,6 +10,8 @@ export const useIsAddressVerified = (tierId: number) => {
   const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
+    if (!account) return;
+
     contractReader
       .call<boolean>('originsBase', 'isAddressApproved', [account, tierId])
       .then(result => setIsVerified(result));
