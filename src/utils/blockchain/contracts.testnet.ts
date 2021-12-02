@@ -232,12 +232,12 @@ export const contracts = {
     blockNumber: 1218836,
   },
   vesting: {
-    address: '0x80ec7ADd6CC1003BBEa89527ce93722e1DaD5c2a',
+    address: '0x6390E950096C49FF615D78FdF69EC287dE9Cd293',
     abi: VestingAbi,
     blockNumber: 1218836,
   },
   vestingRegistry: {
-    address: '0x80ec7ADd6CC1003BBEa89527ce93722e1DaD5c2a',
+    address: '0xF5DBc29B1FA3Ce5467a22F93daF5bC45748B8C0E',
     abi: VestingRegistryAbi,
     blockNumber: 1218836,
   },
@@ -351,7 +351,7 @@ export const contracts = {
     abi: multicallABI,
   },
   governorAdmin: {
-    address: '0xEfB3E729DBC3B6872f4f5CE54d41E3685C182EB9',
+    address: '0x6e22f07d4eDc6B13B07B7369f11371E7e5286de6',
     abi: GovernorAdminABI as any,
   },
   governorOwner: {

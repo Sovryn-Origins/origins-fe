@@ -35,13 +35,6 @@ export function useProposalList(page: number, limit: number = 0) {
               ['BALANCE_OF_GOVERNOR_ADMIN', val => (adminItemsCount = val)],
             ],
           },
-          {
-            target: getContract('governorOwner').address,
-            call: ['proposalCount()(uint256)'],
-            returns: [
-              ['BALANCE_OF_GOVERNOR_OWNER', val => (ownerItemsCount = val)],
-            ],
-          },
         ],
         config,
       );
@@ -56,15 +49,7 @@ export function useProposalList(page: number, limit: number = 0) {
         limit,
       );
 
-      const ownerItems = await getProposalsOf(
-        'governorOwner',
-        getContract('governorOwner').address,
-        ownerItemsCount,
-        page,
-        limit,
-      );
-
-      const merged = [...adminItems, ...ownerItems].sort(
+      const merged = [...adminItems].sort(
         (a, b) => b.startBlock - a.startBlock,
       );
 

@@ -134,35 +134,35 @@ function useGetItems() {
             setState(prevState => ({ ...prevState, items }));
           }
 
-          const vesting3 = (await contractReader.call(
-            'vestingRegistryOrigin',
-            'getVesting',
-            [account],
-          )) as string;
-          if (vesting3 && vesting3 !== ethGenesisAddress) {
-            items.push({ address: vesting3, type: 'origin' });
-            setState(prevState => ({ ...prevState, items }));
-          }
+          // const vesting3 = (await contractReader.call(
+          //   'vestingRegistryOrigin',
+          //   'getVesting',
+          //   [account],
+          // )) as string;
+          // if (vesting3 && vesting3 !== ethGenesisAddress) {
+          //   items.push({ address: vesting3, type: 'origin' });
+          //   setState(prevState => ({ ...prevState, items }));
+          // }
 
-          const vesting4 = (await contractReader.call(
-            'vestingRegistry3',
-            'getVesting',
-            [account],
-          )) as string;
-          if (vesting4 && vesting4 !== ethGenesisAddress) {
-            items.push({ address: vesting4, type: 'reward' });
-            setState(prevState => ({ ...prevState, items }));
-          }
+          // const vesting4 = (await contractReader.call(
+          //   'vestingRegistry3',
+          //   'getVesting',
+          //   [account],
+          // )) as string;
+          // if (vesting4 && vesting4 !== ethGenesisAddress) {
+          //   items.push({ address: vesting4, type: 'reward' });
+          //   setState(prevState => ({ ...prevState, items }));
+          // }
 
-          const vesting5 = (await contractReader.call(
-            'vestingRegistryFISH',
-            'getVesting',
-            [account],
-          )) as string;
-          if (vesting5 && vesting5 !== ethGenesisAddress) {
-            items.push({ address: vesting5, type: 'fish' });
-            setState(prevState => ({ ...prevState, items }));
-          }
+          // const vesting5 = (await contractReader.call(
+          //   'vestingRegistryFISH',
+          //   'getVesting',
+          //   [account],
+          // )) as string;
+          // if (vesting5 && vesting5 !== ethGenesisAddress) {
+          //   items.push({ address: vesting5, type: 'fish' });
+          //   setState(prevState => ({ ...prevState, items }));
+          // }
 
           resolve(items);
         } catch (e) {
