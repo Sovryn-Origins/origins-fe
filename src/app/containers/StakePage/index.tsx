@@ -74,6 +74,7 @@ const InnerStakePage: React.FC = () => {
   const { t } = useTranslation();
   const account = useAccount();
   const [amount, setAmount] = useState('');
+  const [stakedAmount, setStakedAmount] = useState('');
   const weiAmount = useWeiAmount(amount);
   const [weight, setWeight] = useState('');
   const kickoffTs = useStaking_kickoffTs();
@@ -319,6 +320,7 @@ const InnerStakePage: React.FC = () => {
   const onIncrease = useCallback((a, b) => {
     setTimestamp(b);
     setAmount(fromWei(a));
+    setStakedAmount(fromWei(a));
     setUntil(b);
     setStakeForm(false);
     setExtendForm(false);
@@ -502,6 +504,7 @@ const InnerStakePage: React.FC = () => {
                         <IncreaseStakeForm
                           handleSubmit={handleIncreaseStakeSubmit}
                           amount={amount}
+                          currentStakedAmount={stakedAmount}
                           timestamp={timestamp}
                           onChangeAmount={e => setAmount(e)}
                           ogBalance={ogBalance}

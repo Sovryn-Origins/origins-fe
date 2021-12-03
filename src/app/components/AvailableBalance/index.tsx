@@ -12,6 +12,7 @@ import { AssetRenderer } from '../AssetRenderer';
 interface Props {
   asset: Asset;
   className?: string;
+  decimals?: number;
 }
 
 export function AvailableBalance(props: Props) {
@@ -28,7 +29,7 @@ export function AvailableBalance(props: Props) {
         i18nKey={translations.marginTradePage.tradeForm.labels.balance}
         components={[
           <LoadableValue
-            value={weiToNumberFormat(value, 6)}
+            value={weiToNumberFormat(value, props?.decimals || 6)}
             loading={loading}
             tooltip={
               <>

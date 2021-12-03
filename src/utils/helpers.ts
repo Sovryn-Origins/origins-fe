@@ -43,7 +43,10 @@ export const handleNumber = (value, onlyPositive = true) => {
     return value;
   }
 
-  let number = value.replace(',', '.').replace(/[^\d.-]/g, '');
+  if (value.indexOf('.') === -1) {
+    value = value.repalce(',', '.');
+  }
+  let number = value.replace(/[^\d.-]/g, '');
 
   if (onlyPositive) {
     number = number.replace('-', '');
