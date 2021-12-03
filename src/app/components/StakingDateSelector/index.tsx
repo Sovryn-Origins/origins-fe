@@ -283,7 +283,9 @@ const StakingMonthDates: React.FC<IStakingMonthDatesProps> = ({
   return (
     <div>
       <div className="tw-mb-1 tw-font-light tw-text-sm tw-text-center tw-text-sov-white">
-        {monthName}
+        <p className="tw-text-lg tw-font-rowdies tw-uppercase tw-mb-2">
+          {monthName}
+        </p>
         {dateItems.map(item => (
           <div
             key={item.key}
