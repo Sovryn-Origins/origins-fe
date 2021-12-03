@@ -73,7 +73,7 @@ export const StakePage: React.FC = () => {
 const InnerStakePage: React.FC = () => {
   const { t } = useTranslation();
   const account = useAccount();
-  const [amount, setAmount] = useState('0.000');
+  const [amount, setAmount] = useState('');
   const weiAmount = useWeiAmount(amount);
   const [weight, setWeight] = useState('');
   const kickoffTs = useStaking_kickoffTs();
@@ -397,7 +397,7 @@ const InnerStakePage: React.FC = () => {
                     className="tw-bg-primary tw-font-normal tw-bg-opacity-40 hover:tw-text-gray-1 focus:tw-outline-none focus:tw-bg-opacity-50 hover:tw-bg-opacity-40 tw-transition tw-duration-500 tw-ease-in-out tw-text-sm tw-text-black tw-py-3 tw-px-8 tw-border tw-transition-colors tw-duration-300 tw-ease-in-out tw-border-primary tw-rounded-lg tw-font-rowdies tw-uppercase"
                     onClick={() => {
                       setTimestamp(0);
-                      setAmount('');
+                      setAmount('0');
                       setStakeForm(!stakeForm);
                       setExtendForm(false);
                       setIncreaseForm(false);

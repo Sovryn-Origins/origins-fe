@@ -4,11 +4,15 @@ import { translations } from 'locales/i18n';
 import { handleNumberInput } from 'utils/helpers';
 import { numberFromWei } from 'utils/blockchain/math-helpers';
 import { CacheCallResponse } from 'app/hooks/useCacheCall';
+import { useMaintenance } from 'app/hooks/useMaintenance';
+import { useDollarValueOg } from 'app/hooks/useDollarValueOg';
 import { TxFeeCalculator } from 'app/pages/MarginTradePage/components/TxFeeCalculator';
 import { StakingDateSelector } from 'app/components/StakingDateSelector';
+import { LoadableValue } from 'app/components/LoadableValue';
 import { useAccount } from 'app/hooks/useAccount';
+import { useWeiAmount } from 'app/hooks/useWeiAmount';
 import { ethGenesisAddress, discordInvite } from 'utils/classifiers';
-import { useMaintenance } from 'app/hooks/useMaintenance';
+import { weiToUSD } from 'utils/display-text/format';
 import { ErrorBadge } from 'app/components/Form/ErrorBadge';
 import { AvailableBalance } from '../../../components/AvailableBalance';
 import { Asset } from 'types/asset';
@@ -30,6 +34,8 @@ interface Props {
 export function StakeForm(props: Props) {
   const { t } = useTranslation();
   const account = useAccount();
+  const weiAmount = useWeiAmount(props.amount);
+  const dollarValue = useDollarValueOg(weiAmount);
   const { checkMaintenance, States } = useMaintenance();
   const stakingLocked = checkMaintenance(States.STAKING);
   const txConf = {
@@ -49,7 +55,7 @@ export function StakeForm(props: Props) {
                 {t(translations.stake.staking.amountToStake)}
               </label>
               <div className="tw-h-36 tw-bg-gray-3 tw-rounded-lg tw-p-8 tw-mt-3 lg:tw-mt-6">
-                <div className="tw-flex tw-items-center tw-font-rowdies tw-text-3xl tw-uppercase tw-text-white">
+                <div className="tw-flex tw-items-center tw-justify-center tw-font-rowdies tw-text-3xl tw-uppercase tw-text-white">
                   <input
                     className="tw-w-20 tw-bg-transparent tw-mr-2"
                     type="text"
@@ -59,9 +65,16 @@ export function StakeForm(props: Props) {
                   />
                   <span>OG</span>
                 </div>
-                <p className="tw-mb-0 tw-mt-2 tw-text-2xl tw-uppercase tw-text-white">
-                  ≈ 0.00 USD
-                </p>
+                <div className="tw-flex tw-items-center tw-justify-center tw-mb-0 tw-mt-2 tw-text-2xl tw-uppercase tw-text-white tw-text-center">
+                  ≈{' '}
+                  <LoadableValue
+                    loading={dollarValue.loading}
+                    value={weiToUSD(dollarValue.value)
+                      ?.replace('USD', '')
+                      .trim()}
+                  />{' '}
+                  USD
+                </div>
               </div>
             </div>
 

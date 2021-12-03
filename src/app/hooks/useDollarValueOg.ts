@@ -15,7 +15,6 @@ export const useDollarValueOg = (weiAmount: string) => {
     return bignumber(sovWeiAmount)
       .mul(sovDollars.value)
       .div(10 ** decimals)
-
       .toFixed(0);
   }, [asset, sovDollars, sovWeiAmount]);
 

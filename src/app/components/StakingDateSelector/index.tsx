@@ -28,7 +28,8 @@ interface Props {
   delegate?: boolean;
 }
 
-const MAX_PERIODS = 78;
+// const MAX_PERIODS = 78;
+const MAX_PERIODS_YEAR = 2;
 const ms = 1e3;
 
 export function StakingDateSelector(props: Props) {
@@ -101,32 +102,39 @@ export function StakingDateSelector(props: Props) {
         contractOffset,
         'hour',
       ); // get contract date in UTC-0
-      let userDateUTC = dayjs(currentDate).add(currentUserOffset, 'hour'); //get user offset
 
       const dates: Date[] = [];
       const datesFutured: Date[] = [];
-      //getting the last posible date in the contract that low then current date
-      for (let i = 1; contractDateDeployed.unix() < userDateUTC.unix(); i++) {
-        const intervalDate = contractDateDeployed.add(2, 'week');
+
+      const startDateUTC = dayjs(
+        new Date(currentDate.getUTCFullYear(), 0, 1),
+      ).add(currentUserOffset, 'hour');
+      const endDateUTC = dayjs(
+        new Date(currentDate.getUTCFullYear() + MAX_PERIODS_YEAR, 11, 31),
+      )
+        .add(currentUserOffset, 'hour')
+        .subtract(2, 'week');
+
+      // getting the first BIG date in this year.
+      for (let i = 1; contractDateDeployed.unix() > startDateUTC.unix(); i++) {
+        const intervalDate = contractDateDeployed.subtract(2, 'week');
         contractDateDeployed = intervalDate;
       }
 
-      for (let i = 1; i < MAX_PERIODS; i++) {
-        if (contractDateDeployed.unix() > userDateUTC.unix()) {
-          const date = contractDateDeployed.add(2, 'week');
-          contractDateDeployed = date;
-          if (!props.prevExtend) dates.push(date.toDate());
-          if (
-            props.prevExtend &&
-            dayjs(props.prevExtend * ms)
-              .add(contractOffset, 'hour')
-              .toDate()
-              .getTime() /
-              ms <
-              date.unix()
-          ) {
-            datesFutured.push(date.toDate());
-          }
+      for (let i = 1; contractDateDeployed.unix() < endDateUTC.unix(); i++) {
+        const date = contractDateDeployed.add(2, 'week');
+        contractDateDeployed = date;
+        if (!props.prevExtend) dates.push(date.toDate());
+        if (
+          props.prevExtend &&
+          dayjs(props.prevExtend * ms)
+            .add(contractOffset, 'hour')
+            .toDate()
+            .getTime() /
+            ms <
+            date.unix()
+        ) {
+          datesFutured.push(date.toDate());
         }
       }
       if (datesFutured.length) {
@@ -206,48 +214,22 @@ export function StakingDateSelector(props: Props) {
           </p>
         )}
         <Slider {...settingsSliderMonth}>
-          {availableMonth.map((monthName: React.ReactNode, i) => {
-            return (
-              <div key={i}>
-                <div className="tw-mb-1 tw-font-light tw-text-sm tw-text-center tw-text-sov-white">
-                  {monthName}
-                  {currentYearDates.map((item, i) => {
-                    if (dayjs(item.date).format('MMM') === monthName) {
-                      return (
-                        <div
-                          key={i}
-                          onClick={() => {
-                            onItemSelect(item);
-                            setSelectedDay(dayjs(item.date).format('D'));
-                            setSelectedMonth(dayjs(item.date).format('MMM'));
-                          }}
-                          className={classNames(
-                            'tw-w-12 tw-mr-1 tw-mb-1 tw-h-10 tw-leading-10 tw-rounded-lg tw-border tw-border-primary tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-primary hover:tw-bg-opacity-30 tw-px-1 tw-py-0 tw-text-center tw-border-r tw-text-md tw-tracking-tighter',
-                            {
-                              'tw-bg-primary tw-text-black':
-                                selectedDay === dayjs(item.date).format('D') &&
-                                selectedMonth ===
-                                  dayjs(item.date).format('MMM'),
-                              'tw-text-primary':
-                                selectedDay !== dayjs(item.date).format('D') ||
-                                selectedMonth !==
-                                  dayjs(item.date).format('MMM'),
-                            },
-                          )}
-                        >
-                          {dayjs(item.date)
-                            .subtract(currentUserOffset, 'hour')
-                            .format('D')}
-                        </div>
-                      );
-                    } else {
-                      return null;
-                    }
-                  })}
-                </div>
-              </div>
-            );
-          })}
+          {availableMonth.map(monthName => (
+            <StakingMonthDates
+              currentDate={currentDate}
+              monthName={monthName}
+              dateItems={currentYearDates.filter(
+                item => dayjs(item.date).format('MMM') === monthName,
+              )}
+              selectedDay={selectedDay}
+              selectedMonth={selectedMonth}
+              onClick={item => {
+                onItemSelect(item);
+                setSelectedDay(dayjs(item.date).format('D'));
+                setSelectedMonth(dayjs(item.date).format('MMM'));
+              }}
+            />
+          ))}
         </Slider>
       </div>
       {availableYears.length <= 0 && (
@@ -258,6 +240,82 @@ export function StakingDateSelector(props: Props) {
     </div>
   );
 }
+
+interface IStakingMonthDatesProps {
+  monthName: string;
+  dateItems: DateItem[];
+  selectedDay: string;
+  selectedMonth: string;
+  currentDate: Date;
+  onClick: (item: DateItem) => void;
+}
+
+const StakingMonthDates: React.FC<IStakingMonthDatesProps> = ({
+  monthName,
+  dateItems,
+  selectedDay,
+  selectedMonth,
+  currentDate,
+  onClick,
+}) => {
+  const currentUserOffset = currentDate.getTimezoneOffset() / 60;
+
+  const isSelectedDay = useCallback(
+    (item: DateItem) =>
+      selectedDay === dayjs(item.date).format('D') &&
+      selectedMonth === dayjs(item.date).format('MMM'),
+    [selectedDay, selectedMonth],
+  );
+
+  const isSelectable = useCallback(
+    item => item.date.getTime() >= currentDate.getTime(),
+    [currentDate],
+  );
+
+  const handleOnClick = useCallback(
+    item => {
+      if (item.date.getTime() < currentDate.getTime()) return;
+      onClick(item);
+    },
+    [currentDate, onClick],
+  );
+
+  return (
+    <div>
+      <div className="tw-mb-1 tw-font-light tw-text-sm tw-text-center tw-text-sov-white">
+        {monthName}
+        {dateItems.map(item => (
+          <div
+            key={item.key}
+            onClick={() => handleOnClick(item)}
+            className={classNames(
+              'tw-w-12 tw-mr-1 tw-mb-1 tw-h-10 tw-leading-10 tw-rounded-lg tw-border tw-border-primary tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out tw-px-1 tw-py-0 tw-text-center tw-border-r tw-text-md tw-tracking-tighter',
+              {
+                'tw-bg-primary tw-text-black': isSelectedDay(item),
+                'tw-text-primary': !isSelectedDay(item),
+                'tw-opacity-50': !isSelectable(item),
+                'hover:tw-bg-primary hover:tw-bg-opacity-30': isSelectable(
+                  item,
+                ),
+              },
+            )}
+          >
+            {dayjs(item.date).subtract(currentUserOffset, 'hour').format('D')}
+          </div>
+        ))}
+        {dateItems.length < 3 && (
+          <div
+            className={classNames(
+              'tw-w-12 tw-mr-1 tw-mb-1 tw-h-10 tw-leading-10 tw-rounded-lg tw-border tw-border-primary tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out tw-px-1 tw-py-0 tw-text-center tw-border-r tw-text-md tw-text-primary tw-opacity-50 tw-tracking-tighter',
+            )}
+          >
+            -
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
 export const renderItem: ItemRenderer<DateItem> = (
   item,
