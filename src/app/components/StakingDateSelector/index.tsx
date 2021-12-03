@@ -73,6 +73,11 @@ export function StakingDateSelector(props: Props) {
     [filteredDates],
   );
 
+  const availableStartDate = useMemo(() => {
+    if (props?.prevExtend) return new Date(props.prevExtend * ms);
+    return currentDate;
+  }, [currentDate, props?.prevExtend]);
+
   useEffect(() => {
     setFilteredDates(
       dates.map(item => ({
@@ -104,7 +109,6 @@ export function StakingDateSelector(props: Props) {
       ); // get contract date in UTC-0
 
       const dates: Date[] = [];
-      const datesFutured: Date[] = [];
 
       const startDateUTC = dayjs(
         new Date(currentDate.getUTCFullYear(), 0, 1),
@@ -124,24 +128,9 @@ export function StakingDateSelector(props: Props) {
       for (let i = 1; contractDateDeployed.unix() < endDateUTC.unix(); i++) {
         const date = contractDateDeployed.add(2, 'week');
         contractDateDeployed = date;
-        if (!props.prevExtend) dates.push(date.toDate());
-        if (
-          props.prevExtend &&
-          dayjs(props.prevExtend * ms)
-            .add(contractOffset, 'hour')
-            .toDate()
-            .getTime() /
-            ms <
-            date.unix()
-        ) {
-          datesFutured.push(date.toDate());
-        }
+        dates.push(date.toDate());
       }
-      if (datesFutured.length) {
-        setDates(datesFutured);
-      } else {
-        setDates(dates);
-      }
+      setDates(dates);
     }
   }, [props.kickoffTs, props.value, props.prevExtend, currentDate]);
 
@@ -216,7 +205,7 @@ export function StakingDateSelector(props: Props) {
         <Slider {...settingsSliderMonth}>
           {availableMonth.map(monthName => (
             <StakingMonthDates
-              currentDate={currentDate}
+              currentDate={availableStartDate}
               monthName={monthName}
               dateItems={currentYearDates.filter(
                 item => dayjs(item.date).format('MMM') === monthName,
@@ -258,6 +247,11 @@ const StakingMonthDates: React.FC<IStakingMonthDatesProps> = ({
   currentDate,
   onClick,
 }) => {
+  const dateRanges = [
+    [1, 10],
+    [11, 20],
+    [21, 31],
+  ];
   const currentUserOffset = currentDate.getTimezoneOffset() / 60;
 
   const isSelectedDay = useCallback(
@@ -286,34 +280,44 @@ const StakingMonthDates: React.FC<IStakingMonthDatesProps> = ({
         <p className="tw-text-lg tw-font-rowdies tw-uppercase tw-mb-2">
           {monthName}
         </p>
-        {dateItems.map(item => (
-          <div
-            key={item.key}
-            onClick={() => handleOnClick(item)}
-            className={classNames(
-              'tw-w-12 tw-mr-1 tw-mb-1 tw-h-10 tw-leading-10 tw-rounded-lg tw-border tw-border-primary tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out tw-px-1 tw-py-0 tw-text-center tw-border-r tw-text-md tw-tracking-tighter',
-              {
-                'tw-bg-primary tw-text-black': isSelectedDay(item),
-                'tw-text-primary': !isSelectedDay(item),
-                'tw-opacity-50': !isSelectable(item),
-                'hover:tw-bg-primary hover:tw-bg-opacity-30': isSelectable(
-                  item,
-                ),
-              },
-            )}
-          >
-            {dayjs(item.date).subtract(currentUserOffset, 'hour').format('D')}
-          </div>
-        ))}
-        {dateItems.length < 3 && (
-          <div
-            className={classNames(
-              'tw-w-12 tw-mr-1 tw-mb-1 tw-h-10 tw-leading-10 tw-rounded-lg tw-border tw-border-primary tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out tw-px-1 tw-py-0 tw-text-center tw-border-r tw-text-md tw-text-primary tw-opacity-50 tw-tracking-tighter',
-            )}
-          >
-            -
-          </div>
-        )}
+        {dateRanges.map(([from, to]) => {
+          const item = dateItems.find(item => {
+            const itemDate = Number(dayjs(item.date).format('D'));
+            return itemDate >= from && itemDate <= to;
+          });
+          if (item) {
+            return (
+              <div
+                key={item.key}
+                onClick={() => handleOnClick(item)}
+                className={classNames(
+                  'tw-w-12 tw-mr-1 tw-mb-1 tw-h-10 tw-leading-10 tw-rounded-lg tw-border tw-border-primary tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out tw-px-1 tw-py-0 tw-text-center tw-border-r tw-text-md tw-tracking-tighter',
+                  {
+                    'tw-bg-primary tw-text-black': isSelectedDay(item),
+                    'tw-text-primary': !isSelectedDay(item),
+                    'tw-opacity-50': !isSelectable(item),
+                    'hover:tw-bg-primary hover:tw-bg-opacity-30': isSelectable(
+                      item,
+                    ),
+                  },
+                )}
+              >
+                {dayjs(item.date)
+                  .subtract(currentUserOffset, 'hour')
+                  .format('D')}
+              </div>
+            );
+          }
+          return (
+            <div
+              className={classNames(
+                'tw-w-12 tw-mr-1 tw-mb-1 tw-h-10 tw-leading-10 tw-rounded-lg tw-border tw-border-primary tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out tw-px-1 tw-py-0 tw-text-center tw-border-r tw-text-md tw-text-primary tw-opacity-50 tw-tracking-tighter',
+              )}
+            >
+              -
+            </div>
+          );
+        })}
       </div>
     </div>
   );

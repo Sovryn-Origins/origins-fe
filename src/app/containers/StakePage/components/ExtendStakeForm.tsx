@@ -4,11 +4,15 @@ import { translations } from 'locales/i18n';
 import { numberFromWei, toWei } from 'utils/blockchain/math-helpers';
 import { weiToNumberFormat } from 'utils/display-text/format';
 import { CacheCallResponse } from 'app/hooks/useCacheCall';
+import { useDollarValueOg } from 'app/hooks/useDollarValueOg';
+import { useWeiAmount } from 'app/hooks/useWeiAmount';
 import { StakingDateSelector } from '../../../components/StakingDateSelector';
 import { TxFeeCalculator } from 'app/pages/MarginTradePage/components/TxFeeCalculator';
 import { discordInvite } from 'utils/classifiers';
+import { weiToUSD } from 'utils/display-text/format';
 import { useMaintenance } from 'app/hooks/useMaintenance';
 import { ErrorBadge } from 'app/components/Form/ErrorBadge';
+import { LoadableValue } from 'app/components/LoadableValue';
 
 interface Props {
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
@@ -29,6 +33,8 @@ interface Props {
 export function ExtendStakeForm(props: Props) {
   const { t } = useTranslation();
   const { checkMaintenance, States } = useMaintenance();
+  const weiAmount = useWeiAmount(props.amount);
+  const dollarValue = useDollarValueOg(weiAmount);
   const stakingLocked = checkMaintenance(States.STAKING);
   return (
     <>
@@ -43,15 +49,22 @@ export function ExtendStakeForm(props: Props) {
                 {t(translations.stake.extending.amountCurrentlyStaked)}
               </label>
               <div className="tw-h-36 tw-bg-gray-3 tw-rounded-lg tw-p-8 tw-mt-3 lg:tw-mt-6">
-                <div className="tw-flex tw-items-center tw-font-rowdies tw-text-3xl tw-uppercase tw-text-white">
+                <div className="tw-flex tw-items-center tw-justify-center tw-font-rowdies tw-text-3xl tw-uppercase tw-text-white">
                   <div className="tw-mr-2">
-                    {weiToNumberFormat(toWei(props.amount), 6)}
+                    {weiToNumberFormat(toWei(props.amount), 3)}
                   </div>{' '}
                   OG
                 </div>
-                <p className="tw-mb-0 tw-mt-2 tw-text-2xl tw-uppercase tw-text-white">
-                  ≈ 0.00 USD
-                </p>
+                <div className="tw-flex tw-items-center tw-justify-center tw-mb-0 tw-mt-2 tw-text-2xl tw-uppercase tw-text-white">
+                  <span className="tw-pr-2">≈</span>
+                  <LoadableValue
+                    loading={dollarValue.loading}
+                    value={weiToUSD(dollarValue.value)
+                      ?.replace('USD', '')
+                      .trim()}
+                  />
+                  <span className="tw-pl-2">USD</span>
+                </div>
               </div>
             </div>
 
