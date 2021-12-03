@@ -70,7 +70,7 @@ export function ExtendStakeForm(props: Props) {
 
             <div className="tw-mt-6 lg:tw-mt-0">
               <label className="tw-block tw-font-rowdies tw-font-light tw-text-xl tw-uppercase tw-leading-7 tw-text-white tw-text-center">
-                {t(translations.stake.staking.votingPowerReceived)}
+                {t(translations.stake.extending.newVotingPower)}
               </label>
               <div className="tw-h-36 tw-bg-gray-3 tw-rounded-lg tw-p-8 tw-mt-3 lg:tw-mt-6">
                 <p className="tw-mb-0 tw-mt-4 tw-text-3xl tw-uppercase tw-text-white tw-text-center">
