@@ -140,7 +140,7 @@ export function VestedHistory() {
               {t(translations.vestedHistory.tableHeaders.time)}
             </th>
             <th className="tw-text-left tw-font-light">
-              {t(translations.vestedHistory.tableHeaders.vestingSchedule)}
+              {t(translations.vestedHistory.tableHeaders.asset)}
             </th>
             <th className="tw-text-left tw-font-light">
               {t(translations.vestedHistory.tableHeaders.amount)}
@@ -216,10 +216,7 @@ const HisoryTableAsset: React.FC<HisoryAsset> = ({ item }) => {
   return (
     <tr>
       <td>
-        {dayjs
-          .tz(item.eventDate, 'UTC')
-          .tz(dayjs.tz.guess())
-          .format('L - LTS Z')}
+        {dayjs.tz(item.eventDate, 'UTC').tz(dayjs.tz.guess()).format('L - LTS')}
       </td>
       <td className="tw-text-left tw-font-normal tw-tracking-normal">
         <div className="assetname tw-flex tw-items-center">

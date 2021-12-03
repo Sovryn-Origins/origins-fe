@@ -1144,6 +1144,7 @@
     "title": "Vested History",
     "tableHeaders": {
       "time": "Date/Time",
+      "asset": "Asset",
       "vestingSchedule": "Type",
       "amount": "Amount",
       "hash": "Transaction Hash",
