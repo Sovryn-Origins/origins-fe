@@ -176,7 +176,7 @@ const HistoryTableAsset: React.FC<HistoryAsset> = ({ item }) => {
         <LinkToExplorer
           txHash={item.txHash}
           startLength={6}
-          className="hover:tw-underline tw-font-inter"
+          className="hover:tw-underline tw-font-inter tw-text-white"
         />
       </td>
       <td>
