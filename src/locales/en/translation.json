@@ -614,6 +614,7 @@
       "title": "Actions",
       "increase": "Increase",
       "extend": "Extend",
+      "extendStake": "Extend Stake",
       "unstake": "Unstake",
       "delegate": "Delegate",
       "confirm": "Confirm",

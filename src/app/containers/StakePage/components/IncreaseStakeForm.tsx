@@ -83,7 +83,7 @@ export function IncreaseStakeForm(props: Props) {
                   <span className="tw-pr-2">≈</span>
                   <LoadableValue
                     loading={dollarValue.loading}
-                    value={weiToUSD(dollarValue.value)
+                    value={weiToUSD(dollarValue.value, 2)
                       ?.replace('USD', '')
                       .trim()}
                   />
@@ -127,7 +127,7 @@ export function IncreaseStakeForm(props: Props) {
                 <span className="tw-pr-2">≈</span>
                 <LoadableValue
                   loading={addAmountDollarValue.loading}
-                  value={weiToUSD(addAmountDollarValue.value)
+                  value={weiToUSD(addAmountDollarValue.value, 2)
                     ?.replace('USD', '')
                     .trim()}
                 />

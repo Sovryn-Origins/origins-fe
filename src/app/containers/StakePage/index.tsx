@@ -73,7 +73,7 @@ export const StakePage: React.FC = () => {
 const InnerStakePage: React.FC = () => {
   const { t } = useTranslation();
   const account = useAccount();
-  const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState('0');
   const [stakedAmount, setStakedAmount] = useState('');
   const weiAmount = useWeiAmount(amount);
   const [weight, setWeight] = useState('');

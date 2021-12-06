@@ -1,8 +1,9 @@
-import React, { FormEvent } from 'react';
+import React, { useMemo, FormEvent } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { handleNumberInput } from 'utils/helpers';
-import { numberFromWei } from 'utils/blockchain/math-helpers';
+import { numberFromWei, toWei } from 'utils/blockchain/math-helpers';
+import { weiToNumberFormat } from 'utils/display-text/format';
 import { CacheCallResponse } from 'app/hooks/useCacheCall';
 import { useMaintenance } from 'app/hooks/useMaintenance';
 import { useDollarValueOg } from 'app/hooks/useDollarValueOg';
@@ -41,6 +42,7 @@ export function StakeForm(props: Props) {
   const txConf = {
     gas: 450000,
   };
+  // const formatAmount = useMemo(() => weiToNumberFormat(weiAmount, 3), [weiAmount]);
 
   return (
     <div>
@@ -52,35 +54,34 @@ export function StakeForm(props: Props) {
           <div className="tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-4">
             <div>
               <label className="tw-block tw-font-rowdies tw-font-light tw-text-xl tw-uppercase tw-leading-7 tw-text-white tw-text-center">
-                {t(translations.stake.staking.amountToStake)}
+                {t(translations.stake.staking.amountToStake)}:
               </label>
               <div className="tw-h-36 tw-bg-gray-3 tw-rounded-lg tw-p-8 tw-mt-3 lg:tw-mt-6">
                 <div className="tw-flex tw-items-center tw-justify-center tw-font-rowdies tw-text-3xl tw-uppercase tw-text-white">
                   <input
-                    className="tw-w-20 tw-bg-transparent tw-mr-2"
+                    className="tw-w-32 tw-bg-transparent tw-mr-2"
                     type="text"
-                    maxLength={5}
-                    value={props.amount}
+                    value={weiToNumberFormat(weiAmount, 3)}
                     onChange={e => props.onChangeAmount(handleNumberInput(e))}
                   />
                   <span>OG</span>
                 </div>
                 <div className="tw-flex tw-items-center tw-justify-center tw-mb-0 tw-mt-2 tw-text-2xl tw-uppercase tw-text-white tw-text-center">
-                  ≈{' '}
+                  <span className="tw-pr-2">≈</span>
                   <LoadableValue
                     loading={dollarValue.loading}
-                    value={weiToUSD(dollarValue.value)
+                    value={weiToUSD(dollarValue.value, 2)
                       ?.replace('USD', '')
                       .trim()}
-                  />{' '}
-                  USD
+                  />
+                  <span className="tw-pl-2">USD</span>
                 </div>
               </div>
             </div>
 
             <div className="tw-mt-6 lg:tw-mt-0">
               <label className="tw-block tw-font-rowdies tw-font-light tw-text-xl tw-uppercase tw-leading-7 tw-text-white tw-text-center">
-                {t(translations.stake.staking.votingPowerReceived)}
+                {t(translations.stake.staking.votingPowerReceived)}:
               </label>
               <div className="tw-h-36 tw-bg-gray-3 tw-rounded-lg tw-p-8 tw-mt-3 lg:tw-mt-6">
                 <p className="tw-mb-0 tw-mt-4 tw-text-3xl tw-uppercase tw-text-white tw-text-center">
@@ -94,6 +95,7 @@ export function StakeForm(props: Props) {
             <AvailableBalance
               className="tw-font-rowdies tw-text-base tw-leading-8 tw-uppercase tw-text-white"
               asset={Asset.OG}
+              decimals={4}
             />
             <div className="tw-ml-1 tw-font-rowdies tw-text-base tw-leading-8 tw-uppercase tw-text-white">
               {t(translations.stake.og)}

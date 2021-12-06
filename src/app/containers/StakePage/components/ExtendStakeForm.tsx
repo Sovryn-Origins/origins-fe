@@ -46,7 +46,7 @@ export function ExtendStakeForm(props: Props) {
           <div className="tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-4">
             <div>
               <label className="tw-block tw-font-rowdies tw-font-light tw-text-xl tw-uppercase tw-leading-7 tw-text-white tw-text-center">
-                {t(translations.stake.extending.amountCurrentlyStaked)}
+                {t(translations.stake.extending.amountCurrentlyStaked)}:
               </label>
               <div className="tw-h-36 tw-bg-gray-3 tw-rounded-lg tw-p-8 tw-mt-3 lg:tw-mt-6">
                 <div className="tw-flex tw-items-center tw-justify-center tw-font-rowdies tw-text-3xl tw-uppercase tw-text-white">
@@ -59,7 +59,7 @@ export function ExtendStakeForm(props: Props) {
                   <span className="tw-pr-2">≈</span>
                   <LoadableValue
                     loading={dollarValue.loading}
-                    value={weiToUSD(dollarValue.value)
+                    value={weiToUSD(dollarValue.value, 2)
                       ?.replace('USD', '')
                       .trim()}
                   />
@@ -70,7 +70,7 @@ export function ExtendStakeForm(props: Props) {
 
             <div className="tw-mt-6 lg:tw-mt-0">
               <label className="tw-block tw-font-rowdies tw-font-light tw-text-xl tw-uppercase tw-leading-7 tw-text-white tw-text-center">
-                {t(translations.stake.extending.newVotingPower)}
+                {t(translations.stake.extending.newVotingPower)}:
               </label>
               <div className="tw-h-36 tw-bg-gray-3 tw-rounded-lg tw-p-8 tw-mt-3 lg:tw-mt-6">
                 <p className="tw-mb-0 tw-mt-4 tw-text-3xl tw-uppercase tw-text-white tw-text-center">
@@ -144,7 +144,7 @@ export function ExtendStakeForm(props: Props) {
             }`}
             disabled={!props.isValid || stakingLocked}
           >
-            {t(translations.stake.actions.confirm)}
+            {t(translations.stake.actions.extendStake)}
           </button>
           <button
             type="button"
