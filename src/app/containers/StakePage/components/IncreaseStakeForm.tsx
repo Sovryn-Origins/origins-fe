@@ -34,7 +34,7 @@ export function IncreaseStakeForm(props: Props) {
   const { t } = useTranslation();
   const [addAmount, setAddAmount] = useState('0');
   const account = useAccount();
-  const weiAmount = useWeiAmount(props.amount);
+  const weiAmount = useWeiAmount(props.currentStakedAmount);
   const dollarValue = useDollarValueOg(weiAmount);
   const addAmountDollarValue = useDollarValueOg(toWei(addAmount));
   const { checkMaintenance, States } = useMaintenance();
@@ -75,7 +75,7 @@ export function IncreaseStakeForm(props: Props) {
               <div className="tw-h-36 tw-bg-gray-3 tw-rounded-lg tw-p-8 tw-mt-3 lg:tw-mt-6">
                 <div className="tw-flex tw-items-center tw-justify-center tw-font-rowdies tw-text-3xl tw-uppercase tw-text-white">
                   <p className="tw-mr-2 tw-mb-0">
-                    {weiToNumberFormat(toWei(props.currentStakedAmount), 3)}
+                    {weiToNumberFormat(weiAmount, 3)}
                   </p>
                   OG
                 </div>
@@ -104,7 +104,7 @@ export function IncreaseStakeForm(props: Props) {
             </div>
           </div>
 
-          <div className="md:tw-px-9">
+          <div className="md:tw-px-9 tw-max-w-xl tw-mx-auto">
             <label
               className="tw-leading-4 tw-block tw-text-sov-white tw-text-xl tw-text-center tw-font-light tw-font-rowdies tw-uppercase tw-mb-4 tw-mt-12"
               htmlFor="amountAdd"

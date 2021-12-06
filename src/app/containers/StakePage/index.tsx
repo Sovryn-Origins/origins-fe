@@ -269,14 +269,17 @@ const InnerStakePage: React.FC = () => {
       try {
         e.preventDefault();
         setLoading(true);
+        const increaseAmount = bignumber(weiAmount)
+          .sub(toWei(stakedAmount))
+          .toString();
         let nonce = await contractReader.nonce(account);
         const allowance = (await staking_allowance(account)) as string;
-        if (bignumber(allowance).lessThan(weiAmount)) {
-          await staking_approve(weiAmount);
+        if (bignumber(allowance).lessThan(increaseAmount)) {
+          await staking_approve(increaseAmount);
           nonce += 1;
         }
         if (!increaseTx.loading) {
-          increase(weiAmount, timestamp, nonce);
+          increase(increaseAmount, timestamp, nonce);
           setLoading(false);
           setIncreaseForm(!increaseForm);
         }
@@ -286,7 +289,15 @@ const InnerStakePage: React.FC = () => {
         console.error(e);
       }
     },
-    [weiAmount, account, timestamp, increaseForm, increaseTx.loading, increase],
+    [
+      weiAmount,
+      account,
+      timestamp,
+      increaseForm,
+      increaseTx.loading,
+      increase,
+      stakedAmount,
+    ],
   );
 
   const handleExtendTimeSubmit = useCallback(
