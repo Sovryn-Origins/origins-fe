@@ -194,7 +194,7 @@ const AssetRow: React.FC<IAssetRowProps> = ({
         {weiTo4(item.stakedAmount)} {t(translations.stake.og)}
         <br />≈{' '}
         <LoadableValue
-          value={weiToUSD(dollarValue.value)}
+          value={weiToUSD(dollarValue.value, 2)}
           loading={dollarValue.loading}
         />
       </td>

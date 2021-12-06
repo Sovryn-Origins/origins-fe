@@ -28,7 +28,7 @@ import { useStaking_getStakes } from '../../../hooks/staking/useStaking_getStake
 import { useCachedAssetPrice } from '../../../hooks/trading/useCachedAssetPrice';
 import { useAccount } from '../../../hooks/useAccount';
 import { WithdrawVesting } from './WithdrawVesting';
-import { VestGroup } from './CurrentVests';
+import { VestGroup } from '../types';
 
 interface Props {
   vestingAddress: string;
@@ -43,7 +43,7 @@ const getAssetByVestingType = (type: VestGroup) => {
     case 'fish':
       return Asset.FISH;
     default:
-      return Asset.SOV;
+      return Asset.OG;
   }
 };
 
@@ -175,25 +175,19 @@ export function VestingContract(props: Props) {
           <td colSpan={7} className="skeleton" />
         </tr>
       ) : (
-        <tr>
-          {/* <td>
-              <div className="assetname tw-flex tw-items-center">
-                <div>
-                  <img src={logoSvg} className="tw-ml-3 tw-mr-3" alt="sov" />
-                </div>
-                <div className="tw-text-sm tw-font-normal tw-hidden xl:tw-block tw-pl-3">
-                  {t(translations.stake.currentVests.assetType[props.type])}
-                </div>
-              </div>
-            </td> */}
+        <tr className="tw-text-base">
           <td className="tw-text-left tw-font-normal">
-            <p className={`tw-m-0 ${lockedAmount.loading && 'tw-skeleton'}`}>
+            <p
+              className={`tw-m-0 tw-font-inter ${
+                lockedAmount.loading && 'tw-skeleton'
+              }`}
+            >
               {lockedAmount.value && (
                 <>
                   {weiTo4(lockedAmount.value)} {t(translations.stake.og)}
                   <br />≈{' '}
                   <LoadableValue
-                    value={weiToUSD(dollarValue)}
+                    value={weiToUSD(dollarValue, 2)}
                     loading={dollars.loading}
                   />
                 </>
@@ -220,21 +214,29 @@ export function VestingContract(props: Props) {
           </td>
           <td className="tw-text-left tw-hidden lg:tw-table-cell tw-font-normal">
             {locked && (
-              <p className={`tw-m-0 ${!unlockDate && 'tw-skeleton'}`}>
+              <p
+                className={`tw-m-0 tw-font-inter ${
+                  !unlockDate && 'tw-skeleton'
+                }`}
+              >
                 {Math.abs(dayjs().diff(parseInt(unlockDate) * 1e3, 'days'))}{' '}
                 {t(translations.stake.days)}
               </p>
             )}
           </td>
           <td className="tw-text-left tw-hidden lg:tw-table-cell tw-font-normal">
-            <p className={`tw-m-0 ${!stakingPeriodStart && 'tw-skeleton'}`}>
+            <p
+              className={`tw-m-0 tw-font-inter ${
+                !stakingPeriodStart && 'tw-skeleton'
+              }`}
+            >
               {dayjs
                 .tz(parseInt(unlockDate) * 1e3, 'UTC')
                 .tz(dayjs.tz.guess())
                 .format('L - HH:mm:ss')}
             </p>
           </td>
-          <td>
+          <td className="tw-font-inter">
             <LoadableValue value={weiTo4(rbtcValue)} loading={rbtc.loading} />{' '}
             {t(translations.stake.sov)}
           </td>
