@@ -157,15 +157,15 @@ const getActionName = action => {
 const HistoryTableAsset: React.FC<HistoryAsset> = ({ item }) => {
   const { t } = useTranslation();
   return (
-    <tr>
-      <td>
+    <tr className="tw-text-base">
+      <td className="tw-font-inter">
         {dayjs
           .tz(item.timestamp * 1e3, 'UTC')
           .tz(dayjs.tz.guess())
-          .format('L - LTS')}
+          .format('L - HH:mm:ss')}
       </td>
-      <td>{getActionName(item.action)}</td>
-      <td className="tw-text-left tw-font-normal">
+      <td className="tw-font-inter">{getActionName(item.action)}</td>
+      <td className="tw-text-left tw-font-normal tw-font-inter">
         {item.action !== t(translations.stake.actions.delegate) ? (
           <>{numberFromWei(item.amount)} OG</>
         ) : (
@@ -176,20 +176,26 @@ const HistoryTableAsset: React.FC<HistoryAsset> = ({ item }) => {
         <LinkToExplorer
           txHash={item.txHash}
           startLength={6}
-          className="hover:tw-underline"
+          className="hover:tw-underline tw-font-inter"
         />
       </td>
       <td>
         <div className="tw-flex tw-items-center tw-justify-between lg:tw-w-5/6 tw-p-0">
           <div>
             {!item.status && (
-              <p className="tw-m-0">{t(translations.common.executed)}</p>
+              <p className="tw-m-0 tw-font-inter">
+                {t(translations.common.executed)}
+              </p>
             )}
             {item.status === TxStatus.FAILED && (
-              <p className="tw-m-0">{t(translations.common.failed)}</p>
+              <p className="tw-m-0 tw-font-inter">
+                {t(translations.common.failed)}
+              </p>
             )}
             {item.status === TxStatus.PENDING && (
-              <p className="tw-m-0">{t(translations.common.pending)}</p>
+              <p className="tw-m-0 tw-font-inter">
+                {t(translations.common.pending)}
+              </p>
             )}
           </div>
         </div>
