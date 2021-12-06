@@ -418,7 +418,7 @@ const InnerStakePage: React.FC = () => {
                       <>
                         {stakingLocked
                           ? t(translations.maintenance.staking)
-                          : t(translations.stake.noUnlockedSov)}
+                          : t(translations.stake.noUnlockedOg)}
                       </>
                     }
                   >

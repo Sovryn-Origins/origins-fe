@@ -508,7 +508,7 @@
     "viewGovernance": "View Governance",
     "addStake": "Add New Stakes",
     "feeTitle": "Total earned fees Available",
-    "noUnlockedSov": "You don't have unlocked SOV",
+    "noUnlockedOg": "You don't have unlocked OG",
     "txFee": "Tx Fee",
     "sov": "SOV",
     "og": "OG",
