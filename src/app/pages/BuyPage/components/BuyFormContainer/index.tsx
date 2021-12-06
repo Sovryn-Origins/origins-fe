@@ -255,6 +255,8 @@ export function BuyFormContainer() {
     [targetToken, sourceToken, sendPath, sendExternal],
   );
 
+  
+
   return (
     <>
       <SlippageDialog

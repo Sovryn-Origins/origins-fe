@@ -12,33 +12,34 @@ interface Props extends BtnProps {
 }
 
 const StyledButton = styled.button`
-  height: 50px;
-  margin: 40px auto 0 auto;
-  border: 1px solid #17C3B2;
-  color: #000;
-  padding: 0.75rem 4rem;
-  font-size: 0.875rem;
-  font-family: 'Rowdies';
-  font-weight: 900;
-  background: #17C3B2;
+  height: 60px;
+  width: 100%;
+  margin-top: 20px;
+  border: 1px solid #17c3b2;
+  color: #ffffff;
+  padding: 11px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: #17c3b2;
   border-radius: 0.75rem;
   text-transform: none;
   line-height: 1;
-  transition: background 0.3s;
+  transition: opacity 0.3s;
   text-transform: uppercase;
 
   &:hover {
-    background: #17C3BF;
+    opacity: 75%;
   }
 
   ${(props: BtnProps) =>
     props.disabled &&
     css`
-      opacity: 25%;
+      cursor: not-allowed;
+      opacity: 0.5;
     `}
 `;
 
-export function ConfirmButton(props: Props) {
+export function BuyButton(props: Props) {
   return (
     <StyledButton
       onClick={props.onClick}

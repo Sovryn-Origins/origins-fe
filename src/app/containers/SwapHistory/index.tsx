@@ -103,45 +103,47 @@ export function SwapHistory() {
   };
 
   const onGoingTransactions = useMemo(() => {
-    return transactions
-      .filter(
-        tx =>
-          tx.type === TxType.CONVERT_BY_PATH &&
-          [TxStatus.FAILED, TxStatus.PENDING].includes(tx.status),
-      )
-      .map(item => {
-        const { customData } = item;
+    return (
+      transactions
+        // .filter(
+        //   tx =>
+        //     tx.type === TxType.CONVERT_BY_PATH &&
+        //     [TxStatus.FAILED, TxStatus.PENDING].includes(tx.status),
+        // )
+        .map(item => {
+          const { customData } = item;
 
-        if (!hasOngoingTransactions) {
-          setHasOngoingTransactions(true);
-        }
+          if (!hasOngoingTransactions) {
+            setHasOngoingTransactions(true);
+          }
 
-        const assetFrom = assets.find(
-          currency => currency.asset === customData?.sourceToken,
-        );
-        const assetTo = assets.find(
-          currency => currency.asset === customData?.targetToken,
-        );
+          const assetFrom = assets.find(
+            currency => currency.asset === customData?.sourceToken,
+          );
+          const assetTo = assets.find(
+            currency => currency.asset === customData?.targetToken,
+          );
 
-        const data: AssetRowData = {
-          status: item.status,
-          timestamp: customData?.date,
-          transaction_hash: item.transactionHash,
-          returnVal: {
-            _fromAmount: customData?.amount,
-            _toAmount: customData?.minReturn || null,
-          },
-        };
+          const data: AssetRowData = {
+            status: item.status,
+            timestamp: customData?.date,
+            transaction_hash: item.transactionHash,
+            returnVal: {
+              _fromAmount: customData?.amount,
+              _toAmount: customData?.minReturn || null,
+            },
+          };
 
-        return (
-          <AssetRow
-            key={item.transactionHash}
-            data={data}
-            itemFrom={assetFrom!}
-            itemTo={assetTo!}
-          />
-        );
-      });
+          return (
+            <AssetRow
+              key={item.transactionHash}
+              data={data}
+              itemFrom={assetFrom!}
+              itemTo={assetTo!}
+            />
+          );
+        })
+    );
   }, [assets, hasOngoingTransactions, transactions]);
 
   return (
@@ -244,69 +246,76 @@ function AssetRow({ data, itemFrom, itemTo }: AssetProps) {
       .toFixed(0);
   }, [dollars.value, data.returnVal._toAmount, itemTo.decimals]);
 
-  return (
-    <tr>
-      <td className="tw-hidden lg:tw-table-cell">
-        <DisplayDate
-          timestamp={new Date(data.timestamp).getTime().toString()}
-        />
-      </td>
-      <td className="tw-hidden lg:tw-table-cell">
-        <img
-          className="tw-hidden lg:tw-inline tw-mr-2"
-          style={{ height: '40px' }}
-          src={itemFrom.logoSvg}
-          alt={itemFrom.asset}
-        />{' '}
-        <AssetRenderer asset={itemFrom.asset} />
-      </td>
-      <td>{numberFromWei(data.returnVal._fromAmount)}</td>
-      <td>
-        <img
-          className="tw-joddem lg:tw-inline tw-mr-2"
-          style={{ height: '40px' }}
-          src={itemTo.logoSvg}
-          alt={itemTo.asset}
-        />{' '}
-        <AssetRenderer asset={itemTo.asset} />
-      </td>
-      <td className="tw-hidden lg:tw-table-cell">
-        <div>{numberFromWei(data.returnVal._toAmount)}</div>≈{' '}
-        <LoadableValue
-          value={weiToUSD(dollarValue || '0')}
-          loading={dollars.loading}
-        />
-      </td>
-      <td>
-        <div className="tw-flex tw-items-center tw-justify-between tw-p-0">
-          <div>
-            {!data.status && (
-              <p className="tw-m-0">{t(translations.common.confirmed)}</p>
-            )}
-            {data.status === TxStatus.FAILED && (
-              <p className="tw-m-0">{t(translations.common.failed)}</p>
-            )}
-            {data.status === TxStatus.PENDING && (
-              <p className="tw-m-0">{t(translations.common.pending)}</p>
-            )}
-            <LinkToExplorer
-              txHash={data.transaction_hash}
-              className="tw-text-primary tw-font-normal tw-whitespace-nowrap"
-            />
+  if (data.status !== 'confirmed') {
+    return (
+      <tr>
+        <td className="tw-hidden lg:tw-table-cell">
+          <DisplayDate
+            timestamp={new Date(data.timestamp).getTime().toString()}
+          />
+        </td>
+        <td className="tw-hidden lg:tw-table-cell">
+          <img
+            className="tw-hidden lg:tw-inline tw-mr-2"
+            style={{ height: '40px' }}
+            src={itemFrom.logoSvg}
+            alt={itemFrom.asset}
+          />{' '}
+          <AssetRenderer asset={itemFrom.asset} />
+        </td>
+        <td>{numberFromWei(data.returnVal._fromAmount)}</td>
+        <td>
+          <img
+            className="tw-joddem lg:tw-inline tw-mr-2"
+            style={{ height: '40px' }}
+            src={itemTo.logoSvg}
+            alt={itemTo.asset}
+          />{' '}
+          <AssetRenderer asset={itemTo.asset} />
+        </td>
+        <td className="tw-hidden lg:tw-table-cell">
+          <div>{numberFromWei(data.returnVal._toAmount)}</div>≈{' '}
+          <LoadableValue
+            value={weiToUSD(dollarValue || '0')}
+            loading={dollars.loading}
+          />
+        </td>
+        <td>
+          <div className="tw-flex tw-items-center tw-justify-between tw-p-0">
+            <div>
+              {!data.status && (
+                <p className="tw-m-0">{t(translations.common.confirmed)}</p>
+              )}
+              {data.status === TxStatus.FAILED && (
+                <p className="tw-m-0">{t(translations.common.failed)}</p>
+              )}
+              {data.status === TxStatus.PENDING && (
+                <p className="tw-m-0">{t(translations.common.pending)}</p>
+              )}
+              <LinkToExplorer
+                txHash={data.transaction_hash}
+                className="tw-text-primary tw-font-normal tw-whitespace-nowrap"
+              />
+            </div>
+            <div className="tw-hidden sm:tw-block lg:tw-hidden xl:tw-block">
+              {!data.status && (
+                <img src={iconSuccess} title="Confirmed" alt="Confirmed" />
+              )}
+              {data.status === TxStatus.FAILED && (
+                <img src={iconRejected} title="Failed" alt="Failed" />
+              )}
+              {data.status === TxStatus.PENDING && (
+                <img
+                  src={iconPending}
+                  title="Pending"
+                  alt="Pending"
+                  className="tw-animate-spin"
+                />
+              )}
+            </div>
           </div>
-          <div className="tw-hidden sm:tw-block lg:tw-hidden xl:tw-block">
-            {!data.status && (
-              <img src={iconSuccess} title="Confirmed" alt="Confirmed" />
-            )}
-            {data.status === TxStatus.FAILED && (
-              <img src={iconRejected} title="Failed" alt="Failed" />
-            )}
-            {data.status === TxStatus.PENDING && (
-              <img src={iconPending} title="Pending" alt="Pending" />
-            )}
-          </div>
-        </div>
-      </td>
-    </tr>
-  );
+        </td>
+      </tr>
+    );
+  } else return null;
 }

@@ -8,43 +8,41 @@ interface BtnProps {
 
 interface Props extends BtnProps {
   text: React.ReactNode;
-  className?: string;
 }
 
 const StyledButton = styled.button`
-  height: 50px;
-  margin: 40px auto 0 auto;
-  border: 1px solid #17C3B2;
-  color: #000;
-  padding: 0.75rem 4rem;
-  font-size: 0.875rem;
-  font-family: 'Rowdies';
-  font-weight: 900;
-  background: #17C3B2;
+  height: 40px;
+  width: 100%;
+  margin-top: 0;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 11px;
+  font-size: 1rem;
+  font-weight: 500;
+  background: rgba(254, 192, 4, 0.05);
   border-radius: 0.75rem;
   text-transform: none;
   line-height: 1;
   transition: background 0.3s;
-  text-transform: uppercase;
 
   &:hover {
-    background: #17C3BF;
+    background: rgba(254, 192, 4, 0.25);
   }
 
   ${(props: BtnProps) =>
     props.disabled &&
     css`
       opacity: 25%;
+      cursor: not-allowed;
+      &:hover {
+        background: transparent;
+      }
     `}
 `;
 
-export function ConfirmButton(props: Props) {
+export function Button(props: Props) {
   return (
-    <StyledButton
-      onClick={props.onClick}
-      disabled={props.disabled}
-      className={props.className}
-    >
+    <StyledButton onClick={props.onClick} disabled={props.disabled}>
       {props.text}
     </StyledButton>
   );

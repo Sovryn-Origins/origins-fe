@@ -6,6 +6,8 @@ import { detectWeb3Wallet, prettyTx } from '../../../utils/helpers';
 import txFailed from 'assets/images/failed-tx.svg';
 import txConfirm from 'assets/images/confirm-tx.svg';
 import txPending from 'assets/images/pending-tx.svg';
+// import txPending from 'assets/images/buy-pending-tx.svg';
+import closeImg from 'assets/images/closeImg.svg';
 import wMetamask from 'assets/wallets/metamask.svg';
 import wNifty from 'assets/wallets/nifty.png';
 import wLiquality from 'assets/wallets/liquality.svg';
@@ -19,7 +21,7 @@ import styles from './dialog.module.scss';
 import { useWalletContext } from '@sovryn/react-wallet';
 import { Trans, useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { ConfirmButton } from 'app/pages/BuySovPage/components/Button/confirm';
+import { ConfirmButton } from '../../../app/pages/BuyPage/components/Button/confirm';
 import { usePrevious } from '../../hooks/usePrevious';
 
 interface Props {
@@ -79,10 +81,11 @@ export function TxDialog({ tx, onUserConfirmed, onSuccess }: Props) {
       {[TxStatus.PENDING, TxStatus.CONFIRMED, TxStatus.FAILED].includes(
         tx.status,
       ) && (
-        <>
-          <button data-close="" className="dialog-close" onClick={close}>
-            <span className="tw-sr-only">Close Dialog</span>
-          </button>
+        <ModalWrap>
+          <CloseButton data-close="" onClick={close}>
+            {/* <span className="tw-sr-only">Close Dialog</span> */}
+            <img src={closeImg} alt="close" />
+          </CloseButton>
           <h1>{t(translations.buySovPage.txDialog.txStatus.title)}</h1>
           <StatusComponent status={tx.status} />
 
@@ -120,7 +123,7 @@ export function TxDialog({ tx, onUserConfirmed, onSuccess }: Props) {
               text={t(translations.common.close)}
             />
           </div>
-        </>
+        </ModalWrap>
       )}
     </Dialog>
   );
@@ -243,3 +246,18 @@ function WalletLogo({ wallet }: { wallet: string }) {
     </WLContainer>
   );
 }
+
+const CloseButton = styled.div`
+  position: absolute;
+  top: -10px;
+  right: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+
+const ModalWrap = styled.div`
+  position: relative; 
+`;

@@ -42,7 +42,7 @@ interface Props {}
 export function BuyPage(props: Props) {
   const { t } = useTranslation();
   const account = useAccount();
-  const [selectedTab, setSelectedTab] = useState(true);
+  const [selectedTab, setSelectedTab] = useState(false);
 
   return (
     <>
