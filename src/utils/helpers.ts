@@ -44,7 +44,7 @@ export const handleNumber = (value, onlyPositive = true) => {
   }
 
   if (value.indexOf('.') === -1) {
-    value = value.repalce(',', '.');
+    // value = value.repalce(',', '.');
   }
   let number = value.replace(/[^\d.-]/g, '');
 

@@ -146,7 +146,7 @@ export function SwapHistory() {
 
   return (
     <section>
-      <div className="sovryn-table tw-p-4 tw-mb-12">
+      <div className="sovryn-table tw-p-4 tw-mb-12 tw-bg-black tw-rounded-lg">
         <table className="tw-w-full">
           <thead>
             <tr>

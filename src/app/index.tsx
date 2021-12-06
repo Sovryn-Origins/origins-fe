@@ -44,6 +44,7 @@ import { OriginsClaimPage } from './pages/OriginsClaimPage/Loadable';
 import { usePriceFeeds_tradingPairRates } from './hooks/price-feeds/usePriceFeeds_tradingPairRates';
 import { BridgeDepositPage } from './pages/BridgeDepositPage/Loadable';
 import { BridgeWithdrawPage } from './pages/BridgeWithdrawPage/Loadable';
+import { BuyPage } from './pages/BuyPage/Loadable';
 
 const title =
   currentNetwork !== 'mainnet'
@@ -107,6 +108,7 @@ export function App() {
               path="/unsubscribe"
               render={props => <EmailPage {...props} type="UNSUBSCRIBE" />}
             />
+            <Route exact path="/buy" component={BuyPage} />
             <Route component={NotFoundPage} />
           </Switch>
         </WalletProvider>

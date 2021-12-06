@@ -252,6 +252,7 @@
   },
   "mainMenu": {
     "buySov": "Buy SOV",
+    "buy": "Buy",
     "trade": "Trade",
     "swap": "Swap",
     "marginTrade": "Margin",
@@ -1857,6 +1858,19 @@
     },
     "title": "Buy SOV exclusively on Sovryn!",
     "earn": "Earning with Sovryn"
+  },
+  "buyPage": {
+    "meta": {
+      "title": "Buy SOV!",
+      "description": "Buy SOV!"
+    },
+    "banner": {
+      "title": "Buy SOV!",
+      "cta": "Buy SOV",
+      "send": "send",
+      "receive": "receive"
+    },
+    "title": "Buy SOV exclusively on Sovryn!"
   },
   "addToMargin": {
     "title": "Add to Margin",
