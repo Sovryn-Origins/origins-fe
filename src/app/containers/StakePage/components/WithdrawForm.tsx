@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useEffect, useState } from 'react';
+import React, { FormEvent, useCallback, useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { handleNumberInput } from 'utils/helpers';
@@ -67,7 +67,7 @@ export function WithdrawForm(props: Props) {
           return false;
         });
     },
-    [account, props.until],
+    [account, props.until, weiAmount],
   );
 
   return (

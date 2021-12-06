@@ -1,8 +1,8 @@
-import React, { useMemo, FormEvent } from 'react';
+import React, { FormEvent } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { handleNumberInput } from 'utils/helpers';
-import { numberFromWei, toWei } from 'utils/blockchain/math-helpers';
+import { numberFromWei } from 'utils/blockchain/math-helpers';
 import { weiToNumberFormat } from 'utils/display-text/format';
 import { CacheCallResponse } from 'app/hooks/useCacheCall';
 import { useMaintenance } from 'app/hooks/useMaintenance';

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Rsk3 from '@rsksmart/rsk3';
 import { Spinner, Tooltip } from '@blueprintjs/core';
@@ -146,6 +147,7 @@ const InnerStakePage: React.FC = () => {
     timestamp,
     increaseForm,
     extendForm,
+    withdrawForm,
   ]);
 
   //Form Validations
@@ -458,14 +460,12 @@ const InnerStakePage: React.FC = () => {
                 </div>
                 <div className="tw-flex tw-flex-col tw-items-start">
                   <div className="tw-bg-primary tw-font-normal tw-bg-opacity-40 tw-hover:text-primary tw-focus:outline-none tw-focus:bg-opacity-50 hover:tw-bg-opacity-40 tw-transition tw-duration-500 tw-ease-in-out tw-px-8 tw-py-3 tw-text-sm tw-border tw-transition-colors tw-duration-300 tw-ease-in-out tw-border-primary tw-rounded-lg hover:tw-no-underline tw-no-underline tw-inline-block tw-uppercase">
-                    <a
-                      href="https://bitocracy.sovryn.app/"
-                      rel="noopener noreferrer"
-                      target="_blank"
+                    <Link
+                      to="/governance"
                       className="tw-text-black tw-font-rowdies hover:tw-no-underline"
                     >
                       {t(translations.stake.viewGovernance)}
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
