@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import axios from 'axios';
@@ -37,7 +37,7 @@ export function HistoryEventsTable() {
     setCurrentHistory(eventsHistory.slice(offset, offset + pageLimit));
   };
 
-  useEffect(() => {
+  const getHistory = useCallback(() => {
     if (chainId) {
       seIsHistoryLoading(true);
       axios
@@ -77,7 +77,11 @@ export function HistoryEventsTable() {
               </tr>
             </thead>
             <tbody className="tw-mt-5 tw-font-body tw-text-xs">
-              {isHistoryLoading && (
+              {currentHistory.length > 0 && (
+                <HistoryTable items={currentHistory} />
+              )}
+
+              {isHistoryLoading ? (
                 <tr>
                   <td colSpan={5} className="tw-text-center tw-font-normal">
                     <StyledLoading className="loading">
@@ -91,18 +95,22 @@ export function HistoryEventsTable() {
                     </StyledLoading>
                   </td>
                 </tr>
-              )}
-
-              {!isHistoryLoading && currentHistory.length > 0 && (
-                <HistoryTable items={currentHistory} />
-              )}
-
-              {!isHistoryLoading && currentHistory.length === 0 && (
-                <tr>
-                  <td colSpan={5} className="tw-text-center tw-font-normal">
-                    {t(translations.stake.history.noStakingHistory)}
-                  </td>
-                </tr>
+              ) : (
+                <>
+                  {eventsHistory.length === 0 && (
+                    <tr>
+                      <td colSpan={5} className="tw-text-center tw-font-normal">
+                        <button
+                          type="button"
+                          className="tw-bg-primary tw-bg-opacity-40 tw-text-black tw-tracking-normal hover:tw-text-gray-1 hover:tw-no-underline hover:tw-bg-primary hover:tw-bg-opacity-30 tw-mr-1 xl:tw-mr-7 tw-px-4 tw-py-2 tw-transition tw-duration-500 tw-ease-in-out tw-rounded-lg tw-border tw-border-primary tw-text-sm tw-font-light tw-font-rowdies tw-uppercase"
+                          onClick={getHistory}
+                        >
+                          {t(translations.stake.history.viewHistory)}
+                        </button>
+                      </td>
+                    </tr>
+                  )}
+                </>
               )}
             </tbody>
           </StyledTable>
@@ -168,7 +176,7 @@ const HistoryTableAsset: React.FC<HistoryAsset> = ({ item }) => {
         <LinkToExplorer
           txHash={item.txHash}
           startLength={6}
-          className="hover:tw-underline tw-font-inter tw-text-white"
+          className="hover:tw-underline tw-font-inter"
         />
       </td>
       <td>
