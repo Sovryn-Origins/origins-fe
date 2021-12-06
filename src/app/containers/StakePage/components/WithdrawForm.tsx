@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useState } from 'react';
+import React, { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { handleNumberInput } from 'utils/helpers';
@@ -6,12 +6,15 @@ import { numberFromWei, toWei } from 'utils/blockchain/math-helpers';
 import { CacheCallResponse } from 'app/hooks/useCacheCall';
 import { contractReader } from 'utils/sovryn/contract-reader';
 import { useAccount } from 'app/hooks/useAccount';
-import { weiToNumberFormat } from 'utils/display-text/format';
+import { useWeiAmount } from 'app/hooks/useWeiAmount';
+import { useDollarValueOg } from 'app/hooks/useDollarValueOg';
+import { weiToNumberFormat, weiToUSD } from 'utils/display-text/format';
 import { WithdrawConfirmationForm } from './WithdrawConfimationForm';
 import { TxFeeCalculator } from 'app/pages/MarginTradePage/components/TxFeeCalculator';
 import { discordInvite } from 'utils/classifiers';
 import { useMaintenance } from 'app/hooks/useMaintenance';
 import { ErrorBadge } from 'app/components/Form/ErrorBadge';
+import { LoadableValue } from 'app/components/LoadableValue';
 
 interface Props {
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
@@ -28,6 +31,10 @@ interface Props {
 export function WithdrawForm(props: Props) {
   const { t } = useTranslation();
   const account = useAccount();
+  const weiAmount = useWeiAmount(props.amount);
+  const dollarValue = useDollarValueOg(weiAmount);
+  const weiAmountWithdraw = useWeiAmount(props.withdrawAmount);
+  const dollarValueWithdraw = useDollarValueOg(weiAmountWithdraw);
   const { checkMaintenance, States } = useMaintenance();
   const unstakingLocked = checkMaintenance(States.UNSTAKING);
   const [forfeitWithdraw, setForfeitWithdraw] = useState<number>(0);
@@ -44,13 +51,13 @@ export function WithdrawForm(props: Props) {
         .call(
           'staking',
           'getWithdrawAmounts',
-          [toWei(amount), Number(props.until)],
+          [amount, Number(props.until)],
           account,
         )
         .then(res => {
           setForfeitWithdraw(res[1]);
           setForfeitPercent(
-            Number(((Number(res[1]) / Number(toWei(amount))) * 100).toFixed(1)),
+            Number(((Number(res[1]) / Number(weiAmount)) * 100).toFixed(1)),
           );
           setLoadingWithdraw(false);
         })
@@ -74,31 +81,38 @@ export function WithdrawForm(props: Props) {
           />
         ) : (
           <>
-            <h3 className="tw-text-center tw-mb-10 tw-leading-10 tw-text-3xl">
+            <h3 className="tw-text-center tw-mb-14 tw-leading-10 tw-text-3xl">
               {t(translations.stake.withdraw.title)}
             </h3>
             <div className="tw-mb-9 md:tw-px-9 tw-tracking-normal">
               <div className="tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-4">
                 <div>
                   <label className="tw-block tw-font-rowdies tw-font-light tw-text-xl tw-uppercase tw-leading-7 tw-text-white tw-text-center">
-                    {t(translations.stake.withdraw.amountCurrentlyStaked)}
+                    {t(translations.stake.withdraw.amountCurrentlyStaked)}:
                   </label>
                   <div className="tw-h-36 tw-bg-gray-3 tw-rounded-lg tw-p-8 tw-mt-3 lg:tw-mt-6">
-                    <div className="tw-flex tw-items-center tw-font-rowdies tw-text-3xl tw-uppercase tw-text-white">
+                    <div className="tw-flex tw-items-center tw-justify-center tw-font-rowdies tw-text-3xl tw-uppercase tw-text-white">
                       <div className="tw-mr-2">
-                        {weiToNumberFormat(toWei(props.amount), 6)}
+                        {weiToNumberFormat(toWei(props.amount), 3)}
                       </div>
                       <span>OG</span>
                     </div>
-                    <p className="tw-mb-0 tw-mt-2 tw-text-2xl tw-uppercase tw-text-white">
-                      ≈ 0.00 USD
-                    </p>
+                    <div className="tw-flex tw-items-center tw-justify-center tw-mb-0 tw-mt-2 tw-text-2xl tw-uppercase tw-text-white">
+                      <span className="tw-pr-2">≈</span>
+                      <LoadableValue
+                        loading={dollarValue.loading}
+                        value={weiToUSD(dollarValue.value, 2)
+                          ?.replace('USD', '')
+                          .trim()}
+                      />
+                      <span className="tw-pl-2">USD</span>
+                    </div>
                   </div>
                 </div>
 
                 <div className="tw-mt-6 lg:tw-mt-0">
                   <label className="tw-block tw-font-rowdies tw-font-light tw-text-xl tw-uppercase tw-leading-7 tw-text-white tw-text-center">
-                    {t(translations.stake.withdraw.votingPower)}
+                    {t(translations.stake.withdraw.votingPower)}:
                   </label>
                   <div className="tw-h-36 tw-bg-gray-3 tw-rounded-lg tw-p-8 tw-mt-3 lg:tw-mt-6">
                     <p className="tw-mb-0 tw-mt-4 tw-text-3xl tw-uppercase tw-text-white tw-text-center">
@@ -108,108 +122,116 @@ export function WithdrawForm(props: Props) {
                 </div>
               </div>
 
-              <label
-                className="tw-leading-4 tw-block tw-text-sov-white tw-text-xl tw-text-center tw-font-light tw-font-rowdies tw-uppercase tw-mb-4 tw-mt-12"
-                htmlFor="amountAdd"
-              >
-                {t(translations.stake.withdraw.amountToUnstake)}:
-              </label>
-              <div className="tw-bg-white tw-rounded-lg tw-text-black tw-text-xl tw-uppercase tw-font-light tw-flex tw-justify-center tw-py-4 tw-px-6">
-                <div className="tw-mr-4 tw-font-rowdies">
-                  <input
-                    className="tw-mr-2 tw-text-right tw-font-rowdies"
-                    id="amountAdd"
-                    type="text"
-                    value={weiToNumberFormat(toWei(props.withdrawAmount), 6)}
-                    onChange={e => {
-                      props.onChangeAmount(handleNumberInput(e));
-                      getEvent(handleNumberInput(e).toString());
-                    }}
-                  />
-                  {t(translations.stake.og)}
-                </div>
-                <div className="tw-font-rowdies">≈ 0.00 USD</div>
-              </div>
-
-              <div className="tw-flex tw-justify-between tw-rounded tw-mt-4 tw-mb-2">
-                <div
-                  onClick={() => {
-                    let num = Number(props.amount) / 4;
-                    props.onChangeAmount(num.toString());
-                    getEvent(num.toString());
-                  }}
-                  className="tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-primary hover:tw-bg-opacity-30 tw-w-1/5 tw-py-3 tw-text-center tw-text-xl tw-text-primary tw-tracking-tighter tw-bg-gray-3 tw-rounded-lg"
+              <div className="md:tw-px-9 tw-max-w-xl tw-mx-auto">
+                <label
+                  className="tw-leading-4 tw-block tw-text-sov-white tw-text-xl tw-text-center tw-font-light tw-font-rowdies tw-uppercase tw-mb-4 tw-mt-12"
+                  htmlFor="amountToWithdraw"
                 >
-                  25%
-                </div>
-                <div
-                  onClick={() => {
-                    let num = Number(props.amount) / 2;
-                    props.onChangeAmount(num.toString());
-                    getEvent(num.toString());
-                  }}
-                  className="tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-primary hover:tw-bg-opacity-30 tw-w-1/5 tw-py-3 tw-text-center tw-text-xl tw-text-primary tw-tracking-tighter tw-bg-gray-3 tw-rounded-lg"
-                >
-                  50%
-                </div>
-                <div
-                  onClick={() => {
-                    let num = (Number(props.amount) / 4) * 3;
-                    props.onChangeAmount(num.toString());
-                    getEvent(num.toString());
-                  }}
-                  className="tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-primary hover:tw-bg-opacity-30 tw-w-1/5 tw-py-3 tw-text-center tw-text-xl tw-text-primary tw-tracking-tighter tw-bg-gray-3 tw-rounded-lg"
-                >
-                  75%
-                </div>
-                <div
-                  onClick={() => {
-                    props.onChangeAmount(props.amount);
-                    getEvent(props.amount.toString());
-                  }}
-                  className="tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-primary hover:tw-bg-opacity-30 tw-w-1/5 tw-py-3 tw-text-center tw-text-xl tw-text-primary tw-tracking-tighter tw-bg-gray-3 tw-rounded-lg"
-                >
-                  100%
-                </div>
-              </div>
-              {Number(props.until) > Math.round(new Date().getTime() / 1e3) && (
-                <>
-                  <label
-                    className="tw-block tw-text-sov-white tw-text-xl tw-uppercase tw-text-center tw-font-rowdies tw-font-light tw-mb-2 tw-mt-8"
-                    htmlFor="unstake"
-                  >
-                    {t(translations.stake.withdraw.forfeit)}:
-                  </label>
-                  <div className="tw-flex tw-space-x-4">
+                  {t(translations.stake.withdraw.amountToUnstake)}:
+                </label>
+                <div className="tw-bg-white tw-rounded-lg tw-text-black tw-text-xl tw-uppercase tw-font-light tw-flex tw-justify-center tw-py-4 tw-px-6">
+                  <div className="tw-mr-4 tw-font-rowdies">
                     <input
-                      readOnly
-                      className={`tw-border tw-border-gray-3 tw-border-opacity-100 tw-border-solid tw-bg-white tw-text-gray-1 tw-appearance-none tw-text-xl tw-font-light tw-font-rowdies tw-text-center tw-rounded-lg tw-w-full tw-py-4 tw-px-6 tw-bg-transparent tw-tracking-normal focus:tw-outline-none focus:tw-shadow-outline ${
-                        loadingWithdraw && 'tw-skeleton'
-                      }`}
-                      id="unstake"
+                      className="tw-w-28 tw-mr-2 tw-text-left tw-font-rowdies"
+                      id="amountToWithdraw"
                       type="text"
-                      placeholder="0"
-                      value={
-                        forfeitPercent +
-                        '% ≈ ' +
-                        numberFromWei(forfeitWithdraw).toFixed(2) +
-                        ' SOV'
-                      }
+                      value={weiToNumberFormat(weiAmountWithdraw, 2)}
+                      onChange={e => {
+                        props.onChangeAmount(handleNumberInput(e));
+                        getEvent(toWei(handleNumberInput(e)));
+                      }}
                     />
+                    {t(translations.stake.og)}
                   </div>
-                </>
-              )}
+                  <div className="tw-flex tw-items-center tw-justify-center tw-font-rowdies">
+                    <span className="tw-pr-2">≈</span>
+                    <LoadableValue
+                      loading={dollarValueWithdraw.loading}
+                      value={weiToUSD(dollarValueWithdraw.value, 2)
+                        ?.replace('USD', '')
+                        .trim()}
+                    />
+                    <span className="tw-pl-2">USD</span>
+                  </div>
+                </div>
 
-              <div className="tw-flex tw-justify-center">
-                <TxFeeCalculator
-                  args={[
-                    toWei(props.withdrawAmount),
-                    Number(props.until),
-                    account,
-                  ]}
-                  methodName="withdraw"
-                  contractName="staking"
-                />
+                <div className="tw-flex tw-justify-between tw-rounded tw-mt-4 tw-mb-2">
+                  <div
+                    onClick={() => {
+                      let num = Number(props.amount) / 4;
+                      props.onChangeAmount(num.toString());
+                      getEvent(num.toString());
+                    }}
+                    className="tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-primary hover:tw-bg-opacity-30 tw-w-1/5 tw-py-3 tw-text-center tw-text-xl tw-text-primary tw-tracking-tighter tw-bg-gray-3 tw-rounded-lg"
+                  >
+                    25%
+                  </div>
+                  <div
+                    onClick={() => {
+                      let num = Number(props.amount) / 2;
+                      props.onChangeAmount(num.toString());
+                      getEvent(num.toString());
+                    }}
+                    className="tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-primary hover:tw-bg-opacity-30 tw-w-1/5 tw-py-3 tw-text-center tw-text-xl tw-text-primary tw-tracking-tighter tw-bg-gray-3 tw-rounded-lg"
+                  >
+                    50%
+                  </div>
+                  <div
+                    onClick={() => {
+                      let num = (Number(props.amount) / 4) * 3;
+                      props.onChangeAmount(num.toString());
+                      getEvent(num.toString());
+                    }}
+                    className="tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-primary hover:tw-bg-opacity-30 tw-w-1/5 tw-py-3 tw-text-center tw-text-xl tw-text-primary tw-tracking-tighter tw-bg-gray-3 tw-rounded-lg"
+                  >
+                    75%
+                  </div>
+                  <div
+                    onClick={() => {
+                      props.onChangeAmount(props.amount);
+                      getEvent(props.amount.toString());
+                    }}
+                    className="tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-primary hover:tw-bg-opacity-30 tw-w-1/5 tw-py-3 tw-text-center tw-text-xl tw-text-primary tw-tracking-tighter tw-bg-gray-3 tw-rounded-lg"
+                  >
+                    100%
+                  </div>
+                </div>
+                {Number(props.until) >
+                  Math.round(new Date().getTime() / 1e3) && (
+                  <>
+                    <label
+                      className="tw-block tw-text-sov-white tw-text-xl tw-uppercase tw-text-center tw-font-rowdies tw-font-light tw-mb-2 tw-mt-8"
+                      htmlFor="unstake"
+                    >
+                      {t(translations.stake.withdraw.forfeit)}:
+                    </label>
+                    <div className="tw-flex tw-space-x-4">
+                      <input
+                        readOnly
+                        className={`tw-border tw-border-gray-3 tw-border-opacity-100 tw-border-solid tw-bg-white tw-text-gray-1 tw-appearance-none tw-text-xl tw-font-light tw-font-rowdies tw-text-center tw-rounded-lg tw-w-full tw-py-4 tw-px-6 tw-bg-transparent tw-tracking-normal focus:tw-outline-none focus:tw-shadow-outline ${
+                          loadingWithdraw && 'tw-skeleton'
+                        }`}
+                        id="unstake"
+                        type="text"
+                        placeholder="0"
+                        value={
+                          forfeitPercent +
+                          '% ≈ ' +
+                          numberFromWei(forfeitWithdraw).toFixed(2) +
+                          ' OG'
+                        }
+                      />
+                    </div>
+                  </>
+                )}
+
+                <div className="tw-flex tw-justify-center">
+                  <TxFeeCalculator
+                    args={[weiAmountWithdraw, Number(props.until), account]}
+                    methodName="withdraw"
+                    contractName="staking"
+                  />
+                </div>
               </div>
             </div>
             {unstakingLocked && (
@@ -253,7 +275,7 @@ export function WithdrawForm(props: Props) {
                     setWithdrawFormConfirmation(true);
                   }}
                 >
-                  {t(translations.stake.actions.confirm)}
+                  {t(translations.stake.actions.unstake)}
                 </button>
               ) : (
                 <button
@@ -264,7 +286,7 @@ export function WithdrawForm(props: Props) {
                   }`}
                   disabled={!props.isValid || unstakingLocked}
                 >
-                  {t(translations.stake.actions.confirm)}
+                  {t(translations.stake.actions.unstake)}
                 </button>
               )}
               <button

@@ -122,7 +122,11 @@ const InnerStakePage: React.FC = () => {
   const stakingLocked = checkMaintenance(States.STAKING);
 
   useEffect(() => {
-    if (timestamp && weiAmount && (stakeForm || increaseForm || extendForm)) {
+    if (
+      timestamp &&
+      weiAmount &&
+      (stakeForm || increaseForm || extendForm || withdrawForm)
+    ) {
       setLockDate(timestamp);
       setWeight(getWeight.value);
       setVotingPower(
@@ -570,6 +574,7 @@ const InnerStakePage: React.FC = () => {
                           balanceOf={balanceOf}
                           isValid={validateWithdrawForm(amount)}
                           onCloseModal={() => setWithdrawForm(!withdrawForm)}
+                          votePower={votingPower}
                         />
                       </>
                     }

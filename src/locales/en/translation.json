@@ -524,7 +524,7 @@
       "address": "Enter or paste address"
     },
     "withdraw": {
-      "title": "Unstake SOV",
+      "title": "Unstake",
       "amountCurrentlyStaked": "Amount Currently Staked",
       "votingPower": "Voting Power",
       "amountToUnstake": "Amount to Unstake",
