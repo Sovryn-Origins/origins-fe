@@ -3,7 +3,10 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import { translations } from 'locales/i18n';
 import { AssetRenderer } from 'app/components/AssetRenderer';
-import { fromWei, weiToFixed } from '../../../../../utils/blockchain/math-helpers';
+import {
+  fromWei,
+  weiToFixed,
+} from '../../../../../utils/blockchain/math-helpers';
 import { Asset } from '../../../../../types';
 import { useWeiAmount } from '../../../../hooks/useWeiAmount';
 import { useCacheCallWithValue } from '../../../../hooks/useCacheCallWithValue';
@@ -253,10 +256,8 @@ export function BuyFormContainer() {
         ? sendPath()
         : sendExternal(),
     [targetToken, sourceToken, sendPath, sendExternal],
-  );
-
+  ); 
   
-
   return (
     <>
       <SlippageDialog

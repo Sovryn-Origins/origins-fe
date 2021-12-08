@@ -39,14 +39,14 @@ export function useSwapNetwork_approveAndConvertByPath(
 
   return {
     send: async () => {
-      let tx: CheckAndApproveResult = {};
-      if (sourceToken !== Asset.RBTC) {
+      let tx: CheckAndApproveResult = {}; 
+      if (sourceToken !== Asset.RBTC) { 
         tx = await contractWriter.checkAndApprove(
           sourceToken,
           resolveContract(sourceToken, targetToken),
           amount,
         );
-        if (tx.rejected) {
+        if (tx.rejected){
           return;
         }
       }

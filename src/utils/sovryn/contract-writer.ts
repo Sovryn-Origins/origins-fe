@@ -84,21 +84,21 @@ class ContractWriter {
             },
           )
           .then(tx => {
-            this.sovryn.store().dispatch(
-              txActions.addTransaction({
-                transactionHash: tx as string,
-                approveTransactionHash: null,
-                type: TxType.APPROVE,
-                status: TxStatus.PENDING,
-                loading: false,
-                to: contractName,
-                from: address,
-                value: '0',
-                asset,
-                assetAmount: transferAmount.get(amounts[1]),
-              }),
-            );
-            return tx;
+            // this.sovryn.store().dispatch(
+            //   txActions.addTransaction({
+            //     transactionHash: tx as string,
+            //     approveTransactionHash: null,
+            //     type: TxType.APPROVE,
+            //     status: TxStatus.PENDING,
+            //     loading: false,
+            //     to: contractName,
+            //     from: address,
+            //     value: '0',
+            //     asset,
+            //     assetAmount: transferAmount.get(amounts[1]),
+            //   }),
+            // );
+            //return tx;
           });
         nonce += 1;
       }
