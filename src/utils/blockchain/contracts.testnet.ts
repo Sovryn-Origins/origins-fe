@@ -354,10 +354,6 @@ export const contracts = {
     address: '0x6e22f07d4eDc6B13B07B7369f11371E7e5286de6',
     abi: GovernorAdminABI as any,
   },
-  governorOwner: {
-    address: '0x058FD3F6a40b92b311B49E5e3E064300600021D7',
-    abi: GovernorAdminABI as any,
-  },
   OG_token: {
     address: '0x010C233B4F94d35CaDb71D12D7058aAb58789e8f',
     abi: OGTokenAbi,
