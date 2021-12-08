@@ -15,7 +15,8 @@ import { useWeiAmount } from 'app/hooks/useWeiAmount';
 import { ethGenesisAddress, discordInvite } from 'utils/classifiers';
 import { weiToUSD } from 'utils/display-text/format';
 import { ErrorBadge } from 'app/components/Form/ErrorBadge';
-import { AvailableBalance } from '../../../components/AvailableBalance';
+import { AvailableBalance } from 'app/components/AvailableBalance';
+import { StretchInput } from 'app/components/Form/StretchInput';
 import { Asset } from 'types/asset';
 
 interface Props {
@@ -58,8 +59,9 @@ export function StakeForm(props: Props) {
               </label>
               <div className="tw-h-36 tw-bg-gray-3 tw-rounded-lg tw-p-8 tw-mt-3 lg:tw-mt-6">
                 <div className="tw-flex tw-items-center tw-justify-center tw-font-rowdies tw-text-3xl tw-uppercase tw-text-white">
-                  <input
-                    className="tw-w-32 tw-bg-transparent tw-mr-2"
+                  <StretchInput
+                    className="tw-mr-2"
+                    inputClassName="tw-bg-transparent"
                     type="text"
                     value={weiToNumberFormat(weiAmount, 3)}
                     onChange={e => props.onChangeAmount(handleNumberInput(e))}
