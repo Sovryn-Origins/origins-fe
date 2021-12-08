@@ -17,6 +17,7 @@ import { Footer } from '../../components/Footer';
 import { SkeletonRow } from '../../components/Skeleton/SkeletonRow';
 import { useAccount } from '../../hooks/useAccount';
 import { BuyFormContainer } from './components/BuyFormContainer';
+import { BondingCurve } from './components/BondingCurve';
 import Tabbar from './components/Tabbar';
 import { SwapHistory } from '../../containers/SwapHistory';
 
@@ -59,11 +60,7 @@ export function BuyPage(props: Props) {
           />
         </TabbarContainer>
         {!selectedTab && <BuyFormContainer />}
-        {selectedTab && (
-          <BondingContainer>
-            <h1>Coming Soon</h1>
-          </BondingContainer>
-        )}
+        {selectedTab && <BondingCurve />}
         <div>
           <div className={styles.swapHistoryTableContainer}>
             {!account ? (
