@@ -277,7 +277,7 @@ const InnerStakePage: React.FC = () => {
         setLoading(true);
         const increaseAmount = bignumber(weiAmount)
           .sub(toWei(stakedAmount))
-          .toString();
+          .toFixed();
         let nonce = await contractReader.nonce(account);
         const allowance = (await staking_allowance(account)) as string;
         if (bignumber(allowance).lessThan(increaseAmount)) {
