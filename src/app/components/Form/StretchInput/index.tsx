@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import styles from './index.module.scss';
 
 interface IProps {
+  id?: string;
   className?: string;
   inputClassName?: string;
   type?: string;
@@ -11,6 +12,7 @@ interface IProps {
 }
 
 export const StretchInput: React.FC<IProps> = ({
+  id,
   className,
   inputClassName,
   type = 'text',
@@ -21,6 +23,7 @@ export const StretchInput: React.FC<IProps> = ({
     <div className={classNames(styles.wrapper, className)}>
       <span>{value}</span>
       <input
+        id={id}
         className={classNames(
           'tw-absolute tw-top-0 tw-left-0 tw-p-0 tw-m-0 tw-w-full',
           inputClassName,

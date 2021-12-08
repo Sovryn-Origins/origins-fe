@@ -14,6 +14,7 @@ import { ethGenesisAddress, discordInvite } from 'utils/classifiers';
 import { useMaintenance } from 'app/hooks/useMaintenance';
 import { AvailableBalance } from '../../../components/AvailableBalance';
 import { LoadableValue } from 'app/components/LoadableValue';
+import { StretchInput } from 'app/components/Form/StretchInput';
 import { Asset } from 'types/asset';
 import { ErrorBadge } from 'app/components/Form/ErrorBadge';
 
@@ -112,12 +113,12 @@ export function IncreaseStakeForm(props: Props) {
               {t(translations.stake.increase.amountToAdd)}:
             </label>
             <div className="tw-max-w-xl tw-flex tw-items-center tw-justify-center tw-mx-auto tw-bg-white tw-rounded-lg tw-text-black tw-text-xl tw-uppercase tw-font-light tw-py-4 tw-px-6">
-              <div className="tw-mr-4 tw-font-rowdies">
-                <input
-                  className="tw-w-28 tw-mr-2 tw-text-left tw-font-rowdies"
+              <div className="tw-flex tw-justify-center tw-items-center tw-mr-4 tw-font-rowdies">
+                <StretchInput
+                  className="tw-mr-2"
+                  inputClassName="tw-text-left tw-font-rowdies"
                   id="amountAdd"
                   type="text"
-                  maxLength={15}
                   value={weiToNumberFormat(toWei(addAmount), 3)}
                   onChange={e => handleChangeAddAmount(handleNumberInput(e))}
                 />
