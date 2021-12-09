@@ -39,9 +39,9 @@ export function ProposalRow({ proposal }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingState, loadingState, created, state, wasLoaded]);
 
-  if (!created) return null;
+  // if (!created) return null;
 
-  if (loadingState || loadingCreated || !created || !state) {
+  if (loadingState || loadingCreated || !state) {
     return (
       <>
         <tr>
