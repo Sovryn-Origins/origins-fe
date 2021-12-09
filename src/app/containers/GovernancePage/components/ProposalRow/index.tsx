@@ -124,7 +124,7 @@ export function ProposalRow({ proposal }: Props) {
             <td className="tw-text-left">
               <Link
                 to={{
-                  pathname: `/proposals/${proposal.id}/${proposal.contractName}`,
+                  pathname: `${match.url}/proposal/${proposal.id}/${proposal.contractName}`,
                   state: { background: location },
                 }}
                 className="tw-text-gold hover:tw-text-gold hover:tw-underline tw-font-thin tw-font-rowdies tw-tracking-normal tw-uppercase"
