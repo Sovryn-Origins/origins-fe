@@ -4,12 +4,13 @@ import { isAddress } from 'web3-utils';
 import { Icon } from '@blueprintjs/core';
 import { bignumber } from 'mathjs';
 
+import { TxDialog } from 'app/components/Dialogs/TxDialog';
 import { useAccount } from 'app/hooks/useAccount';
 import { useStaking_getCurrentVotes } from 'app/hooks/staking/useStaking_getCurrentVotes';
 import { governance_proposalThreshold } from 'app/hooks/governance/governance_proposalThreshold';
-import { governance_propose } from 'app/hooks/governance/governance_propose';
 import { fromWei } from 'utils/blockchain/math-helpers';
 import { toastError } from 'utils/toaster';
+import { useSendProposal } from '../hooks/useSendProposal';
 
 const initRow = {
   target: '',
@@ -26,6 +27,7 @@ export const Propose: React.FC = () => {
   const [rows, setRows] = useState([initRow]);
   const account = useAccount();
   const votes = useStaking_getCurrentVotes(account);
+  const { propose, ...tx } = useSendProposal(governor);
 
   const updateRow = (value, field, rowIndex) => {
     const newRows = [...rows.map(row => ({ ...row }))];
@@ -85,16 +87,7 @@ export const Propose: React.FC = () => {
       const signatures = rows.map(row => row.signature);
       const calldatas = rows.map(row => row.calldata);
 
-      await governance_propose(
-        targets,
-        values,
-        signatures,
-        calldatas,
-        description,
-        account,
-        governor,
-      );
-      history.goBack();
+      propose(targets, values, signatures, calldatas, description);
     } catch (error) {
       console.error(error);
     }
@@ -202,6 +195,7 @@ export const Propose: React.FC = () => {
           </button>
         </div>
       </form>
+      <TxDialog tx={tx} />
     </div>
   );
 };

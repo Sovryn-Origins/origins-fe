@@ -27,6 +27,9 @@ export function ProposalRow({ proposal }: Props) {
     value: created,
     event,
   } = useGetProposalCreateEvent(proposal);
+  useEffect(() => {
+    console.log('[EventLoading]', loadingCreated, created, event);
+  }, [loadingCreated, created, event]);
   const { loading: loadingState, state } = useGetProposalState(proposal);
   const location = useLocation();
   const match = useRouteMatch();
@@ -98,7 +101,7 @@ export function ProposalRow({ proposal }: Props) {
                 {String(proposal.id).padStart(3, '0')} • {created?.description}
               </Linkify>
             </td>
-            <td className="tw-text-left tw-hidden xl:tw-table-cell tw-truncate tw-pr-4 tw-pl-4">
+            <td className="tw-text-left tw-hidden xl:tw-table-cell tw-truncate tw-pr-4">
               #{proposal.startBlock}
             </td>
             <td className="tw-text-left tw-hidden xl:tw-table-cell tw-pr-4">
