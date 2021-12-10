@@ -126,7 +126,8 @@ export const ProposalDetail: React.FC = () => {
               Voting ends:{' '}
               {dateByBlocks(
                 data?.startTime,
-                createdEvent?.blockNumber,
+                // createdEvent?.blockNumber,
+                data?.startBlock,
                 data?.endBlock,
               )}
             </p>
@@ -205,19 +206,21 @@ export const ProposalDetail: React.FC = () => {
         </div>
 
         <div className="tw-bg-white tw-px-4 tw-pt-11 tw-pb-0 tw-rounded-lg">
-          <button className="tw-bg-primary tw-border tw-border-black tw-text-black tw-text-sm tw-uppercase tw-px-6 tw-py-3 tw-rounded-lg tw-ml-6 tw-mb-12">
-            I Understand
-          </button>
+          <div className="tw-mb-12">
+            <button className="tw-bg-primary tw-border tw-border-black tw-text-black tw-text-sm tw-uppercase tw-px-6 tw-py-3 tw-rounded-lg tw-ml-6">
+              I Understand
+            </button>
 
-          {data?.id && isConnected && state === ProposalState.Active && (
-            <VoteCaster
-              votesFor={data.forVotes}
-              votesAgainst={data.againstVotes}
-              proposalId={data.id}
-              proposal={data}
-              contractName={data.contractName}
-            />
-          )}
+            {data?.id && isConnected && state === ProposalState.Active && (
+              <VoteCaster
+                votesFor={data.forVotes}
+                votesAgainst={data.againstVotes}
+                proposalId={data.id}
+                proposal={data}
+                contractName={data.contractName}
+              />
+            )}
+          </div>
 
           <div className="xl:tw-flex tw--mx-2 tw-mt-8">
             <div className="tw-bg-gray-1 tw-rounded-lg tw-border tw-mb-4 xl:tw-mb-0 xl:tw-w-2/4 sovryn-table tw-p-4 tw-mx-2 tw-overflow-y-auto">

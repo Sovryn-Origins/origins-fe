@@ -105,7 +105,7 @@ export function VoteCaster(props: Props) {
       >
         <p className="tw-text-gold tw-p-0 tw-m-0 tw-duration-300 hover:tw-opacity-70 tw-transition tw-cursor-pointer">
           <button
-            className="tw-tracking-normal vote__success tw-w-full xl:tw-w-auto tw-bg-turquoise focus:tw-bg-opacity-50 hover:tw-bg-opacity-40 focus:tw-outline-none tw-transition tw-duration-500 tw-ease-in-out tw-bg-opacity-30 tw-rounded-xl tw-mb-4 xl:tw-mb-0 tw-border xl:tw-px-12 tw-px-3 tw-py-3 tw-text-center xl:tw-text-lg tw-text-sm tw-text-turquoise tw-border-turquoise"
+            className="tw-tracking-normal vote__success tw-w-full xl:tw-w-auto tw-bg-turquoise focus:tw-bg-opacity-50 hover:tw-bg-opacity-40 focus:tw-outline-none tw-transition tw-duration-500 tw-ease-in-out tw-bg-opacity-30 tw-rounded-lg tw-mb-4 xl:tw-mb-0 tw-border xl:tw-px-12 tw-px-3 tw-py-3 tw-text-center xl:tw-text-lg tw-text-sm tw-text-turquoise tw-text-black tw-uppercase tw-border-turquoise"
             type="button"
             onClick={() => handleVote(true)}
           >
@@ -127,7 +127,7 @@ export function VoteCaster(props: Props) {
       >
         <p className="tw-text-gold tw-p-0 tw-m-0 tw-duration-300 hover:tw-opacity-70 tw-transition tw-cursor-pointer">
           <button
-            className="tw-tracking-normal vote__danger tw-w-full xl:tw-w-auto tw-bg-red focus:tw-bg-opacity-50 hover:tw-bg-opacity-40 focus:tw-outline-none tw-transition tw-duration-500 tw-ease-in-out tw-bg-opacity-30 tw-rounded-xl tw-border xl:tw-px-12 tw-px-3 tw-py-3 tw-text-center xl:tw-text-lg tw-text-sm tw-text-red tw-border-red"
+            className="tw-tracking-normal vote__danger tw-w-full xl:tw-w-auto tw-bg-red focus:tw-bg-opacity-50 hover:tw-bg-opacity-40 focus:tw-outline-none tw-transition tw-duration-500 tw-ease-in-out tw-bg-opacity-30 tw-rounded-lg tw-border xl:tw-px-12 tw-px-3 tw-py-3 tw-text-center xl:tw-text-lg tw-text-sm tw-text-black tw-uppercase tw-text-red tw-border-red"
             type="button"
             onClick={() => handleVote(false)}
           >

@@ -27,9 +27,7 @@ export function ProposalRow({ proposal }: Props) {
     value: created,
     event,
   } = useGetProposalCreateEvent(proposal);
-  useEffect(() => {
-    console.log('[EventLoading]', loadingCreated, created, event);
-  }, [loadingCreated, created, event]);
+
   const { loading: loadingState, state } = useGetProposalState(proposal);
   const location = useLocation();
   const match = useRouteMatch();
