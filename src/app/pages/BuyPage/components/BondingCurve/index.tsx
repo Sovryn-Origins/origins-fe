@@ -79,6 +79,9 @@ export function BondingCurve() {
   const [tokenBalance, setTokenBalance] = useState<any[]>([]);
 
   useEffect(() => {
+
+    console.log("TOKENS", tokens)
+
     async function getOptions() {
       try {
         Promise.all(
@@ -282,7 +285,7 @@ export function BondingCurve() {
           <div className={styles.title}>{t(translations.swap.send)}</div>
           <div className={styles.currency}>
             <SwapAssetSelector
-              value={sourceToken}
+              value={sourceToken} 
               items={sourceOptions}
               placeholder={t(s.fields.currency_placeholder)}
               onChange={value => setSourceToken(value.key)}

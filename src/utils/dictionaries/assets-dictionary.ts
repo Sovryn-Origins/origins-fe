@@ -106,6 +106,10 @@ export class AssetsDictionary {
         Asset.RIF,
         new AssetDetails(Asset.RIF, 'RIF', 'RIF', 18, rifToken, true),
       ],
+      [
+        Asset.MYNT,
+        new AssetDetails(Asset.MYNT, 'MYNT', 'MYNT', 18, rifToken, true),
+      ],
       [Asset.OG, new AssetDetails(Asset.OG, 'OG', 'OG', 18, ogIcon, true)],
     ],
   );

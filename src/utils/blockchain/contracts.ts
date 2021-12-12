@@ -356,8 +356,12 @@ export const contracts = {
     address: '0x6979bd7aa099c6c0566c40e5B1FC88CB96D73254',
     abi: OGTokenAbi,
   },
-  OGMarketMaker: {
-    address: '',
-    abi: OGMarketMakerAbi,
+  MYNT_token:{
+    address:'0xf75170ce8d4060b8D5fc24E996FA00A94bb8A232',
+    abi: OGMarketMakerAbi, 
   },
+  // OGMarketMaker: {
+  //   address: '',
+  //   abi: OGMarketMakerAbi,
+  // },
 };
