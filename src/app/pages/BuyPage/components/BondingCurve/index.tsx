@@ -50,6 +50,12 @@ interface Option {
 
 const xusdExcludes = [Asset.USDT, Asset.DOC];
 
+const tokens = [
+  '0x75bbf7f4d77777730eE35b94881B898113a93124',
+  '0x010C233B4F94d35CaDb71D12D7058aAb58789e8f',
+  '0xaa7038D80521351F243168FefE0352194e3f83C3',
+];
+
 export function BondingCurve() {
   const { t } = useTranslation();
   const isConnected = useCanInteract();
@@ -65,11 +71,11 @@ export function BondingCurve() {
   const [slippage, setSlippage] = useState(0.5);
   const account = useAccount();
   const weiAmount = useWeiAmount(amount);
-  const { value: tokens } = useCacheCallWithValue<string[]>(
-    'converterRegistry',
-    'getConvertibleTokens',
-    [],
-  );
+  // const { value: tokens } = useCacheCallWithValue<string[]>(
+  //   'converterRegistry',
+  //   'getConvertibleTokens',
+  //   [],
+  // );
   const [tokenBalance, setTokenBalance] = useState<any[]>([]);
 
   useEffect(() => {
