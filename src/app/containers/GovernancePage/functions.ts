@@ -8,7 +8,7 @@ export function governance_propose(
   calldatas: string[],
   description: string,
   account,
-  contractName: ContractName | undefined = 'governorAdmin',
+  contractName: ContractName,
 ) {
   return contractWriter.send(
     contractName,

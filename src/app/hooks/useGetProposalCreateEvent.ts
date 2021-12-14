@@ -11,6 +11,12 @@ interface StateStatus {
 }
 
 export function useGetProposalCreateEvent(proposal: MergedProposal) {
+  const [state, setState] = useState<StateStatus>({
+    event: null as any,
+    value: null as any,
+    loading: true,
+  });
+
   const getEvent = useCallback(async () => {
     setState(prevState => ({ ...prevState, loading: true }));
     const events = await eventReader.getPastEvents(
@@ -36,12 +42,6 @@ export function useGetProposalCreateEvent(proposal: MergedProposal) {
       loading: false,
     };
   }, [proposal]);
-
-  const [state, setState] = useState<StateStatus>({
-    event: null as any,
-    value: null as any,
-    loading: true,
-  });
 
   useEffect(() => {
     if (proposal.id) {

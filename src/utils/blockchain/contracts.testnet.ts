@@ -351,7 +351,7 @@ export const contracts = {
     abi: multicallABI,
   },
   governorAdmin: {
-    address: '0x6e22f07d4eDc6B13B07B7369f11371E7e5286de6',
+    address: '0x6e22f07d4edc6b13b07b7369f11371e7e5286de6',
     abi: GovernorAdminABI as any,
   },
   OG_token: {

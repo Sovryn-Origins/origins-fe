@@ -200,13 +200,36 @@ export class SovrynNetwork {
   protected async initDatabaseWeb3(chainId: number) {
     try {
       const nodeUrl = databaseRpcNodes[chainId];
-      const web3Provider = new Web3.providers.HttpProvider(nodeUrl, {
-        keepAlive: true,
-      });
+      let web3Provider;
+      let isWebsocket = false;
+      if (nodeUrl.startsWith('http')) {
+        web3Provider = new Web3.providers.HttpProvider(nodeUrl, {
+          keepAlive: true,
+        });
+      } else {
+        web3Provider = new Web3.providers.WebsocketProvider(nodeUrl, {
+          reconnectDelay: 10,
+          timeout: 5,
+        });
+        isWebsocket = true;
+      }
       this._databaseWeb3 = new Web3(web3Provider);
+
       Array.from(Object.keys(appContracts)).forEach(key => {
         this.addDatabaseContract(key, appContracts[key]);
       });
+      if (isWebsocket) {
+        const provider: WebsocketProvider = (this._databaseWeb3
+          .currentProvider as unknown) as WebsocketProvider;
+
+        provider.on('end', () => {
+          provider.removeAllListeners('end');
+          this.contracts = {};
+          this.contractList = [];
+          this._databaseWeb3 = undefined as any;
+          this.initDatabaseWeb3(chainId);
+        });
+      }
     } catch (e) {
       console.error('init database web3 fails.');
       console.error(e);

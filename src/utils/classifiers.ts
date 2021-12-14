@@ -33,8 +33,8 @@ export const fastBtcApis = {
 };
 
 export const databaseRpcNodes = {
-  30: 'https://backend.sovryn.app/rpc',
-  31: 'https://api.test.sovryn.app/rpc',
+  30: 'wss://mainnet.sovryn.app/websocket',
+  31: 'wss://testnet.sovryn.app/ws',
 };
 
 export const backendUrl = {

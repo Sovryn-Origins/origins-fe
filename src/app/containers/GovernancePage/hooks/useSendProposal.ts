@@ -1,9 +1,7 @@
 import { ContractName } from 'utils/types/contracts';
 import { useSendContractTx } from 'app/hooks/useSendContractTx';
 
-export const useSendProposal = (
-  contractName: ContractName | undefined = 'governorAdmin',
-) => {
+export const useSendProposal = (contractName: ContractName) => {
   const { send, ...rest } = useSendContractTx(contractName, 'propose');
 
   return {
