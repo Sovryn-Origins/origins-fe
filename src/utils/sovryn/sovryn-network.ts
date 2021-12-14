@@ -224,8 +224,8 @@ export class SovrynNetwork {
 
         provider.on('end', () => {
           provider.removeAllListeners('end');
-          this.contracts = {};
-          this.contractList = [];
+          // this.contracts = {};
+          // this.contractList = [];
           this._databaseWeb3 = undefined as any;
           this.initDatabaseWeb3(chainId);
         });

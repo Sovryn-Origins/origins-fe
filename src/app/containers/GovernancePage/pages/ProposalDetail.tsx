@@ -66,7 +66,7 @@ export const ProposalDetail: React.FC = () => {
         { id: proposal.id },
         {
           fromBlock: proposal.startBlock - 1,
-          toBlock: proposal.startBlock + 1,
+          toBlock: proposal.endBlock,
         },
       );
       setCreatedEvent(events[0]);
@@ -103,7 +103,9 @@ export const ProposalDetail: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(data), blockSync]);
-
+  useEffect(() => {
+    console.log('[data]', data, createdEvent);
+  }, [data, createdEvent]);
   return (
     <div className="container tw-max-w-screen-xl tw-w-full tw-mx-auto tw-px-4 tw-pt-16 tw-pb-2 tw-bg-gray-1 tw-rounded-lg">
       <div className="proposap-detail">
@@ -300,9 +302,6 @@ export const ProposalDetail: React.FC = () => {
               <p className="tw-font-inter tw-uppercase tw-text-base tw-leadning-7 tw-mb-6">
                 Amount to transfer: 0 (r)BTC
               </p>
-              <div className="tw-w-full lg:tw-w-2/3 tw-rounded-lg tw-bg-gray-3 tw-px-2 tw-pb-4 tw-pt-2">
-                <img src={imgInterface} alt="Interface Reference" />
-              </div>
             </div>
           </div>
         </div>
