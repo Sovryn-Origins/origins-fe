@@ -22,6 +22,7 @@ import { Proposal, ProposalState } from '../types';
 import { blockExplorers, currentChainId } from 'utils/classifiers';
 import { VoteCaster } from '../components/VoteCaster';
 import { ProposalHistory } from '../components/ProposalHistory';
+import { ProposalTransactions } from '../components/ProposalTransactions';
 import styles from './index.module.scss';
 
 export const ProposalDetail: React.FC = () => {
@@ -108,6 +109,13 @@ export const ProposalDetail: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(data), blockSync]);
 
+  useEffect(() => {
+    console.log('[Data]', data);
+  }, [data]);
+
+  useEffect(() => {
+    console.log('[createdEvent]', createdEvent);
+  }, [createdEvent]);
   return (
     <div className="container tw-max-w-screen-xl tw-w-full tw-mx-auto tw-px-4 tw-pt-16 tw-pb-2 tw-bg-gray-1 tw-rounded-lg">
       <div className="proposap-detail">
@@ -207,7 +215,7 @@ export const ProposalDetail: React.FC = () => {
           </div>
         </div>
 
-        <div className="tw-bg-white tw-px-4 tw-pt-11 tw-pb-0 tw-rounded-lg">
+        <div className="tw-bg-white tw-px-4 tw-pt-11 tw-pb-6 tw-rounded-lg">
           <div className="tw-mb-12">
             {!showVoteCaster && !(receipt?.value as any)?.hasVoted && (
               <>
@@ -257,42 +265,11 @@ export const ProposalDetail: React.FC = () => {
 
           <ProposalHistory proposal={data} createdEvent={createdEvent} />
 
-          <div className="tw-bg-gray-1 tw-rounded-lg tw-px-4 tw-pb-10 tw-pt-12 tw-mt-8">
-            <div className="tw-mt-8">
-              <p className="tw-uppercase tw-text-xl tw-leading-7 tw-mb-6">
-                Function to invoke:{' '}
-                <span
-                  className={classNames({
-                    'tw-skeleton tw-w-32 tw-h-4': createdEventLoading,
-                  })}
-                >
-                  {createdEvent?.returnValues.signatures[0]}
-                </span>
-              </p>
-              <p className="tw-font-inter tw-uppercase tw-text-base tw-leadning-7">
-                <span
-                  className={classNames({
-                    'tw-skeleton tw-w-32 tw-h-4': createdEventLoading,
-                  })}
-                >
-                  {createdEvent?.returnValues.calldatas[0]}
-                </span>
-              </p>
-              <p className="tw-font-inter tw-uppercase tw-text-base tw-leadning-7">
-                Contract Address:{' '}
-                <span
-                  className={classNames({
-                    'tw-skeleton tw-w-32 tw-h-4': createdEventLoading,
-                  })}
-                >
-                  {createdEvent?.returnValues.targets[0]}
-                </span>
-              </p>
-              <p className="tw-font-inter tw-uppercase tw-text-base tw-leadning-7 tw-mb-6">
-                Amount to transfer: 0 (r)BTC
-              </p>
-            </div>
-          </div>
+          <ProposalTransactions
+            className="tw-mt-6"
+            data={createdEvent?.returnValues}
+            loading={createdEventLoading}
+          />
         </div>
       </div>
     </div>

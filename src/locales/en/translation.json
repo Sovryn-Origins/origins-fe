@@ -661,6 +661,14 @@
         "voteAgainst": "Vote Against",
         "youWillCastVotesFor": "You will cast {{votes}} votes for",
         "youWillCastVotesAgainst": "You will cast {{votes}} votes against"
+      },
+      "transactions": {
+        "title": "Transaction(s)",
+        "target": "Target",
+        "signature": "Signature",
+        "calldata": "Calldata",
+        "value": "value",
+        "copiedCalldata": "Calldata was copied to clipboard."
       }
     },
     "actions": {

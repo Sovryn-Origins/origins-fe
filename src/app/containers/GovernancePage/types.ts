@@ -22,3 +22,22 @@ export enum ProposalState {
   Expired = '6',
   Executed = '7',
 }
+
+export interface IProposalCreatedReturnValue {
+  id: string;
+  proposer: string;
+  targets: string[];
+  values: string[];
+  signatures: string[];
+  calldatas: string[];
+  startBlock: string;
+  endBlock: string;
+  description: string;
+}
+
+export interface IProposalTransaction {
+  target: string;
+  signature: string;
+  calldata: string;
+  value: string;
+}

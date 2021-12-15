@@ -93,7 +93,6 @@ module.exports = {
       'warning-25': '#A5222240',
       'warning-10': '#A522221a',
       error: '#FF5757',
-      red: '#FF5757',
 
       'yellow-1': '#F5E884',
       'yellow-2': '#DEB258',
