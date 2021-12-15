@@ -1,5 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { Popover2 } from '@blueprintjs/popover2';
+import { useTranslation } from 'react-i18next';
+
+import { translations } from 'locales/i18n';
 import { useIsConnected } from 'app/hooks/useAccount';
 import { LinkToExplorer } from 'app/components/LinkToExplorer';
 import { contractWriter } from 'utils/sovryn/contract-writer';
@@ -20,6 +23,7 @@ interface Props {
 }
 
 export function VoteCaster(props: Props) {
+  const { t } = useTranslation();
   const isConnected = useIsConnected();
   const account = useAccount();
 
@@ -90,7 +94,7 @@ export function VoteCaster(props: Props) {
   }
 
   return (
-    <div className="xl:tw-flex tw-items-center tw-justify-between tw-mt-10">
+    <div className="xl:tw-flex tw-items-center tw-justify-between">
       <Popover2
         interactionKind="hover"
         minimal={true}
@@ -98,8 +102,11 @@ export function VoteCaster(props: Props) {
         popoverClassName="bp3-tooltip2"
         content={
           <>
-            You will cast {kFormatter(numberFromWei(votesCurrent.value || 0))}{' '}
-            votes for
+            {t(
+              translations.governance.proposalDetail.voteCaster
+                .youWillCastVotesFor,
+              { votes: kFormatter(numberFromWei(votesCurrent.value || 0)) },
+            )}
           </>
         }
       >
@@ -109,7 +116,7 @@ export function VoteCaster(props: Props) {
             type="button"
             onClick={() => handleVote(true)}
           >
-            Vote For
+            {t(translations.governance.proposalDetail.voteCaster.voteFor)}
           </button>
         </p>
       </Popover2>
@@ -118,12 +125,11 @@ export function VoteCaster(props: Props) {
         minimal={true}
         placement="top"
         popoverClassName="bp3-tooltip2"
-        content={
-          <>
-            You will cast {kFormatter(numberFromWei(votesCurrent.value || 0))}{' '}
-            votes against
-          </>
-        }
+        content={t(
+          translations.governance.proposalDetail.voteCaster
+            .youWillCastVotesAgainst,
+          { votes: kFormatter(numberFromWei(votesCurrent.value || 0)) },
+        )}
       >
         <p className="tw-text-gold tw-p-0 tw-m-0 tw-duration-300 hover:tw-opacity-70 tw-transition tw-cursor-pointer">
           <button
@@ -131,7 +137,7 @@ export function VoteCaster(props: Props) {
             type="button"
             onClick={() => handleVote(false)}
           >
-            Vote Against
+            {t(translations.governance.proposalDetail.voteCaster.voteAgainst)}
           </button>
         </p>
       </Popover2>

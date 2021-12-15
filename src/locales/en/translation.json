@@ -655,7 +655,13 @@
       "proposedOn": "Proposed On",
       "deadline": "Deadline",
       "verifyOnGithub": "Verify On Github",
-      "resolved": "Resolved"
+      "resolved": "Resolved",
+      "voteCaster": {
+        "voteFor": "Vote For",
+        "voteAgainst": "Vote Against",
+        "youWillCastVotesFor": "You will cast {{votes}} votes for",
+        "youWillCastVotesAgainst": "You will cast {{votes}} votes against"
+      }
     },
     "actions": {
       "title": "Actions",

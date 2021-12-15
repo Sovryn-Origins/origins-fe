@@ -38,6 +38,7 @@ export const ProposalDetail: React.FC = () => {
   const [data, setData] = useState<MergedProposal>(null as any);
   const { state } = useGetProposalState(data);
   const [proposalLoading, setProposalLoading] = useState(false);
+  const [showVoteCaster, setShowVoteCaster] = useState(false);
 
   const votesForProgressPercents =
     (numberFromWei(data?.forVotes || 0) /
@@ -204,19 +205,33 @@ export const ProposalDetail: React.FC = () => {
 
         <div className="tw-bg-white tw-px-4 tw-pt-11 tw-pb-0 tw-rounded-lg">
           <div className="tw-mb-12">
-            <button className="tw-bg-primary tw-border tw-border-black tw-text-black tw-text-sm tw-uppercase tw-px-6 tw-py-3 tw-rounded-lg tw-ml-6">
-              {t(translations.governance.proposalDetail.IUnderstand)}
-            </button>
-
-            {data?.id && isConnected && state === ProposalState.Active && (
-              <VoteCaster
-                votesFor={data.forVotes}
-                votesAgainst={data.againstVotes}
-                proposalId={data.id}
-                proposal={data}
-                contractName={data.contractName}
-              />
+            {!showVoteCaster && (
+              <>
+                <p className="tw-max-w-md tw-mx-auto tw-mb-4 tw-font-inter tw-font-medium tw-text-black tw-text-base tw-text-center tw-uppercase">
+                  {t(translations.governance.proposalDetail.IUnderstandConfirm)}
+                </p>
+                <div className="tw-flex tw-justify-center">
+                  <button
+                    className={styles.understandButton}
+                    onClick={() => setShowVoteCaster(true)}
+                  >
+                    {t(translations.governance.proposalDetail.IUnderstand)}
+                  </button>
+                </div>
+              </>
             )}
+            {showVoteCaster &&
+              data?.id &&
+              isConnected &&
+              state === ProposalState.Active && (
+                <VoteCaster
+                  votesFor={data.forVotes}
+                  votesAgainst={data.againstVotes}
+                  proposalId={data.id}
+                  proposal={data}
+                  contractName={data.contractName}
+                />
+              )}
           </div>
 
           <div className="xl:tw-flex tw--mx-2 tw-mt-8">

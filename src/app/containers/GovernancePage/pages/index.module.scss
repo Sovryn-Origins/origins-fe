@@ -169,3 +169,12 @@
   line-height: 1.875rem;
   padding-top: 4.5rem;
 }
+
+.understandButton {
+  @apply tw-bg-primary tw-text-black tw-text-sm tw-uppercase tw-px-10 tw-py-2 tw-rounded-lg tw-ml-6;
+  line-height: 30px;
+
+  &:hover {
+    @apply tw-opacity-75;
+  }
+}
