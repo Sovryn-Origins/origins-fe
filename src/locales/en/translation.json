@@ -648,6 +648,9 @@
       "unlockDate": "Unlock Date"
     },
     "proposalDetail": {
+      "VotingEnds": "Voting ends",
+      "IUnderstandConfirm": "I understand that this vote will be registered on the governance proposal.",
+      "IUnderstand": "I Understand",
       "proposedBy": "Proposed By",
       "proposedOn": "Proposed On",
       "deadline": "Deadline",

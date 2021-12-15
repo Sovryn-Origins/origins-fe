@@ -71,7 +71,7 @@ export const ProposalDetail: React.FC = () => {
       setCreatedEvent(events[0]);
       setCreatedEventLoading(false);
     };
-    get().then().catch();
+    get();
   }, [id, blockSync, contractName]);
 
   useEffect(() => {
@@ -102,19 +102,15 @@ export const ProposalDetail: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(data), blockSync]);
-  useEffect(() => {
-    console.log('[data]', data, createdEvent);
-  }, [data, createdEvent]);
+
   return (
     <div className="container tw-max-w-screen-xl tw-w-full tw-mx-auto tw-px-4 tw-pt-16 tw-pb-2 tw-bg-gray-1 tw-rounded-lg">
       <div className="proposap-detail">
         <div className="xl:tw-flex tw-justify-between tw-items-start">
           <div className="tw-text-2xl tw-text-white tw-font-normal tw-uppercase">
             <p className={`tw-mb-4 ${createdEventLoading && 'tw-skeleton'}`}>
-              {createdEvent?.returnValues?.description.split(':')[0]}:
-            </p>
-            <p className={`tw-mb-0 ${createdEventLoading && 'tw-skeleton'}`}>
-              {createdEvent?.returnValues?.description.split(':')[1]}
+              {createdEvent?.returnValues?.description.split('.')[0] ||
+                'No description'}
             </p>
           </div>
 
@@ -124,7 +120,7 @@ export const ProposalDetail: React.FC = () => {
                 createdEventLoading && 'tw-skeleton'
               }`}
             >
-              Voting ends:{' '}
+              {t(translations.governance.proposalDetail.VotingEnds)}:{' '}
               {dateByBlocks(
                 data?.startTime,
                 // createdEvent?.blockNumber,
@@ -209,7 +205,7 @@ export const ProposalDetail: React.FC = () => {
         <div className="tw-bg-white tw-px-4 tw-pt-11 tw-pb-0 tw-rounded-lg">
           <div className="tw-mb-12">
             <button className="tw-bg-primary tw-border tw-border-black tw-text-black tw-text-sm tw-uppercase tw-px-6 tw-py-3 tw-rounded-lg tw-ml-6">
-              I Understand
+              {t(translations.governance.proposalDetail.IUnderstand)}
             </button>
 
             {data?.id && isConnected && state === ProposalState.Active && (
@@ -243,31 +239,6 @@ export const ProposalDetail: React.FC = () => {
           <ProposalHistory proposal={data} createdEvent={createdEvent} />
 
           <div className="tw-bg-gray-1 tw-rounded-lg tw-px-4 tw-pb-10 tw-pt-12 tw-mt-8">
-            <p className="tw-text-white tw-text-xl tw-uppercase tw-mb-4">
-              {createdEvent?.returnValues?.description.split(':')[1]}
-            </p>
-
-            <div>
-              <p className="tw-uppercase tw-font-inter tw-leaning-7 tw-mb-0">
-                {t(translations.governance.proposalDetail.resolved)}
-              </p>
-              <ol className="tw-list-decimal tw-pl-5 tw-w-1/2">
-                <li className="tw-font-inter tw-uppercase tw-leading-7">
-                  The Origins protocol will issue up to 2,000,000 OG tokens.
-                  This represent a 200,000 increase from 1,800,000 of OIP 0002.
-                </li>
-                <li className="tw-font-inter tw-uppercase tw-leading-7">
-                  The Sovryn protocol will issue up to 2,000,000 cSOV tokens.
-                  This represent a 200,000 increase from 1,800,000 of SIP 0002.
-                </li>
-              </ol>
-            </div>
-
-            <p className="tw-mt-24 tw-font-inter tw-text-base tw-uppercase tw-leading-7 tw-mb-0">
-              sha256:{' '}
-              63817f1519ef0bf4699899acd747ef7a856ddbda1bba7a20ec75eb9da89650b7
-            </p>
-
             <div className="tw-mt-8">
               <p className="tw-uppercase tw-text-xl tw-leading-7 tw-mb-6">
                 Function to invoke:{' '}
