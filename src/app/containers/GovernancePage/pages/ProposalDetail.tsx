@@ -11,7 +11,9 @@ import { useBlockSync, useIsConnected } from 'app/hooks/useAccount';
 import { translations } from 'locales/i18n';
 import { toastSuccess } from 'utils/toaster';
 import { useGetProposalState } from 'app/hooks/useGetProposalState';
+import { useAccount } from 'app/hooks/useAccount';
 import { MergedProposal } from 'app/hooks/useProposalList';
+import { useCacheCall } from 'app/hooks/useCacheCall';
 import { contractReader } from 'utils/sovryn/contract-reader';
 import { eventReader } from 'utils/sovryn/event-reader';
 import { dateByBlocks, kFormatter, prettyTx } from 'utils/helpers';
@@ -24,6 +26,7 @@ import styles from './index.module.scss';
 
 export const ProposalDetail: React.FC = () => {
   const { t } = useTranslation();
+  const account = useAccount();
   const { id, contractName } = useParams<any>();
   const blockSync = useBlockSync();
 
@@ -39,6 +42,7 @@ export const ProposalDetail: React.FC = () => {
   const { state } = useGetProposalState(data);
   const [proposalLoading, setProposalLoading] = useState(false);
   const [showVoteCaster, setShowVoteCaster] = useState(false);
+  const receipt = useCacheCall(contractName, 'getReceipt', id, account);
 
   const votesForProgressPercents =
     (numberFromWei(data?.forVotes || 0) /
@@ -205,7 +209,7 @@ export const ProposalDetail: React.FC = () => {
 
         <div className="tw-bg-white tw-px-4 tw-pt-11 tw-pb-0 tw-rounded-lg">
           <div className="tw-mb-12">
-            {!showVoteCaster && (
+            {!showVoteCaster && !(receipt?.value as any)?.hasVoted && (
               <>
                 <p className="tw-max-w-md tw-mx-auto tw-mb-4 tw-font-inter tw-font-medium tw-text-black tw-text-base tw-text-center tw-uppercase">
                   {t(translations.governance.proposalDetail.IUnderstandConfirm)}
@@ -220,7 +224,7 @@ export const ProposalDetail: React.FC = () => {
                 </div>
               </>
             )}
-            {showVoteCaster &&
+            {(showVoteCaster || (receipt?.value as any)?.hasVoted) &&
               data?.id &&
               isConnected &&
               state === ProposalState.Active && (

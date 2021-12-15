@@ -63,12 +63,12 @@ export function VoteCaster(props: Props) {
 
   if (txHash) {
     return (
-      <div className="tw-text-white tw-px-3 tw-py-2 tw-w-2/3 tw-mt-2">
-        <div className="tw-text-xs tw-text-gray-500">Vote Cast</div>
+      <div className="tw-px-3 tw-py-2 tw-w-2/3">
+        <div className="tw-text-xs tw-text-gray-3">Vote Cast</div>
         <div className={`tw-truncate tw-text-sm ${loading && 'tw-skeleton'}`}>
           <LinkToExplorer
             txHash={txHash}
-            className="tw-text-white hover:tw-text-gold"
+            className="tw-text-black hover:tw-text-primary"
           />
         </div>
       </div>
