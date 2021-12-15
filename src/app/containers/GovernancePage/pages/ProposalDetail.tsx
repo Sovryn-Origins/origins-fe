@@ -15,7 +15,7 @@ import { MergedProposal } from 'app/hooks/useProposalList';
 import { contractReader } from 'utils/sovryn/contract-reader';
 import { eventReader } from 'utils/sovryn/event-reader';
 import { dateByBlocks, kFormatter, prettyTx } from 'utils/helpers';
-import { numberFromWei } from 'utils/blockchain/math-helpers';
+import { numberFromWei, weiToFixed } from 'utils/blockchain/math-helpers';
 import { Proposal, ProposalState } from '../types';
 import { blockExplorers, currentChainId } from 'utils/classifiers';
 import { VoteCaster } from '../components/VoteCaster';
@@ -163,7 +163,7 @@ export const ProposalDetail: React.FC = () => {
               placement="top"
             >
               <p className="tw-text-xl tw-font-light tw-tracking-normal tw-uppercase">
-                {numberFromWei(data?.forVotes || 0)} votes
+                {weiToFixed(data?.forVotes || 0, 0)} votes
               </p>
             </Tooltip2>
           </div>
@@ -197,7 +197,7 @@ export const ProposalDetail: React.FC = () => {
               placement="top"
             >
               <p className="tw-text-xl tw-font-light tw-tracking-normal tw-uppercase">
-                {numberFromWei(data?.againstVotes || 0).toFixed(0)} votes
+                {weiToFixed(data?.againstVotes || 0, 0)} votes
               </p>
             </Tooltip2>
           </div>

@@ -49,13 +49,12 @@ export function VoteCaster(props: Props) {
       const tx = await contractWriter.send(
         props.contractName || 'governorAdmin',
         'castVote',
-        [props.proposalId, support, { from: account }],
-        // { type: 'vote' },
+        [props.proposalId, support],
       );
       setTxHash(tx as string);
       setLoading(false);
     },
-    [account, props.proposalId, props.contractName],
+    [props.proposalId, props.contractName],
   );
 
   if (!isConnected || receipt.loading) {
@@ -79,13 +78,13 @@ export function VoteCaster(props: Props) {
   if ((receipt?.value as any)?.hasVoted) {
     const d = receipt.value as any;
     return (
-      <div className="xl:tw-flex tw-items-center tw-justify-between tw-mt-20">
+      <div className="xl:tw-flex tw-items-center tw-justify-between">
         {d.support ? (
-          <div className="tw-tracking-normal vote__success tw-rounded-xl tw-bg-turquoise tw-bg-opacity-30 tw-mb-4 xl:tw-mb-0 tw-border xl:tw-px-12 tw-px-3 tw-py-3 tw-text-center xl:tw-text-lg tw-text-sm tw-text-turquoise tw-border-turquoise">
+          <div className="tw-tracking-normal tw-rounded-lg tw-bg-trade-long tw-mb-4 xl:tw-mb-0 xl:tw-px-12 tw-px-3 tw-py-3 tw-text-center xl:tw-text-lg tw-text-sm tw-text-white">
             You Voted {kFormatter(numberFromWei(d.votes))} for
           </div>
         ) : (
-          <div className="tw-tracking-normal vote__danger tw-rounded-xl tw-bg-red tw-bg-opacity-30 tw-border xl:tw-px-12 tw-px-3 tw-py-3 tw-text-center xl:tw-text-lg tw-text-sm tw-text-red tw-border-red">
+          <div className="tw-tracking-normal tw-rounded-lg tw-bg-error xl:tw-px-12 tw-px-3 tw-py-3 tw-text-center xl:tw-text-lg tw-text-sm tw-text-red tw-border-red">
             You Voted {kFormatter(numberFromWei(d.votes))} against
           </div>
         )}
@@ -101,18 +100,22 @@ export function VoteCaster(props: Props) {
         placement="top"
         popoverClassName="bp3-tooltip2"
         content={
-          <>
+          <span className="tw-font-inter">
             {t(
               translations.governance.proposalDetail.voteCaster
                 .youWillCastVotesFor,
               { votes: kFormatter(numberFromWei(votesCurrent.value || 0)) },
             )}
-          </>
+          </span>
         }
       >
-        <p className="tw-text-gold tw-p-0 tw-m-0 tw-duration-300 hover:tw-opacity-70 tw-transition tw-cursor-pointer">
+        <p className="tw-p-0 tw-m-0 tw-duration-300 hover:tw-opacity-70 tw-transition tw-cursor-pointer">
           <button
-            className="tw-tracking-normal vote__success tw-w-full xl:tw-w-auto tw-bg-turquoise focus:tw-bg-opacity-50 hover:tw-bg-opacity-40 focus:tw-outline-none tw-transition tw-duration-500 tw-ease-in-out tw-bg-opacity-30 tw-rounded-lg tw-mb-4 xl:tw-mb-0 tw-border xl:tw-px-12 tw-px-3 tw-py-3 tw-text-center xl:tw-text-lg tw-text-sm tw-text-turquoise tw-text-black tw-uppercase tw-border-turquoise"
+            className="tw-tracking-normal tw-w-full xl:tw-w-auto tw-transition tw-duration-500 tw-ease-in-out
+              hover:tw-bg-opacity-90
+              focus:tw-bg-opacity-50 focus:tw-outline-none
+              tw-bg-trade-long tw-rounded-lg tw-mb-4 xl:tw-mb-0 xl:tw-px-12 tw-px-3 tw-py-3
+              tw-text-center tw-text-sm tw-text-white tw-uppercase"
             type="button"
             onClick={() => handleVote(true)}
           >
@@ -125,15 +128,23 @@ export function VoteCaster(props: Props) {
         minimal={true}
         placement="top"
         popoverClassName="bp3-tooltip2"
-        content={t(
-          translations.governance.proposalDetail.voteCaster
-            .youWillCastVotesAgainst,
-          { votes: kFormatter(numberFromWei(votesCurrent.value || 0)) },
-        )}
+        content={
+          <span className="tw-font-inter">
+            {t(
+              translations.governance.proposalDetail.voteCaster
+                .youWillCastVotesAgainst,
+              { votes: kFormatter(numberFromWei(votesCurrent.value || 0)) },
+            )}
+          </span>
+        }
       >
-        <p className="tw-text-gold tw-p-0 tw-m-0 tw-duration-300 hover:tw-opacity-70 tw-transition tw-cursor-pointer">
+        <p className="tw-p-0 tw-m-0 tw-duration-300 hover:tw-opacity-70 tw-transition tw-cursor-pointer">
           <button
-            className="tw-tracking-normal vote__danger tw-w-full xl:tw-w-auto tw-bg-red focus:tw-bg-opacity-50 hover:tw-bg-opacity-40 focus:tw-outline-none tw-transition tw-duration-500 tw-ease-in-out tw-bg-opacity-30 tw-rounded-lg tw-border xl:tw-px-12 tw-px-3 tw-py-3 tw-text-center xl:tw-text-lg tw-text-sm tw-text-black tw-uppercase tw-text-red tw-border-red"
+            className="tw-tracking-normal tw-w-full xl:tw-w-auto tw-transition tw-duration-500 tw-ease-in-out
+              hover:tw-bg-opacity-90
+              focus:tw-bg-opacity-50 focus:tw-outline-none
+              tw-bg-error tw-rounded-lg xl:tw-px-12 tw-px-3 tw-py-3
+              tw-text-center tw-text-sm tw-text-white tw-uppercase"
             type="button"
             onClick={() => handleVote(false)}
           >
