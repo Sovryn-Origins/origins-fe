@@ -20,7 +20,6 @@ import { Proposal, ProposalState } from '../types';
 import { blockExplorers, currentChainId } from 'utils/classifiers';
 import { VoteCaster } from '../components/VoteCaster';
 import { ProposalHistory } from '../components/ProposalHistory';
-import imgInterface from 'assets/images/governance/example-interface.png';
 import styles from './index.module.scss';
 
 export const ProposalDetail: React.FC = () => {
