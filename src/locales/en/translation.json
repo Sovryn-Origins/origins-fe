@@ -657,10 +657,13 @@
       "verifyOnGithub": "Verify On Github",
       "resolved": "Resolved",
       "voteCaster": {
+        "voteCast": "Vote Cast",
         "voteFor": "Vote For",
         "voteAgainst": "Vote Against",
         "youWillCastVotesFor": "You will cast {{votes}} votes for",
-        "youWillCastVotesAgainst": "You will cast {{votes}} votes against"
+        "youWillCastVotesAgainst": "You will cast {{votes}} votes against",
+        "youVotedFor": "You Voted {{votes}} for",
+        "youVotedAgainst": "You Voted {{votes}} against"
       },
       "transactions": {
         "title": "Transaction(s)",

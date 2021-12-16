@@ -64,11 +64,13 @@ export function VoteCaster(props: Props) {
   if (txHash) {
     return (
       <div className="tw-px-3 tw-py-2 tw-w-2/3">
-        <div className="tw-text-xs tw-text-gray-3">Vote Cast</div>
-        <div className={`tw-truncate tw-text-sm ${loading && 'tw-skeleton'}`}>
+        <div className="tw-text-lg tw-uppercase tw-text-gray-3 ">
+          {t(translations.governance.proposalDetail.voteCaster.voteCast)}
+        </div>
+        <div className={`tw-truncate tw-text-base ${loading && 'tw-skeleton'}`}>
           <LinkToExplorer
             txHash={txHash}
-            className="tw-text-black hover:tw-text-primary"
+            className="tw-text-primary hover:tw-text-primary"
           />
         </div>
       </div>
@@ -81,11 +83,18 @@ export function VoteCaster(props: Props) {
       <div className="xl:tw-flex tw-items-center tw-justify-between">
         {d.support ? (
           <div className="tw-tracking-normal tw-rounded-lg tw-bg-trade-long tw-mb-4 xl:tw-mb-0 xl:tw-px-12 tw-px-3 tw-py-3 tw-text-center xl:tw-text-lg tw-text-sm tw-text-white">
-            You Voted {kFormatter(numberFromWei(d.votes))} for
+            {t(translations.governance.proposalDetail.voteCaster.youVotedFor, {
+              votes: kFormatter(numberFromWei(d.votes)),
+            })}
           </div>
         ) : (
           <div className="tw-tracking-normal tw-rounded-lg tw-bg-error xl:tw-px-12 tw-px-3 tw-py-3 tw-text-center xl:tw-text-lg tw-text-sm tw-text-red tw-border-red">
-            You Voted {kFormatter(numberFromWei(d.votes))} against
+            {t(
+              translations.governance.proposalDetail.voteCaster.youVotedAgainst,
+              {
+                votes: kFormatter(numberFromWei(d.votes)),
+              },
+            )}
           </div>
         )}
       </div>
