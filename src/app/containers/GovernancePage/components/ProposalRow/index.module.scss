@@ -1,36 +1,19 @@
 .styledBar {
-  width: 100%;
+  @apply tw-w-full tw-flex tw-flex-nowrap tw-overflow-hidden tw-rounded-lg;
   max-width: 100px;
-  flex-wrap: nowrap;
   margin: 5px 0 5px auto;
-  border-radius: 8px;
-  overflow: hidden;
-
-  &>div {
-    height: 10px;
-  }
 }
 
 .progressBlue {
-  display: inline-block;
-  width: 50%;
   height: 10px;
-  background: rgb(78, 205, 196);
   background: linear-gradient(90deg,
       rgba(78, 205, 196, 1) 0%,
       rgba(0, 0, 0, 1) 100%);
-  border-bottom-left-radius: 8px;
-  border-top-left-radius: 8px;
 }
 
 .progressRed {
-  display: inline-block;
-  width: 50%;
   height: 10px;
-  background: rgb(0, 0, 0);
   background: linear-gradient(90deg,
       rgba(0, 0, 0, 1) 0%,
       rgba(205, 78, 78, 1) 100%);
-  border-bottom-right-radius: 8px;
-  border-top-right-radius: 8px;
 }
