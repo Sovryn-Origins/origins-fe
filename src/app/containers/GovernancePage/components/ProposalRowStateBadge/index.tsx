@@ -1,6 +1,5 @@
 import React from 'react';
 import { getStatus, ProposalState } from 'types/Proposal';
-import styles from './index.module.scss';
 
 const getStateClass = (state: ProposalState) => {
   switch (state) {
@@ -24,14 +23,12 @@ interface Props {
 
 export function ProposalRowStateBadge({ state }: Props) {
   return (
-    <div className={styles.styledDiv}>
-      <div
-        className={`proposal-state tw-tracking-normal tw-font-inter ${getStateClass(
-          state,
-        )}`}
-      >
-        {getStatus(state)}
-      </div>
+    <div
+      className={`tw-relative tw-pr-4 tw-tracking-normal tw-font-inter ${getStateClass(
+        state,
+      )}`}
+    >
+      {getStatus(state)}
     </div>
   );
 }
