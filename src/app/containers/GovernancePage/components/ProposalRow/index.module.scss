@@ -8,7 +8,7 @@
   border-radius: 8px;
   overflow: hidden;
 
-  .progress__blue {
+  div.progress__blue {
     width: 50%;
     background: rgb(78, 205, 196);
     background: linear-gradient(90deg,
@@ -24,3 +24,4 @@
         rgba(205, 78, 78, 1) 100%);
   }
 }
+

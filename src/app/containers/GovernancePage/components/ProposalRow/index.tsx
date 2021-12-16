@@ -99,7 +99,7 @@ export function ProposalRow({ proposal }: Props) {
                 {String(proposal.id).padStart(3, '0')} • {created?.description}
               </Linkify>
             </td>
-            <td className="tw-text-left tw-hidden xl:tw-table-cell tw-truncate tw-pr-4">
+            <td className="tw-text-left tw-hidden xl:tw-table-cell tw-tracking-normal tw-truncate tw-pr-4">
               #{proposal.startBlock}
             </td>
             <td className="tw-text-left tw-hidden xl:tw-table-cell tw-pr-4">
@@ -107,14 +107,14 @@ export function ProposalRow({ proposal }: Props) {
                 <ProposalStatusBadge state={state} />
                 <div className={styles.styledBar}>
                   <div
-                    className="progress__blue"
+                    className={'progress__blue'}
                     style={{ width: `${blue}%` }}
                   />
                   <div className="progress__red" style={{ width: `${red}%` }} />
                 </div>
               </div>
             </td>
-            <td className="tw-text-left tw-hidden xl:tw-table-cell tw-truncate tw-pr-4">
+            <td className="tw-text-left tw-hidden xl:tw-table-cell tw-tracking-normal tw-truncate tw-pr-4">
               {dateByBlocks(
                 proposal.startTime,
                 proposal.startBlock,
@@ -128,7 +128,7 @@ export function ProposalRow({ proposal }: Props) {
                   pathname: `${match.url}/proposal/${proposal.id}/${proposal.contractName}`,
                   state: { background: location },
                 }}
-                className="tw-text-gold hover:tw-text-gold hover:tw-underline tw-font-thin tw-font-rowdies tw-tracking-normal tw-uppercase"
+                className="tw-text-primary tw-text-sm hover:tw-underline tw-font-thin tw-font-rowdies tw-tracking-normal tw-uppercase"
               >
                 View Proposal
               </Link>
@@ -136,7 +136,7 @@ export function ProposalRow({ proposal }: Props) {
           </>
         ) : (
           <>
-            <td className="tw-font-montserrat tw-max-w-sm tw-truncate tw-pr-4 tw-pl-5">
+            <td className="tw-font-inter tw-max-w-sm tw-truncate tw-pr-4 tw-pl-5">
               <Linkify>
                 {String(proposal.id).padStart(3, '0')} • {created?.description}
               </Linkify>
