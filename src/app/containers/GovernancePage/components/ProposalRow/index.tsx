@@ -107,10 +107,13 @@ export function ProposalRow({ proposal }: Props) {
                 <ProposalStatusBadge state={state} />
                 <div className={styles.styledBar}>
                   <div
-                    className={'progress__blue'}
                     style={{ width: `${blue}%` }}
+                    className={styles.progressBlue}
                   />
-                  <div className="progress__red" style={{ width: `${red}%` }} />
+                  <div
+                    className={styles.progressRed}
+                    style={{ width: `${red}%` }}
+                  />
                 </div>
               </div>
             </td>
