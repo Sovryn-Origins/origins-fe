@@ -87,7 +87,7 @@ export function StakeForm(props: Props) {
               </label>
               <div className="tw-h-36 tw-bg-gray-3 tw-rounded-lg tw-p-8 tw-mt-3 lg:tw-mt-6">
                 <p className="tw-mb-0 tw-mt-4 tw-text-3xl tw-uppercase tw-text-white tw-text-center">
-                  {numberFromWei(props.votePower)}
+                  {numberFromWei(props.votePower).toFixed()}
                 </p>
               </div>
             </div>
