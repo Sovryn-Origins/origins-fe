@@ -304,8 +304,7 @@ function VotingTable(props: TableProps) {
     >
       <thead>
         <tr className="tw-uppercase">
-          <th className="tw-text-base">username</th>
-          <th className="tw-text-base">Addresses</th>
+          <th className="tw-text-base tw-pl-2">Addresses</th>
           <th className="tw-text-base hidden md:table-cell">Tx Hash</th>
           <th className="tw-text-base">Votes</th>
         </tr>
@@ -366,7 +365,6 @@ function VotingRow({
     return (
       <tr>
         <td className="tw-skeleton tw-pl-4">--------------</td>
-        <td className="tw-skeleton">--------------</td>
         <td className="tw-skeleton tw-hidden md:tw-table-cell">
           --------------
         </td>
@@ -379,7 +377,6 @@ function VotingRow({
     return (
       <tr>
         <td className="tw-pl-4">-</td>
-        <td>-</td>
         <td className="tw-hidden md:tw-table-cell">-</td>
         <td>-</td>
       </tr>
@@ -388,8 +385,7 @@ function VotingRow({
 
   return (
     <tr>
-      <td className="tw-uppercase tw-pl-4">LOREUM</td>
-      <td>
+      <td className="tw-pl-2">
         <Popover2
           minimal={true}
           placement="top"
