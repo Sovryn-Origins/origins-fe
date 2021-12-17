@@ -109,13 +109,6 @@ export const ProposalDetail: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(data), blockSync]);
 
-  useEffect(() => {
-    console.log('[Data]', data);
-  }, [data]);
-
-  useEffect(() => {
-    console.log('[createdEvent]', createdEvent);
-  }, [createdEvent]);
   return (
     <div className="container tw-max-w-screen-xl tw-w-full tw-mx-auto tw-px-4 tw-pt-16 tw-pb-2 tw-bg-gray-1 tw-rounded-lg">
       <div className="proposap-detail">

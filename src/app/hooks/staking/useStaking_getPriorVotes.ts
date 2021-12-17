@@ -10,7 +10,6 @@ export function useStaking_getPriorVotes(
     'staking',
     'getPriorVotes',
     '0',
-    !!address && address !== ethGenesisAddress,
     address,
     blockNumber,
     timestamp,
