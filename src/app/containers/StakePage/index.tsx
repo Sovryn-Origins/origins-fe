@@ -167,7 +167,7 @@ const InnerStakePage: React.FC = () => {
 
   const validateIncreaseForm = useCallback(() => {
     if (loading || increaseTx.loading) return false;
-    const num = toWei(amount);
+    const num = bignumber(toWei(amount)).sub(toWei(stakedAmount));
     if (!num || bignumber(num).lessThanOrEqualTo(0)) return false;
     return bignumber(num).lessThanOrEqualTo(ogBalance);
   }, [loading, amount, ogBalance, increaseTx.loading]);

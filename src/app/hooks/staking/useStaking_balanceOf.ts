@@ -5,7 +5,7 @@ export function useStaking_balanceOf(address: string) {
   return useCacheCallWithValue(
     'staking',
     'balanceOf',
-    !!address && address !== ethGenesisAddress,
+    '0',
     address || ethGenesisAddress,
   );
 }

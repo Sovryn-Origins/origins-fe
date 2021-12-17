@@ -5,7 +5,7 @@ export function useStaking_getCurrentVotes(address: string) {
   return useCacheCallWithValue(
     'staking',
     'getCurrentVotes',
-    !!address && address !== ethGenesisAddress,
+    '0',
     address || ethGenesisAddress,
   );
 }
