@@ -170,7 +170,7 @@ const InnerStakePage: React.FC = () => {
     const num = bignumber(toWei(amount)).sub(toWei(stakedAmount));
     if (!num || bignumber(num).lessThanOrEqualTo(0)) return false;
     return bignumber(num).lessThanOrEqualTo(ogBalance);
-  }, [loading, amount, ogBalance, increaseTx.loading]);
+  }, [loading, amount, stakedAmount, ogBalance, increaseTx.loading]);
 
   const validateWithdrawForm = useCallback(
     amount => {
