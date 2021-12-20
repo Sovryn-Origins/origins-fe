@@ -209,35 +209,38 @@ export const ProposalDetail: React.FC = () => {
         </div>
 
         <div className="tw-bg-white tw-px-4 tw-pt-11 tw-pb-6 tw-rounded-lg">
-          <div className="tw-mb-12">
-            {!showVoteCaster && !(receipt?.value as any)?.hasVoted && (
-              <>
-                <p className="tw-max-w-md tw-mx-auto tw-mb-4 tw-font-inter tw-font-medium tw-text-black tw-text-base tw-text-center tw-uppercase">
-                  {t(translations.governance.proposalDetail.IUnderstandConfirm)}
-                </p>
-                <div className="tw-flex tw-justify-center">
-                  <button
-                    className={styles.understandButton}
-                    onClick={() => setShowVoteCaster(true)}
-                  >
-                    {t(translations.governance.proposalDetail.IUnderstand)}
-                  </button>
-                </div>
-              </>
-            )}
-            {(showVoteCaster || (receipt?.value as any)?.hasVoted) &&
-              data?.id &&
-              isConnected &&
-              state === ProposalState.Active && (
-                <VoteCaster
-                  votesFor={data.forVotes}
-                  votesAgainst={data.againstVotes}
-                  proposalId={data.id}
-                  proposal={data}
-                  contractName={data.contractName}
-                />
+          {state === ProposalState.Active && (
+            <div className="tw-mb-12">
+              {!showVoteCaster && !(receipt?.value as any)?.hasVoted && (
+                <>
+                  <p className="tw-max-w-md tw-mx-auto tw-mb-4 tw-font-inter tw-font-medium tw-text-black tw-text-base tw-text-center tw-uppercase">
+                    {t(
+                      translations.governance.proposalDetail.IUnderstandConfirm,
+                    )}
+                  </p>
+                  <div className="tw-flex tw-justify-center">
+                    <button
+                      className={styles.understandButton}
+                      onClick={() => setShowVoteCaster(true)}
+                    >
+                      {t(translations.governance.proposalDetail.IUnderstand)}
+                    </button>
+                  </div>
+                </>
               )}
-          </div>
+              {(showVoteCaster || (receipt?.value as any)?.hasVoted) &&
+                data?.id &&
+                isConnected && (
+                  <VoteCaster
+                    votesFor={data.forVotes}
+                    votesAgainst={data.againstVotes}
+                    proposalId={data.id}
+                    proposal={data}
+                    contractName={data.contractName}
+                  />
+                )}
+            </div>
+          )}
 
           <div className="xl:tw-flex tw--mx-2 tw-mt-8">
             <div className="tw-bg-gray-1 tw-rounded-lg tw-border tw-mb-4 xl:tw-mb-0 xl:tw-w-2/4 sovryn-table tw-p-4 tw-mx-2 tw-overflow-y-auto">
