@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import { Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
-// import { discordInvite } from 'utils/classifiers';
 
 import OptOutDialog from 'app/components/OptOutDialog';
 import OriginsLogo from 'assets/images/origins-logo.svg';
-// import footerLogo from 'assets/images/footer-logo.svg';
-// import footerBackground from 'assets/images/footer-background.svg';
 import discordIcon from 'assets/images/social-icon-discord.png';
 import linkedinIcon from 'assets/images/social-icon-linkedin.png';
 import twitterIcon from 'assets/images/social-icon-twitter.png';
 import redditIcon from 'assets/images/social-icon-reddit.png';
-import { StyledFooterWrapper } from './styled';
+import footerBackground from 'assets/images/footer-background.svg';
 
 export const Footer: React.FC = () => {
   const [optDialogOpen, setOptDialogOpen] = useState<boolean>(false);
 
   return (
-    <StyledFooterWrapper className="tw-mt-4 tw-text-sov-white tw-px-4 tw-pt-12 tw-pb-16">
+    <footer
+      className="tw-mt-4 tw-text-sov-white tw-px-4 tw-pt-12 tw-pb-16 tw-bg-left-top tw-bg-origin-border tw-bg-cover tw-bg-no-repeat"
+      style={{ backgroundImage: `url(${footerBackground})` }}
+    >
       <div className="tw-max-w-screen-xl tw-w-full tw-mx-auto">
         <h6 className="tw-font-consolas tw-text-lg tw-text-center tw-w-full">
           "
@@ -73,6 +73,6 @@ export const Footer: React.FC = () => {
         open={optDialogOpen}
         onClose={() => setOptDialogOpen(false)}
       />
-    </StyledFooterWrapper>
+    </footer>
   );
 };
