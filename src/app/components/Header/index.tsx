@@ -2,22 +2,20 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import iconNewTab from 'assets/images/iconNewTab.svg';
-import { usePageViews } from 'app/hooks/useAnalytics';
 import { MenuItem, Menu as BPMenu, Position, Popover } from '@blueprintjs/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+
+import { usePageViews } from 'app/hooks/useAnalytics';
 import { translations } from 'locales/i18n';
 import WalletConnector from '../../containers/WalletConnector';
 import { LanguageToggle } from '../LanguageToggle';
-import styles from './index.module.scss';
 import { Burger } from './components/Burger';
-import {
-  StyledHeader,
-  StyledLogo,
-  StyledMenu,
-  StyledMenuWrapper,
-} from './styled';
+import iconNewTab from 'assets/images/iconNewTab.svg';
+import headerBG from 'assets/images/header-background.svg';
+import { ReactComponent as LogoSVG } from 'assets/images/origins-logo.svg';
+
+import styles from './index.module.scss';
 
 export function Header() {
   const { t } = useTranslation();
@@ -28,8 +26,12 @@ export function Header() {
 
   usePageViews();
 
-  const Menu = ({ open, setOpen }) => {
-    return <StyledMenu open={open}>{menuItems}</StyledMenu>;
+  const Menu = ({ open }) => {
+    return (
+      <nav className={classNames(styles.menu, open && styles.open)}>
+        {menuItems}
+      </nav>
+    );
   };
 
   const pages = [
@@ -104,15 +106,15 @@ export function Header() {
 
   const isSectionOpen = (section: string) => {
     const paths = {
-      // [SECTION_TYPE.TRADE]: ['/buy-sov', '/trade', '/swap'],
-      // [SECTION_TYPE.FINANCE]: ['/lend', '/yield-farm'],
-      // [SECTION_TYPE.ORIGINS]: ['/origins', '/origins/claim'],
-      [SECTION_TYPE.BITOCRACY]: ['/stake'],
+      [SECTION_TYPE.BITOCRACY]: ['/stake', '/governance'],
       [SECTION_TYPE.PORTFOLIO]: ['/wallet'],
       [SECTION_TYPE.LAUNCHPAD]: ['/launchpad'],
       [SECTION_TYPE.CLAIM]: ['/claim'],
     };
-    return !!section && paths[section].includes(location.pathname);
+    return (
+      !!section &&
+      paths[section].some(prefix => location.pathname.includes(prefix))
+    );
   };
 
   useEffect(() => {
@@ -134,18 +136,23 @@ export function Header() {
 
   return (
     <>
-      <StyledHeader className={classNames(styles.header, open && styles.open)}>
+      <header
+        className={classNames(styles.header, open && styles.open)}
+        style={{
+          backgroundImage: `url(${headerBG})`,
+        }}
+      >
         <div className="tw-container tw-flex tw-justify-between tw-items-center tw-pt-2 tw-pb-6 tw-px-4 tw-mx-auto">
           <div className="xl:tw-hidden">
             <div ref={node}>
               <Burger open={open} setOpen={setOpen} />
-              <Menu open={open} setOpen={setOpen} />
+              <Menu open={open} />
             </div>
           </div>
           <div className="xl:tw-flex tw-flex-row tw-items-center">
             <div className="tw-mr-5 2xl:tw-mr-20">
               <Link to="/">
-                <StyledLogo />
+                <LogoSVG className={styles.logo} />
               </Link>
             </div>
             <div className="tw-hidden xl:tw-flex tw-flex-row tw-flex-nowrap tw-space-x-4 2xl:tw-space-x-10 tw-ml-8">
@@ -185,20 +192,22 @@ export function Header() {
                     isSectionOpen(SECTION_TYPE.BITOCRACY) && 'font-weight-bold'
                   }`}
                 >
-                  <StyledMenuWrapper
-                    selected={isSectionOpen(SECTION_TYPE.BITOCRACY)}
-                    className="tw-mr-2 2xl:tw-mr-3"
+                  <div
+                    className={classNames(styles.menuWrapper, {
+                      [styles.selected]: isSectionOpen(SECTION_TYPE.BITOCRACY),
+                    })}
                   >
                     <span className="tw-cursor-pointer tw-px-1 tw-uppercase">
                       {t(translations.mainMenu.bitocracy)}
                     </span>
-                  </StyledMenuWrapper>
+                  </div>
                   <FontAwesomeIcon icon={faChevronDown} size="xs" />
                 </div>
               </NavPopover>
-              <StyledMenuWrapper
-                selected={isSectionOpen(SECTION_TYPE.PORTFOLIO)}
-                className="tw-mr-2 2xl:tw-mr-3"
+              <div
+                className={classNames(styles.menuWrapper, {
+                  [styles.selected]: isSectionOpen(SECTION_TYPE.PORTFOLIO),
+                })}
               >
                 <NavLink
                   className="tw-header-link tw-px-1 tw-uppercase"
@@ -206,10 +215,11 @@ export function Header() {
                 >
                   {t(translations.mainMenu.wallet)}
                 </NavLink>
-              </StyledMenuWrapper>
-              <StyledMenuWrapper
-                selected={isSectionOpen(SECTION_TYPE.LAUNCHPAD)}
-                className="tw-mr-2 2xl:tw-mr-3"
+              </div>
+              <div
+                className={classNames(styles.menuWrapper, {
+                  [styles.selected]: isSectionOpen(SECTION_TYPE.LAUNCHPAD),
+                })}
               >
                 <NavLink
                   className="tw-header-link tw-px-1 tw-uppercase"
@@ -217,10 +227,11 @@ export function Header() {
                 >
                   {t(translations.mainMenu.launchpad)}
                 </NavLink>
-              </StyledMenuWrapper>
-              <StyledMenuWrapper
-                selected={isSectionOpen(SECTION_TYPE.CLAIM)}
-                className="tw-mr-2 2xl:tw-mr-3"
+              </div>
+              <div
+                className={classNames(styles.menuWrapper, {
+                  [styles.selected]: isSectionOpen(SECTION_TYPE.CLAIM),
+                })}
               >
                 <NavLink
                   className="tw-header-link tw-px-1 tw-uppercase"
@@ -228,7 +239,7 @@ export function Header() {
                 >
                   {t(translations.mainMenu.claim)}
                 </NavLink>
-              </StyledMenuWrapper>
+              </div>
             </div>
           </div>
           <div className="tw-flex tw-justify-start tw-items-center">
@@ -246,7 +257,7 @@ export function Header() {
             <WalletConnector simpleView={false} />
           </div>
         </div>
-      </StyledHeader>
+      </header>
     </>
   );
 }
