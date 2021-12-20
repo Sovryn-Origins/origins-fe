@@ -3,13 +3,14 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import { translations } from 'locales/i18n';
 import { AssetRenderer } from 'app/components/AssetRenderer';
+import { useSelector } from 'react-redux';
+import { selectTransactions } from 'store/global/transactions-store/selectors';
 import {
   fromWei,
   weiToFixed,
 } from '../../../../../utils/blockchain/math-helpers';
 import { Asset } from '../../../../../types';
 import { useWeiAmount } from '../../../../hooks/useWeiAmount';
-import { useCacheCallWithValue } from '../../../../hooks/useCacheCallWithValue';
 import { AssetsDictionary } from '../../../../../utils/dictionaries/assets-dictionary';
 import { useCanInteract } from '../../../../hooks/useCanInteract';
 import { SwapAssetSelector } from '../SwapAssetSelector/Loadable';
@@ -25,7 +26,6 @@ import { TxDialog } from 'app/components/Dialogs/TxDialog';
 import { bignumber } from 'mathjs';
 import { Input } from 'app/components/Form/Input';
 import { AvailableBalance } from '../../../../components/AvailableBalance';
-import { Arbitrage } from '../../../../components/Arbitrage/Arbitrage';
 import { useAccount } from '../../../../hooks/useAccount';
 import { getTokenContractName } from '../../../../../utils/blockchain/contract-helpers';
 import { Sovryn } from '../../../../../utils/sovryn';
@@ -34,48 +34,80 @@ import { ErrorBadge } from 'app/components/Form/ErrorBadge';
 import { useMaintenance } from 'app/hooks/useMaintenance';
 import { discordInvite } from 'utils/classifiers';
 import { useSwapsExternal_getSwapExpectedReturn } from '../../../../hooks/swap-network/useSwapsExternal_getSwapExpectedReturn';
-import { useSwapsExternal_approveAndSwapExternal } from '../../../../hooks/swap-network/useSwapsExternal_approveAndSwapExternal';
 import { IPromotionLinkState } from 'app/pages/LandingPage/components/Promotions/components/PromotionCard/types';
 
 import styles from './index.module.scss';
-import { useSwapNetwork_approveAndConvertByPath } from '../../../../hooks/swap-network/useSwapNetwork_approveAndConvertByPath';
+import { useSwapsBonding } from '../../../../hooks/swap-network/useSwapBonding';
 import { useSwapNetwork_conversionPath } from '../../../../hooks/swap-network/useSwapNetwork_conversionPath';
+import Web3 from 'web3';
 
 const s = translations.swapTradeForm;
-
 interface Option {
   key: Asset;
   label: string;
 }
 
-const xusdExcludes = [Asset.USDT, Asset.DOC];
+const tokens = [
+  '0x6a9A07972D07e58F0daf5122d11E069288A375fb',
+  '0x010C233B4F94d35CaDb71D12D7058aAb58789e8f',
+  '0x139483e22575826183F5b56dd242f8f2C1AEf327',
+  '0xAc5C5917e713581c8C8B78c7B12f2D67dA0323f0',
+];
 
 export function BondingCurve() {
   const { t } = useTranslation();
-  const isConnected = useCanInteract();
   const { checkMaintenance, States } = useMaintenance();
   const swapLocked = checkMaintenance(States.SWAP_TRADES);
 
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [amount, setAmount] = useState('');
-  const [sourceToken, setSourceToken] = useState(Asset.RBTC);
+  const [sourceToken, setSourceToken] = useState(Asset.MYNT);
   const [targetToken, setTargetToken] = useState(Asset.SOV);
   const [sourceOptions, setSourceOptions] = useState<any[]>([]);
   const [targetOptions, setTargetOptions] = useState<any[]>([]);
   const [slippage, setSlippage] = useState(0.5);
+  const [swap, setSwap] = useState(true);
   const account = useAccount();
   const weiAmount = useWeiAmount(amount);
-  const { value: tokens } = useCacheCallWithValue<string[]>(
-    'converterRegistry',
-    'getConvertibleTokens',
-    [],
-  );
   const [tokenBalance, setTokenBalance] = useState<any[]>([]);
+  const transactions = useSelector(selectTransactions);
+  const [method, setMethod] = useState('buy');
+  const [batchId, setBatchId] = useState(0);
+  const [hash, setHash] = useState('');
 
   useEffect(() => {
+    const start = async () => {
+      const keys = Object.keys(transactions);
+      const transaction = transactions[keys[keys.length - 1]];
+      if (
+        transaction?.status === 'confirmed' &&
+        transaction?.type === 'bonding' &&
+        transaction?.customData?.stage === 'buy'
+      ) {
+        window.ethereum.enable();
+        const web3 = new Web3(Web3.givenProvider);
+        const receipt = await web3.eth.getTransactionReceipt(
+          transaction.transactionHash,
+        );
+        console.log('>>>>>Receipt', receipt);
+        const blockNumber = receipt.blockNumber;
+        const id = Math.floor(blockNumber / 10) * 10;
+        setBatchId(id);
+        setHash(transaction.transactionHash);
+        setMethod('claim');
+      }
+      if (transaction?.customData?.stage !== 'buy') {
+        setMethod('buy');
+      }
+    };
+    start();
+  }, [transactions]);
 
-    console.log("TOKENS", tokens)
+  useEffect(() => {
+    if (method !== 'buy') send();
+  }, [method]);
 
+  useEffect(() => {
     async function getOptions() {
       try {
         Promise.all(
@@ -86,7 +118,7 @@ export function BondingCurve() {
             }
             let token: string = '';
             if (account) {
-              if (asset.asset === Asset.RBTC) {
+              if (asset.asset === Asset.SOV) {
                 token = await Sovryn.getWeb3().eth.getBalance(account);
               } else {
                 token = await contractReader.call(
@@ -113,64 +145,66 @@ export function BondingCurve() {
   }, [account, tokens]);
 
   useEffect(() => {
-    const newOptions = tokenBalance;
-    if (newOptions) {
-      setSourceOptions(newOptions);
-    }
-
-    if (
-      !newOptions.find(item => item.key === sourceToken) &&
-      newOptions.length
-    ) {
-      setSourceToken(newOptions[0].key);
-    }
-  }, [tokens, targetToken, sourceToken, tokenBalance]);
-
-  useEffect(() => {
-    const newOptions = tokenBalance;
-
-    if (newOptions) {
-      const filteredOptions = newOptions.filter(option => {
-        if (sourceToken === Asset.XUSD && xusdExcludes.includes(option.key))
-          return false;
-        if (xusdExcludes.includes(sourceToken) && option.key === Asset.XUSD)
-          return false;
-        return option.key !== sourceToken;
-      });
-      if (filteredOptions.length > 0) setTargetOptions(filteredOptions);
-    }
-
-    let defaultTo: Asset | null = null;
-    if (sourceToken === targetToken) {
-      switch (targetToken) {
-        case Asset.RBTC: {
-          defaultTo = Asset.SOV;
-          break;
-        }
-        case Asset.SOV:
-        default: {
-          defaultTo = Asset.RBTC;
-          break;
-        }
+    var newOptions = [...tokenBalance];
+    newOptions.forEach((item, index) => {
+      if (item.key === 'SOV') {
+        newOptions.splice(index, 1);
+      }
+    });
+    if (swap) {
+      if (newOptions) {
+        setSourceOptions(newOptions);
+      }
+      if (
+        !newOptions.find(item => item.key === sourceToken) &&
+        newOptions.length
+      ) {
+        setSourceToken(newOptions[0].key);
+      }
+    } else {
+      if (newOptions) {
+        if (newOptions.length > 0) setTargetOptions(newOptions);
+      }
+      if (
+        !newOptions.find(item => item.key === targetToken) &&
+        newOptions.length
+      ) {
+        setTargetToken(newOptions[0].key);
       }
     }
+  }, [tokens, tokenBalance, swap]);
 
-    if (defaultTo && newOptions.find(item => item.key === defaultTo)) {
-      setTargetToken(defaultTo);
-    } else if (
-      //default to RBTC if invalid XUSD pair used
-      ((sourceToken === Asset.XUSD && xusdExcludes.includes(targetToken)) ||
-        (xusdExcludes.includes(sourceToken) && targetToken === Asset.XUSD)) &&
-      newOptions.find(item => item.key === Asset.RBTC)
-    ) {
-      setTargetToken(Asset.RBTC);
-    } else if (
-      !newOptions.find(item => item.key === targetToken) &&
-      newOptions.length
-    ) {
-      setTargetToken(newOptions[0].key);
+  useEffect(() => {
+    var newOptions = [...tokenBalance];
+    var targetOption: any = [];
+    newOptions.forEach((item, index) => {
+      if (item.key === 'SOV') {
+        targetOption.push(item);
+      }
+    });
+
+    if (swap) {
+      if (targetOption) {
+        if (targetOption.length > 0) setTargetOptions(targetOption);
+      }
+      if (
+        !targetOption.find(item => item.key === targetToken) &&
+        targetOption.length
+      ) {
+        setTargetToken(targetOption[0].key);
+      }
+    } else {
+      if (targetOption) {
+        setSourceOptions(targetOption);
+      }
+      if (
+        !targetOption.find(item => item.key === sourceToken) &&
+        targetOption.length
+      ) {
+        setSourceToken(targetOption[0].key);
+      }
     }
-  }, [tokens, sourceToken, targetToken, tokenBalance]);
+  }, [tokens, tokenBalance, swap]);
 
   const { value: rateByPath } = useSwapsExternal_getSwapExpectedReturn(
     sourceToken,
@@ -185,16 +219,7 @@ export function BondingCurve() {
     tokenAddress(targetToken),
   );
 
-  const { send: sendPath, ...txPath } = useSwapNetwork_approveAndConvertByPath(
-    path,
-    weiAmount,
-    minReturn,
-  );
-
-  const {
-    send: sendExternal,
-    ...txExternal
-  } = useSwapsExternal_approveAndSwapExternal(
+  const { send: sendExternal, ...txExternal } = useSwapsBonding(
     sourceToken,
     targetToken,
     account,
@@ -203,6 +228,9 @@ export function BondingCurve() {
     '0',
     minReturn,
     '0x',
+    method,
+    batchId,
+    hash,
   );
 
   const location = useLocation<IPromotionLinkState>();
@@ -233,6 +261,7 @@ export function BondingCurve() {
     setSourceToken(targetToken);
     setTargetToken(_sourceToken);
     setAmount(fromWei(rateByPath));
+    setSwap(!swap);
   };
 
   const validate = useMemo(() => {
@@ -243,23 +272,18 @@ export function BondingCurve() {
     );
   }, [targetToken, sourceToken, minReturn, weiAmount]);
 
-  const tx = useMemo(
-    () =>
-      targetToken === Asset.RBTC ||
-      [targetToken, sourceToken].includes(Asset.RIF)
-        ? txPath
-        : txExternal,
-    [targetToken, sourceToken, txExternal, txPath],
-  );
+  const tx = useMemo(() => txExternal, [targetToken, sourceToken, txExternal]);
 
-  const send = useCallback(
-    () =>
-      targetToken === Asset.RBTC ||
-      [targetToken, sourceToken].includes(Asset.RIF)
-        ? sendPath()
-        : sendExternal(),
-    [targetToken, sourceToken, sendPath, sendExternal],
-  );
+  const send = useCallback(() => sendExternal(), [
+    targetToken,
+    sourceToken,
+    sendExternal,
+  ]);
+
+  const callSend = () => {
+    setMethod('buy');
+    send();
+  };
 
   return (
     <>
@@ -279,7 +303,7 @@ export function BondingCurve() {
           <div className={styles.title}>{t(translations.swap.send)}</div>
           <div className={styles.currency}>
             <SwapAssetSelector
-              value={sourceToken} 
+              value={sourceToken}
               items={sourceOptions}
               placeholder={t(s.fields.currency_placeholder)}
               onChange={value => setSourceToken(value.key)}
@@ -359,13 +383,8 @@ export function BondingCurve() {
           />
         )}
         <BuyButton
-          disabled={
-            tx.loading ||
-            !isConnected ||
-            (!validate && isConnected) ||
-            swapLocked
-          }
-          onClick={send}
+          disabled={false}
+          onClick={callSend}
           text={t(translations.swap.cta)}
         />
       </div>

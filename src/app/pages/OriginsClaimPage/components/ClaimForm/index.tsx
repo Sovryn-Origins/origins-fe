@@ -81,10 +81,10 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
     address,
   );
 
-  const balance = useMemo(
-    () => bignumber(getVestedBalance).add(getWaitedUnlockedBalance).toFixed(0),
-    [getVestedBalance, getWaitedUnlockedBalance],
-  );
+  // const balance = useMemo(
+  //   () => bignumber(getVestedBalance).add(getWaitedUnlockedBalance).toFixed(0),
+  //   [getVestedBalance, getWaitedUnlockedBalance],
+  // );
 
   const unlockTime = useMemo(() => Number(getWaitedTS) * 1000, [getWaitedTS]);
 

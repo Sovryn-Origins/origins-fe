@@ -10,7 +10,7 @@ import { Sovryn } from './index';
 import { ContractName } from '../types/contracts';
 import { contractReader } from './contract-reader';
 import { bignumber } from 'mathjs';
-import { TxStatus, TxType } from '../../store/global/transactions-store/types';
+import { TxType } from '../../store/global/transactions-store/types';
 import { Asset } from '../../types';
 import {
   getContract,
@@ -29,6 +29,7 @@ export interface CheckAndApproveResult {
 class ContractWriter {
   private sovryn: SovrynNetwork;
   private contracts: { [address: string]: Contract } = {};
+  public BATCH_SIZE: number = 10;
 
   constructor() {
     this.sovryn = Sovryn;
@@ -137,7 +138,6 @@ class ContractWriter {
       );
     } else {
       const { address, abi } = getContract(contractName);
-
       return this.sendByAddress(address, abi, methodName, args, options);
     }
   }
@@ -154,7 +154,6 @@ class ContractWriter {
         const data = this.getCustomContract(address, abi)
           .methods[methodName](...args)
           .encodeABI();
-
         const nonce =
           options.nonce ||
           (await contractReader.nonce(walletService.address.toLowerCase()));
@@ -179,7 +178,6 @@ class ContractWriter {
               chainId: walletService.chainId,
             },
           );
-
           // Browser wallets (extensions) signs and broadcasts transactions themselves
           if (isWeb3Wallet(walletService.providerType as ProviderType)) {
             resolve(signedTxOrTransactionHash);

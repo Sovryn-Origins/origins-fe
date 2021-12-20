@@ -20,7 +20,7 @@ const slice = createSlice({
   name: 'transactionsState',
   initialState,
   reducers: {
-    addTransaction(state, { payload }: PayloadAction<Transaction>) { 
+    addTransaction(state, { payload }: PayloadAction<Transaction>) {
       state.transactionStack.push(payload.transactionHash);
       state.transactions[payload.transactionHash] = payload;
     },

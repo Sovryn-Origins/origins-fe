@@ -3,7 +3,10 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import { translations } from 'locales/i18n';
 import { AssetRenderer } from 'app/components/AssetRenderer';
-import { fromWei, weiToFixed } from '../../../../../utils/blockchain/math-helpers';
+import {
+  fromWei,
+  weiToFixed,
+} from '../../../../../utils/blockchain/math-helpers';
 import { Asset } from '../../../../../types';
 import { useWeiAmount } from '../../../../hooks/useWeiAmount';
 import { useCacheCallWithValue } from '../../../../hooks/useCacheCallWithValue';
@@ -22,7 +25,6 @@ import { TxDialog } from 'app/components/Dialogs/TxDialog';
 import { bignumber } from 'mathjs';
 import { Input } from 'app/components/Form/Input';
 import { AvailableBalance } from '../../../../components/AvailableBalance';
-import { Arbitrage } from '../../../../components/Arbitrage/Arbitrage';
 import { useAccount } from '../../../../hooks/useAccount';
 import { getTokenContractName } from '../../../../../utils/blockchain/contract-helpers';
 import { Sovryn } from '../../../../../utils/sovryn';
@@ -254,8 +256,6 @@ export function BuyFormContainer() {
         : sendExternal(),
     [targetToken, sourceToken, sendPath, sendExternal],
   );
-
-  
 
   return (
     <>

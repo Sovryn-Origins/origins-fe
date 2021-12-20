@@ -30,13 +30,6 @@ const TabbarContainer = styled.div`
   justify-content: center;
   margin: 2em 0 3em;
 `;
-const BondingContainer = styled.div`
-  height: 400px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 
 interface Props {}
 

@@ -15,7 +15,7 @@ import iconPending from 'assets/images/icon-pending.svg';
 import iconRejected from 'assets/images/icon-rejected.svg';
 import iconSuccess from 'assets/images/icon-success.svg';
 import { selectTransactionArray } from 'store/global/transactions-store/selectors';
-import { TxStatus, TxType } from 'store/global/transactions-store/types';
+import { TxStatus } from 'store/global/transactions-store/types';
 import { getContractNameByAddress } from 'utils/blockchain/contract-helpers';
 import { numberFromWei } from 'utils/blockchain/math-helpers';
 import { backendUrl, currentChainId } from 'utils/classifiers';
@@ -111,7 +111,7 @@ export function SwapHistory() {
         //     [TxStatus.FAILED, TxStatus.PENDING].includes(tx.status),
         // )
         .map(item => {
-          const { customData } = item;  
+          const { customData } = item;
 
           if (!hasOngoingTransactions) {
             setHasOngoingTransactions(true);
@@ -122,8 +122,8 @@ export function SwapHistory() {
           );
           const assetTo = assets.find(
             currency => currency.asset === customData?.targetToken,
-          );  
-          
+          );
+
           const data: AssetRowData = {
             status: item.status,
             timestamp: customData?.date,
@@ -236,7 +236,7 @@ interface AssetProps {
 }
 
 function AssetRow({ data, itemFrom, itemTo }: AssetProps) {
-  const { t } = useTranslation(); 
+  const { t } = useTranslation();
   const dollars = useCachedAssetPrice(itemTo.asset, Asset.USDT);
   const dollarValue = useMemo(() => {
     if (data.returnVal._toAmount === null) return '';
