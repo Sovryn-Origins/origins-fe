@@ -1,0 +1,46 @@
+
+.button {
+  @apply tw-absolute tw-flex tw-flex-col tw-justify-around tw-bg-transparent tw-border-0 tw-cursor-pointer tw-p-0 tw-z-10;
+  top: 1.3rem;
+  width: 2rem;
+  height: 2rem;
+
+  &:focus {
+    @apply tw-outline-none;
+  }
+
+  div {
+    @apply tw-relative tw-bg-white tw-rounded-xl;
+    width: 2rem;
+    height: 0.25rem;
+    transition: all 0.3s linear;
+    transform-origin: 1px;
+
+    &:first-child {
+      transform: rotate(0);
+    }
+
+    &:nth-child(2) {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    &:nth-child(3) {
+      transform: rotate(0);
+    }
+  }
+}
+
+.open {
+  div {
+    &:first-child {
+      transform: rotate(45deg);
+    }
+    &:nth-child(2) {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    &:nth-child(3) {
+      transform: rotate(-45deg);
+    }
+  }
+}

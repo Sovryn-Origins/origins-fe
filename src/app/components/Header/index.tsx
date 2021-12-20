@@ -10,20 +10,14 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { translations } from 'locales/i18n';
 import WalletConnector from '../../containers/WalletConnector';
 import { LanguageToggle } from '../LanguageToggle';
-// import { currentNetwork } from 'utils/classifiers';
 import styles from './index.module.scss';
+import { Burger } from './components/Burger';
 import {
-  StyledBurger,
   StyledHeader,
   StyledLogo,
   StyledMenu,
   StyledMenuWrapper,
 } from './styled';
-
-// const bridgeURL =
-//   currentNetwork === 'mainnet'
-//     ? 'https://bridge.sovryn.app'
-//     : 'https://bridge.test.sovryn.app/';
 
 export function Header() {
   const { t } = useTranslation();
@@ -36,16 +30,6 @@ export function Header() {
 
   const Menu = ({ open, setOpen }) => {
     return <StyledMenu open={open}>{menuItems}</StyledMenu>;
-  };
-
-  const Burger = ({ open, setOpen }) => {
-    return (
-      <StyledBurger open={open} onClick={() => setOpen(!open)}>
-        <div />
-        <div />
-        <div />
-      </StyledBurger>
-    );
   };
 
   const pages = [

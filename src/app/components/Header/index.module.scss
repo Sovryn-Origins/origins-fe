@@ -10,19 +10,17 @@
   }
 
   select {
-    @apply tw-text-base tw-font-body tw-font-thin 
-      tw-bg-transparent;
+    @apply tw-text-base tw-font-body tw-font-thin tw-bg-transparent;
   }
 }
 
 // blueprintjs override
 :global(.bp3-popover).header-nav-popover :global(.bp3-popover-content) {
-  @apply tw-bg-black tw-border-0 
-    tw-overflow-hidden;
+  @apply tw-bg-black tw-border-0 tw-overflow-hidden;
 
   & :global(.bp3-menu) {
     @apply tw-p-0;
-    
+
     & a {
       @apply tw-font-normal;
     }
