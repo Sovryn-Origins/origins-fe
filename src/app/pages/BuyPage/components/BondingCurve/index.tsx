@@ -12,7 +12,6 @@ import {
 import { Asset } from '../../../../../types';
 import { useWeiAmount } from '../../../../hooks/useWeiAmount';
 import { AssetsDictionary } from '../../../../../utils/dictionaries/assets-dictionary';
-import { useCanInteract } from '../../../../hooks/useCanInteract';
 import { SwapAssetSelector } from '../SwapAssetSelector/Loadable';
 import { AmountInput } from '../AmountInput';
 // import swapIcon from '../../../../../assets/images/swap/swap_horizontal.svg';
@@ -23,7 +22,6 @@ import { useSlippage } from 'app/pages/BuySovPage/components/BuyForm/useSlippage
 import { weiToNumberFormat } from 'utils/display-text/format';
 import { BuyButton } from 'app/pages/BuySovPage/components/Button/buy';
 import { TxDialog } from 'app/components/Dialogs/TxDialog';
-import { bignumber } from 'mathjs';
 import { Input } from 'app/components/Form/Input';
 import { AvailableBalance } from '../../../../components/AvailableBalance';
 import { useAccount } from '../../../../hooks/useAccount';
@@ -38,7 +36,6 @@ import { IPromotionLinkState } from 'app/pages/LandingPage/components/Promotions
 
 import styles from './index.module.scss';
 import { useSwapsBonding } from '../../../../hooks/swap-network/useSwapBonding';
-import { useSwapNetwork_conversionPath } from '../../../../hooks/swap-network/useSwapNetwork_conversionPath';
 import Web3 from 'web3';
 
 const s = translations.swapTradeForm;
@@ -69,11 +66,6 @@ export function BondingCurve() {
   const [swap, setSwap] = useState(true);
   const account = useAccount();
   const weiAmount = useWeiAmount(amount);
-  // const { value: tokens } = useCacheCallWithValue<string[]>(
-  //   'converterRegistry',
-  //   'getConvertibleTokens',
-  //   [],
-  // );
   const [tokenBalance, setTokenBalance] = useState<any[]>([]);
   const transactions = useSelector(selectTransactions);
   const [method, setMethod] = useState('buy');
@@ -94,7 +86,6 @@ export function BondingCurve() {
         const receipt = await web3.eth.getTransactionReceipt(
           transaction.transactionHash,
         );
-        console.log('>>>>>Receipt', receipt);
         const blockNumber = receipt.blockNumber;
         const id = Math.floor(blockNumber / 10) * 10;
         setBatchId(id);
@@ -219,11 +210,6 @@ export function BondingCurve() {
 
   const { minReturn } = useSlippage(rateByPath, slippage);
 
-  const { value: path } = useSwapNetwork_conversionPath(
-    tokenAddress(sourceToken),
-    tokenAddress(targetToken),
-  );
-
   const { send: sendExternal, ...txExternal } = useSwapsBonding(
     sourceToken,
     targetToken,
@@ -268,14 +254,6 @@ export function BondingCurve() {
     setAmount(fromWei(rateByPath));
     setSwap(!swap);
   };
-
-  const validate = useMemo(() => {
-    return (
-      bignumber(weiAmount).greaterThan(0) &&
-      bignumber(minReturn).greaterThan(0) &&
-      targetToken !== sourceToken
-    );
-  }, [targetToken, sourceToken, minReturn, weiAmount]);
 
   const tx = useMemo(() => txExternal, [targetToken, sourceToken, txExternal]);
 

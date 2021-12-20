@@ -26,7 +26,6 @@ export function useSwapBonding_External(
       ? 'claimBuyOrder'
       : 'claimSellOrder',
   );
-  console.log('>>>>>>>>>GGGG', sourceToken);
   return {
     send: (nonce?: number, approveTx?: string | null) => {
       return send(

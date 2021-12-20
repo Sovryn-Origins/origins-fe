@@ -1,11 +1,11 @@
 import { bignumber } from 'mathjs';
 import React, { useMemo } from 'react';
-import cn from 'classnames';
+import classNames from 'classnames';
 
-import { Asset } from '../../../../../types';
-import { fromWei } from '../../../../../utils/blockchain/math-helpers';
-import { AssetRenderer } from '../../../../components/AssetRenderer';
-import { useAssetBalanceOf } from '../../../../hooks/useAssetBalanceOf';
+import { Asset } from 'types';
+import { fromWei } from 'utils/blockchain/math-helpers';
+import { AssetRenderer } from 'app/components/AssetRenderer';
+import { useAssetBalanceOf } from 'app/hooks/useAssetBalanceOf';
 import { Input } from '../Input';
 import { AssetSelect } from 'app/components/AssetSelect';
 import {
@@ -68,7 +68,7 @@ export function AmountInput({
             )
           ) : null
         }
-        className={cn('tw-rounded-lg', `theme-${theme}`)}
+        className={classNames('tw-rounded-lg', `theme-${theme}`)}
         readOnly={readonly}
         leftDivider={selectable}
       />

@@ -51,7 +51,6 @@ export function TxDialog({ tx, onUserConfirmed, onSuccess }: Props) {
   useEffect(() => {
     const keys = Object.keys(transactions);
     const transaction = transactions[keys[keys.length - 1]];
-    console.log('>>>>>>>TT', transaction);
     if (transaction?.type === 'bonding') {
       // setBonding(transaction);
     }
