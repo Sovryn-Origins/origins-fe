@@ -1,4 +1,4 @@
-import cn from 'classnames';
+import classNames from 'classnames';
 import React, { useCallback } from 'react';
 
 import { handleNumber } from 'utils/helpers';
@@ -44,12 +44,12 @@ export function Input({
 
   return (
     <div
-      className={cn('tw-input-wrapper', className, {
+      className={classNames('tw-input-wrapper', className, {
         readonly: props.readOnly,
       })}
     >
       <input
-        className={cn('tw-input', inputClassName)}
+        className={classNames('tw-input', inputClassName)}
         lang={navigator.language}
         value={value}
         onChange={e => handleChange(e.currentTarget.value)}
@@ -57,7 +57,7 @@ export function Input({
       />
       {appendElem && (
         <div
-          className={cn(
+          className={classNames(
             'tw-input-append',
             props.leftDivider
               ? 'tw-border-l-2 tw-border-solid tw-pl-2 tw-append-selectable'
@@ -92,11 +92,11 @@ export function DummyInput({
 }: DummyProps) {
   return (
     <div
-      className={cn('tw-input-wrapper', className, {
+      className={classNames('tw-input-wrapper', className, {
         readonly: props.readOnly,
       })}
     >
-      <div className={cn('tw-input', inputClassName)}>{value}</div>
+      <div className={classNames('tw-input', inputClassName)}>{value}</div>
       {appendElem && <div className="tw-input-append">{appendElem}</div>}
     </div>
   );
