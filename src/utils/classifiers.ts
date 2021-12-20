@@ -22,9 +22,9 @@ export const blockExplorers = {
   97: 'https://testnet.bscscan.com',
 };
 
-export const readNodes = {
-  30: 'wss://mainnet.sovryn.app/ws',
-  31: 'wss://testnet.sovryn.app/ws',
+export const rpcNodes = {
+  30: 'https://mainnet.sovryn.app/rpc',
+  31: 'https://testnet.sovryn.app/rpc',
 };
 
 export const fastBtcApis = {
@@ -40,11 +40,6 @@ export const databaseRpcNodes = {
 export const backendUrl = {
   30: 'https://backend.sovryn.app',
   31: 'https://api.test.sovryn.app',
-};
-
-export const rpcNodes = {
-  30: 'https://public-node.rsk.co',
-  31: 'https://public-node.testnet.rsk.co',
 };
 
 export const ethGenesisAddress = '0x0000000000000000000000000000000000000000';
