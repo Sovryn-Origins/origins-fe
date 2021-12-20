@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Position, Popover, PopoverInteractionKind } from '@blueprintjs/core';
-import { AssetList } from './AssetList';
 import { AssetRenderer } from '../AssetRenderer';
-import { ArrowDown, ArrowUp } from './Arrows';
+import { AssetList } from './components/AssetList';
+import { ArrowDown, ArrowUp } from './components/Arrows';
 import { Asset } from 'types/asset';
 
 interface AssetSelectProps {

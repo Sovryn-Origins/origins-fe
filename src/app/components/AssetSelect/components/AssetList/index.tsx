@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { AssetRenderer } from '../AssetRenderer';
-import { AssetSelectItemWrapper } from './styled';
+import { AssetRenderer } from '../../../AssetRenderer';
 import { Asset } from 'types/asset';
-import { useDetectOutsideClick } from './hooks/useClickedOutside';
+import { useDetectOutsideClick } from '../../hooks/useClickedOutside';
+import styles from './index.module.scss';
+
 const assets: Asset[] = [
   Asset.RBTC,
   Asset.SOV,
@@ -27,13 +28,13 @@ export const AssetList: React.FC<AssetListProps> = ({ selected, onSelect }) => {
   return (
     <ul className="tw-bg-white tw-rounded-lg" ref={wrapperRef}>
       {assets.map(asset => (
-        <AssetSelectItemWrapper
-          className="tw-px-3 tw-py-1 tw-text-black"
+        <div
+          className={styles.assetSelectItemWrapper}
           onClick={() => onSelect?.(asset)}
           key={asset}
         >
           <AssetRenderer className="tw-text-lg tw-font-rowdies" asset={asset} />
-        </AssetSelectItemWrapper>
+        </div>
       ))}
     </ul>
   );
