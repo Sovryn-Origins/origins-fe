@@ -6,9 +6,7 @@ export const Burger = ({ open, setOpen }) => {
   return (
     <button
       className={classNames(styles.button, {
-        // [styles.open]: open,
-        isOpen: open,
-        // [styles.close]: !open,
+        'is-open': open,
       })}
       onClick={() => setOpen(!open)}
     >
