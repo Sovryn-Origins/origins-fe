@@ -1,0 +1,5 @@
+.toggleButton {
+  @apply tw-absolute tw-right-2 tw-z-10 tw-flex tw-justify-end tw-cursor-pointer;
+  bottom: 0.2rem;
+  min-width: 6rem;
+}
