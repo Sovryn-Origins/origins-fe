@@ -17,9 +17,6 @@ import { ContractName } from 'utils/types/contracts';
 import { useAccount } from './useAccount';
 import { Nullable } from 'types';
 import { gasLimit } from '../../utils/classifiers';
-import Web3 from 'web3';
-import { Sovryn } from '../../utils/sovryn/index';
-import { getContract } from 'utils/blockchain/contract-helpers';
 export interface TransactionOptions {
   type?: TxType;
   approveTransactionHash?: Nullable<string>;
@@ -114,17 +111,12 @@ export function useSendContractTx(
   useEffect(() => {
     if (txId && transactions.hasOwnProperty(txId)) {
       if (transactions[txId].type === 'bonding') {
-        // callClaim(txId, transactions[txId]);
         if (
           transactions[txId].status === 'pending' &&
           transactions[txId].customData?.stage === 'buy'
         ) {
-          // setTxId(TxStatus.CLAIMING);
         }
-
-        console.log('>>>>BONDING', transactions[txId]);
       }
-
       setTx(transactions[txId]);
     } else {
       setTx(undefined);

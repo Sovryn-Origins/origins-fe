@@ -69,6 +69,11 @@ export function BondingCurve() {
   const [swap, setSwap] = useState(true);
   const account = useAccount();
   const weiAmount = useWeiAmount(amount);
+  // const { value: tokens } = useCacheCallWithValue<string[]>(
+  //   'converterRegistry',
+  //   'getConvertibleTokens',
+  //   [],
+  // );
   const [tokenBalance, setTokenBalance] = useState<any[]>([]);
   const transactions = useSelector(selectTransactions);
   const [method, setMethod] = useState('buy');
