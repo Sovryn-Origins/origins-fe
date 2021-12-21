@@ -27,7 +27,6 @@ import { MaintenancePage } from './containers/MaintenancePage';
 import { WalletProvider } from './containers/WalletProvider';
 
 import { NotFoundPage } from './components/NotFoundPage/Loadable';
-import { EmailPage } from './containers/EmailPage';
 import { WalletPage } from './containers/WalletPage/Loadable';
 import { StakePage } from './containers/StakePage/Loadable';
 import { GovernancePage } from './containers/GovernancePage/Loadable';
@@ -74,16 +73,6 @@ export function App() {
             <Route exact path="/wallet" component={WalletPage} />
             <Route path="/launchpad" component={OriginsLaunchpadPage} />
             <Route exact path="/claim" component={OriginsClaimPage} />
-            <Route
-              exact
-              path="/optin-success"
-              render={props => <EmailPage {...props} type="OPTIN" />}
-            />
-            <Route
-              exact
-              path="/unsubscribe"
-              render={props => <EmailPage {...props} type="UNSUBSCRIBE" />}
-            />
             <Route component={NotFoundPage} />
           </Switch>
         </WalletProvider>
