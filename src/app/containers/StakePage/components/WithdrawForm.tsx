@@ -10,7 +10,7 @@ import { useWeiAmount } from 'app/hooks/useWeiAmount';
 import { useDollarValueOg } from 'app/hooks/useDollarValueOg';
 import { weiToNumberFormat, weiToUSD } from 'utils/display-text/format';
 import { WithdrawConfirmationForm } from './WithdrawConfimationForm';
-import { TxFeeCalculator } from 'app/pages/MarginTradePage/components/TxFeeCalculator';
+import { TxFeeCalculator } from 'app/components/TxFeeCalculator';
 import { discordInvite } from 'utils/classifiers';
 import { useMaintenance } from 'app/hooks/useMaintenance';
 import { ErrorBadge } from 'app/components/Form/ErrorBadge';

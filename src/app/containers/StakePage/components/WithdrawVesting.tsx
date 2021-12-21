@@ -6,7 +6,7 @@ import { numberFromWei } from 'utils/blockchain/math-helpers';
 import { useAccount } from 'app/hooks/useAccount';
 import { useGetUnlockedVesting } from '../../../hooks/staking/useGetUnlockedVesting';
 import { vesting_withdraw } from 'utils/blockchain/requests/vesting';
-import { TxFeeCalculator } from 'app/pages/MarginTradePage/components/TxFeeCalculator';
+import { TxFeeCalculator } from 'app/components/TxFeeCalculator';
 import { discordInvite } from 'utils/classifiers';
 import { useMaintenance } from 'app/hooks/useMaintenance';
 import { ErrorBadge } from 'app/components/Form/ErrorBadge';

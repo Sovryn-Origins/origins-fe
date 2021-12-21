@@ -7,7 +7,7 @@ import { weiToNumberFormat } from 'utils/display-text/format';
 import { CacheCallResponse } from 'app/hooks/useCacheCall';
 import { useMaintenance } from 'app/hooks/useMaintenance';
 import { useDollarValueOg } from 'app/hooks/useDollarValueOg';
-import { TxFeeCalculator } from 'app/pages/MarginTradePage/components/TxFeeCalculator';
+import { TxFeeCalculator } from 'app/components/TxFeeCalculator';
 import { StakingDateSelector } from 'app/components/StakingDateSelector';
 import { LoadableValue } from 'app/components/LoadableValue';
 import { useAccount } from 'app/hooks/useAccount';

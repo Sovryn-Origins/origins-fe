@@ -7,7 +7,7 @@ import { CacheCallResponse } from 'app/hooks/useCacheCall';
 import { useDollarValueOg } from 'app/hooks/useDollarValueOg';
 import { useWeiAmount } from 'app/hooks/useWeiAmount';
 import { StakingDateSelector } from '../../../components/StakingDateSelector';
-import { TxFeeCalculator } from 'app/pages/MarginTradePage/components/TxFeeCalculator';
+import { TxFeeCalculator } from 'app/components/TxFeeCalculator';
 import { discordInvite } from 'utils/classifiers';
 import { weiToUSD } from 'utils/display-text/format';
 import { useMaintenance } from 'app/hooks/useMaintenance';

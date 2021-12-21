@@ -6,7 +6,7 @@ import { handleNumberInput } from 'utils/helpers';
 import { toWei, fromWei } from 'utils/blockchain/math-helpers';
 import { weiToNumberFormat, weiToUSD } from 'utils/display-text/format';
 import { CacheCallResponse } from 'app/hooks/useCacheCall';
-import { TxFeeCalculator } from 'app/pages/MarginTradePage/components/TxFeeCalculator';
+import { TxFeeCalculator } from 'app/components/TxFeeCalculator';
 import { useAccount } from 'app/hooks/useAccount';
 import { useDollarValueOg } from 'app/hooks/useDollarValueOg';
 import { useWeiAmount } from 'app/hooks/useWeiAmount';

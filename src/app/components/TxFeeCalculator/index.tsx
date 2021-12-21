@@ -4,15 +4,12 @@ import { Trans } from 'react-i18next';
 import type { TransactionConfig } from 'web3-core';
 import { translations } from 'locales/i18n';
 import { fromWei } from 'utils/blockchain/math-helpers';
-import { LoadableValue } from '../../../../components/LoadableValue';
-import {
-  toNumberFormat,
-  weiToNumberFormat,
-} from '../../../../../utils/display-text/format';
-import { ContractName } from '../../../../../utils/types/contracts';
-import { useEstimateContractGas } from '../../../../hooks/useEstimateGas';
+import { LoadableValue } from '../LoadableValue';
+import { toNumberFormat, weiToNumberFormat } from 'utils/display-text/format';
+import { ContractName } from 'utils/types/contracts';
+import { useEstimateContractGas } from 'app/hooks/useEstimateGas';
 import cn from 'classnames';
-import { gas } from '../../../../../utils/blockchain/gas-price';
+import { gas } from 'utils/blockchain/gas-price';
 import { bignumber } from 'mathjs';
 
 interface Props {

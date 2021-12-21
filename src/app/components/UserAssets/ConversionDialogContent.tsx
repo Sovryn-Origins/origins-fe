@@ -16,7 +16,7 @@ import { BuyButton, Img } from './styled';
 import image from '../../../assets/images/arrow-down.svg';
 import { weiToFixed } from '../../../utils/blockchain/math-helpers';
 import { noop } from '../../constants';
-import { TxFeeCalculator } from '../../pages/MarginTradePage/components/TxFeeCalculator';
+import { TxFeeCalculator } from 'app/components/TxFeeCalculator';
 
 interface IConversionDialogContentProps {
   asset: Asset;
