@@ -1,10 +1,9 @@
 import { AppMode, Chain, ChainId } from 'types';
-import { NetworkModel } from '../types/network-model';
-import { CrossBridgeAsset } from '../types/cross-bridge-asset';
-import { currentNetwork } from '../../../../utils/classifiers';
+import { NetworkModel } from 'types/network-model';
+import { CrossBridgeAsset } from 'types/cross-bridge-asset';
+import { currentNetwork } from '../classifiers';
 
-import rskLogo from './bridges/icons/rsk.svg';
-
+import rskLogo from 'assets/images/networks/rsk.svg';
 import bscIcon from 'assets/images/networks/bsc.svg';
 import ethIcon from 'assets/images/networks/eth.svg';
 

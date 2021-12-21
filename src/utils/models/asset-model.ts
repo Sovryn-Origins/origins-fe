@@ -1,6 +1,6 @@
 import { bignumber } from 'mathjs';
 import { roundToSmaller } from 'utils/blockchain/math-helpers';
-import { CrossBridgeAsset } from './cross-bridge-asset';
+import { CrossBridgeAsset } from 'types/cross-bridge-asset';
 
 export class AssetModel {
   public readonly bridgeTokenAddress: string;

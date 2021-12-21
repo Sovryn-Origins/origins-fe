@@ -2,9 +2,10 @@ import { utils } from '@rsksmart/rsk3';
 import { bignumber } from 'mathjs';
 import { blockTime, currentChainId } from './classifiers';
 import { gas } from './blockchain/gas-price';
-import { Asset } from '../types';
+import { Asset, Chain, ChainId } from '../types';
 import { ProviderType } from '@sovryn/wallet';
 import { walletService } from '@sovryn/react-wallet';
+import { BridgeNetworkDictionary } from './dictionaries/bridge-network-dictionary';
 
 export const isObjectEmpty = (obj: {}) => {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
@@ -240,3 +241,14 @@ export function dateByBlocks(
     (Number(startTime) + getSecondsBetweenBlocks(startBlock, endBlock)) * 1000,
   );
 }
+
+export const getBridgeChainId = (chain: Chain): ChainId | null =>
+  BridgeNetworkDictionary.get(chain)?.chainId || null;
+
+export const getBridgeChain = (chainId: ChainId): Chain | null =>
+  BridgeNetworkDictionary.getByChainId(chainId)?.chain || null;
+
+export const getSupportedBridgeChainIds = () =>
+  BridgeNetworkDictionary.networks.map(item => item.chainId).filter(unique);
+
+export const unique = (value, index, self) => self.indexOf(value) === index;

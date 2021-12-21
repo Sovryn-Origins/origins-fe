@@ -3,17 +3,17 @@ import { ethers } from 'ethers';
 import type { TransactionRequest } from '@ethersproject/abstract-provider';
 import { walletService } from '@sovryn/react-wallet';
 import { isWeb3Wallet, ProviderType } from '@sovryn/wallet';
-import { RpcNetwork } from '../../../../utils/blockchain/rpc-network';
-import { getBridgeChainId } from './helpers';
+import { RpcNetwork } from './rpc-network';
+import { getBridgeChainId } from '../helpers';
 import { BridgeNetworkDictionary } from '../dictionaries/bridge-network-dictionary';
-import { NetworkModel } from '../types/network-model';
-import { AssetModel } from '../types/asset-model';
+import { NetworkModel } from 'types/network-model';
+import { AssetModel } from 'utils/models/asset-model';
 
 import multiCallAbi from 'utils/blockchain/abi/multiCall2.json';
 import erc20Abi from 'utils/blockchain/abi/erc20.json';
 import mAssetAbi from 'utils/blockchain/abi/BabelFish_MassetAbi.json';
 import bridgeAbi from 'utils/blockchain/abi/BridgeAbi.json';
-import { CrossBridgeAsset } from '../types/cross-bridge-asset';
+import { CrossBridgeAsset } from 'types/cross-bridge-asset';
 
 interface MultiCallData {
   address: string;
