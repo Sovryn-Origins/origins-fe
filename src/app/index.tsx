@@ -8,7 +8,7 @@
 
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 import { currentNetwork } from 'utils/classifiers';
 import { useAppTheme } from './hooks/app/useAppTheme';
@@ -29,12 +29,6 @@ import { WalletProvider } from './containers/WalletProvider';
 import { NotFoundPage } from './components/NotFoundPage/Loadable';
 import { EmailPage } from './containers/EmailPage';
 import { WalletPage } from './containers/WalletPage/Loadable';
-
-// import { SwapPage } from './containers/SwapPage/Loadable';
-// import { RewardPage } from './pages/RewardPage/Loadable';
-// import { BuySovPage } from './pages/BuySovPage/Loadable';
-// import { SpotTradingPage } from './pages/SpotTradingPage/Loadable';
-
 import { StakePage } from './containers/StakePage/Loadable';
 import { GovernancePage } from './containers/GovernancePage/Loadable';
 import { LandingPage } from './pages/LandingPage/Loadable';
@@ -77,13 +71,8 @@ export function App() {
           <NetworkRibbon />
           <Switch>
             <Route exact path="/" component={LandingPage} />
-            {/* <Route exact path="/buy-sov" component={BuySovPage} />
-            <Route exact path="/swap" component={SwapPage} />
-            <Route exact path="/spot" component={SpotTradingPage} /> */}
             <Route exact path="/stake" component={StakePage} />
             <Route path="/governance" component={GovernancePage} />
-            <Redirect exact from="/liquidity" to="/yield-farm" />
-            {/* <Route exact path="/reward" component={RewardPage} /> */}
             <Route exact path="/wallet" component={WalletPage} />
             <Route path="/launchpad" component={OriginsLaunchpadPage} />
             <Route exact path="/claim" component={OriginsClaimPage} />

@@ -19,7 +19,7 @@ import styles from './dialog.module.scss';
 import { useWalletContext } from '@sovryn/react-wallet';
 import { Trans, useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { ConfirmButton } from 'app/pages/BuySovPage/components/Button/confirm';
+import { ConfirmButton } from '../Form/ConfirmButton';
 import { usePrevious } from '../../hooks/usePrevious';
 
 interface Props {

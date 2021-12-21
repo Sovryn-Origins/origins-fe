@@ -8,7 +8,7 @@ import styles from './dialog.module.scss';
 import { useWalletContext } from '@sovryn/react-wallet';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { ConfirmButton } from 'app/pages/BuySovPage/components/Button/confirm';
+import { ConfirmButton } from 'app/components/Form/ConfirmButton';
 import { usePrevious } from 'app/hooks/usePrevious';
 import { AssetSymbolRenderer } from 'app/components/AssetSymbolRenderer';
 import { weiToFixed } from 'utils/blockchain/math-helpers';
