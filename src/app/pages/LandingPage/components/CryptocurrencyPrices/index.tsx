@@ -1,21 +1,14 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-// import { Trans } from 'react-i18next';
-// import { Icon, Popover } from '@blueprintjs/core';
+import { bignumber } from 'mathjs';
+
 import { translations } from 'locales/i18n';
 import { IPairs, IAssets, IAssetData } from './types';
 import { AssetsDictionary } from 'utils/dictionaries/assets-dictionary';
 import { AssetSymbolRenderer } from 'app/components/AssetSymbolRenderer';
-import {
-  // btcToSatoshi,
-  numberToUSD,
-  toNumberFormat,
-} from 'utils/display-text/format';
-// import arrowUp from 'assets/images/trend-arrow-up.svg';
-// import arrowDown from 'assets/images/trend-arrow-down.svg';
+import { numberToUSD, toNumberFormat } from 'utils/display-text/format';
 import { SkeletonRow } from 'app/components/Skeleton/SkeletonRow';
-import { bignumber } from 'mathjs';
 import { Asset } from 'types';
 import { AssetDetails } from 'utils/models/asset-details';
 import { LoadableValue } from 'app/components/LoadableValue';
