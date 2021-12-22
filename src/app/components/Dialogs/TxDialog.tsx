@@ -23,11 +23,8 @@ import { Trans, useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { ConfirmButton } from '../../../app/pages/BuyPage/components/Button/confirm';
 import { usePrevious } from '../../hooks/usePrevious';
-import {
-  selectLoadingTransaction,
-  selectTransactions,
-} from 'store/global/transactions-store/selectors';
-import { useDispatch, useSelector } from 'react-redux';
+import { selectTransactions } from 'store/global/transactions-store/selectors';
+import { useSelector } from 'react-redux';
 
 interface Props {
   tx: ResetTxResponseInterface;

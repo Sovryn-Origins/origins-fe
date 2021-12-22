@@ -151,7 +151,7 @@ export class LiquidityPoolDictionary {
           testnet: '0x6e03DEFD0ae9091Be74f64c8CB9BE319994E5deB',
         }),
       ]).setVersion(1),
-    ], 
+    ],
   ]);
 
   public static get(asset: Asset): LiquidityPool {

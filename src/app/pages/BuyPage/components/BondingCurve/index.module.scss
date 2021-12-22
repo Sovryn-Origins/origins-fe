@@ -26,10 +26,7 @@
 
 // swap form
 .swap-form-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @apply tw-flex tw-flex-col tw-justify-center tw-items-center; 
   max-width: 1200px;
   width: 90%;
   margin: 0 auto;
@@ -80,3 +77,4 @@
     }
   }
 }
+ 

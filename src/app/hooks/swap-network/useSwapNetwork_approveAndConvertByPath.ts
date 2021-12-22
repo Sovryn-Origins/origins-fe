@@ -25,9 +25,7 @@ export function useSwapNetwork_approveAndConvertByPath(
     targetToken = AssetsDictionary.getByTokenContractAddress(
       path[path.length - 1],
     ).asset;
-  } catch (e) {
-    //
-  }
+  } catch (e) {}
 
   const { send, ...txState } = useSwapNetwork_convertByPath(
     sourceToken,

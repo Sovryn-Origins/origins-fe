@@ -22,7 +22,6 @@ import { backendUrl, currentChainId } from 'utils/classifiers';
 import { AssetsDictionary } from 'utils/dictionaries/assets-dictionary';
 import { weiToUSD } from 'utils/display-text/format';
 import { AssetDetails } from 'utils/models/asset-details';
-
 import { translations } from '../../../locales/i18n';
 import { Asset } from '../../../types';
 import { DisplayDate } from '../../components/ActiveUserLoanContainer/components/DisplayDate';
@@ -34,7 +33,7 @@ import { useCachedAssetPrice } from '../../hooks/trading/useCachedAssetPrice';
 import { useAccount } from '../../hooks/useAccount';
 import { useTradeHistoryRetry } from '../../hooks/useTradeHistoryRetry';
 import { Nullable } from 'types';
-
+import { bondHistory } from '../../hooks/useBondHistory';
 interface AssetRowData {
   status: TxStatus;
   timestamp: number;
@@ -59,11 +58,17 @@ export function SwapHistory() {
 
   let cancelTokenSource = useRef<CancelTokenSource>();
 
+  const getBond = useCallback(() => {
+    bondHistory.getPastEvents('MYNT_MarketMaker', 'ClaimBuyOrder', {
+      fromBlock: 0,
+      toBlock: 'latest',
+    });
+  }, [account]);
+
   const getData = useCallback(() => {
     if (cancelTokenSource.current) {
       cancelTokenSource.current.cancel();
     }
-
     cancelTokenSource.current = axios.CancelToken.source();
     axios
       .get(`${url}/events/conversion-swap/${account}`, {
@@ -85,9 +90,9 @@ export function SwapHistory() {
     setLoading(true);
     setHistory([]);
     setCurrentHistory([]);
-
     getData();
-  }, [getData]);
+    //console.log('>>>>>>BONDHISTORY', getBond());
+  }, [getData, getBond]);
 
   //GET HISTORY
   useEffect(() => {
@@ -103,47 +108,39 @@ export function SwapHistory() {
   };
 
   const onGoingTransactions = useMemo(() => {
-    return (
-      transactions
-        // .filter(
-        //   tx =>
-        //     tx.type === TxType.CONVERT_BY_PATH &&
-        //     [TxStatus.FAILED, TxStatus.PENDING].includes(tx.status),
-        // )
-        .map(item => {
-          const { customData } = item;
+    return transactions.map(item => {
+      const { customData } = item;
 
-          if (!hasOngoingTransactions) {
-            setHasOngoingTransactions(true);
-          }
+      if (!hasOngoingTransactions) {
+        setHasOngoingTransactions(true);
+      }
 
-          const assetFrom = assets.find(
-            currency => currency.asset === customData?.sourceToken,
-          );
-          const assetTo = assets.find(
-            currency => currency.asset === customData?.targetToken,
-          );
+      const assetFrom = assets.find(
+        currency => currency.asset === customData?.sourceToken,
+      );
+      const assetTo = assets.find(
+        currency => currency.asset === customData?.targetToken,
+      );
 
-          const data: AssetRowData = {
-            status: item.status,
-            timestamp: customData?.date,
-            transaction_hash: item.transactionHash,
-            returnVal: {
-              _fromAmount: customData?.amount,
-              _toAmount: customData?.minReturn || null,
-            },
-          };
+      const data: AssetRowData = {
+        status: item.status,
+        timestamp: customData?.date,
+        transaction_hash: item.transactionHash,
+        returnVal: {
+          _fromAmount: customData?.amount,
+          _toAmount: customData?.minReturn || null,
+        },
+      };
 
-          return (
-            <AssetRow
-              key={item.transactionHash}
-              data={data}
-              itemFrom={assetFrom!}
-              itemTo={assetTo!}
-            />
-          );
-        })
-    );
+      return (
+        <AssetRow
+          key={item.transactionHash}
+          data={data}
+          itemFrom={assetFrom!}
+          itemTo={assetTo!}
+        />
+      );
+    });
   }, [assets, hasOngoingTransactions, transactions]);
 
   return (
@@ -239,7 +236,8 @@ function AssetRow({ data, itemFrom, itemTo }: AssetProps) {
   const { t } = useTranslation();
   const dollars = useCachedAssetPrice(itemTo.asset, Asset.USDT);
   const dollarValue = useMemo(() => {
-    if (data.returnVal._toAmount === null) return '';
+    //if (data.returnVal._toAmount === null) return '';
+    if (data.status !== 'confirmed') return null;
     return bignumber(data.returnVal._toAmount)
       .mul(dollars.value)
       .div(10 ** itemTo.decimals)

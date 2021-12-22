@@ -12,7 +12,7 @@ import {
 import { Asset } from '../../../../../types';
 import { useWeiAmount } from '../../../../hooks/useWeiAmount';
 import { AssetsDictionary } from '../../../../../utils/dictionaries/assets-dictionary';
-import { SwapAssetSelector } from '../SwapAssetSelector/Loadable';
+import { SwapAssetSelector } from 'app/containers/SwapFormContainer/components/SwapAssetSelector/Loadable';
 import { AmountInput } from '../AmountInput';
 // import swapIcon from '../../../../../assets/images/swap/swap_horizontal.svg';
 import swapIcon from '../../../../../assets/images/buy/buy_exchange.svg';
@@ -20,7 +20,7 @@ import settingIcon from '../../../../../assets/images/swap/ic_setting.svg';
 import { SlippageDialog } from 'app/pages/BuySovPage/components/BuyForm/Dialogs/SlippageDialog';
 import { useSlippage } from 'app/pages/BuySovPage/components/BuyForm/useSlippage';
 import { weiToNumberFormat } from 'utils/display-text/format';
-import { BuyButton } from 'app/pages/BuySovPage/components/Button/buy';
+import { BuyButton } from 'app/pages/BuyPage/components/Button/buy';
 import { TxDialog } from 'app/components/Dialogs/TxDialog';
 import { Input } from 'app/components/Form/Input';
 import { AvailableBalance } from '../../../../components/AvailableBalance';
@@ -369,14 +369,11 @@ export function BondingCurve() {
           disabled={false}
           onClick={callSend}
           text={t(translations.swap.cta)}
+          className={'buy-btn'}
         />
       </div>
 
       <TxDialog tx={tx} />
     </>
   );
-}
-
-function tokenAddress(asset: Asset) {
-  return AssetsDictionary.get(asset).getTokenContractAddress();
 }

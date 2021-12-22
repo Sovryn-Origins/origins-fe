@@ -1,9 +1,8 @@
 // swap btn
 .swap-btn-container {
-  max-width: 250px;
-  margin: auto;
+  max-width: 250px; 
   margin-top: 23px;
-
+  @apply tw-m-auto ;
   .swap-btn-helper {
     @apply tw-flex tw-items-center tw-justify-center
       tw-text-lg tw-text-black tw-text-center tw-tracking-normal;
@@ -26,10 +25,7 @@
 
 // swap form
 .swap-form-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @apply tw-flex tw-flex-col tw-justify-center tw-items-center; 
   max-width: 1200px;
   width: 90%;
   margin: 0 auto;

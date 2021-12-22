@@ -9,9 +9,7 @@ import styled from 'styled-components';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-
 import { translations } from 'locales/i18n';
-
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import { SkeletonRow } from '../../components/Skeleton/SkeletonRow';

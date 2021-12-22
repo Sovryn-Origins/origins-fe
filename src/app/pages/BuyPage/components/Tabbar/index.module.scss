@@ -1,0 +1,21 @@
+.tab-container{
+    @apply tw-w-full tw-flex tw-items-center tw-justify-between tw-max-w-screen-sm; 
+}
+.bar-wrapper{
+    @apply tw-flex tw-items-center tw-justify-between tw-flex-col tw-cursor-pointer; 
+    height: 70px; 
+    @media (max-width: 600px) {
+      height: 55px;
+    }
+    p {
+      @apply tw-font-normal tw-text-black tw-m-0 tw-p-0 tw-uppercase ;
+      font-family: Rowdies;
+      font-size: 32px;
+      @media (max-width: 600px) {
+        font-size: 24px;
+      }
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+} 

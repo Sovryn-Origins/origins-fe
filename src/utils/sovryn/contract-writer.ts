@@ -84,23 +84,7 @@ class ContractWriter {
               from: address,
             },
           )
-          .then(tx => {
-            // this.sovryn.store().dispatch(
-            //   txActions.addTransaction({
-            //     transactionHash: tx as string,
-            //     approveTransactionHash: null,
-            //     type: TxType.APPROVE,
-            //     status: TxStatus.PENDING,
-            //     loading: false,
-            //     to: contractName,
-            //     from: address,
-            //     value: '0',
-            //     asset,
-            //     assetAmount: transferAmount.get(amounts[1]),
-            //   }),
-            // );
-            //return tx;
-          });
+          .then(tx => {});
         nonce += 1;
       }
       dispatch(txActions.setLoading(false));
@@ -225,6 +209,9 @@ class ContractWriter {
     options.data = this.getCustomContract(address, abi)
       .methods[methodName](...args)
       .encodeABI();
+    // const contractMarket = new web3.eth.Contract(abi, address);
+    // var info = contractMarket.getPastEvents('OpenBuyOrder');
+    // console.log('>>id', info);
     return new Promise<number>(resolve => {
       return Sovryn.getWeb3()
         .eth.estimateGas(options)

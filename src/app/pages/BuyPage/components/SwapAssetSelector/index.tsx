@@ -11,9 +11,9 @@ import {
 } from 'app/components/FormSelect';
 import { MenuItem, Text } from '@blueprintjs/core';
 import { StyledButton, CaretElement } from './styled';
-import { isMobile } from '../../../../../utils/helpers';
+import { isMobile } from 'utils/helpers';
 import arrowDownIcon from 'assets/images/swap/ic_arrow_down.svg';
-import { AssetRenderer } from '../../../../components/AssetRenderer';
+import { AssetRenderer } from 'app/components/AssetRenderer';
 
 const Selector = Select.ofType<SelectItem>();
 
