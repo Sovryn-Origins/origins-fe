@@ -13,7 +13,6 @@ import { VestedAssets } from '../../components/UserAssets/VestedAssets';
 import { useAccount, useIsConnected } from '../../hooks/useAccount';
 import { TopUpHistory } from '../FastBtcDialog/components/TopUpHistory';
 import { VestedHistory } from '../VestedHistory';
-// import { OriginClaimBanner } from './components/OriginClaimBanner';
 
 import './_overlay.scss';
 
@@ -33,10 +32,6 @@ export function WalletPage() {
         />
       </Helmet>
       <Header />
-
-      {/* <div className="tw-container tw-mx-auto tw-px-4 tw-mt-4">
-        <OriginClaimBanner />
-      </div> */}
 
       <div className="tw-container tw-mx-auto tw-px-4 tw-max-w-screen-xl">
         <div
