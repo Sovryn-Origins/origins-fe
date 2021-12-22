@@ -15,8 +15,6 @@
 .close-btn{
     @apply tw-w-full tw-border-solid tw-border tw-text-xl 
     tw-font-extrabold tw-rounded-xl tw-uppercase tw-leading-4;
-    border: 1px solid var(--primary);
-    color: var(--primary);
     background: rgba(254, 192, 4, 0.05);
     transition: background 0.3s;
     margin-top: 40px;

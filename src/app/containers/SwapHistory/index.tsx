@@ -91,7 +91,7 @@ export function SwapHistory() {
     setHistory([]);
     setCurrentHistory([]);
     getData();
-    //console.log('>>>>>>BONDHISTORY', getBond());
+    console.log('>>>>>>BONDHISTORY', getBond());
   }, [getData, getBond]);
 
   //GET HISTORY
