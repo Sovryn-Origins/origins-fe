@@ -51,9 +51,7 @@ export const ethGenesisAddress = '0x0000000000000000000000000000000000000000';
 
 export const sovAnalyticsCookie = { name: 'SovAnalytics', value: 'optout' };
 
-export const chartStorageKey = 'sovryn.charts';
-
-export const originsSaleStorageKey = 'sovryn.origins.sales';
+export const originsSaleStorageKey = 'sovryn-origins.sales';
 
 export const gasLimit = {
   [TxType.TRADE]: 3750000,
