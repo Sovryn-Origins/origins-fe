@@ -41,7 +41,7 @@ import { useStakeExtend } from '../../hooks/staking/useStakeExtend';
 import { useStakeDelegate } from '../../hooks/staking/useStakeDelegate';
 import { useVestingDelegate } from '../../hooks/staking/useVestingDelegate';
 import { useMaintenance } from 'app/hooks/useMaintenance';
-import { ConnectWalletWarning } from './components/ConnectWalletWarning';
+import { ConnectWalletWarning } from 'app/components/ConnectWalletWarning';
 
 const now = new Date();
 
@@ -62,7 +62,11 @@ export const StakePage: React.FC = () => {
       <main>
         <div className="tw-tracking-normal">
           <div className="tw-container tw-mx-auto tw-px-6 tw-mb-44 tw-pt-2">
-            <ConnectWalletWarning className="tw-mt-16" />
+            <ConnectWalletWarning
+              className="tw-mt-16"
+              title={t(translations.stake.connectWalletWarning.title)}
+              description={t(translations.stake.connectWalletWarning.alert)}
+            />
           </div>
         </div>
       </main>

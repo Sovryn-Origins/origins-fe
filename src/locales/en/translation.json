@@ -385,9 +385,14 @@
     }
   },
   "originsClaim": {
+    "walletConnectTitle": "Claim Tokens",
     "meta": {
       "title": "Origins Claim",
       "description": "Claim your Origins Purchases"
+    },
+    "walletConnect": {
+      "title": "Claim Tokens",
+      "description": "Please connect with your wallet to use Claim"
     },
     "claimForm": {
       "title": "Claim Tokens",
