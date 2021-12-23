@@ -8,7 +8,6 @@ import {
   useLocation,
 } from 'react-router-dom';
 
-import { TitleContent } from './styled';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { EngageWalletStep } from './pages/EngageWalletStep/index';
@@ -54,9 +53,9 @@ export const SalesDay: React.FC<ISalesDayProps> = ({
     <div className="tw-mb-52">
       {info.isSaleActive && (
         <div className="tw-text-center tw-items-center tw-justify-center tw-flex tw-mb-12">
-          <TitleContent>
+          <div className="tw-text-black tw-text-xl tw-font-semibold tw-font-rowdies tw-leading-6 tw-uppercase tw-tracking-normal">
             {t(translations.originsLaunchpad.saleDay.title)}
-          </TitleContent>
+          </div>
         </div>
       )}
 

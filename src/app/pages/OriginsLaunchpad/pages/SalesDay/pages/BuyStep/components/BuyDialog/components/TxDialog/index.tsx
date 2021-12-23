@@ -4,7 +4,6 @@ import { ResetTxResponseInterface } from 'app/hooks/useSendContractTx';
 import { TxStatus } from 'store/global/transactions-store/types';
 import { detectWeb3Wallet, prettyTx } from 'utils/helpers';
 import { LinkToExplorer } from 'app/components/LinkToExplorer';
-import styles from './dialog.module.scss';
 import { useWalletContext } from '@sovryn/react-wallet';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -13,9 +12,10 @@ import { usePrevious } from 'app/hooks/usePrevious';
 import { AssetSymbolRenderer } from 'app/components/AssetSymbolRenderer';
 import { weiToFixed } from 'utils/blockchain/math-helpers';
 import { DisplayDate } from 'app/components/ActiveUserLoanContainer/components/DisplayDate';
-import { CloseButton } from './styled';
 import { StatusComponent } from './StatusComponent';
 import { WalletLogo, getWalletName } from './WalletLogo';
+
+import styles from './dialog.module.scss';
 
 interface ITxDialogProps {
   tx: ResetTxResponseInterface;
@@ -52,9 +52,9 @@ export const TxDialog: React.FC<ITxDialogProps> = ({ tx, onUserConfirmed }) => {
       onClose={close}
       className={styles.dialog}
     >
-      <CloseButton onClick={close}>
+      <button className={styles.closeButton} onClick={close}>
         <span className="tw-sr-only">Close Dialog</span>
-      </CloseButton>
+      </button>
       {tx.status === TxStatus.PENDING_FOR_USER && (
         <>
           <div className="tw-mb-24 tw-normal-case tw-text-center tw-text-2xl tw-font-semibold">

@@ -1,14 +1,10 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import {
-  InstructionsSectionsWrapper,
-  InstructionsTitle,
-  MainInstructionsWrapper,
-} from './styled';
 import { AssetSymbolRenderer } from 'app/components/AssetSymbolRenderer';
 import { Asset } from 'types';
 import imgInstructions from 'assets/images/OriginsLaunchpad/FishSale/small_NFT.svg';
+import styles from './index.module.scss';
 
 interface IInstructionsProps {
   saleName: string;
@@ -18,12 +14,12 @@ export const Instructions: React.FC<IInstructionsProps> = ({ saleName }) => {
   const { t } = useTranslation();
 
   return (
-    <InstructionsSectionsWrapper>
-      <InstructionsTitle>
+    <div className={styles.sectionsWrapper}>
+      <div className={styles.title}>
         {t(translations.originsLaunchpad.saleDay.buyStep.instructions.title)}:
-      </InstructionsTitle>
+      </div>
 
-      <MainInstructionsWrapper>
+      <div className={styles.mainWrapper}>
         <div>
           •{' '}
           <Trans
@@ -62,9 +58,9 @@ export const Instructions: React.FC<IInstructionsProps> = ({ saleName }) => {
             tOptions={{ discordUrl: 'discord.com/invite/J22WS6z' }}
           />
         </div>
-      </MainInstructionsWrapper>
+      </div>
 
       <img src={imgInstructions} alt="instructions" />
-    </InstructionsSectionsWrapper>
+    </div>
   );
 };

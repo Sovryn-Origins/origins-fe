@@ -1,5 +1,5 @@
 import React from 'react';
-import cn from 'classnames';
+import classNames from 'classnames';
 
 interface IInfoItemProps {
   label: string;
@@ -14,7 +14,13 @@ export const InfoItem: React.FC<IInfoItemProps> = ({
   className,
   isLastItem,
 }) => (
-  <div className={cn('tw-text-left', isLastItem ? '' : 'tw-mb-8', className)}>
+  <div
+    className={classNames(
+      'tw-text-left',
+      isLastItem ? '' : 'tw-mb-8',
+      className,
+    )}
+  >
     <div className="tw-text-base tw-font-rowdies tw-font-light tw-tracking-normal tw-uppercase tw-mb-3">
       {label}
     </div>

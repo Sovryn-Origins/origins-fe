@@ -1,0 +1,15 @@
+.title {
+  @apply tw-text-base tw-uppercase tw-leading-5 tw-trading-normal tw-mb-4;
+  color: #f4f4f4;
+}
+
+.mainWrapper {
+  @apply tw-text-sm tw-leading-normal tw-text-white tw-font-thin tw-trading-normal;
+  margin-bottom: 4.125rem;
+}
+
+.sectionsWrapper {
+  @apply tw-text-left;
+  margin-left: 5.75rem;
+  max-width: 26.6875rem;
+}
