@@ -7,8 +7,7 @@ import {
   useRouteMatch,
   useLocation,
 } from 'react-router-dom';
-import classNames from 'classnames';
-// import imgTitle from 'assets/images/OriginsLaunchpad/FishSale/title_image.png';
+
 import { TitleContent } from './styled';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -17,22 +16,25 @@ import { AccessCodeVerificationStep } from './pages/AccessCodeVerificationStep/i
 import { useIsConnected } from 'app/hooks/useAccount';
 import { ImportantInformationStep } from './pages/ImportantInformationStep';
 import { BuyStep } from './pages/BuyStep';
-import { SaleSummary } from './components/SaleSummary';
-import { useGetSaleInformation } from '../../hooks/useGetSaleInformation';
+import { ISaleInformation } from '../../types';
 import saleStorage from './storage';
 
 interface ISalesDayProps {
   tierId: number;
+  info: ISaleInformation;
   saleName: string;
 }
 
-export const SalesDay: React.FC<ISalesDayProps> = ({ tierId, saleName }) => {
+export const SalesDay: React.FC<ISalesDayProps> = ({
+  tierId,
+  info,
+  saleName,
+}) => {
   const { t } = useTranslation();
   const { url } = useRouteMatch();
   const location = useLocation();
   const history = useHistory();
   const connected = useIsConnected();
-  const info = useGetSaleInformation(tierId);
 
   const setStep = (step: number) => {
     saleStorage.saveData({ step });
@@ -81,11 +83,6 @@ export const SalesDay: React.FC<ISalesDayProps> = ({ tierId, saleName }) => {
         </Route>
         <Redirect to={`${url}/1`} />
       </Switch>
-
-      <SaleSummary
-        saleInfo={info}
-        className={classNames({ 'tw-mt-56': info.isSaleActive })}
-      />
     </div>
   );
 };
