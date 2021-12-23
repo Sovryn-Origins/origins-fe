@@ -4,15 +4,13 @@
   border: 5px solid #000000;
   background-origin: border-box;
 
-  @media (min-width: 576px) {
-    @apply tw-py-10 tw-px-4;
+  @screen xl {
+    @apply tw-flex-row tw-flex-wrap tw-justify-evenly tw-p-4;
+    max-width: 1100px;
   }
 
-  @media (min-width: 1200px) {
-    @apply tw-flex-row tw-p-4;
-  }
-
-  @media (min-width: 1768px) {
-    @apply tw-p-10;
+  @screen 2xl {
+    @apply tw-justify-between tw-p-10;
+    max-width: none;
   }
 }

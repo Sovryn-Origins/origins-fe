@@ -3,7 +3,7 @@
   width: 14.063rem;
   height: 18.75rem;
 
-  @media (min-width: 576px) {
+  @screen md {
     @apply tw-mb-0;
   }
 }

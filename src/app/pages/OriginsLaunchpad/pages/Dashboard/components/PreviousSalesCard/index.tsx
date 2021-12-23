@@ -34,7 +34,7 @@ export const PreviousSalesCard: React.FC<IPreviousSalesCardProps> = ({
   return (
     <div
       className={cn(
-        'tw-flex tw-min-w-100 tw-flex-col tw-items-center sm:tw-flex-row xl:tw-max-w-screen-xl tw-px-3',
+        'tw-flex lg:tw-w-fit tw-flex-col tw-items-center sm:tw-flex-row tw-px-3 xl:tw-my-4',
         className,
       )}
     >
@@ -42,7 +42,7 @@ export const PreviousSalesCard: React.FC<IPreviousSalesCardProps> = ({
         style={{ backgroundImage: `url(${backgroundImage})` }}
         className={cn(styles.cardImage, cardClassName)}
       ></div>
-      <div className="tw-flex tw-flex-col tw-justify-center tw-ml-6 xl:tw-ml-4">
+      <div className="tw-flex tw-flex-col tw-justify-center tw-ml-6 xl:tw-ml-4 tw-w-40">
         <InfoRow
           label={t(
             translations.originsLaunchpad.previousSales.projectCard.date,
