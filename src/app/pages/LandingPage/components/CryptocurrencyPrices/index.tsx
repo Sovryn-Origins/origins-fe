@@ -6,6 +6,7 @@ import { bignumber } from 'mathjs';
 import { translations } from 'locales/i18n';
 import { IPairs, IAssets, IAssetData } from './types';
 import { AssetsDictionary } from 'utils/dictionaries/assets-dictionary';
+import { TradingAssets } from 'types/asset';
 import { AssetSymbolRenderer } from 'app/components/AssetSymbolRenderer';
 import { numberToUSD, toNumberFormat } from 'utils/display-text/format';
 import { SkeletonRow } from 'app/components/Skeleton/SkeletonRow';
@@ -22,8 +23,6 @@ interface ICryptocurrencyPricesProps {
   className?: string;
 }
 
-const listingTokens = ['USDT', 'RBTC', 'SOV', 'FISH', 'MYNT', 'ZERO', 'OG'];
-
 export const CryptocurrencyPrices: React.FC<ICryptocurrencyPricesProps> = ({
   pairs,
   assetData,
@@ -37,7 +36,7 @@ export const CryptocurrencyPrices: React.FC<ICryptocurrencyPricesProps> = ({
     if (!pairs) return [];
     return Object.keys(pairs)
       .map(key => pairs[key])
-      .filter(pair => listingTokens.includes(pair.base_symbol))
+      .filter(pair => TradingAssets.some(asset => pair.base_symbol === asset))
       .filter(pair => pair);
   }, [pairs]);
 

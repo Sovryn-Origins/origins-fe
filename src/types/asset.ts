@@ -25,3 +25,13 @@ export const AcceptedCurrencies: Array<Asset> = [
   Asset.XUSD,
   Asset.SOV,
 ];
+
+export const TradingAssets = [
+  Asset.USDT,
+  Asset.RBTC,
+  Asset.SOV,
+  Asset.FISH,
+  Asset.MYNT,
+  Asset.ZERO,
+  Asset.OG,
+];
