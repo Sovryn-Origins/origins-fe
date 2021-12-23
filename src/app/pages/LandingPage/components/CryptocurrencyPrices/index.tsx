@@ -146,7 +146,7 @@ interface IRowProps {
   assetLoading: boolean;
 }
 
-export const Row: React.FC<IRowProps> = ({
+const Row: React.FC<IRowProps> = ({
   assetData,
   assetDetails,
   price24h,
@@ -225,7 +225,7 @@ interface IPriceChangeProps {
   value: number;
 }
 
-export const PriceChange: React.FC<IPriceChangeProps> = ({ value }) => {
+const PriceChange: React.FC<IPriceChangeProps> = ({ value }) => {
   let numberString = toNumberFormat(value || 0, 2);
   numberString =
     numberString === '0.00' || numberString === '-0.00' ? '0' : numberString;
