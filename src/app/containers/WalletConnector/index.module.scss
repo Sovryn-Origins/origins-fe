@@ -40,3 +40,27 @@
     }
   }
 }
+
+.button {
+  @apply xl:tw-text-black tw-uppercase tw-border-none tw-bg-none
+    tw-text-white tw-text-center;
+  width: 3rem;
+  height: 3rem;
+
+  @screen xl {
+    @apply tw-border tw-border-solid tw-rounded-xl tw-whitespace-nowrap tw-w-auto tw-m-0
+      tw-font-normal tw-font-rowdies tw-text-base tw-capitalize;
+    height: 2.5rem;
+    padding: 0.313rem 1.625rem;
+    letter-spacing: -1px;
+    transition: all .3s;
+    
+    &:hover {
+      background: rgba(254,192,4, 0.25) !important;
+    }
+
+    &:active, &:focus {
+      background: rgba(254,192,4, 0.5) !important;
+    }
+  }
+}
