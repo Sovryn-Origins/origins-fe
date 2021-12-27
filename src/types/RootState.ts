@@ -4,6 +4,8 @@ import { EventsStoreState } from '../store/global/events-store/types';
 import { TransactionsStoreState } from '../store/global/transactions-store/types';
 import { MaintenanceStoreState } from '../store/global/maintenance-store/types';
 import { FastBtcDialogState } from 'app/containers/FastBtcDialog/types';
+import { BridgeDepositPageState } from 'app/pages/BridgeDepositPage/types';
+import { BridgeWithdrawPageState } from 'app/pages/BridgeWithdrawPage/types';
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
 /*
@@ -17,5 +19,7 @@ export interface RootState {
   transactionsState?: TransactionsStoreState;
   maintenanceState?: MaintenanceStoreState;
   fastBtcDialog?: FastBtcDialogState;
+  bridgeDepositPage?: BridgeDepositPageState;
+  bridgeWithdrawPage?: BridgeWithdrawPageState;
   // [INSERT NEW REDUCER KEY ABOVE] < Needed for generating containers seamlessly
 }
