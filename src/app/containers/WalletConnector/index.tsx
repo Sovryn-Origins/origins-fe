@@ -43,7 +43,7 @@ const WalletConnectorContainer: React.FC<Props> = props => {
   };
 
   return (
-    <div className="tw-justify-center tw-items-center tw-hidden md:tw-flex">
+    <div className="tw-justify-center tw-items-center tw-flex">
       {!connected && !address ? (
         <button
           onClick={() => connect()}
