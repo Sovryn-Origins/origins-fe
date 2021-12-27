@@ -5,7 +5,7 @@ import { walletService } from '@sovryn/react-wallet';
 import { isWeb3Wallet, ProviderType } from '@sovryn/wallet';
 import { RpcNetwork } from './rpc-network';
 import { getBridgeChainId } from '../helpers';
-import { BridgeNetworkDictionary } from '../dictionaries/bridge-network-dictionary';
+import { BridgeNetworkDictionary } from 'app/pages/BridgeDepositPage/dictionaries/bridge-network-dictionary';
 import { NetworkModel } from 'types/network-model';
 import { AssetModel } from 'utils/models/asset-model';
 

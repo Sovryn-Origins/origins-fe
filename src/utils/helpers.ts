@@ -5,7 +5,7 @@ import { gas } from './blockchain/gas-price';
 import { Asset, Chain, ChainId } from '../types';
 import { ProviderType } from '@sovryn/wallet';
 import { walletService } from '@sovryn/react-wallet';
-import { BridgeNetworkDictionary } from './dictionaries/bridge-network-dictionary';
+import { BridgeNetworkDictionary } from 'app/pages/BridgeDepositPage/dictionaries/bridge-network-dictionary';
 
 export const isObjectEmpty = (obj: {}) => {
   return Object.keys(obj).length === 0 && obj.constructor === Object;

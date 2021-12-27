@@ -1,7 +1,7 @@
 import { RpcNode } from './rpc-node';
 import { ChainId } from '../../types';
 import { currentChainId } from 'utils/classifiers';
-import { BridgeNetworkDictionary } from '../dictionaries/bridge-network-dictionary';
+import { BridgeNetworkDictionary } from 'app/pages/BridgeDepositPage/dictionaries/bridge-network-dictionary';
 
 export class RpcNetwork {
   private static networks: Map<ChainId, RpcNode> = new Map<ChainId, RpcNode>();
