@@ -24,7 +24,6 @@ export function useProposalList(page: number, limit: number = 0) {
 
     const get = async () => {
       let adminItemsCount = 0;
-      let ownerItemsCount = 0;
 
       await aggregate(
         [
@@ -39,7 +38,7 @@ export function useProposalList(page: number, limit: number = 0) {
         config,
       );
 
-      setTotal(adminItemsCount + ownerItemsCount);
+      setTotal(adminItemsCount);
 
       const adminItems = await getProposalsOf(
         'governorAdmin',
@@ -49,9 +48,7 @@ export function useProposalList(page: number, limit: number = 0) {
         limit,
       );
 
-      const merged = [...adminItems].sort(
-        (a, b) => b.startBlock - a.startBlock,
-      );
+      const merged = adminItems.sort((a, b) => b.startBlock - a.startBlock);
 
       if (limit) {
         return merged.slice(0, limit);
