@@ -5,17 +5,19 @@
 
 .sunPatternWrapper {
   @apply tw-relative tw-w-full tw-flex tw-flex-col tw-justify-center tw-bg-left-top tw-bg-no-repeat tw-bg-cover;
-  padding-top: 32%;
-  min-height: 350px;
+  padding-top: 19.25rem;
+  max-height: 19.25rem;
   background-image: url('../../../../../assets/images/sun-pattern-bg.svg');
   background-origin: border-box;
 }
 
 .welcomeTitle {
-  @apply tw-font-rowdies tw-text-white tw-uppercase md:tw-w-1/2 tw-mx-auto;
+  @apply tw-font-rowdies tw-text-white tw-uppercase tw-mx-auto;
   line-height: 4.188rem;
   font-size: 2.5rem;
+  width: 25.875rem;
   @screen lg {
+    @apply tw-w-1/2;
     font-size: 3.5rem;
   }
   @screen xl {

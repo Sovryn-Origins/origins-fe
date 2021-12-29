@@ -1,8 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-
-// import { BannerPromotion } from '../BannerPromotion';
 import styles from './index.module.scss';
 
 export const TopBanner = () => {
@@ -16,7 +14,6 @@ export const TopBanner = () => {
           </p>
         </div>
       </div>
-      {/* <BannerPromotion /> */}
     </div>
   );
 };
