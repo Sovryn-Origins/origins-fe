@@ -166,7 +166,10 @@ const Row: React.FC<IRowProps> = ({
             alt={assetDetails.symbol}
           />
           <strong className="tw-ml-4">
-            <AssetSymbolRenderer asset={assetDetails.asset} />
+            <AssetSymbolRenderer
+              className="tw-font-inter"
+              asset={assetDetails.asset}
+            />
           </strong>
         </td>
 
