@@ -31,7 +31,7 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({ className }) => {
       </p>
       <ChartD3 />
       <p className={styles.bctitle}>Why Bonding Curve?</p>
-      <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 md:tw-gap-4">
+      <div className="tw-max-w-4xl tw-mx-auto tw-grid tw-grid-cols-1 md:tw-grid-cols-3 md:tw-gap-4">
         {[0, 1, 2].map(i => (
           <CharacterItem
             key={i}
@@ -62,7 +62,7 @@ const CharacterItem: React.FC<ICharacterItemProps> = ({
   description,
 }) => {
   return (
-    <div className="tw-mb-8 tw-max-w-xl tw-mx-auto lg:tw-max-w-max">
+    <div className="tw-mb-8 tw-max-w-xl tw-mx-auto lg:tw-w-60">
       <p className={styles.itemTitle}>{title}</p>
       <p className={styles.itemDescription}>{description}</p>
     </div>
