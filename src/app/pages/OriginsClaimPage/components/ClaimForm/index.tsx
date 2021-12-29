@@ -99,16 +99,17 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
         <div>
           <FormGroup
             label={t(translations.originsClaim.claimForm.selectToken)}
-            labelClassName="tw-text-sm tw-mb-4 tw-uppercase tw-font-rowdies"
+            labelClassName="tw-text-base tw-leading-8 tw-mb-4 tw-uppercase tw-font-rowdies"
             className="tw-mb-12"
           >
             <select
-              className="tw-font-inter tw-text-gray-6 tw-text-lg tw-w-full tw-py-2 tw-px-2 tw-rounded-lg"
+              className="tw-font-rowdies tw-text-lg tw-leading-8 tw-text-gray-6 tw-w-full tw-py-2 tw-px-2 tw-rounded-lg"
               value={tierId}
               onChange={e => setTierId(Number(e.target.value))}
             >
               <option
                 className="tw-text-left tw-font-inter tw-text-gray-6"
+                style={{ fontSize: 13 }}
                 value={0}
               >
                 {t(translations.originsClaim.claimForm.chooseToken)}
@@ -116,7 +117,7 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
               {tierRows.map(tierRow => (
                 <option
                   key={tierRow.name}
-                  className="tw-text-black tw-font-inter"
+                  className="tw-text-black tw-font-rowdies tw-leading-8"
                   value={tierRow.tier}
                 >
                   {tierRow.name}
@@ -126,10 +127,11 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
           </FormGroup>
           <FormGroup
             label={t(translations.originsClaim.claimForm.availble)}
-            labelClassName="tw-text-sm tw-mb-4 tw-uppercase tw-font-rowdies"
+            labelClassName="tw-text-base tw-leading-8 tw-mb-4 tw-uppercase tw-font-rowdies"
           >
             <Input
               className="tw-max-w-none"
+              inputClassName="tw-font-rowdies tw-font-normal"
               value={weiToNumberFormat(availableAmount, 4)}
               readOnly={false}
               appendElem={token ? <AssetRenderer asset={token} /> : undefined}
@@ -161,13 +163,13 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
               <Button
                 disabled={!tierId || availableAmount === '0'}
                 onClick={send}
-                className="tw-mx-auto tw-uppercase"
+                className="tw-mx-auto tw-uppercase tw-text-sm tw-leading-8"
                 text={t(translations.originsClaim.claimForm.cta)}
               />
             </div>
           )}
 
-          <div className="tw-text-sm tw-font-light tw-font-rowdies tw-uppercase tw-mt-8">
+          <div className="tw-text-sm tw-text-center tw-leading-8 tw-font-light tw-font-rowdies tw-uppercase tw-mt-8">
             {token &&
               t(translations.originsClaim.claimForm.note, {
                 date: new Date(unlockTime).toLocaleString(),
