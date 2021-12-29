@@ -19,7 +19,7 @@ export const Footer: React.FC = () => {
       style={{ backgroundImage: `url(${footerBackground})` }}
     >
       <div className="tw-max-w-screen-xl tw-w-full tw-mx-auto">
-        <h6 className="tw-font-consolas tw-text-lg tw-text-center tw-w-full">
+        <h6 className="tw-font-rowdies tw-font-bold tw-text-lg tw-text-center tw-w-full">
           "
           <Trans
             i18nKey={translations.footer.title}
