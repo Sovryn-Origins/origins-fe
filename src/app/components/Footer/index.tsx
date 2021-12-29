@@ -33,7 +33,7 @@ export const Footer: React.FC = () => {
               className="tw-mx-4"
               target="_blank"
               rel="noreferrer"
-              href="https://discord.gg/NrvH8NHU"
+              href="https://discord.gg/9dyPcpFEaZ"
             >
               <img src={discordIcon} alt="Discord" />
             </a>
