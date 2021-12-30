@@ -22,7 +22,7 @@ export function CurrentVests(props: Props) {
         <div className="tw-rounded-lg sovryn-table tw-pt-1 tw-pb-0 tw-mb-5 max-h-96 tw-overflow-y-auto">
           <StyledTable className="tw-w-full">
             <thead>
-              <tr>
+              <tr style={{ lineHeight: '30px' }}>
                 <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left">
                   {t(translations.stake.currentVests.lockedAmount)}
                 </th>

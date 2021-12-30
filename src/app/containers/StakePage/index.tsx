@@ -42,6 +42,7 @@ import { useStakeDelegate } from '../../hooks/staking/useStakeDelegate';
 import { useVestingDelegate } from '../../hooks/staking/useVestingDelegate';
 import { useMaintenance } from 'app/hooks/useMaintenance';
 import { ConnectWalletWarning } from 'app/components/ConnectWalletWarning';
+import styles from './index.module.scss';
 
 const now = new Date();
 
@@ -378,7 +379,7 @@ const InnerStakePage: React.FC = () => {
           <div className="tw-container tw-mx-auto tw-px-6 tw-mb-44">
             <h2
               className="tw-text-black tw-mb-6 tw-pl-10 tw-text-center tw-text-xl tw-font-rowdies tw-font-semibold tw-uppercase"
-              style={{ marginTop: '4.5rem' }}
+              style={{ marginTop: '4.5rem', lineHeight: '30px' }}
             >
               {t(translations.stake.title)}
             </h2>
@@ -387,7 +388,7 @@ const InnerStakePage: React.FC = () => {
                 <p className="tw-text-base tw--mt-1 tw-mb-0 tw-font-rowdies tw-uppercase">
                   {t(translations.stake.total)}
                 </p>
-                <div className="tw-text-3xl tw-uppercase tw-font-rowdies tw-mt-6 tw-mb-12">
+                <div className={styles.cardTitle}>
                   {weiTo4(balanceOf.value)} OG
                   {balanceOf.loading && (
                     <Spinner size={20} className="tw-inline-block tw-m-2" />
@@ -417,7 +418,7 @@ const InnerStakePage: React.FC = () => {
                 {ogBalance !== '0' && !stakingLocked ? (
                   <button
                     type="button"
-                    className="tw-bg-primary tw-font-normal tw-bg-opacity-40 hover:tw-text-gray-1 focus:tw-outline-none focus:tw-bg-opacity-50 hover:tw-bg-opacity-40 tw-transition tw-duration-500 tw-ease-in-out tw-text-sm tw-text-black tw-py-3 tw-px-8 tw-border tw-transition-colors tw-duration-300 tw-ease-in-out tw-border-primary tw-rounded-lg tw-font-rowdies tw-uppercase"
+                    className={styles.addNewStake}
                     onClick={() => {
                       setTimestamp(0);
                       setAmount('0');
@@ -456,7 +457,7 @@ const InnerStakePage: React.FC = () => {
                 <p className="tw-text-base tw--mt-1 tw-font-rowdies tw-uppercase">
                   {t(translations.stake.votingPower)}
                 </p>
-                <div className="tw-text-3xl tw-mt-6 tw-mb-12 tw-font-rowdies tw-uppercase">
+                <div className={styles.cardTitle}>
                   {weiTo4(voteBalance.value)}
                   {voteBalance.loading && (
                     <Spinner size={20} className="tw-inline-block tw-m-2" />

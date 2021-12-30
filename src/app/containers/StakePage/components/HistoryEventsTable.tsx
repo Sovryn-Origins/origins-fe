@@ -58,20 +58,23 @@ export function HistoryEventsTable() {
         <div className="tw-rounded-lg tw-sovryn-table tw-pt-1 tw-pb-0 tw-mb-5">
           <StyledTable className="tw-w-full">
             <thead>
-              <tr className="tw-uppercase tw-font-consolos">
-                <th className="tw-font-bold tw-font-consolas tw-text-left tw-text-lg tw-pl-0 assets">
+              <tr
+                className="tw-capitalize tw-font-rowdies tw-font-light"
+                style={{ lineHeight: '30px' }}
+              >
+                <th className="tw-text-left tw-text-lg tw-pl-0 assets">
                   {t(translations.stake.history.stakingDate)}
                 </th>
-                <th className="tw-font-bold tw-font-consolas tw-text-left tw-text-lg">
+                <th className="tw-text-left tw-text-lg">
                   {t(translations.stake.history.action)}
                 </th>
-                <th className="tw-font-bold tw-font-consolas tw-text-left tw-text-lg">
+                <th className="tw-text-left tw-text-lg">
                   {t(translations.stake.history.stakedAmount)}
                 </th>
-                <th className="tw-font-bold tw-font-consolas tw-text-left tw-text-lg tw-hidden lg:tw-table-cell">
+                <th className="tw-text-left tw-text-lg tw-hidden lg:tw-table-cell">
                   {t(translations.stake.history.hash)}
                 </th>
-                <th className="tw-font-bold tw-font-consolas tw-text-left tw-text-lg tw-hidden lg:tw-table-cell">
+                <th className="tw-text-left tw-text-lg tw-hidden lg:tw-table-cell">
                   {t(translations.stake.history.status)}
                 </th>
               </tr>
@@ -103,6 +106,7 @@ export function HistoryEventsTable() {
                         <button
                           type="button"
                           className="tw-bg-primary tw-bg-opacity-40 tw-text-black tw-tracking-normal hover:tw-text-gray-1 hover:tw-no-underline hover:tw-bg-primary hover:tw-bg-opacity-30 tw-mr-1 xl:tw-mr-7 tw-px-4 tw-py-2 tw-transition tw-duration-500 tw-ease-in-out tw-rounded-lg tw-border tw-border-primary tw-text-sm tw-font-light tw-font-rowdies tw-uppercase"
+                          style={{ lineHeight: '30px' }}
                           onClick={getHistory}
                         >
                           {t(translations.stake.history.viewHistory)}
