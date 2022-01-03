@@ -34,6 +34,7 @@ import { useAccount } from '../../hooks/useAccount';
 import { useTradeHistoryRetry } from '../../hooks/useTradeHistoryRetry';
 import { Nullable } from 'types';
 import { bondHistory } from '../../hooks/useBondHistory';
+import { useSwapsExternal_getSwapExpectedReturn } from '../../hooks/swap-network/useSwapsExternal_getSwapExpectedReturn';
 interface AssetRowData {
   status: TxStatus;
   timestamp: number;
@@ -44,7 +45,7 @@ interface AssetRowData {
   };
 }
 
-export function SwapHistory() {
+export function SwapHistory({ tabState }) {
   const transactions = useSelector(selectTransactionArray);
   const account = useAccount();
   const url = backendUrl[currentChainId];
@@ -55,14 +56,24 @@ export function SwapHistory() {
   const assets = AssetsDictionary.list();
   const [hasOngoingTransactions, setHasOngoingTransactions] = useState(false);
   const retry = useTradeHistoryRetry();
+  const [swapTemp, setSwaptemp] = useState([]) as any;
+  const [bondTemp, setBondTemp] = useState([]) as any;
 
   let cancelTokenSource = useRef<CancelTokenSource>();
-
-  const getBond = useCallback(() => {
-    bondHistory.getPastEvents('MYNT_MarketMaker', 'ClaimBuyOrder', {
-      fromBlock: 0,
-      toBlock: 'latest',
-    });
+  const getBond = useCallback(async () => {
+    let historyList: History[] = [];
+    bondHistory
+      .getPastEvents('MYNT_MarketMaker', 'ClaimBuyOrder', {
+        fromBlock: 0,
+        toBlock: 'latest',
+      })
+      .then(res => {
+        setHistory([]);
+        setCurrentHistory([]);
+        setHistory(res.sort((x, y) => y.timestamp - x.timestamp));
+        setLoading(false);
+      })
+      .catch(e => {});
   }, [account]);
 
   const getData = useCallback(() => {
@@ -90,9 +101,12 @@ export function SwapHistory() {
     setLoading(true);
     setHistory([]);
     setCurrentHistory([]);
-    getData();
-    console.log('>>>>>>BONDHISTORY', getBond());
-  }, [getData, getBond]);
+    if (tabState === true) {
+      getBond();
+    } else {
+      getData();
+    }
+  }, [getData, getBond, tabState]);
 
   //GET HISTORY
   useEffect(() => {

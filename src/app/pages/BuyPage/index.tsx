@@ -60,7 +60,7 @@ export function BuyPage(props: Props) {
                 className="tw-mt-2"
               />
             ) : (
-              <SwapHistory />
+              <SwapHistory tabState={selectedTab} />
             )}
           </div>
         </div>
