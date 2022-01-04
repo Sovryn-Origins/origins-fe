@@ -10,7 +10,7 @@ import { Sovryn } from './index';
 import { ContractName } from '../types/contracts';
 import { contractReader } from './contract-reader';
 import { bignumber } from 'mathjs';
-import { TxStatus, TxType } from '../../store/global/transactions-store/types';
+import { TxType } from '../../store/global/transactions-store/types';
 import { Asset } from '../../types';
 import {
   getContract,
@@ -29,6 +29,7 @@ export interface CheckAndApproveResult {
 class ContractWriter {
   private sovryn: SovrynNetwork;
   private contracts: { [address: string]: Contract } = {};
+  public BATCH_SIZE: number = 10;
 
   constructor() {
     this.sovryn = Sovryn;
@@ -83,23 +84,7 @@ class ContractWriter {
               from: address,
             },
           )
-          .then(tx => {
-            this.sovryn.store().dispatch(
-              txActions.addTransaction({
-                transactionHash: tx as string,
-                approveTransactionHash: null,
-                type: TxType.APPROVE,
-                status: TxStatus.PENDING,
-                loading: false,
-                to: contractName,
-                from: address,
-                value: '0',
-                asset,
-                assetAmount: transferAmount.get(amounts[1]),
-              }),
-            );
-            return tx;
-          });
+          .then(tx => {});
         nonce += 1;
       }
       dispatch(txActions.setLoading(false));
@@ -137,7 +122,6 @@ class ContractWriter {
       );
     } else {
       const { address, abi } = getContract(contractName);
-
       return this.sendByAddress(address, abi, methodName, args, options);
     }
   }
@@ -154,7 +138,6 @@ class ContractWriter {
         const data = this.getCustomContract(address, abi)
           .methods[methodName](...args)
           .encodeABI();
-
         const nonce =
           options.nonce ||
           (await contractReader.nonce(walletService.address.toLowerCase()));
@@ -179,7 +162,6 @@ class ContractWriter {
               chainId: walletService.chainId,
             },
           );
-
           // Browser wallets (extensions) signs and broadcasts transactions themselves
           if (isWeb3Wallet(walletService.providerType as ProviderType)) {
             resolve(signedTxOrTransactionHash);
@@ -227,6 +209,9 @@ class ContractWriter {
     options.data = this.getCustomContract(address, abi)
       .methods[methodName](...args)
       .encodeABI();
+    // const contractMarket = new web3.eth.Contract(abi, address);
+    // var info = contractMarket.getPastEvents('OpenBuyOrder');
+    // console.log('>>id', info);
     return new Promise<number>(resolve => {
       return Sovryn.getWeb3()
         .eth.estimateGas(options)

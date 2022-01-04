@@ -17,7 +17,6 @@ import { ContractName } from 'utils/types/contracts';
 import { useAccount } from './useAccount';
 import { Nullable } from 'types';
 import { gasLimit } from '../../utils/classifiers';
-
 export interface TransactionOptions {
   type?: TxType;
   approveTransactionHash?: Nullable<string>;
@@ -63,6 +62,9 @@ export function useSendContractTx(
       options: TransactionOptions = {},
     ) => {
       setTxId(TxStatus.PENDING_FOR_USER);
+      if (options?.customData?.stage === 'claim') {
+        // setTxId(TxStatus.CLAIMABLE);
+      }
       if (
         !config.hasOwnProperty('gas') &&
         options.approveTransactionHash &&
@@ -71,7 +73,6 @@ export function useSendContractTx(
       ) {
         config.gas = gasLimit[options.type];
       }
-
       contractWriter
         .send(contractName, methodName, args, config)
         .then(e => {
@@ -80,7 +81,7 @@ export function useSendContractTx(
             transactionHash: transactionHash,
             approveTransactionHash: options?.approveTransactionHash || null,
             type: options?.type || TxType.OTHER,
-            status: TxStatus.PENDING,
+            status: TxStatus.CLAIMABLE,
             loading: true,
             to: contractName,
             from: account.toLowerCase(),
@@ -92,7 +93,7 @@ export function useSendContractTx(
           dispatch(actions.addTransaction(txData));
           setTx(txData);
           setTxId(transactionHash);
-          dispatch(actions.closeTransactionRequestDialog());
+          //dispatch(actions.closeTransactionRequestDialog());
         })
         .catch(e => {
           console.error(e.message);
@@ -109,6 +110,13 @@ export function useSendContractTx(
 
   useEffect(() => {
     if (txId && transactions.hasOwnProperty(txId)) {
+      if (transactions[txId].type === 'bonding') {
+        if (
+          transactions[txId].status === 'pending' &&
+          transactions[txId].customData?.stage === 'buy'
+        ) {
+        }
+      }
       setTx(transactions[txId]);
     } else {
       setTx(undefined);
@@ -129,6 +137,7 @@ export function useSendContractTx(
           TxStatus.PENDING_FOR_USER,
           TxStatus.CONFIRMED,
           TxStatus.FAILED,
+          TxStatus.CLAIMING,
         ].includes(txId as TxStatus)
       ? txId
       : TxStatus.PENDING,

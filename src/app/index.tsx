@@ -33,6 +33,7 @@ import { GovernancePage } from './containers/GovernancePage/Loadable';
 import { LandingPage } from './pages/LandingPage/Loadable';
 import { BridgeDepositPage } from './pages/BridgeDepositPage/Loadable';
 import { BridgeWithdrawPage } from './pages/BridgeWithdrawPage/Loadable';
+import { BuyPage } from './pages/BuyPage/Loadable';
 
 import { OriginsLaunchpadPage } from './pages/OriginsLaunchpad/Loadable';
 import { OriginsClaimPage } from './pages/OriginsClaimPage/Loadable';
@@ -75,6 +76,7 @@ export function App() {
             <Route exact path="/wallet" component={WalletPage} />
             <Route path="/launchpad" component={OriginsLaunchpadPage} />
             <Route exact path="/claim" component={OriginsClaimPage} />
+            <Route exact path="/buy" component={BuyPage} />
             <Route
               exact
               path="/cross-chain/deposit"

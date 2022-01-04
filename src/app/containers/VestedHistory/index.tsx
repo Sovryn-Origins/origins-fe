@@ -118,7 +118,6 @@ export function VestedHistory() {
         setLoading(false);
       }
     }
-
     getHistory();
   }, [
     account,

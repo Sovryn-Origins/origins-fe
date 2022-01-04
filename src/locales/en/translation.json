@@ -11,6 +11,9 @@
     "fee": "Tx Fee: {{amount}} (r)BTC",
     "pending": "Pending",
     "confirmed": "Confirmed",
+    "open_buy": "Waiting for claiming",
+    "claimable": "claimable",
+    "claiming": "claiming",
     "failed": "Failed",
     "deposit": "Deposit",
     "withdraw": "Withdraw",
@@ -253,6 +256,7 @@
   },
   "mainMenu": {
     "buySov": "Buy SOV",
+    "buy": "Buy",
     "trade": "Trade",
     "swap": "Swap",
     "marginTrade": "Margin",
@@ -1884,6 +1888,19 @@
     },
     "title": "Buy SOV exclusively on Sovryn!",
     "earn": "Earning with Sovryn"
+  },
+  "buyPage": {
+    "meta": {
+      "title": "Buy SOV!",
+      "description": "Buy SOV!"
+    },
+    "banner": {
+      "title": "Buy SOV!",
+      "cta": "Buy SOV",
+      "send": "send",
+      "receive": "receive"
+    },
+    "title": "Buy SOV exclusively on Sovryn!"
   },
   "addToMargin": {
     "title": "Add to Margin",
