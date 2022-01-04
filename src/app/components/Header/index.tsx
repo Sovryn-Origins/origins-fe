@@ -40,6 +40,7 @@ export function Header() {
     { to: '/wallet', title: t(translations.mainMenu.wallet) },
     { to: '/launchpad', title: t(translations.mainMenu.origins) },
     { to: '/claim', title: t(translations.mainMenu.originsClaim) },
+    { to: '/buy', title: t(translations.mainMenu.buy) },
   ];
 
   const menuItems = pages.map((item, index) => {
@@ -102,6 +103,7 @@ export function Header() {
     PORTFOLIO: 'portfolio',
     LAUNCHPAD: 'launchpad',
     CLAIM: 'claim',
+    BUY: 'buy',
   };
 
   const isSectionOpen = (section: string) => {
@@ -110,6 +112,7 @@ export function Header() {
       [SECTION_TYPE.PORTFOLIO]: ['/wallet'],
       [SECTION_TYPE.LAUNCHPAD]: ['/launchpad'],
       [SECTION_TYPE.CLAIM]: ['/claim'],
+      [SECTION_TYPE.BUY]: ['/buy'],
     };
     return (
       !!section &&
@@ -238,6 +241,18 @@ export function Header() {
                   to="/claim"
                 >
                   {t(translations.mainMenu.claim)}
+                </NavLink>
+              </div>
+              <div
+                className={classNames(styles.menuWrapper, {
+                  [styles.selected]: isSectionOpen(SECTION_TYPE.BUY),
+                })}
+              >
+                <NavLink
+                  className="tw-header-link tw-px-1 tw-uppercase"
+                  to="/buy"
+                >
+                  {t(translations.mainMenu.buy)}
                 </NavLink>
               </div>
             </div>

@@ -13,6 +13,7 @@ import fishIcon from 'assets/images/tokens/babelfish.svg';
 import rdoc from 'assets/images/tokens/rifd.svg';
 import rifToken from 'assets/images/tokens/rif.svg';
 import ogIcon from 'assets/images/tokens/og.png';
+import myntToken from 'assets/images/tokens/mint.svg';
 
 import { AssetDetails } from '../models/asset-details';
 
@@ -105,6 +106,14 @@ export class AssetsDictionary {
       [
         Asset.RIF,
         new AssetDetails(Asset.RIF, 'RIF', 'RIF', 18, rifToken, true),
+      ],
+      [
+        Asset.MYNT,
+        new AssetDetails(Asset.MYNT, 'MYNT', 'MYNT', 18, myntToken, true),
+      ],
+      [
+        Asset.ZERO,
+        new AssetDetails(Asset.ZERO, 'ZERO', 'ZERO', 18, rifToken, true),
       ],
       [Asset.OG, new AssetDetails(Asset.OG, 'OG', 'OG', 18, ogIcon, true)],
     ],

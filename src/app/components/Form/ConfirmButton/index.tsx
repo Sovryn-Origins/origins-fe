@@ -14,13 +14,13 @@ interface Props extends BtnProps {
 const StyledButton = styled.button`
   height: 50px;
   margin: 40px auto 0 auto;
-  border: 1px solid var(--primary);
+  border: 1px solid #17c3b2;
   color: #000;
   padding: 0.75rem 4rem;
   font-size: 0.875rem;
   font-family: 'Rowdies';
   font-weight: 900;
-  background: var(--primary);
+  background: #17c3b2;
   border-radius: 0.75rem;
   text-transform: none;
   line-height: 1;
@@ -28,7 +28,7 @@ const StyledButton = styled.button`
   text-transform: uppercase;
 
   &:hover {
-    background: rgba(254, 192, 4, 0.75);
+    background: #17c3bf;
   }
 
   ${(props: BtnProps) =>

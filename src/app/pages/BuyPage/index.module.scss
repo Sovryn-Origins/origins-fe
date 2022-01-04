@@ -1,0 +1,15 @@
+// new swap page
+.swap-page { 
+  @apply tw-max-w-full tw-my-4 tw-mx-auto;
+
+  @screen lg {
+    margin: 3rem auto;
+  }
+
+  // swap history table
+  .swap-history-table-container {
+    @apply tw-m-auto;
+    max-width: 1544px;
+    margin-top: 95px;
+  }
+}

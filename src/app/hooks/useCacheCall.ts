@@ -36,7 +36,6 @@ export function useCacheCall<T = any>(
 
   useEffect(() => {
     setState(prevState => ({ ...prevState, loading: true, error: null }));
-
     try {
       contractReader
         .call(contractName, methodName, args, account || undefined)

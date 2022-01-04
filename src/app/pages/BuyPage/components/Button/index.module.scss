@@ -1,0 +1,40 @@
+//buy button
+.buy-btn {
+    @apply tw-border tw-border-solid tw-text-white tw-uppercase tw-leading-4 tw-rounded-xl tw-w-full tw-font-extrabold tw-text-2xl;
+    padding: 11px;
+    transition: opacity 0.3s;
+    margin-top: 20px;
+    height: 60px;
+    border-color: #17c3b2;
+    background-color: #17c3b2;
+    &:hover {
+        opacity: 75%;
+    }
+}
+//close button
+.close-btn{
+    @apply tw-w-full tw-border-solid tw-border tw-text-xl 
+    tw-font-extrabold tw-rounded-xl tw-uppercase tw-leading-4;
+    background: rgba(254, 192, 4, 0.05);
+    transition: background 0.3s;
+    margin-top: 40px;
+    padding: 11px;
+    height: 50px;
+    &:hover {
+        opacity: 75%;
+    }
+}
+//confirm button
+.confirm-btn{
+    @apply tw-border-solid tw-border tw-text-black tw-text-sm  tw-font-extrabold tw-rounded-xl tw-uppercase tw-leading-4;
+    margin: 40px auto 0 auto; 
+    padding: 0.75rem 4rem;
+    font-family: 'Rowdies';
+    transition: background 0.3s;
+    height: 50px;
+    border-color: #17c3b2;
+    background-color: #17c3b2;
+    &:hover {
+        opacity: 75%;
+    }
+}
