@@ -77,4 +77,22 @@
     }
   }
 }
+
+.coming-form {
+  @apply tw-px-9 tw-pt-8 tw-pb-12 
+    tw-border tw-border-gray-5 tw-rounded-3xl;
+  background: #161616;
+  border: 1px solid black;
+  width: 530px;
+  min-height: 280px;
+}
+
+.coming-icon-wrapper {
+  @apply tw-flex tw-items-center tw-mt-8 tw-justify-center 
+}
+.coming-text {
+  @apply tw-text-center tw-uppercase tw-mt-8;
+  color: #FEC004;
+  font-size: 24px;
+}
  

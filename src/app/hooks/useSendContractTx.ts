@@ -81,7 +81,7 @@ export function useSendContractTx(
             transactionHash: transactionHash,
             approveTransactionHash: options?.approveTransactionHash || null,
             type: options?.type || TxType.OTHER,
-            status: TxStatus.PENDING,
+            status: TxStatus.CLAIMABLE,
             loading: true,
             to: contractName,
             from: account.toLowerCase(),

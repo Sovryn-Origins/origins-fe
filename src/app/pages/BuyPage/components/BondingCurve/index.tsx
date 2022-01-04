@@ -14,7 +14,7 @@ import { useWeiAmount } from '../../../../hooks/useWeiAmount';
 import { AssetsDictionary } from '../../../../../utils/dictionaries/assets-dictionary';
 import { SwapAssetSelector } from 'app/containers/SwapFormContainer/components/SwapAssetSelector/Loadable';
 import { AmountInput } from '../AmountInput';
-// import swapIcon from '../../../../../assets/images/swap/swap_horizontal.svg';
+import comingIcon from '../../../../../assets/images/swap/coming.svg';
 import swapIcon from '../../../../../assets/images/buy/buy_exchange.svg';
 import settingIcon from '../../../../../assets/images/swap/ic_setting.svg';
 import { SlippageDialog } from 'app/pages/BuySovPage/components/BuyForm/Dialogs/SlippageDialog';
@@ -71,6 +71,8 @@ export function BondingCurve() {
   const [method, setMethod] = useState('buy');
   const [batchId, setBatchId] = useState(0);
   const [hash, setHash] = useState('');
+
+  const comingSoon = false;
 
   useEffect(() => {
     const start = async () => {
@@ -279,99 +281,112 @@ export function BondingCurve() {
         onChange={value => setSlippage(value)}
       />
 
-      {/* <Arbitrage /> */}
-
-      <div className={styles.swapFormContainer}>
-        <div className={styles.swapForm}>
-          <div className={styles.title}>{t(translations.swap.send)}</div>
-          <div className={styles.currency}>
-            <SwapAssetSelector
-              value={sourceToken}
-              items={sourceOptions}
-              placeholder={t(s.fields.currency_placeholder)}
-              onChange={value => setSourceToken(value.key)}
-            />
-          </div>
-          <div className={styles.availableBalance}>
-            <AvailableBalance asset={sourceToken} />
-          </div>
-          <div className={styles.amount}>
-            <AmountInput
-              value={amount}
-              onChange={value => setAmount(value)}
-              asset={sourceToken}
-            />
-          </div>
-        </div>
-        <div className={styles.swapRevertWrapper}>
-          <div
-            className={styles.swapRevert}
-            style={{ backgroundImage: `url(${swapIcon})` }}
-            onClick={onSwapAssert}
-          />
-        </div>
-        <div className={styles.swapForm}>
-          <div className={styles.title}>{t(translations.swap.receive)}</div>
-          <div className={styles.currency}>
-            <SwapAssetSelector
-              value={targetToken}
-              items={targetOptions}
-              placeholder={t(s.fields.currency_placeholder)}
-              onChange={value => setTargetToken(value.key)}
-            />
-          </div>
-          <div className={styles.availableBalance}>
-            <AvailableBalance asset={targetToken} />
-          </div>
-          <div className={styles.amount}>
-            <Input
-              value={weiToFixed(rateByPath, 6)}
-              onChange={value => setAmount(value)}
-              readOnly={true}
-              appendElem={<AssetRenderer asset={targetToken} />}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.swapBtnContainer}>
-        <div className={styles.swapBtnHelper}>
-          <span>
-            {t(translations.swap.minimumReceived)}{' '}
-            {weiToNumberFormat(minReturn, 6)}
-          </span>
-          <img
-            src={settingIcon}
-            alt="settings"
-            onClick={() => setDialogOpen(true)}
-          />
-        </div>
-        {swapLocked && (
-          <ErrorBadge
-            content={
-              <Trans
-                i18nKey={translations.maintenance.swapTrades}
-                components={[
-                  <a
-                    href={discordInvite}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="tw-text-warning tw-text-xs tw-underline hover:tw-no-underline"
-                  >
-                    x
-                  </a>,
-                ]}
+      {comingSoon ? (
+        <>
+          <div className={styles.swapFormContainer}>
+            <div className={styles.swapForm}>
+              <div className={styles.title}>{t(translations.swap.send)}</div>
+              <div className={styles.currency}>
+                <SwapAssetSelector
+                  value={sourceToken}
+                  items={sourceOptions}
+                  placeholder={t(s.fields.currency_placeholder)}
+                  onChange={value => setSourceToken(value.key)}
+                />
+              </div>
+              <div className={styles.availableBalance}>
+                <AvailableBalance asset={sourceToken} />
+              </div>
+              <div className={styles.amount}>
+                <AmountInput
+                  value={amount}
+                  onChange={value => setAmount(value)}
+                  asset={sourceToken}
+                />
+              </div>
+            </div>
+            <div className={styles.swapRevertWrapper}>
+              <div
+                className={styles.swapRevert}
+                style={{ backgroundImage: `url(${swapIcon})` }}
+                onClick={onSwapAssert}
               />
-            }
-          />
-        )}
-        <BuyButton
-          disabled={false}
-          onClick={callSend}
-          text={t(translations.swap.cta)}
-          className={'buy-btn'}
-        />
-      </div>
+            </div>
+            <div className={styles.swapForm}>
+              <div className={styles.title}>{t(translations.swap.receive)}</div>
+              <div className={styles.currency}>
+                <SwapAssetSelector
+                  value={targetToken}
+                  items={targetOptions}
+                  placeholder={t(s.fields.currency_placeholder)}
+                  onChange={value => setTargetToken(value.key)}
+                />
+              </div>
+              <div className={styles.availableBalance}>
+                <AvailableBalance asset={targetToken} />
+              </div>
+              <div className={styles.amount}>
+                <Input
+                  value={weiToFixed(rateByPath, 6)}
+                  onChange={value => setAmount(value)}
+                  readOnly={true}
+                  appendElem={<AssetRenderer asset={targetToken} />}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.swapBtnContainer}>
+            <div className={styles.swapBtnHelper}>
+              <span>
+                {t(translations.swap.minimumReceived)}{' '}
+                {weiToNumberFormat(minReturn, 6)}
+              </span>
+              <img
+                src={settingIcon}
+                alt="settings"
+                onClick={() => setDialogOpen(true)}
+              />
+            </div>
+            {swapLocked && (
+              <ErrorBadge
+                content={
+                  <Trans
+                    i18nKey={translations.maintenance.swapTrades}
+                    components={[
+                      <a
+                        href={discordInvite}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="tw-text-warning tw-text-xs tw-underline hover:tw-no-underline"
+                      >
+                        x
+                      </a>,
+                    ]}
+                  />
+                }
+              />
+            )}
+            <BuyButton
+              disabled={false}
+              onClick={callSend}
+              text={t(translations.swap.cta)}
+              className={'buy-btn'}
+            />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className={styles.swapFormContainer}>
+            <div className={styles.comingForm}>
+              <div className={styles.comingIconWrapper}>
+                <img src={comingIcon} alt="ss" />
+              </div>
+              <p className={styles.comingText}>COMING SOON...</p>
+            </div>
+          </div>
+        </>
+      )}
 
       <TxDialog tx={tx} />
     </>

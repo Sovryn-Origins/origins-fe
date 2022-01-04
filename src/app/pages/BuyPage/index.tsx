@@ -35,6 +35,7 @@ export function BuyPage(props: Props) {
   const { t } = useTranslation();
   const account = useAccount();
   const [selectedTab, setSelectedTab] = useState(false);
+  const comingSoon = false;
 
   return (
     <>
@@ -52,18 +53,24 @@ export function BuyPage(props: Props) {
         </TabbarContainer>
         {!selectedTab && <BuyFormContainer />}
         {selectedTab && <BondingCurve />}
-        <div>
-          <div className={styles.swapHistoryTableContainer}>
-            {!account ? (
-              <SkeletonRow
-                loadingText={t(translations.topUpHistory.walletHistory)}
-                className="tw-mt-2"
-              />
-            ) : (
-              <SwapHistory tabState={selectedTab} />
-            )}
-          </div>
-        </div>
+        {comingSoon || !selectedTab ? (
+          <>
+            <div>
+              <div className={styles.swapHistoryTableContainer}>
+                {!account ? (
+                  <SkeletonRow
+                    loadingText={t(translations.topUpHistory.walletHistory)}
+                    className="tw-mt-2"
+                  />
+                ) : (
+                  <SwapHistory tabState={selectedTab} />
+                )}
+              </div>
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
       </div>
       <Footer />
     </>
