@@ -10,10 +10,10 @@ import {
   SelectItem,
 } from 'app/components/FormSelect';
 import { MenuItem, Text } from '@blueprintjs/core';
-import { StyledButton, CaretElement } from './styled';
 import { isMobile } from 'utils/helpers';
 import arrowDownIcon from 'assets/images/swap/ic_arrow_down.svg';
 import { AssetRenderer } from 'app/components/AssetRenderer';
+import styles from './index.module.scss';
 
 const Selector = Select.ofType<SelectItem>();
 
@@ -66,7 +66,7 @@ export function SwapAssetSelector(props: Props) {
         targetTagName: 'div',
       }}
     >
-      <StyledButton>
+      <button className={styles.button}>
         <span className="tw-px-4 tw-pr-8 tw-flex tw-flex-row tw-items-center tw-justify-between tw-flex-shrink-0 tw-flex-grow">
           {selected ? (
             <>
@@ -78,10 +78,10 @@ export function SwapAssetSelector(props: Props) {
             <Text ellipsize>{t(translations.formSelect.selectTradePair)}</Text>
           )}
         </span>
-        <CaretElement>
+        <div className={styles.caretElement}>
           <img src={arrowDownIcon} alt="arrow-down" />
-        </CaretElement>
-      </StyledButton>
+        </div>
+      </button>
     </Selector>
   );
 }
