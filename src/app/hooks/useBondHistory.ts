@@ -41,12 +41,8 @@ class useBondHistory {
     const web3 = new Web3(Web3.givenProvider);
     const { address, abi } = getContract(contractName);
     const contractMarket = new web3.eth.Contract(abi, address);
-    const sovProtocal = new web3.eth.Contract(
-      getContract('sovrynProtocol').abi,
-      getContract('sovrynProtocol').address,
-    );
     const accounts = await web3.eth.getAccounts();
-    const blocks = (await web3.eth.getBlockNumber()) - 50;
+
     var history = await contractMarket.getPastEvents(eventName, {
       fromBlock: 0,
       toBlock: 'latest',

@@ -136,7 +136,7 @@ export function BondingCurve() {
       }
     }
     if (tokens.length > 0) getOptions();
-  }, [account, tokens]);
+  }, [account]);
 
   useEffect(() => {
     var newOptions = [...tokenBalance];
@@ -166,7 +166,7 @@ export function BondingCurve() {
         setTargetToken(newOptions[0].key);
       }
     }
-  }, [tokenBalance, swap]);
+  }, [tokenBalance, swap, sourceToken, targetToken]);
 
   useEffect(() => {
     var newOptions = [...tokenBalance];
@@ -198,7 +198,7 @@ export function BondingCurve() {
         setSourceToken(targetOption[0].key);
       }
     }
-  }, [tokens, tokenBalance, swap]);
+  }, [tokenBalance, swap, sourceToken, targetToken]);
 
   const { value: rateByPath } = useSwapsExternal_getSwapExpectedReturn(
     sourceToken,
@@ -222,11 +222,7 @@ export function BondingCurve() {
     hash,
   );
 
-  const send = useCallback(() => sendExternal(), [
-    targetToken,
-    sourceToken,
-    sendExternal,
-  ]);
+  const send = useCallback(() => sendExternal(), [sendExternal]);
 
   useEffect(() => {
     if (method !== 'buy') send();
@@ -253,7 +249,7 @@ export function BondingCurve() {
         history.replace(location.pathname);
       }
     }
-  }, [tokens, tokenBalance, location.state, location.pathname, history]);
+  }, [tokenBalance, location.state, location.pathname, history]);
 
   const onSwapAssert = () => {
     const _sourceToken = sourceToken;
@@ -263,6 +259,7 @@ export function BondingCurve() {
     setSwap(!swap);
   };
 
+  // eslint-disable-next-line
   const tx = useMemo(() => txExternal, [targetToken, sourceToken, txExternal]);
 
   const callSend = () => {

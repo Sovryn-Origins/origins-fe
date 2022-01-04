@@ -34,7 +34,6 @@ import { useAccount } from '../../hooks/useAccount';
 import { useTradeHistoryRetry } from '../../hooks/useTradeHistoryRetry';
 import { Nullable } from 'types';
 import { bondHistory } from '../../hooks/useBondHistory';
-import { useSwapsExternal_getSwapExpectedReturn } from '../../hooks/swap-network/useSwapsExternal_getSwapExpectedReturn';
 interface AssetRowData {
   status: TxStatus;
   timestamp: number;
@@ -56,12 +55,9 @@ export function SwapHistory({ tabState }) {
   const assets = AssetsDictionary.list();
   const [hasOngoingTransactions, setHasOngoingTransactions] = useState(false);
   const retry = useTradeHistoryRetry();
-  const [swapTemp, setSwaptemp] = useState([]) as any;
-  const [bondTemp, setBondTemp] = useState([]) as any;
 
   let cancelTokenSource = useRef<CancelTokenSource>();
   const getBond = useCallback(async () => {
-    let historyList: History[] = [];
     bondHistory
       .getPastEvents('MYNT_MarketMaker', 'ClaimBuyOrder', {
         fromBlock: 0,
@@ -74,7 +70,7 @@ export function SwapHistory({ tabState }) {
         setLoading(false);
       })
       .catch(e => {});
-  }, [account]);
+  }, []);
 
   const getData = useCallback(() => {
     if (cancelTokenSource.current) {
@@ -256,7 +252,7 @@ function AssetRow({ data, itemFrom, itemTo }: AssetProps) {
       .mul(dollars.value)
       .div(10 ** itemTo.decimals)
       .toFixed(0);
-  }, [dollars.value, data.returnVal._toAmount, itemTo.decimals]);
+  }, [dollars.value, data.returnVal._toAmount, itemTo.decimals, data.status]);
 
   if (data.status !== 'confirmed') {
     return (

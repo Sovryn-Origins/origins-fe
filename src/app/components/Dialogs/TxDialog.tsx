@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { Dialog } from '../../containers/Dialog';
 import { ResetTxResponseInterface } from '../../hooks/useSendContractTx';
 import { TxStatus } from '../../../store/global/transactions-store/types';
@@ -43,7 +43,7 @@ export function TxDialog({ tx, onUserConfirmed, onSuccess }: Props) {
 
   const oldStatus = usePrevious(tx.status);
 
-  const [bonding, setBonding] = useState(null);
+  // const [bonding, setBonding] = useState(null);
 
   useEffect(() => {
     const keys = Object.keys(transactions);
