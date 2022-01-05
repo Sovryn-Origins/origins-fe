@@ -126,9 +126,9 @@ export const ProposalDetail: React.FC = () => {
 
           <div className="tw-text-base tw-text-white tw-font-normal tw-uppercase">
             <p
-              className={`tw-mb-4 tw-text-right ${
-                createdEventLoading && 'tw-skeleton'
-              }`}
+              className={classNames(styles.votingInfo, 'tw-mb-4', {
+                'tw-skeleton': createdEventLoading,
+              })}
             >
               {t(translations.governance.proposalDetail.VotingEnds)}:{' '}
               {dateByBlocks(
@@ -139,9 +139,9 @@ export const ProposalDetail: React.FC = () => {
               )}
             </p>
             <p
-              className={`tw-mb-0 tw-text-right ${
-                createdEventLoading && 'tw-skeleton'
-              }`}
+              className={classNames(styles.votingInfo, 'tw-mb-0', {
+                'tw-skeleton': createdEventLoading,
+              })}
             >
               #{createdEvent?.blockNumber}
             </p>
@@ -154,7 +154,7 @@ export const ProposalDetail: React.FC = () => {
           }`}
         >
           <div className="tw-mr-4 tw-text-right">
-            <span className="tw-text-xl tw-font-normal tw-leading-5 tw-tracking-normal">
+            <span className={styles.votePercent}>
               {(votesForProgressPercents || 0).toLocaleString(undefined, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
@@ -171,7 +171,7 @@ export const ProposalDetail: React.FC = () => {
               }
               placement="top"
             >
-              <p className="tw-text-xl tw-font-light tw-tracking-normal tw-uppercase">
+              <p className={styles.voteCount}>
                 {weiToFixed(data?.forVotes || 0, 0)} votes
               </p>
             </Tooltip2>
@@ -188,7 +188,7 @@ export const ProposalDetail: React.FC = () => {
               )}
           </div>
           <div className="tw-ml-4">
-            <span className="tw-text-xl tw-font-normal tw-leading-5 tw-tracking-normal">
+            <span className={styles.votePercent}>
               {(votesAgainstProgressPercents || 0).toLocaleString(undefined, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
@@ -205,7 +205,7 @@ export const ProposalDetail: React.FC = () => {
               }
               placement="top"
             >
-              <p className="tw-text-xl tw-font-light tw-tracking-normal tw-uppercase">
+              <p className={styles.voteCount}>
                 {weiToFixed(data?.againstVotes || 0, 0)} votes
               </p>
             </Tooltip2>
@@ -217,7 +217,7 @@ export const ProposalDetail: React.FC = () => {
             <div className="tw-mb-12">
               {!showVoteCaster && !(receipt?.value as any)?.hasVoted && (
                 <>
-                  <p className="tw-max-w-md tw-mx-auto tw-mb-4 tw-font-inter tw-font-medium tw-text-black tw-text-base tw-text-center tw-uppercase">
+                  <p className={styles.disclaimer}>
                     {t(
                       translations.governance.proposalDetail.IUnderstandConfirm,
                     )}

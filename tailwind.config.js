@@ -117,6 +117,9 @@ module.exports = {
       minWidth: theme => theme('width'),
       maxWidth: theme => theme('width'),
       height: {},
+      lineHeight: {
+        '30px': '1.875rem',
+      },
       minHeight: theme => theme('height'),
       maxHeight: theme => theme('height'),
       borderRadius: {

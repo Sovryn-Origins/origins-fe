@@ -20,7 +20,7 @@ export const ProposalHistory: React.FC<Props> = props => {
   return (
     <div className="tw-bg-gray-1 tw-px-4 tw-pt-7 tw-pb-9 tw-flex tw-justify-between tw-rounded-lg tw-mt-6">
       <div className="tw-flex tw-justify-between">
-        <div className="tw-font-inter tw-text-trade-long tw-text-base tw-uppercase">
+        <div className="tw-font-inter tw-text-trade-long tw-text-base tw-uppercase tw-leading-30px">
           {t(translations.governance.proposalDetail.proposedBy)}:
         </div>
         <div className="tw-ml-4">
@@ -54,7 +54,7 @@ export const ProposalHistory: React.FC<Props> = props => {
                   </div>
                 }
               >
-                <p className="tw-text-white tw-text-base tw-font-inter tw-tracking-normal tw-cursor-pointer tw-duration-300 hover:tw-opacity-70 tw-transition">
+                <p className="tw-text-white tw-text-base tw-leading-30px tw-font-inter tw-tracking-normal tw-cursor-pointer tw-duration-300 hover:tw-opacity-70 tw-transition">
                   {prettyTx(props.proposal?.proposer) || '0x00000000000000000'}
                 </p>
               </Popover2>
@@ -66,20 +66,20 @@ export const ProposalHistory: React.FC<Props> = props => {
       </div>
 
       <div className="tw-flex tw-justify-between">
-        <div className="tw-text-trade-long tw-text-base tw-uppercase">
+        <div className="tw-font-inter tw-text-trade-long tw-text-base tw-uppercase tw-leading-30px">
           {t(translations.governance.proposalDetail.proposedOn)}:
         </div>
         <div className="tw-ml-4">
           {props.proposal && props.createdEvent ? (
             <>
-              <p className="tw-font-inter tw-mb-2">
+              <p className="tw-font-inter tw-mb-0 tw-leading-30px">
                 {dateByBlocks(
                   props.proposal.startTime,
                   props.createdEvent?.blockNumber,
                   props.createdEvent.blockNumber,
                 )}
               </p>
-              <p className="tw-font-inter tw-mb-0">
+              <p className="tw-font-inter tw-mb-0 tw-leading-30px">
                 #{props.createdEvent.blockNumber}
               </p>
             </>
@@ -93,20 +93,20 @@ export const ProposalHistory: React.FC<Props> = props => {
       </div>
 
       <div className="tw-flex tw-justify-between">
-        <div className="tw-text-trade-long tw-text-base tw-uppercase">
+        <div className="tw-font-inter tw-text-trade-long tw-text-base tw-uppercase tw-leading-30px">
           {t(translations.governance.proposalDetail.deadline)}:
         </div>
         <div className="tw-ml-4">
           {props.proposal ? (
             <>
-              <p className="tw-font-inter tw-mb-2">
+              <p className="tw-font-inter tw-mb-0 tw-leading-30px">
                 {dateByBlocks(
                   props.proposal.startTime,
                   props.createdEvent?.blockNumber,
                   props.proposal.endBlock,
                 )}
               </p>
-              <p className="tw-font-inter tw-mb-0">
+              <p className="tw-font-inter tw-mb-0 tw-leading-30px">
                 #{props.proposal.endBlock}
               </p>
             </>
@@ -120,7 +120,7 @@ export const ProposalHistory: React.FC<Props> = props => {
       </div>
 
       <div>
-        <button className="tw-bg-primary tw-px-6 tw-py-3 tw-rounded-lg tw-text-black tw-text-sm tw-uppercase">
+        <button className="tw-bg-primary tw-px-6 tw-py-3 tw-rounded-lg tw-text-black tw-text-sm tw-uppercase tw-leading-30px">
           Verify On Github
         </button>
       </div>

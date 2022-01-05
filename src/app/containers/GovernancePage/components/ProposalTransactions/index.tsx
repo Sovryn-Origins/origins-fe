@@ -54,7 +54,7 @@ export const ProposalTransactions: React.FC<IProposalTransactionsProps> = ({
         'tw-bg-gray-1 tw-rounded-lg tw-px-8 tw-pt-4 tw-pb-6',
       )}
     >
-      <p className="tw-text-white tw-text-xl tw-uppercase">
+      <p className="tw-text-white tw-text-xl tw-uppercase tw-mb-8">
         {t(translations.governance.proposalDetail.transactions.title)}
       </p>
 

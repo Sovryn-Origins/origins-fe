@@ -193,3 +193,23 @@
   @apply tw-mb-4;
   line-height: 1.875rem;
 }
+
+.votingInfo {
+  @apply tw-text-right;
+  line-height: 1.875rem;
+}
+
+.votePercent {
+  @apply tw-text-xl tw-font-normal tw-leading-5 tw-tracking-normal;
+  line-height: 1.875rem;
+}
+
+.voteCount {
+  @apply tw-text-xl tw-font-normal tw-tracking-normal tw-uppercase;
+  line-height: 1.875rem;
+}
+
+.disclaimer {
+  @apply tw-max-w-md tw-mx-auto tw-mb-4 tw-font-inter tw-font-medium tw-text-black tw-text-base tw-text-center tw-uppercase;
+  line-height: 1.875rem;
+}
