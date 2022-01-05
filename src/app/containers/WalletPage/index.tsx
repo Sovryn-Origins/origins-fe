@@ -47,6 +47,7 @@ export function WalletPage() {
             <div className="tw-mr-2 tw-ml-2">
               <Tab
                 text={t(translations.walletPage.tabs.unlocked)}
+                textClassName="tw-leading-30px"
                 active={activeAssets === 0}
                 onClick={() => setActiveAssets(0)}
               />
@@ -54,6 +55,7 @@ export function WalletPage() {
             <div className="tw-mr-2 tw-ml-2">
               <Tab
                 text={t(translations.walletPage.tabs.vested)}
+                textClassName="tw-leading-30px"
                 active={activeAssets === 1}
                 onClick={() => setActiveAssets(1)}
               />

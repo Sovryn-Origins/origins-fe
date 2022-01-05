@@ -1,0 +1,8 @@
+.tab {
+  @apply tw-font-normal tw-text-sov-white tw-text-sm tw-uppercase tw-mr-8 tw-bg-transparent;
+  padding: 0.313rem 0px;
+
+  &.active {
+    @apply tw-border-b-4 tw-border-solid tw-border-primary;
+  }
+}
