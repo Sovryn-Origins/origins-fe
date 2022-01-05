@@ -58,10 +58,7 @@ export function HistoryEventsTable() {
         <div className="tw-rounded-lg tw-sovryn-table tw-pt-1 tw-pb-0 tw-mb-5">
           <StyledTable className="tw-w-full">
             <thead>
-              <tr
-                className="tw-capitalize tw-font-rowdies tw-font-light"
-                style={{ lineHeight: '30px' }}
-              >
+              <tr className="tw-capitalize tw-font-rowdies tw-font-light tw-leading-30px">
                 <th className="tw-text-left tw-text-lg tw-pl-0 assets">
                   {t(translations.stake.history.stakingDate)}
                 </th>
@@ -105,8 +102,7 @@ export function HistoryEventsTable() {
                       <td colSpan={5} className="tw-text-center tw-font-normal">
                         <button
                           type="button"
-                          className="tw-bg-primary tw-bg-opacity-40 tw-text-black tw-tracking-normal hover:tw-text-gray-1 hover:tw-no-underline hover:tw-bg-primary hover:tw-bg-opacity-30 tw-mr-1 xl:tw-mr-7 tw-px-4 tw-py-2 tw-transition tw-duration-500 tw-ease-in-out tw-rounded-lg tw-border tw-border-primary tw-text-sm tw-font-light tw-font-rowdies tw-uppercase"
-                          style={{ lineHeight: '30px' }}
+                          className="tw-bg-primary tw-bg-opacity-40 tw-text-black tw-leading-30px tw-tracking-normal hover:tw-text-gray-1 hover:tw-no-underline hover:tw-bg-primary hover:tw-bg-opacity-30 tw-mr-1 xl:tw-mr-7 tw-px-4 tw-py-2 tw-transition tw-duration-500 tw-ease-in-out tw-rounded-lg tw-border tw-border-primary tw-text-sm tw-font-light tw-font-rowdies tw-uppercase"
                           onClick={getHistory}
                         >
                           {t(translations.stake.history.viewHistory)}

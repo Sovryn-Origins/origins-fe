@@ -89,7 +89,7 @@ export const CurrentStakes: React.FC<ICurrentStakesProps> = props => {
           )}
           <StyledTable className="tw-w-full tw-text-sov-white">
             <thead>
-              <tr style={{ lineHeight: '30px' }}>
+              <tr className="tw-leading-30px">
                 <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left tw-pl-0">
                   {t(translations.stake.currentStakes.lockedAmount)}
                 </th>
