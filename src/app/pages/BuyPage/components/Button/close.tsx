@@ -1,5 +1,4 @@
 import React from 'react';
-import styled, { css } from 'styled-components/macro';
 import styles from './index.module.scss';
 interface BtnProps {
   onClick: () => void;
