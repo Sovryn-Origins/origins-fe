@@ -114,7 +114,11 @@ export const ProposalDetail: React.FC = () => {
       <div className="proposap-detail">
         <div className="xl:tw-flex tw-justify-between tw-items-start">
           <div className="tw-text-2xl tw-text-white tw-font-normal tw-uppercase">
-            <p className={`tw-mb-4 ${createdEventLoading && 'tw-skeleton'}`}>
+            <p
+              className={classNames(styles.detailDescription, {
+                'tw-skeleton': createdEventLoading,
+              })}
+            >
               {createdEvent?.returnValues?.description.split('.')[0] ||
                 'No description'}
             </p>

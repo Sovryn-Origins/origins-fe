@@ -188,3 +188,8 @@
     @apply tw-no-underline tw-bg-opacity-80;
   }
 }
+
+.detailDescription {
+  @apply tw-mb-4;
+  line-height: 1.875rem;
+}
