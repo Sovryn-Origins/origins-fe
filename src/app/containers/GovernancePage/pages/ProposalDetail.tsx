@@ -115,7 +115,7 @@ export const ProposalDetail: React.FC = () => {
         <div className="xl:tw-flex tw-justify-between tw-items-start">
           <div className="tw-text-2xl tw-text-white tw-font-normal tw-uppercase">
             <p
-              className={classNames(styles.detailDescription, {
+              className={classNames('tw-mb-4 tw-leading-30px', {
                 'tw-skeleton': createdEventLoading,
               })}
             >
@@ -126,7 +126,7 @@ export const ProposalDetail: React.FC = () => {
 
           <div className="tw-text-base tw-text-white tw-font-normal tw-uppercase">
             <p
-              className={classNames(styles.votingInfo, 'tw-mb-4', {
+              className={classNames('tw-text-right tw-leading-30px tw-mb-4', {
                 'tw-skeleton': createdEventLoading,
               })}
             >
@@ -139,7 +139,7 @@ export const ProposalDetail: React.FC = () => {
               )}
             </p>
             <p
-              className={classNames(styles.votingInfo, 'tw-mb-0', {
+              className={classNames('tw-text-right tw-leading-30px tw-mb-0', {
                 'tw-skeleton': createdEventLoading,
               })}
             >
@@ -154,7 +154,7 @@ export const ProposalDetail: React.FC = () => {
           }`}
         >
           <div className="tw-mr-4 tw-text-right">
-            <span className={styles.votePercent}>
+            <span className="tw-text-xl tw-font-normal tw-tracking-normal tw-leading-30px">
               {(votesForProgressPercents || 0).toLocaleString(undefined, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
@@ -171,7 +171,7 @@ export const ProposalDetail: React.FC = () => {
               }
               placement="top"
             >
-              <p className={styles.voteCount}>
+              <p className="tw-text-xl tw-font-normal tw-tracking-normal tw-uppercase tw-leading-30px">
                 {weiToFixed(data?.forVotes || 0, 0)} votes
               </p>
             </Tooltip2>
@@ -188,7 +188,7 @@ export const ProposalDetail: React.FC = () => {
               )}
           </div>
           <div className="tw-ml-4">
-            <span className={styles.votePercent}>
+            <span className="tw-text-xl tw-font-normal tw-leading-30px tw-tracking-normal">
               {(votesAgainstProgressPercents || 0).toLocaleString(undefined, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
@@ -205,7 +205,7 @@ export const ProposalDetail: React.FC = () => {
               }
               placement="top"
             >
-              <p className={styles.voteCount}>
+              <p className="tw-text-xl tw-font-normal tw-tracking-normal tw-uppercase tw-leading-30px">
                 {weiToFixed(data?.againstVotes || 0, 0)} votes
               </p>
             </Tooltip2>
@@ -217,14 +217,14 @@ export const ProposalDetail: React.FC = () => {
             <div className="tw-mb-12">
               {!showVoteCaster && !(receipt?.value as any)?.hasVoted && (
                 <>
-                  <p className={styles.disclaimer}>
+                  <p className="tw-max-w-md tw-mx-auto tw-mb-4 tw-font-inter tw-font-medium tw-text-black tw-text-base tw-text-center tw-uppercase tw-leading-30px">
                     {t(
                       translations.governance.proposalDetail.IUnderstandConfirm,
                     )}
                   </p>
                   <div className="tw-flex tw-justify-center">
                     <button
-                      className={styles.understandButton}
+                      className="tw-bg-primary tw-text-black tw-text-sm tw-leading-30px tw-uppercase tw-px-10 tw-py-2 tw-rounded-lg tw-ml-6 hover:tw-opacity-75"
                       onClick={() => setShowVoteCaster(true)}
                     >
                       {t(translations.governance.proposalDetail.IUnderstand)}

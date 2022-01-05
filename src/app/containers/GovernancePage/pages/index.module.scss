@@ -16,9 +16,8 @@
   .table-header:not(.sub-header) {
     height: 40px;
     th {
-      @apply tw-font-rowdies tw-font-light tw-text-lg tw-text-white tw-p-0 tw-tracking-normal;
+      @apply tw-font-rowdies tw-font-light tw-text-lg tw-text-white tw-leading-30px tw-p-0 tw-tracking-normal;
       height: 45px;
-      line-height: 1.875rem;
     }
   }
   tbody {
@@ -165,51 +164,6 @@
 }
 
 .title {
-  @apply tw-text-black tw-text-center tw-font-rowdies tw-text-xl tw-uppercase tw-pb-12 tw-tracking-normal;
-  line-height: 1.875rem;
+  @apply tw-text-black tw-text-center tw-font-rowdies tw-text-xl tw-leading-30px tw-uppercase tw-pb-12 tw-tracking-normal;
   padding-top: 4.5rem;
-}
-
-.understandButton {
-  @apply tw-bg-primary tw-text-black tw-text-sm tw-uppercase tw-px-10 tw-py-2 tw-rounded-lg tw-ml-6;
-  line-height: 30px;
-
-  &:hover {
-    @apply tw-opacity-75;
-  }
-}
-
-.proposeButton {
-  @apply tw-inline-block tw-text-center tw-px-4 tw-py-2 tw-text-sm tw-font-rowdies tw-font-light tw-uppercase tw-bg-primary tw-bg-opacity-40 tw-rounded-lg tw-border-2 tw-border-solid tw-border-primary tw-tracking-normal;
-  line-height: 1.875rem;
-  color: black !important;
-
-  &:hover {
-    @apply tw-no-underline tw-bg-opacity-80;
-  }
-}
-
-.detailDescription {
-  @apply tw-mb-4;
-  line-height: 1.875rem;
-}
-
-.votingInfo {
-  @apply tw-text-right;
-  line-height: 1.875rem;
-}
-
-.votePercent {
-  @apply tw-text-xl tw-font-normal tw-leading-5 tw-tracking-normal;
-  line-height: 1.875rem;
-}
-
-.voteCount {
-  @apply tw-text-xl tw-font-normal tw-tracking-normal tw-uppercase;
-  line-height: 1.875rem;
-}
-
-.disclaimer {
-  @apply tw-max-w-md tw-mx-auto tw-mb-4 tw-font-inter tw-font-medium tw-text-black tw-text-base tw-text-center tw-uppercase;
-  line-height: 1.875rem;
 }

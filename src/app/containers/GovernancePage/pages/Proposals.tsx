@@ -34,7 +34,7 @@ export function Proposals() {
                 pathname: `${match.url}/propose`,
                 state: { background: location },
               }}
-              className={styles.proposeButton}
+              className="tw-inline-block tw-text-center tw-px-4 tw-py-2 tw-text-sm tw-font-rowdies tw-font-light tw-uppercase tw-bg-primary tw-bg-opacity-40 tw-rounded-lg tw-border-2 tw-border-solid tw-border-primary tw-tracking-normal tw-text-black tw-leading-30px hover:tw-no-underline hover:tw-bg-opacity-80"
             >
               Propose
             </Link>
