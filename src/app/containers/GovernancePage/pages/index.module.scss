@@ -18,7 +18,7 @@
     th {
       @apply tw-font-rowdies tw-font-light tw-text-lg tw-text-white tw-p-0 tw-tracking-normal;
       height: 45px;
-      line-height: 1.375rem;
+      line-height: 1.875rem;
     }
   }
   tbody {
@@ -176,5 +176,15 @@
 
   &:hover {
     @apply tw-opacity-75;
+  }
+}
+
+.proposeButton {
+  @apply tw-inline-block tw-text-center tw-px-4 tw-py-2 tw-text-sm tw-font-rowdies tw-font-light tw-uppercase tw-bg-primary tw-bg-opacity-40 tw-rounded-lg tw-border-2 tw-border-solid tw-border-primary tw-tracking-normal;
+  line-height: 1.875rem;
+  color: black !important;
+
+  &:hover {
+    @apply tw-no-underline tw-bg-opacity-80;
   }
 }
