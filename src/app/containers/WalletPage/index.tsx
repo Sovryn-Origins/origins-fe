@@ -86,6 +86,7 @@ export function WalletPage() {
             <div className="tw-mr-2 tw-ml-2">
               <Tab
                 text={t(translations.topUpHistory.meta.title)}
+                textClassName="tw-font-medium tw-text-xl tw-leading-30px"
                 active={activeHistory === 0}
                 onClick={() => setActiveHistory(0)}
                 theme={Theme.LIGHT}
@@ -94,6 +95,7 @@ export function WalletPage() {
             <div className="tw-mr-2 tw-ml-2">
               <Tab
                 text={t(translations.vestedHistory.title)}
+                textClassName="tw-font-medium tw-text-xl tw-leading-30px"
                 active={activeHistory === 1}
                 onClick={() => setActiveHistory(1)}
                 theme={Theme.LIGHT}

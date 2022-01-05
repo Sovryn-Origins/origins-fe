@@ -289,31 +289,36 @@ function AssetRow({
         <div className="tw-w-full tw-flex tw-flex-row tw-space-x-4 tw-justify-end">
           {item.asset === Asset.RBTC && (
             <ActionButton
-              textClassName="tw-uppercase"
+              textClassName="tw-uppercase tw-leading-30px"
               text={t(translations.userAssets.actions.buy)}
               onClick={() => onTransack()}
             />
           )}
           {item.asset === Asset.RBTC && (
             <ActionButton
-              textClassName="tw-uppercase"
+              textClassName="tw-uppercase tw-leading-30px"
               text={t(translations.userAssets.actions.fastBtc)}
               onClick={() => onFastBtc()}
             />
           )}
           {[Asset.USDT, Asset.RDOC].includes(item.asset) && (
             <ActionButton
-              textClassName="tw-uppercase"
+              textClassName="tw-uppercase tw-leading-30px"
               text={t(translations.userAssets.actions.convert)}
               onClick={() => onConvert(item.asset)}
             />
           )}
           {[Asset.SOV, Asset.ETH, Asset.XUSD, Asset.BNB].includes(
             item.asset,
-          ) && <BridgeLink textClassName="tw-uppercase" asset={item.asset} />}
+          ) && (
+            <BridgeLink
+              textClassName="tw-uppercase tw-leading-30px"
+              asset={item.asset}
+            />
+          )}
           {item.asset === Asset.WRBTC && (
             <ActionButton
-              textClassName="tw-uppercase"
+              textClassName="tw-uppercase tw-leading-30px"
               text={t(translations.userAssets.actions.unwrap)}
               onClick={onUnWrap}
             />
