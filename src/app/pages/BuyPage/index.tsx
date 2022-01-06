@@ -54,6 +54,7 @@ export function BuyPage(props: Props) {
         </div>
 
         {!currentTab && <BuyFormContainer />}
+
         {currentTab && <BondingCurve />}
 
         {comingSoon || !currentTab ? (

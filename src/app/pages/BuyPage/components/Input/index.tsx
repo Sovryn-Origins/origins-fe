@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, { useCallback } from 'react';
 
 import { handleNumber } from 'utils/helpers';
+import styles from './index.module.scss';
 
 type InputType = 'text' | 'email' | 'password' | 'number';
 
@@ -49,7 +50,11 @@ export function Input({
       })}
     >
       <input
-        className={classNames('tw-input tw-text-white', inputClassName)}
+        className={classNames(
+          'tw-input tw-text-white',
+          styles.input,
+          inputClassName,
+        )}
         lang={navigator.language}
         value={value}
         onChange={e => handleChange(e.currentTarget.value)}

@@ -219,7 +219,7 @@ export function BuyFormContainer() {
     }
   }, [tokens, tokenBalance, location.state, location.pathname, history]);
 
-  const onSwapAssert = () => {
+  const onSwapAssets = () => {
     const _sourceToken = sourceToken;
     setSourceToken(targetToken);
     setTargetToken(_sourceToken);
@@ -291,7 +291,7 @@ export function BuyFormContainer() {
           <div
             className={styles.swapRevert}
             style={{ backgroundImage: `url(${swapIcon})` }}
-            onClick={onSwapAssert}
+            onClick={onSwapAssets}
           />
         </div>
         <div className={styles.swapForm}>

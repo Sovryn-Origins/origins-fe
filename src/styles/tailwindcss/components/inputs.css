@@ -8,7 +8,6 @@
   }
   .tw-input-wrapper.theme-white {
     @apply tw-bg-white tw-border-2 tw-border-solid;
-
   }
 
   .tw-input {
