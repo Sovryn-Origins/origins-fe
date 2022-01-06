@@ -1,14 +1,15 @@
 //buy button
 .buy-btn {
-    @apply tw-border tw-border-solid tw-text-white tw-uppercase tw-leading-4 tw-rounded-xl tw-w-full tw-font-extrabold tw-text-2xl;
+    @apply tw-mx-auto tw-block tw-border tw-border-solid tw-text-white tw-uppercase tw-leading-4 tw-rounded-lg tw-font-normal tw-text-xl;
+    width: 9.688rem;
+    height: 3.125rem;
     padding: 11px;
     transition: opacity 0.3s;
     margin-top: 20px;
-    height: 60px;
     border-color: #17c3b2;
     background-color: #17c3b2;
     &:hover {
-        opacity: 75%;
+      @apply tw-opacity-75;
     }
 }
 //close button

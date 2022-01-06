@@ -1,26 +1,19 @@
 // swap btn
-.swap-btn-container {
+.swapBtnContainer {
   @apply tw-m-auto;
-  max-width: 250px;
   margin-top: 23px;
 
-  .swap-btn-helper {
-    @apply tw-flex tw-items-center tw-justify-center tw-text-lg tw-text-black tw-text-center tw-tracking-normal;
+  .swapBtnHelper {
+    @apply tw-flex tw-items-center tw-justify-center tw-text-base tw-text-black tw-text-center tw-uppercase tw-tracking-normal;
 
     img {
-      @apply tw-ml-2 tw-cursor-pointer;
+      @apply tw-ml-4 tw-cursor-pointer;
     }
-  }
-
-  .swap-btn {
-    @apply tw-flex tw-items-center tw-justify-center tw-p-0 tw-mx-auto tw-mt-4 tw-text-xl tw-font-bold tw-bg-trade-long tw-rounded-lg;
-    height: 60px;
-    width: 250px;
   }
 }
 
 // swap form
-.swap-form-container {
+.swapFormContainer {
   @apply tw-flex tw-flex-col tw-justify-center tw-items-center tw-my-0 tw-mx-auto;
   max-width: 1200px;
   width: 90%;
@@ -29,7 +22,7 @@
     @apply tw-flex-row;
   }
 
-  .swap-form {
+  .swapForm {
     @apply tw-bg-gray-1 tw-px-9 tw-pt-8 tw-pb-12 tw-border tw-border-gray-5 tw-rounded-3xl;
     border: 5px solid black;
     width: 530px;
@@ -40,7 +33,7 @@
       margin-bottom: 41px;
     }
 
-    .available-balance {
+    .availableBalance {
       @apply tw-mt-2.5 tw-text-sov-white tw-text-base tw-font-body tw-uppercase;
     }
 
@@ -49,7 +42,7 @@
     }
   }
 
-  .swap-revert-wrapper {
+  .swapRevertWrapper {
     @apply tw-flex tw-items-center tw-justify-center tw-mx-8 tw-my-0;
     width: 80px;
     transform: rotate(90deg);
@@ -58,7 +51,7 @@
       transform: none;
     }
 
-    .swap-revert {
+    .swapRevert {
       @apply tw-cursor-pointer;
       width: 170px;
       height: 133px;
