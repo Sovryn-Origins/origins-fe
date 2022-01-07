@@ -34,6 +34,8 @@ import { useAccount } from '../../hooks/useAccount';
 import { useTradeHistoryRetry } from '../../hooks/useTradeHistoryRetry';
 import { Nullable } from 'types';
 import { bondHistory } from '../../hooks/useBondHistory';
+import styles from './index.module.scss';
+
 interface AssetRowData {
   status: TxStatus;
   timestamp: number;
@@ -155,9 +157,9 @@ export function SwapHistory({ tabState }) {
 
   return (
     <section>
-      <div className="sovryn-table tw-p-4 tw-mb-12 tw-bg-black tw-rounded-lg">
+      <div className="sovryn-table tw-p-4 tw-mb-12 tw-bg-gray-1 tw-rounded-lg tw-border-4 tw-border-solid tw-border-black">
         <table className="tw-w-full">
-          <thead>
+          <thead className={styles.header}>
             <tr>
               <th className="tw-hidden lg:tw-table-cell">
                 {t(translations.swapHistory.tableHeaders.time)}
@@ -259,30 +261,35 @@ function AssetRow({ data, itemFrom, itemTo }: AssetProps) {
       <tr>
         <td className="tw-hidden lg:tw-table-cell">
           <DisplayDate
+            className={styles.dateTime}
             timestamp={new Date(data.timestamp).getTime().toString()}
           />
         </td>
         <td className="tw-hidden lg:tw-table-cell">
           <img
-            className="tw-hidden lg:tw-inline tw-mr-2"
-            style={{ height: '40px' }}
+            className={styles.assetImg}
             src={itemFrom.logoSvg}
             alt={itemFrom.asset}
           />{' '}
-          <AssetRenderer asset={itemFrom.asset} />
+          <AssetRenderer className={styles.assetLabel} asset={itemFrom.asset} />
         </td>
-        <td>{numberFromWei(data.returnVal._fromAmount)}</td>
+        <td className="tw-font-inter tw-text-base">
+          {numberFromWei(data.returnVal._fromAmount)}
+        </td>
         <td>
           <img
-            className="tw-joddem lg:tw-inline tw-mr-2"
+            className={styles.assetImg}
             style={{ height: '40px' }}
             src={itemTo.logoSvg}
             alt={itemTo.asset}
           />{' '}
-          <AssetRenderer asset={itemTo.asset} />
+          <AssetRenderer className={styles.assetLabel} asset={itemTo.asset} />
         </td>
-        <td className="tw-hidden lg:tw-table-cell">
-          <div>{numberFromWei(data.returnVal._toAmount)}</div>≈{' '}
+        <td className="tw-hidden lg:tw-table-cell tw-font-inter tw-text-base">
+          <div className="tw-font-inter">
+            {numberFromWei(data.returnVal._toAmount)}
+          </div>
+          ≈{' '}
           <LoadableValue
             value={weiToUSD(dollarValue || '0')}
             loading={dollars.loading}
@@ -291,18 +298,18 @@ function AssetRow({ data, itemFrom, itemTo }: AssetProps) {
         <td>
           <div className="tw-flex tw-items-center tw-justify-between tw-p-0">
             <div>
-              {!data.status && (
-                <p className="tw-m-0">{t(translations.common.confirmed)}</p>
-              )}
-              {data.status === TxStatus.FAILED && (
-                <p className="tw-m-0">{t(translations.common.failed)}</p>
-              )}
-              {data.status === TxStatus.PENDING && (
-                <p className="tw-m-0">{t(translations.common.pending)}</p>
-              )}
+              <p className="tw-m-0 tw-font-inter tw-text-base">
+                {!data.status && <>{t(translations.common.confirmed)}</>}
+                {data.status === TxStatus.FAILED && (
+                  <>{t(translations.common.failed)}</>
+                )}
+                {data.status === TxStatus.PENDING && (
+                  <>{t(translations.common.pending)}</>
+                )}
+              </p>
               <LinkToExplorer
                 txHash={data.transaction_hash}
-                className="tw-text-primary tw-font-normal tw-whitespace-nowrap"
+                className="tw-text-primary tw-text-base tw-font-inter tw-font-normal tw-whitespace-nowrap"
               />
             </div>
             <div className="tw-hidden sm:tw-block lg:tw-hidden xl:tw-block">
