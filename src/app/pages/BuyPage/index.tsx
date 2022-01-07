@@ -18,11 +18,12 @@ import styles from './index.module.scss';
 
 interface Props {}
 
+const comingSoon = false;
+
 export function BuyPage(props: Props) {
   const { t } = useTranslation();
   const account = useAccount();
   const [currentTab, setCurrentTab] = useState<BuyType>(BuyType.SOVRYN_SWAP);
-  const comingSoon = false;
 
   return (
     <>
@@ -55,9 +56,11 @@ export function BuyPage(props: Props) {
 
         {currentTab === BuyType.SOVRYN_SWAP && <BuyFormContainer />}
 
-        {currentTab === BuyType.BONDING_CURVE && <BondingCurve />}
+        {currentTab === BuyType.BONDING_CURVE && (
+          <BondingCurve comingSoon={comingSoon} />
+        )}
 
-        {comingSoon || currentTab === BuyType.SOVRYN_SWAP ? (
+        {!comingSoon || currentTab === BuyType.SOVRYN_SWAP ? (
           <>
             <div>
               <div className={styles.swapHistoryTableContainer}>

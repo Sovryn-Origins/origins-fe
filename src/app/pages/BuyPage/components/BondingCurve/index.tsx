@@ -51,7 +51,13 @@ const tokens = [
   '0xAc5C5917e713581c8C8B78c7B12f2D67dA0323f0',
 ];
 
-export function BondingCurve() {
+interface IBondingCurveProps {
+  comingSoon?: boolean;
+}
+
+export const BondingCurve: React.FC<IBondingCurveProps> = ({
+  comingSoon = true,
+}) => {
   const { t } = useTranslation();
   const { checkMaintenance, States } = useMaintenance();
   const swapLocked = checkMaintenance(States.SWAP_TRADES);
@@ -71,8 +77,6 @@ export function BondingCurve() {
   const [method, setMethod] = useState('buy');
   const [batchId, setBatchId] = useState(0);
   const [hash, setHash] = useState('');
-
-  const comingSoon = false;
 
   useEffect(() => {
     const start = async () => {
@@ -278,7 +282,7 @@ export function BondingCurve() {
         onChange={value => setSlippage(value)}
       />
 
-      {comingSoon ? (
+      {!comingSoon ? (
         <>
           <div className={styles.swapFormContainer}>
             <div className={styles.swapForm}>
@@ -373,19 +377,21 @@ export function BondingCurve() {
           </div>
         </>
       ) : (
-        <>
-          <div className={styles.swapFormContainer}>
-            <div className={styles.comingForm}>
-              <div className={styles.comingIconWrapper}>
-                <img src={comingIcon} alt="ss" />
-              </div>
-              <p className={styles.comingText}>COMING SOON...</p>
-            </div>
-          </div>
-        </>
+        <ComingSoon />
       )}
 
       <TxDialog tx={tx} />
     </>
   );
-}
+};
+
+const ComingSoon = () => (
+  <div className={styles.swapFormContainer}>
+    <div className={styles.comingForm}>
+      <div className={styles.comingIconWrapper}>
+        <img src={comingIcon} alt="ss" />
+      </div>
+      <p className={styles.comingText}>COMING SOON...</p>
+    </div>
+  </div>
+);
