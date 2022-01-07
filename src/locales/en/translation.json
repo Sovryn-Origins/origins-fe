@@ -1894,6 +1894,10 @@
       "title": "Buy SOV!",
       "description": "Buy SOV!"
     },
+    "tab": {
+      "sovrynSwap": "Sovryn Swap",
+      "bondingCurve": "Bonding Curve"
+    },
     "banner": {
       "title": "Buy SOV!",
       "cta": "Buy SOV",

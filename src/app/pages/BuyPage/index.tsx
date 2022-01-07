@@ -35,7 +35,7 @@ export function BuyPage(props: Props) {
         <div className="tw-w-full tw-flex tw-items-center tw-justify-center tw-mt-8 tw-mb-12 tw-mx-0">
           <div className="tw-mr-2 tw-ml-2">
             <Tab
-              text={t(translations.topUpHistory.meta.title)}
+              text={t(translations.buyPage.tab.sovrynSwap)}
               textClassName={styles.tab}
               active={currentTab === BuyType.SOVRYN_SWAP}
               onClick={() => setCurrentTab(BuyType.SOVRYN_SWAP)}
@@ -44,7 +44,7 @@ export function BuyPage(props: Props) {
           </div>
           <div className="tw-mr-2 tw-ml-2">
             <Tab
-              text={t(translations.vestedHistory.title)}
+              text={t(translations.buyPage.tab.bondingCurve)}
               textClassName={styles.tab}
               active={currentTab === BuyType.BONDING_CURVE}
               onClick={() => setCurrentTab(BuyType.BONDING_CURVE)}
