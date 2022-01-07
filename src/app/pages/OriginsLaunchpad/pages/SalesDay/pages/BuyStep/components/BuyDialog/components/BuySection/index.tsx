@@ -85,6 +85,10 @@ export const BuySection: React.FC<IBuySectionProps> = ({
 
   const { buy, ...buyTx } = useApproveAndBuyToken();
 
+  useEffect(() => {
+    setSourceToken(depositToken);
+  }, [depositToken]);
+
   useEffect(() => setTokenAmount(`${Number(amount) * depositRate}`), [
     amount,
     depositRate,

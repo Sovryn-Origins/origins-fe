@@ -331,7 +331,7 @@ export const contracts = {
     blockNumber: 1218836,
   },
   originsBase: {
-    address: '0x2269aCc85288c23E29B79A373240681eed66F82E',
+    address: '0xD5815A8326D436796e7D87df37EF249db5eE2034',
     abi: OriginsBaseAbi,
   },
   lockedFund: {
