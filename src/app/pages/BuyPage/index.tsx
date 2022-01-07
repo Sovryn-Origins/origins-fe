@@ -53,11 +53,11 @@ export function BuyPage(props: Props) {
           </div>
         </div>
 
-        {!currentTab && <BuyFormContainer />}
+        {currentTab === BuyType.SOVRYN_SWAP && <BuyFormContainer />}
 
-        {currentTab && <BondingCurve />}
+        {currentTab === BuyType.BONDING_CURVE && <BondingCurve />}
 
-        {comingSoon || !currentTab ? (
+        {comingSoon || currentTab === BuyType.SOVRYN_SWAP ? (
           <>
             <div>
               <div className={styles.swapHistoryTableContainer}>
