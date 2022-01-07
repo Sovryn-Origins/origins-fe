@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { Dialog } from '../../containers/Dialog';
 import { ResetTxResponseInterface } from '../../hooks/useSendContractTx';
 import { TxStatus } from '../../../store/global/transactions-store/types';
@@ -17,14 +18,13 @@ import wTrezor from 'assets/wallets/trezor.svg';
 import wWalletConnect from 'assets/wallets/walletconnect.svg';
 import { LinkToExplorer } from '../LinkToExplorer';
 import styled from 'styled-components/macro';
-import styles from './dialog.module.scss';
 import { useWalletContext } from '@sovryn/react-wallet';
-import { Trans, useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { ConfirmButton } from '../Form/ConfirmButton';
 import { usePrevious } from '../../hooks/usePrevious';
 import { selectTransactions } from 'store/global/transactions-store/selectors';
 import { useSelector } from 'react-redux';
+import styles from './dialog.module.scss';
 
 interface Props {
   tx: ResetTxResponseInterface;
