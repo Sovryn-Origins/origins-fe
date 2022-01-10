@@ -8,6 +8,9 @@ import discordIcon from 'assets/images/social-icon-discord.png';
 import linkedinIcon from 'assets/images/social-icon-linkedin.png';
 import twitterIcon from 'assets/images/social-icon-twitter.png';
 import redditIcon from 'assets/images/social-icon-reddit.png';
+import telegramIcon from 'assets/images/social-icon-telegram.png';
+import instagramIcon from 'assets/images/social-icon-instagram.png';
+import facebookIcon from 'assets/images/social-icon-facebook.png';
 import footerBackground from 'assets/images/footer-background.svg';
 
 export const Footer: React.FC = () => {
@@ -33,17 +36,9 @@ export const Footer: React.FC = () => {
               className="tw-mx-4"
               target="_blank"
               rel="noreferrer"
-              href="https://discord.gg/9dyPcpFEaZ"
+              href="https://discord.gg/gjkPdRT9kA"
             >
               <img src={discordIcon} alt="Discord" />
-            </a>
-            <a
-              className="tw-mx-4"
-              target="_blank"
-              rel="noreferrer"
-              href="https://www.linkedin.com/company/originsxyz/"
-            >
-              <img src={linkedinIcon} alt="LinkedIn" />
             </a>
             <a
               className="tw-mx-4"
@@ -61,9 +56,41 @@ export const Footer: React.FC = () => {
             >
               <img src={redditIcon} alt="Reddit" />
             </a>
+            <a
+              className="tw-mx-4"
+              target="_blank"
+              rel="noreferrer"
+              href="https://t.me/OriginsXYZ"
+            >
+              <img src={telegramIcon} alt="Telegram" />
+            </a>
+            <a
+              className="tw-mx-4"
+              target="_blank"
+              rel="noreferrer"
+              href="https://www.instagram.com/originsxyz"
+            >
+              <img src={instagramIcon} alt="Instagram" />
+            </a>
+            <a
+              className="tw-mx-4"
+              target="_blank"
+              rel="noreferrer"
+              href="https://www.linkedin.com/company/originsxyz/"
+            >
+              <img src={linkedinIcon} alt="LinkedIn" />
+            </a>
+            <a
+              className="tw-mx-4"
+              target="_blank"
+              rel="noreferrer"
+              href="https://www.facebook.com/OriginsXYZ"
+            >
+              <img src={facebookIcon} alt="Facebook" />
+            </a>
           </div>
 
-          <div className="tw-mt-8 md:tw-absolute md:tw-left-0 md:tw-bottom-0">
+          <div className="tw-mt-8 lg:tw-absolute lg:tw-left-0 lg:tw-bottom-0">
             <img className="tw-mx-auto" src={OriginsLogo} alt="Origins" />
           </div>
         </div>
