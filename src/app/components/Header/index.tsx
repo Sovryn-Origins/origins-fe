@@ -259,7 +259,7 @@ export function Header() {
           </div>
           <div className="tw-flex tw-justify-start tw-items-center">
             <a
-              href="https://wiki.sovryn.app/en/sovryn-dapp/faq-dapp"
+              href="https://docs.origins.xyz/en/latest/"
               target="_blank"
               rel="noopener noreferrer"
               className="tw-header-link tw-hidden xl:tw-block tw-px-4 tw-uppercase"
