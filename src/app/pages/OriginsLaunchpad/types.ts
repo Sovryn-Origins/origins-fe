@@ -46,4 +46,5 @@ export enum VerificationType {
   None = '0',
   Everyone = '1',
   ByAddress = '2',
+  ByStake = '3',
 }
