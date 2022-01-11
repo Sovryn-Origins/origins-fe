@@ -64,16 +64,18 @@ export const BuySection: React.FC<IBuySectionProps> = ({
     );
   }, [isOverMaxLimit, weiAmount, weiTokenAmount]);
 
-  const { value: amountInSOV } = useSwapsExternal_getSwapExpectedReturn(
+  const {
+    value: amountInDepositToken,
+  } = useSwapsExternal_getSwapExpectedReturn(
     sourceToken,
-    Asset.SOV,
+    depositToken,
     weiAmount,
   );
-  const { minReturn } = useSlippage(amountInSOV, slippage);
+  const { minReturn } = useSlippage(amountInDepositToken, slippage);
 
   const { send: sendSwap, ...txSwap } = useSwapsExternal_approveAndSwapExternal(
     sourceToken,
-    Asset.SOV,
+    depositToken,
     account,
     account,
     weiAmount,
@@ -86,6 +88,12 @@ export const BuySection: React.FC<IBuySectionProps> = ({
   const { buy, ...buyTx } = useApproveAndBuyToken();
 
   useEffect(() => {
+    if (buyTx.status === TxStatus.CONFIRMED) {
+      setAmount('');
+    }
+  }, [buyTx]);
+
+  useEffect(() => {
     setSourceToken(depositToken);
   }, [depositToken]);
 
@@ -96,25 +104,26 @@ export const BuySection: React.FC<IBuySectionProps> = ({
 
   useEffect(() => {
     if (
-      sourceToken !== Asset.SOV &&
+      sourceToken !== depositToken &&
       txSwap?.status === TxStatus.CONFIRMED &&
       oldSwapStatus !== TxStatus.CONFIRMED
     ) {
       buy(
         tierId,
-        bignumber(amountInSOV).mul(depositRate).toString(),
+        bignumber(amountInDepositToken).mul(depositRate).toString(),
         saleName,
-        amountInSOV,
-        Asset.SOV,
+        amountInDepositToken,
+        depositToken,
       );
     }
   }, [
     buy,
     saleName,
+    depositToken,
     sourceToken,
     tierId,
     txSwap,
-    amountInSOV,
+    amountInDepositToken,
     oldSwapStatus,
     depositRate,
   ]);
@@ -125,12 +134,21 @@ export const BuySection: React.FC<IBuySectionProps> = ({
   );
 
   const onBuyClick = useCallback(() => {
-    if (sourceToken === Asset.SOV) {
+    if (sourceToken === depositToken) {
       buy(tierId, weiTokenAmount, saleName, weiAmount, sourceToken);
     } else {
       sendSwap();
     }
-  }, [buy, saleName, sourceToken, tierId, weiAmount, weiTokenAmount, sendSwap]);
+  }, [
+    buy,
+    saleName,
+    depositToken,
+    sourceToken,
+    tierId,
+    weiAmount,
+    weiTokenAmount,
+    sendSwap,
+  ]);
 
   return (
     <div className={styles.buyWrapper}>
