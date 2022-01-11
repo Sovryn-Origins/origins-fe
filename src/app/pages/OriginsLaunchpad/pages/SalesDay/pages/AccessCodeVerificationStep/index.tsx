@@ -1,9 +1,11 @@
 import React from 'react';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 // import imgLargeNFT from 'assets/images/OriginsLaunchpad/FishSale/large_NFT.svg';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { ActionButton } from 'app/components/Form/ActionButton';
 import { useIsAddressVerified } from 'app/pages/OriginsLaunchpad/hooks/useIsAddressVerified';
+import saleStorage from '../../storage';
 import styles from './index.module.scss';
 
 interface IAccessCodeVerificationStepProps {
@@ -12,13 +14,24 @@ interface IAccessCodeVerificationStepProps {
   onVerified?: () => void;
 }
 
+const currentStep = 1;
+
 export const AccessCodeVerificationStep: React.FC<IAccessCodeVerificationStepProps> = ({
   tierId,
   saleName,
   onVerified,
 }) => {
+  const history = useHistory();
+  const { url } = useRouteMatch();
   const { t } = useTranslation();
   const isVerified = useIsAddressVerified(tierId);
+
+  React.useEffect(() => {
+    const { step } = saleStorage.getData();
+    if (step > currentStep && isVerified) {
+      history.push(url.replace(`/${currentStep}`, `/${step}`));
+    }
+  }, [isVerified, history, url]);
 
   return (
     <>

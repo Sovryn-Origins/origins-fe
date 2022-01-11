@@ -21,6 +21,10 @@ export const OriginsLaunchpad: React.FC = () => {
   const activeTierId = useGetActiveSaleTierId();
   const info = useGetSaleInformation(activeTierId);
 
+  // useEffect(() => {
+  //   console.log('[Info]', info);
+  // }, [info]);
+
   useEffect(() => {
     document.body.classList.add('originsLaunchpad');
     if (activeTierId > 0) {

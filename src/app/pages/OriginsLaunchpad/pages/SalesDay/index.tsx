@@ -5,7 +5,6 @@ import {
   Redirect,
   useHistory,
   useRouteMatch,
-  useLocation,
 } from 'react-router-dom';
 
 import { useTranslation } from 'react-i18next';
@@ -31,7 +30,6 @@ export const SalesDay: React.FC<ISalesDayProps> = ({
 }) => {
   const { t } = useTranslation();
   const { url } = useRouteMatch();
-  const location = useLocation();
   const history = useHistory();
   const connected = useIsConnected();
 
@@ -41,13 +39,10 @@ export const SalesDay: React.FC<ISalesDayProps> = ({
   };
 
   useEffect(() => {
-    const { step } = saleStorage.getData();
-    if (connected) {
-      history.push(`${url}/${step}`);
-    } else {
+    if (!connected) {
       history.push(`${url}/engage-wallet`);
     }
-  }, [connected, location.pathname, history, url]);
+  }, [connected, history, url]);
 
   return (
     <div className="tw-mb-52">
