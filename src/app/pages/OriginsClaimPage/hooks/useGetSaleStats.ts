@@ -10,7 +10,19 @@ export const useGetSaleStats = tierId => {
     tokenBoughtByAddress: '0',
     tokenSoldPerTier: '0',
     totalTokenOnTier: '0',
+    saleEndTS: 0,
   });
+
+  useEffect(() => {
+    contractReader
+      .call('originsBase', 'readTierPartA', [tierId])
+      .then(result => {
+        setSaleStats(prevValue => ({
+          ...prevValue,
+          saleEndTS: result['_saleEnd'],
+        }));
+      });
+  }, [tierId]);
 
   useEffect(() => {
     if (!account) return;

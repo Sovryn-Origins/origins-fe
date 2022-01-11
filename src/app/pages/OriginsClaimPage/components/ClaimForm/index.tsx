@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import cn from 'classnames';
 import { bignumber } from 'mathjs';
 import { useTranslation, Trans } from 'react-i18next';
@@ -43,6 +43,7 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
   const { checkMaintenance, States } = useMaintenance();
   const rewardsLocked = checkMaintenance(States.CLAIM_REWARDS);
   const saleStats = useGetSaleStats(tierId);
+  const currentTS = useRef(Math.floor(Date.now() / 1000));
 
   const availableAmount = useMemo(() => {
     const {
@@ -161,7 +162,11 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
           {!rewardsLocked && (
             <div className="tw-flex tw-justify-center">
               <Button
-                disabled={!tierId || availableAmount === '0'}
+                disabled={
+                  !tierId ||
+                  availableAmount === '0' ||
+                  saleStats.saleEndTS > currentTS.current
+                }
                 onClick={send}
                 className="tw-mx-auto tw-uppercase tw-text-sm tw-leading-8"
                 text={t(translations.originsClaim.claimForm.cta)}
@@ -171,8 +176,11 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
 
           <div className="tw-text-sm tw-text-center tw-leading-8 tw-font-light tw-font-rowdies tw-uppercase tw-mt-8">
             {token &&
+              tierId > 0 &&
               t(translations.originsClaim.claimForm.note, {
-                date: new Date(unlockTime).toLocaleString(),
+                date: new Date(
+                  Math.max(unlockTime, saleStats.saleEndTS * 1000),
+                ).toLocaleString(),
               })}
             {parseFloat(getWaitedUnlockedBalance) > 0 && (
               <div className="tw-mt-1">

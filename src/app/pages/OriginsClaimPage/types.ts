@@ -4,6 +4,7 @@ export interface ISaleStats {
   tokenBoughtByAddress: string;
   totalTokenOnTier: string;
   tokenSoldPerTier: string;
+  saleEndTS: number;
 }
 
 export interface IClaimRequestProps {
