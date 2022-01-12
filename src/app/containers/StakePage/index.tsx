@@ -464,14 +464,14 @@ const InnerStakePage: React.FC = () => {
                   )}
                 </div>
                 <div className="tw-flex tw-flex-col tw-items-start">
-                  <div className="tw-bg-primary tw-font-normal tw-bg-opacity-40 tw-hover:text-primary tw-focus:outline-none tw-focus:bg-opacity-50 hover:tw-bg-opacity-40 tw-transition tw-duration-500 tw-ease-in-out tw-px-8 tw-py-3 tw-text-sm tw-border tw-transition-colors tw-duration-300 tw-ease-in-out tw-border-primary tw-rounded-lg hover:tw-no-underline tw-no-underline tw-inline-block tw-uppercase">
-                    <Link
-                      to="/governance"
-                      className="tw-text-black tw-font-rowdies hover:tw-no-underline"
-                    >
+                  <Link
+                    to="/governance"
+                    className="tw-font-normal tw-bg-opacity-40 hover:tw-bg-opacity-40 tw-transition tw-duration-500 tw-ease-in-out tw-text-sm tw-leading-30px tw-border tw-border-primary tw-rounded-lg hover:tw-no-underline tw-no-underline tw-inline-block tw-uppercase tw-bg-primary tw-px-8 tw-py-3 tw-text-black tw-font-rowdies"
+                  >
+                    <span className="">
                       {t(translations.stake.viewGovernance)}
-                    </Link>
-                  </div>
+                    </span>
+                  </Link>
                 </div>
               </div>
             </div>
