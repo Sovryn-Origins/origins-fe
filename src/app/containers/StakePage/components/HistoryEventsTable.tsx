@@ -29,7 +29,7 @@ export function HistoryEventsTable() {
   const account = useAccount();
   const { chainId } = useSelector(selectWalletProvider);
   const [eventsHistory, setEventsHistory] = useState<HistoryItem[]>([]);
-  const [isHistoryLoading, seIsHistoryLoading] = useState(false);
+  const [isHistoryLoading, setIsHistoryLoading] = useState(false);
   const [currentHistory, setCurrentHistory] = useState<HistoryItem[]>([]);
   const onPageChanged = data => {
     const { currentPage, pageLimit } = data;
@@ -39,12 +39,12 @@ export function HistoryEventsTable() {
 
   const getHistory = useCallback(() => {
     if (chainId) {
-      seIsHistoryLoading(true);
+      setIsHistoryLoading(true);
       axios
         .get(`${backendUrl[chainId]}/events/stake/${account}`)
         .then(({ data }) => {
           setEventsHistory(data?.events);
-          seIsHistoryLoading(false);
+          setIsHistoryLoading(false);
         });
     }
   }, [account, chainId]);
