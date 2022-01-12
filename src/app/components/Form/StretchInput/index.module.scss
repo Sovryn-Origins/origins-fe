@@ -2,3 +2,9 @@
   @apply tw-relative;
   min-width: 2rem;
 }
+
+.input {
+  @apply tw-block;
+  min-width: 2rem;
+  min-height: 42px;
+}

@@ -1,9 +1,7 @@
 import React, { FormEvent } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { handleNumberInput } from 'utils/helpers';
 import { numberFromWei } from 'utils/blockchain/math-helpers';
-import { weiToNumberFormat } from 'utils/display-text/format';
 import { CacheCallResponse } from 'app/hooks/useCacheCall';
 import { useMaintenance } from 'app/hooks/useMaintenance';
 import { useDollarValueOg } from 'app/hooks/useDollarValueOg';
@@ -63,8 +61,9 @@ export function StakeForm(props: Props) {
                     className="tw-mr-2"
                     inputClassName="tw-bg-transparent"
                     type="text"
-                    value={weiToNumberFormat(weiAmount, 3)}
-                    onChange={e => props.onChangeAmount(handleNumberInput(e))}
+                    placeholder="0"
+                    value={props.amount}
+                    onChange={e => props.onChangeAmount(e.target.value)}
                   />
                   <span>OG</span>
                 </div>
