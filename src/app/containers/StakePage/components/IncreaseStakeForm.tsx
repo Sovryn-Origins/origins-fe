@@ -2,7 +2,6 @@ import React, { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { bignumber } from 'mathjs';
 import { translations } from 'locales/i18n';
-import { handleNumberInput } from 'utils/helpers';
 import { toWei, fromWei } from 'utils/blockchain/math-helpers';
 import { weiToNumberFormat, weiToUSD } from 'utils/display-text/format';
 import { CacheCallResponse } from 'app/hooks/useCacheCall';
@@ -48,6 +47,7 @@ export function IncreaseStakeForm(props: Props) {
   const handleChangeAddAmount = useCallback(
     addValue => {
       setAddAmount(addValue);
+      if (addValue === '') return;
       props.onChangeAmount(
         bignumber(props.currentStakedAmount).add(addValue).toString(),
       );
@@ -56,8 +56,6 @@ export function IncreaseStakeForm(props: Props) {
   );
 
   useEffect(() => {
-    //setting the max value for staking by default
-    // if (initialStep) props.onChangeAmount(fromWei(props.ogBalance));
     setInitialStep(false);
   }, [props, initialStep]);
 
@@ -119,8 +117,9 @@ export function IncreaseStakeForm(props: Props) {
                   inputClassName="tw-text-left tw-font-rowdies"
                   id="amountAdd"
                   type="text"
-                  value={weiToNumberFormat(toWei(addAmount), 3)}
-                  onChange={e => handleChangeAddAmount(handleNumberInput(e))}
+                  placeholder="0"
+                  value={addAmount}
+                  onChange={e => handleChangeAddAmount(e.target.value)}
                 />
                 {t(translations.stake.og)}
               </div>
