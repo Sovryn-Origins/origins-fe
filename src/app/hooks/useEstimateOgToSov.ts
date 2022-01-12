@@ -26,7 +26,7 @@ export const useEstimateOgToSov = (weiAmount: string) => {
   }, [depositRate, totalSupply, collateral, weiAmount]);
 
   useEffect(() => {
-    contractReader.call('originsBase', 'readTierPartA', [2]).then(result => {
+    contractReader.call('originsBase', 'readTierPartA', [1]).then(result => {
       setDepositRate(result['_depositRate']);
     });
   }, []);
