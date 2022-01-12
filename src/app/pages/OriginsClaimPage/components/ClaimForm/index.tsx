@@ -16,6 +16,7 @@ import { ErrorBadge } from 'app/components/Form/ErrorBadge';
 import { discordInvite } from 'utils/classifiers';
 import { useGetSaleStats } from '../../hooks/useGetSaleStats';
 import { useClaimAndWithdraw } from '../../hooks/useClaimAndWithdraw';
+import { useBlockSync } from 'app/hooks/useAccount';
 
 interface IClaimFormProps {
   address: string;
@@ -41,9 +42,12 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
   const { t } = useTranslation();
   const [tierId, setTierId] = useState(0);
   const { checkMaintenance, States } = useMaintenance();
+  const blockSync = useBlockSync();
   const rewardsLocked = checkMaintenance(States.CLAIM_REWARDS);
   const saleStats = useGetSaleStats(tierId);
   const currentTS = useRef(Math.floor(Date.now() / 1000));
+
+  const { send, ...tx } = useClaimAndWithdraw({ tierId, address });
 
   const availableAmount = useMemo(() => {
     const {
@@ -60,7 +64,8 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
     return bignumber(tokenBoughtByAddress).lessThan(distributedAmount)
       ? tokenBoughtByAddress
       : distributedAmount;
-  }, [saleStats]);
+    // eslint-disable-next-line
+  }, [saleStats, blockSync]);
 
   const { value: getWaitedTS } = useCacheCallWithValue(
     'lockedFund',
@@ -83,8 +88,6 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
   );
 
   const unlockTime = useMemo(() => Number(getWaitedTS) * 1000, [getWaitedTS]);
-
-  const { send, ...tx } = useClaimAndWithdraw({ tierId, address });
 
   return (
     <div

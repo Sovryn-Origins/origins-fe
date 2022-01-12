@@ -33,16 +33,9 @@ export function useClaimAndWithdraw({
       prevClaimPooledStatus !== TxStatus.CONFIRMED &&
       claimPooledTx.status === TxStatus.CONFIRMED
     ) {
-      withdraw(
-        [address],
-        {
-          from: address,
-          gas: gasLimit[TxType.LOCKED_FUND_WAITED_CLAIM],
-        },
-        {
-          type: TxType.LOCKED_FUND_WAITED_CLAIM,
-        },
-      );
+      withdraw([address], {
+        from: address,
+      });
     }
   }, [prevClaimPooledStatus, claimPooledTx, withdraw, address]);
 
