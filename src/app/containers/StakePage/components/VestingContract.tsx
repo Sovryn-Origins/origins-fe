@@ -5,7 +5,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useMaintenance } from 'app/hooks/useMaintenance';
-// import logoSvg from 'assets/images/tokens/sov.svg';
 import { translations } from 'locales/i18n';
 import { getContract } from 'utils/blockchain/contract-helpers';
 import { weiTo4 } from 'utils/blockchain/math-helpers';
@@ -16,13 +15,13 @@ import {
 import { ethGenesisAddress } from 'utils/classifiers';
 import { AssetsDictionary } from 'utils/dictionaries/assets-dictionary';
 import { weiToUSD } from 'utils/display-text/format';
-import { contractReader } from 'utils/sovryn/contract-reader';
 
 import { Asset } from '../../../../types';
-import { AddressBadge } from '../../../components/AddressBadge';
 import { LoadableValue } from '../../../components/LoadableValue';
 import { Modal } from '../../../components/Modal';
 import { useStaking_balanceOf } from '../../../hooks/staking/useStaking_balanceOf';
+import { useStaking_WEIGHT_FACTOR } from '../../../hooks/staking/useStaking_WEIGHT_FACTOR';
+import { useStaking_computeWeightByDate } from '../../../hooks/staking/useStaking_computeWeightByDate';
 import { useStaking_getAccumulatedFees } from '../../../hooks/staking/useStaking_getAccumulatedFees';
 import { useStaking_getStakes } from '../../../hooks/staking/useStaking_getStakes';
 import { useCachedAssetPrice } from '../../../hooks/trading/useCachedAssetPrice';
@@ -59,6 +58,7 @@ const getTokenContractNameByVestingType = (type: VestGroup) => {
 };
 
 export function VestingContract(props: Props) {
+  const now = new Date();
   const { t } = useTranslation();
   const { checkMaintenances, States } = useMaintenance();
   const {
@@ -70,14 +70,19 @@ export function VestingContract(props: Props) {
   const getStakes = useStaking_getStakes(props.vestingAddress);
   const lockedAmount = useStaking_balanceOf(props.vestingAddress);
   const [stakingPeriodStart, setStakingPeriodStart] = useState('');
+  const WEIGHT_FACTOR = useStaking_WEIGHT_FACTOR();
+  // const [weight, setWeight] = useState('');
+  const [votingPower, setVotingPower] = useState(0);
   const [unlockDate, setUnlockDate] = useState('');
   const [vestLoading, setVestLoading] = useState(false);
   const [locked, setLocked] = useState(true);
-  const [delegate, setDelegate] = useState<any>([]);
-  const [delegateLoading, setDelegateLoading] = useState(false);
   const [showWithdraw, setShowWithdraw] = useState(false);
   const SOV = AssetsDictionary.get(Asset.SOV);
   const CSOV = AssetsDictionary.get(Asset.SOV);
+  const weight = useStaking_computeWeightByDate(
+    Number(unlockDate),
+    Math.round(now.getTime() / 1e3),
+  );
   const dollars = useCachedAssetPrice(Asset.SOV, Asset.USDT);
   const rbtc = useCachedAssetPrice(
     getAssetByVestingType(props.type),
@@ -108,6 +113,17 @@ export function VestingContract(props: Props) {
   }, [currency, CSOV.decimals, SOV.decimals, props.type, rbtc.value]);
 
   useEffect(() => {
+    if (weight.loading) {
+      setVotingPower(0);
+    } else {
+      setVotingPower(
+        (Number(lockedAmount.value) * Number(weight.value)) /
+          Number(WEIGHT_FACTOR.value),
+      );
+    }
+  }, [weight, WEIGHT_FACTOR, lockedAmount]);
+
+  useEffect(() => {
     async function getVestsList() {
       try {
         setVestLoading(true);
@@ -132,41 +148,10 @@ export function VestingContract(props: Props) {
   }, [props.vestingAddress, account]);
 
   useEffect(() => {
-    async function getDelegate() {
-      setDelegateLoading(true);
-      const datesLength = getStakes.value['dates'].length;
-      try {
-        await contractReader
-          .call('staking', 'delegates', [
-            props.vestingAddress,
-            getStakes.value['dates'][datesLength - 2],
-          ])
-          .then(res => {
-            setDelegateLoading(false);
-            if (
-              res.toString().toLowerCase() !==
-              props.vestingAddress.toLowerCase()
-            ) {
-              setDelegate(res);
-            }
-            return false;
-          });
-      } catch (e) {
-        console.error(e);
-        setDelegateLoading(false);
-      }
-    }
     if (unlockDate && !vestLoading && getStakes.value['dates'].length > 0) {
-      getDelegate();
       setLocked(Number(unlockDate) > Math.round(new Date().getTime() / 1e3));
     }
-  }, [
-    props.vestingAddress,
-    vestLoading,
-    unlockDate,
-    delegate,
-    getStakes.value,
-  ]);
+  }, [vestLoading, unlockDate, getStakes.value]);
 
   return (
     <>
@@ -194,23 +179,8 @@ export function VestingContract(props: Props) {
               )}
             </p>
           </td>
-          <td className="tw-text-left tw-hidden lg:tw-table-cell tw-font-normal">
-            <p className={`tw-m-0 ${delegateLoading && 'tw-skeleton'}`}>
-              {delegate.length > 0 && (
-                <>
-                  <AddressBadge
-                    txHash={delegate}
-                    startLength={6}
-                    className={`tw-text-secondary hover:tw-underline ${
-                      delegateLoading && 'tw-skeleton'
-                    }`}
-                  />
-                </>
-              )}
-              {!delegate.length && (
-                <>{t(translations.stake.delegation.noDelegate)}</>
-              )}
-            </p>
+          <td className="tw-text-left tw-hidden lg:tw-table-cell tw-font-normal tw-font-inter">
+            {weiTo4(votingPower)}
           </td>
           <td className="tw-text-left tw-hidden lg:tw-table-cell tw-font-normal">
             {locked && (
