@@ -186,6 +186,7 @@ const InnerStakePage: React.FC = () => {
     },
     [withdrawAmount, loading],
   );
+
   const validateExtendTimeForm = useCallback(() => {
     if (loading || extendTx.loading || timestamp === prevTimestamp)
       return false;
@@ -330,6 +331,7 @@ const InnerStakePage: React.FC = () => {
     setAmount(fromWei(a));
     setDelegateForm(delegateForm => !delegateForm);
   }, []);
+
   const onExtend = useCallback((a, b) => {
     setPrevTimestamp(b);
     setTimestamp(b);
@@ -339,6 +341,7 @@ const InnerStakePage: React.FC = () => {
     setIncreaseForm(false);
     setWithdrawForm(false);
   }, []);
+
   const onIncrease = useCallback((a, b) => {
     setTimestamp(b);
     setAmount(fromWei(a));
@@ -349,6 +352,7 @@ const InnerStakePage: React.FC = () => {
     setIncreaseForm(true);
     setWithdrawForm(false);
   }, []);
+
   const onUnstake = useCallback((a, b) => {
     setAmount(fromWei(a));
     setWithdrawAmount('0');
