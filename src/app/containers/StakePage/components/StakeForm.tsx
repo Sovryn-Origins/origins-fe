@@ -4,7 +4,7 @@ import { translations } from 'locales/i18n';
 import { numberFromWei } from 'utils/blockchain/math-helpers';
 import { CacheCallResponse } from 'app/hooks/useCacheCall';
 import { useMaintenance } from 'app/hooks/useMaintenance';
-import { useDollarValueOg } from 'app/hooks/useDollarValueOg';
+import { useDollarValue } from 'app/hooks/useDollarValue';
 import { TxFeeCalculator } from 'app/components/TxFeeCalculator';
 import { StakingDateSelector } from 'app/components/StakingDateSelector';
 import { LoadableValue } from 'app/components/LoadableValue';
@@ -16,6 +16,7 @@ import { ErrorBadge } from 'app/components/Form/ErrorBadge';
 import { AvailableBalance } from 'app/components/AvailableBalance';
 import { StretchInput } from 'app/components/Form/StretchInput';
 import { Asset } from 'types/asset';
+import { governanceToken } from 'app/constants';
 
 interface Props {
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
@@ -35,7 +36,7 @@ export function StakeForm(props: Props) {
   const { t } = useTranslation();
   const account = useAccount();
   const weiAmount = useWeiAmount(props.amount);
-  const dollarValue = useDollarValueOg(weiAmount);
+  const dollarValue = useDollarValue(governanceToken, weiAmount);
   const { checkMaintenance, States } = useMaintenance();
   const stakingLocked = checkMaintenance(States.STAKING);
   const txConf = {

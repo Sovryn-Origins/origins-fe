@@ -2,9 +2,10 @@ import React, { FormEvent } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { numberFromWei, toWei } from 'utils/blockchain/math-helpers';
+import { Asset } from 'types';
 import { weiToNumberFormat } from 'utils/display-text/format';
 import { CacheCallResponse } from 'app/hooks/useCacheCall';
-import { useDollarValueOg } from 'app/hooks/useDollarValueOg';
+import { useDollarValue } from 'app/hooks/useDollarValue';
 import { useWeiAmount } from 'app/hooks/useWeiAmount';
 import { StakingDateSelector } from '../../../components/StakingDateSelector';
 import { TxFeeCalculator } from 'app/components/TxFeeCalculator';
@@ -34,7 +35,7 @@ export function ExtendStakeForm(props: Props) {
   const { t } = useTranslation();
   const { checkMaintenance, States } = useMaintenance();
   const weiAmount = useWeiAmount(props.amount);
-  const dollarValue = useDollarValueOg(weiAmount);
+  const dollarValue = useDollarValue(Asset.OG, weiAmount);
   const stakingLocked = checkMaintenance(States.STAKING);
   return (
     <>

@@ -7,7 +7,7 @@ import { CacheCallResponse } from 'app/hooks/useCacheCall';
 import { contractReader } from 'utils/sovryn/contract-reader';
 import { useAccount } from 'app/hooks/useAccount';
 import { useWeiAmount } from 'app/hooks/useWeiAmount';
-import { useDollarValueOg } from 'app/hooks/useDollarValueOg';
+import { useDollarValue } from 'app/hooks/useDollarValue';
 import { weiToNumberFormat, weiToUSD } from 'utils/display-text/format';
 import { WithdrawConfirmationForm } from './WithdrawConfimationForm';
 import { TxFeeCalculator } from 'app/components/TxFeeCalculator';
@@ -15,6 +15,7 @@ import { discordInvite } from 'utils/classifiers';
 import { useMaintenance } from 'app/hooks/useMaintenance';
 import { ErrorBadge } from 'app/components/Form/ErrorBadge';
 import { LoadableValue } from 'app/components/LoadableValue';
+import { governanceToken } from 'app/constants';
 
 interface Props {
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
@@ -32,9 +33,12 @@ export function WithdrawForm(props: Props) {
   const { t } = useTranslation();
   const account = useAccount();
   const weiAmount = useWeiAmount(props.amount);
-  const dollarValue = useDollarValueOg(weiAmount);
+  const dollarValue = useDollarValue(governanceToken, weiAmount);
   const weiAmountWithdraw = useWeiAmount(props.withdrawAmount);
-  const dollarValueWithdraw = useDollarValueOg(weiAmountWithdraw);
+  const dollarValueWithdraw = useDollarValue(
+    governanceToken,
+    weiAmountWithdraw,
+  );
   const { checkMaintenance, States } = useMaintenance();
   const unstakingLocked = checkMaintenance(States.UNSTAKING);
   const [forfeitWithdraw, setForfeitWithdraw] = useState<number>(0);

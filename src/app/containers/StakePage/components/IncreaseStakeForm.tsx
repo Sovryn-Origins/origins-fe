@@ -7,7 +7,7 @@ import { weiToNumberFormat, weiToUSD } from 'utils/display-text/format';
 import { CacheCallResponse } from 'app/hooks/useCacheCall';
 import { TxFeeCalculator } from 'app/components/TxFeeCalculator';
 import { useAccount } from 'app/hooks/useAccount';
-import { useDollarValueOg } from 'app/hooks/useDollarValueOg';
+import { useDollarValue } from 'app/hooks/useDollarValue';
 import { useWeiAmount } from 'app/hooks/useWeiAmount';
 import { ethGenesisAddress, discordInvite } from 'utils/classifiers';
 import { useMaintenance } from 'app/hooks/useMaintenance';
@@ -15,6 +15,7 @@ import { AvailableBalance } from '../../../components/AvailableBalance';
 import { LoadableValue } from 'app/components/LoadableValue';
 import { StretchInput } from 'app/components/Form/StretchInput';
 import { Asset } from 'types/asset';
+import { governanceToken } from 'app/constants';
 import { ErrorBadge } from 'app/components/Form/ErrorBadge';
 
 interface Props {
@@ -35,8 +36,11 @@ export function IncreaseStakeForm(props: Props) {
   const [addAmount, setAddAmount] = useState('0');
   const account = useAccount();
   const weiAmount = useWeiAmount(props.currentStakedAmount);
-  const dollarValue = useDollarValueOg(weiAmount);
-  const addAmountDollarValue = useDollarValueOg(toWei(addAmount));
+  const dollarValue = useDollarValue(governanceToken, weiAmount);
+  const addAmountDollarValue = useDollarValue(
+    governanceToken,
+    toWei(addAmount),
+  );
   const { checkMaintenance, States } = useMaintenance();
   const stakingLocked = checkMaintenance(States.STAKING);
   const [initialStep, setInitialStep] = useState(true);
