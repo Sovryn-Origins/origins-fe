@@ -74,6 +74,25 @@
         "type": "address"
       },
       {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "MissingBalanceDeposited",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_initiator",
+        "type": "address"
+      },
+      {
         "indexed": true,
         "internalType": "address",
         "name": "_vesting",
@@ -87,6 +106,56 @@
       }
     ],
     "name": "TokenStaked",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_initiator",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_oldToken",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_newToken",
+        "type": "address"
+      }
+    ],
+    "name": "TokenUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_initiator",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_userAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "UnlockedDeposited",
     "type": "event"
   },
   {
@@ -215,6 +284,31 @@
         "internalType": "uint256",
         "name": "_amount",
         "type": "uint256"
+      }
+    ],
+    "name": "WaitedUnlockedDeposited",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_initiator",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_userAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
       },
       {
         "indexed": false,
@@ -248,7 +342,32 @@
         "type": "uint256"
       }
     ],
-    "name": "Withdrawn",
+    "name": "WithdrawnUnlockedBalance",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_initiator",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "_userAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "WithdrawnWaitedUnlockedBalance",
     "type": "event"
   },
   {
@@ -307,6 +426,21 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "_token",
+        "type": "address"
+      }
+    ],
+    "name": "changeToken",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "_vestingRegistry",
         "type": "address"
       }
@@ -337,16 +471,21 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "_addr",
         "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_vestingData",
+        "type": "bytes32"
       }
     ],
-    "name": "cliff",
+    "name": "checkUserVestingsOf",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "internalType": "bool",
+        "name": "_status",
+        "type": "bool"
       }
     ],
     "payable": false,
@@ -356,12 +495,33 @@
   {
     "constant": false,
     "inputs": [],
+    "name": "createAllVesting",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "_vestingAddresses",
+        "type": "address[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_vestingData",
+        "type": "bytes32"
+      }
+    ],
     "name": "createVesting",
     "outputs": [
       {
-        "internalType": "address",
-        "name": "_vestingAddress",
-        "type": "address"
+        "internalType": "address[]",
+        "name": "_vestingAddresses",
+        "type": "address[]"
       }
     ],
     "payable": false,
@@ -409,9 +569,29 @@
         "internalType": "uint256",
         "name": "_unlockedOrWaited",
         "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_receiveTokens",
+        "type": "bool"
       }
     ],
     "name": "depositLocked",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "depositMissingBalance",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -449,6 +629,11 @@
         "internalType": "uint256",
         "name": "_unlockedOrWaited",
         "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_receiveTokens",
+        "type": "bool"
       }
     ],
     "name": "depositVested",
@@ -474,6 +659,11 @@
         "internalType": "uint256",
         "name": "_basisPoint",
         "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_receiveTokens",
+        "type": "bool"
       }
     ],
     "name": "depositWaitedUnlocked",
@@ -486,42 +676,26 @@
     "constant": true,
     "inputs": [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
+        "internalType": "bytes32",
+        "name": "_vestingData",
+        "type": "bytes32"
       }
     ],
-    "name": "duration",
+    "name": "getCliffDurationAndType",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_addr",
-        "type": "address"
-      }
-    ],
-    "name": "getCliffAndDuration",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
+        "name": "_cliff",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "_duration",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "vestingType",
         "type": "uint256"
       }
     ],
@@ -536,9 +710,29 @@
         "internalType": "address",
         "name": "_addr",
         "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_lockingData",
+        "type": "bytes32"
       }
     ],
     "name": "getLockedBalance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "_balance",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getMissingBalance",
     "outputs": [
       {
         "internalType": "uint256",
@@ -595,6 +789,32 @@
         "type": "address"
       }
     ],
+    "name": "getUserVestingsOf",
+    "outputs": [
+      {
+        "internalType": "bytes32[]",
+        "name": "_userVestings",
+        "type": "bytes32[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_addr",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_vestingData",
+        "type": "bytes32"
+      }
+    ],
     "name": "getVestedBalance",
     "outputs": [
       {
@@ -609,8 +829,70 @@
   },
   {
     "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_tokenOwner",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_cliff",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_duration",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_vestingCreationType",
+        "type": "uint256"
+      }
+    ],
+    "name": "getVesting",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "_vestingAddress",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_cliff",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_duration",
+        "type": "uint256"
+      }
+    ],
+    "name": "getVestingData",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_vestingData",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "constant": true,
     "inputs": [],
-    "name": "getVestingDetails",
+    "name": "getVestingRegistry",
     "outputs": [
       {
         "internalType": "address",
@@ -686,6 +968,11 @@
         "internalType": "address",
         "name": "",
         "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
       }
     ],
     "name": "lockedBalances",
@@ -718,6 +1005,21 @@
   {
     "constant": false,
     "inputs": [],
+    "name": "stakeAllTokens",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_vestingData",
+        "type": "bytes32"
+      }
+    ],
     "name": "stakeTokens",
     "outputs": [],
     "payable": false,
@@ -767,6 +1069,37 @@
         "internalType": "address",
         "name": "",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "userVestings",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
       }
     ],
     "name": "vestedBalances",
@@ -784,10 +1117,56 @@
   {
     "constant": true,
     "inputs": [],
+    "name": "vestingCreationType",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "name": "vestingDatas",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "vestingType",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "cliff",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "duration",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
     "name": "vestingRegistry",
     "outputs": [
       {
-        "internalType": "contract IVestingRegistry",
+        "internalType": "contract IVestingRegistryLogic",
         "name": "",
         "type": "address"
       }
@@ -842,6 +1221,21 @@
       }
     ],
     "name": "withdrawAndStakeTokens",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_receiverAddress",
+        "type": "address"
+      }
+    ],
+    "name": "withdrawUnlockedBalance",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",

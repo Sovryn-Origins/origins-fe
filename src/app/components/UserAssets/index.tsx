@@ -30,8 +30,7 @@ import { discordInvite } from 'utils/classifiers';
 import { ConversionDialog } from './ConversionDialog';
 import { BridgeLink } from './BridgeLink';
 import { UnWrapDialog } from './UnWrapDialog';
-import { useDollarValue as useDollarValueDefault } from '../../hooks/useDollarValue';
-import { useDollarValueOg } from '../../hooks/useDollarValueOg';
+import { useDollarValue } from '../../hooks/useDollarValue';
 import styles from './index.module.scss';
 
 const listingAssets = [
@@ -256,13 +255,7 @@ function AssetRow({
     get().catch();
   }, [item.asset, account, blockSync]);
 
-  const dollarValueDefault = useDollarValueDefault(item.asset, tokens);
-  const dollarValueOg = useDollarValueOg(tokens);
-
-  const dollarValue = useMemo(
-    () => (item.asset === Asset.OG ? dollarValueOg : dollarValueDefault),
-    [dollarValueDefault, dollarValueOg, item.asset],
-  );
+  const dollarValue = useDollarValue(item.asset, tokens);
 
   if (tokens === '0' && item.hideIfZero)
     return <React.Fragment key={item.asset} />;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import type { RevertInstructionError } from 'web3-core-helpers';
 import { Tooltip, Spinner } from '@blueprintjs/core';
+import { Asset } from 'types';
 import { useAccount } from '../../../hooks/useAccount';
 import { weiToUSD } from 'utils/display-text/format';
 import { StyledTable } from './StyledTable';
@@ -10,7 +11,7 @@ import { AddressBadge } from '../../../components/AddressBadge';
 import { contractReader } from 'utils/sovryn/contract-reader';
 import { LoadableValue } from '../../../components/LoadableValue';
 import { useTranslation } from 'react-i18next';
-import { useDollarValueOg } from '../../../hooks/useDollarValueOg';
+import { useDollarValue } from '../../../hooks/useDollarValue';
 import { useStaking_getStakes } from '../../../hooks/staking/useStaking_getStakes';
 import { useStaking_WEIGHT_FACTOR } from '../../../hooks/staking/useStaking_WEIGHT_FACTOR';
 import { weiTo4 } from 'utils/blockchain/math-helpers';
@@ -176,7 +177,7 @@ const AssetRow: React.FC<IAssetRowProps> = ({
     Math.round(now.getTime() / 1e3),
   );
 
-  const dollarValue = useDollarValueOg(item.stakedAmount);
+  const dollarValue = useDollarValue(Asset.OG, item.stakedAmount);
 
   useEffect(() => {
     setWeight(getWeight.value);
