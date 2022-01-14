@@ -181,9 +181,7 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
             {token &&
               tierId > 0 &&
               t(translations.originsClaim.claimForm.note, {
-                date: new Date(
-                  Math.max(unlockTime, saleStats.saleEndTS * 1000),
-                ).toLocaleString(),
+                date: new Date(unlockTime).toLocaleString(),
               })}
             {parseFloat(getWaitedUnlockedBalance) > 0 && (
               <div className="tw-mt-1">
