@@ -41,8 +41,8 @@ export const BuySection: React.FC<IBuySectionProps> = ({
   depositRate,
   depositToken,
   tierId,
-  maxAmount,
-  minAmount,
+  maxAmount: maxAmountDepositToken,
+  minAmount: minAmountDepositToken,
   myTotalDeposit,
 }) => {
   const { t } = useTranslation();
@@ -51,20 +51,12 @@ export const BuySection: React.FC<IBuySectionProps> = ({
 
   const [sourceToken, setSourceToken] = useState<Asset>(depositToken);
   const [amount, setAmount] = useState('');
-  const [isOverMaxLimit, setIsOverMaxLimit] = useState(false);
   const weiAmount = useWeiAmount(amount);
 
   const [tokenAmount, setTokenAmount] = useState(amount);
   const weiTokenAmount = useWeiAmount(tokenAmount);
 
-  const isValidAmount = useMemo(() => {
-    return (
-      bignumber(weiAmount).greaterThan(0) &&
-      bignumber(weiTokenAmount).greaterThan(0) &&
-      !isOverMaxLimit
-    );
-  }, [isOverMaxLimit, weiAmount, weiTokenAmount]);
-
+  const { buy, ...buyTx } = useApproveAndBuyToken();
   const {
     value: amountInDepositToken,
   } = useSwapsExternal_getSwapExpectedReturn(
@@ -72,10 +64,51 @@ export const BuySection: React.FC<IBuySectionProps> = ({
     depositToken,
     weiAmount,
   );
-  const equivalentDepositTokenAmount = useMemo(
+  const {
+    value: minAmountSourceToken,
+  } = useSwapsExternal_getSwapExpectedReturn(
+    depositToken,
+    sourceToken,
+    minAmountDepositToken,
+  );
+  const {
+    value: maxAmountSourceToken,
+  } = useSwapsExternal_getSwapExpectedReturn(
+    depositToken,
+    sourceToken,
+    maxAmountDepositToken,
+  );
+
+  const estimatedDepositTokenAmount = useMemo(
     () => (depositToken === sourceToken ? weiAmount : amountInDepositToken),
     [depositToken, sourceToken, weiAmount, amountInDepositToken],
   );
+
+  const minAmount = useMemo(() => {
+    return depositToken === sourceToken
+      ? minAmountDepositToken
+      : minAmountSourceToken;
+  }, [depositToken, sourceToken, minAmountDepositToken, minAmountSourceToken]);
+
+  const maxAmount = useMemo(() => {
+    return depositToken === sourceToken
+      ? maxAmountDepositToken
+      : maxAmountSourceToken;
+  }, [depositToken, sourceToken, maxAmountDepositToken, maxAmountSourceToken]);
+
+  const estimatedOgAmount = useMemo(
+    () => bignumber(estimatedDepositTokenAmount).mul(depositRate),
+    [estimatedDepositTokenAmount, depositRate],
+  );
+
+  const isValidAmount = useMemo(() => {
+    console.log('[isValidAmount]', weiAmount, minAmount, maxAmount);
+    return (
+      bignumber(weiAmount).greaterThan(minAmount) &&
+      bignumber(weiAmount).lessThan(maxAmount)
+    );
+  }, [weiAmount, minAmount, maxAmount]);
+
   const { minReturn } = useSlippage(amountInDepositToken, slippage);
 
   const { send: sendSwap, ...txSwap } = useSwapsExternal_approveAndSwapExternal(
@@ -89,8 +122,6 @@ export const BuySection: React.FC<IBuySectionProps> = ({
     '0x',
   );
   const oldSwapStatus = usePrevious(txSwap.status);
-
-  const { buy, ...buyTx } = useApproveAndBuyToken();
 
   useEffect(() => {
     if (buyTx.status === TxStatus.CONFIRMED) {
@@ -133,14 +164,6 @@ export const BuySection: React.FC<IBuySectionProps> = ({
     depositRate,
   ]);
 
-  useEffect(
-    () =>
-      setIsOverMaxLimit(
-        bignumber(equivalentDepositTokenAmount).greaterThan(maxAmount),
-      ),
-    [equivalentDepositTokenAmount, maxAmount],
-  );
-
   const onBuyClick = useCallback(() => {
     if (sourceToken === depositToken) {
       buy(tierId, weiTokenAmount, saleName, weiAmount, sourceToken);
@@ -163,7 +186,7 @@ export const BuySection: React.FC<IBuySectionProps> = ({
       <div className={styles.buyInnerWrapper}>
         <div className="tw-max-w-md tw-mx-auto">
           <DepositLimit
-            depositToken={depositToken}
+            depositToken={sourceToken}
             minAmount={minAmount}
             maxAmount={maxAmount}
           />
@@ -200,21 +223,20 @@ export const BuySection: React.FC<IBuySectionProps> = ({
               theme="white"
               showAmountSelector={false}
             />
-            {sourceToken !== depositToken && (
-              <div className="tw-text-center tw-text-sm tw-leading-30px tw-text-gray-2 tw-border tw-border-sold tw-border-gray-2 tw-rounded-lg tw-mt-4">
-                Equivalent {depositToken} Token :{' '}
-                {weiToNumberFormat(equivalentDepositTokenAmount, 4)}{' '}
-                <AssetRenderer asset={depositToken} />
-              </div>
-            )}
-            {isOverMaxLimit && (
+
+            <div className="tw-text-center tw-text-sm tw-leading-30px tw-text-gray-2 tw-border tw-border-sold tw-border-gray-2 tw-rounded-lg tw-mt-4">
+              Equivalent OG Token : {weiToNumberFormat(estimatedOgAmount, 4)}{' '}
+              <AssetRenderer asset={Asset.OG} />
+            </div>
+
+            {bignumber(weiAmount).greaterThan(0) && !isValidAmount && (
               <ErrorBadge
                 className="tw-py-0 tw-my-3"
                 content={
                   <span>
                     {t(
                       translations.originsLaunchpad.saleDay.buyStep.buyDialog
-                        .isOverMaxLimit,
+                        .isOutOfLimit,
                     )}
                   </span>
                 }
