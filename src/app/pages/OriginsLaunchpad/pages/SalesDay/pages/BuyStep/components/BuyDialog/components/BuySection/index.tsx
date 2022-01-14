@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { bignumber } from 'mathjs';
+import classNames from 'classnames';
 
 import { AmountInput } from 'app/components/Form/AmountInput';
 import { TxDialog } from '../TxDialog';
@@ -71,6 +72,10 @@ export const BuySection: React.FC<IBuySectionProps> = ({
     depositToken,
     weiAmount,
   );
+  const equivalentDepositTokenAmount = useMemo(
+    () => (depositToken === sourceToken ? weiAmount : amountInDepositToken),
+    [depositToken, sourceToken, weiAmount, amountInDepositToken],
+  );
   const { minReturn } = useSlippage(amountInDepositToken, slippage);
 
   const { send: sendSwap, ...txSwap } = useSwapsExternal_approveAndSwapExternal(
@@ -129,8 +134,11 @@ export const BuySection: React.FC<IBuySectionProps> = ({
   ]);
 
   useEffect(
-    () => setIsOverMaxLimit(bignumber(weiAmount).greaterThan(maxAmount)),
-    [weiAmount, maxAmount],
+    () =>
+      setIsOverMaxLimit(
+        bignumber(equivalentDepositTokenAmount).greaterThan(maxAmount),
+      ),
+    [equivalentDepositTokenAmount, maxAmount],
   );
 
   const onBuyClick = useCallback(() => {
@@ -173,7 +181,10 @@ export const BuySection: React.FC<IBuySectionProps> = ({
               <AssetRenderer asset={Asset.OG} />
             </div>
           </div>
-          <div className="tw-mt-32 tw-mb-10">
+          <div
+            className={classNames('tw-mt-24 tw-mb-4')}
+            style={{ height: '150px' }}
+          >
             <div className="tw-text-base tw-text-left tw-font-rowdies tw-mb-2 tw-text-black tw-uppercase">
               {t(
                 translations.originsLaunchpad.saleDay.buyStep.buyDialog
@@ -189,8 +200,16 @@ export const BuySection: React.FC<IBuySectionProps> = ({
               theme="white"
               showAmountSelector={false}
             />
+            {sourceToken !== depositToken && (
+              <div className="tw-text-center tw-text-sm tw-leading-30px tw-text-gray-2 tw-border tw-border-sold tw-border-gray-2 tw-rounded-lg tw-mt-4">
+                Equivalent {depositToken} Token :{' '}
+                {weiToNumberFormat(equivalentDepositTokenAmount, 4)}{' '}
+                <AssetRenderer asset={depositToken} />
+              </div>
+            )}
             {isOverMaxLimit && (
               <ErrorBadge
+                className="tw-py-0 tw-my-3"
                 content={
                   <span>
                     {t(
