@@ -50,7 +50,7 @@ export function WithdrawVesting({ vesting, onCloseModal }: Props) {
   return (
     <>
       <h3 className="tw-text-center tw-mb-10 tw-leading-10 tw-text-3xl">
-        {t(translations.stake.withdraw.title)}
+        {t(translations.vesting.withdraw.title)}
       </h3>
       <form onSubmit={submitForm}>
         <div className="tw-mb-9 md:tw-px-9 tw-tracking-normal">
@@ -58,7 +58,7 @@ export function WithdrawVesting({ vesting, onCloseModal }: Props) {
             className="tw-leading-4 tw-block tw-text-sov-white tw-text-md tw-font-medium tw-mb-2"
             htmlFor="address"
           >
-            {t(translations.stake.withdraw.receiveSovAt)}:
+            {t(translations.vesting.withdraw.receiveOgAt)}:
           </label>
           <div className="tw-flex tw-space-x-4 tw-relative">
             <input
@@ -75,7 +75,7 @@ export function WithdrawVesting({ vesting, onCloseModal }: Props) {
             className="tw-block tw-text-sov-white tw-text-md tw-font-medium tw-mb-2 tw-mt-8"
             htmlFor="voting-power"
           >
-            {t(translations.stake.withdraw.unlockedSov)}:
+            {t(translations.vesting.withdraw.unlockedOg)}:
           </label>
           <div className="tw-flex tw-space-x-4 tw-mb-3">
             <div className="tw-border tw-text-sov-white tw-appearance-none tw-text-md tw-font-semibold tw-text-center tw-h-10 tw-rounded-lg tw-w-full tw-py-2 tw-px-3 tw-bg-transparent tw-tracking-normal focus:tw-outline-none focus:tw-shadow-outline">

@@ -642,6 +642,14 @@
     "loading": "Loading, please wait...",
     "nostake": "No stakes yet."
   },
+  "vesting": {
+    "withdraw": {
+      "title": "Withdraw",
+      "receiveOgAt": "Receive OG at",
+      "unlockedOg": "Unlocked OG",
+      "loading": "Loading..."
+    }
+  },
   "governance": {
     "title": "Sovryn Origins Bitocracy",
     "meta": "Staking/Vesting",
