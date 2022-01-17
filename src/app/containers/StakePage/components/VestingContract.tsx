@@ -26,8 +26,10 @@ import { useStaking_getAccumulatedFees } from '../../../hooks/staking/useStaking
 import { useStaking_getStakes } from '../../../hooks/staking/useStaking_getStakes';
 import { useCachedAssetPrice } from '../../../hooks/trading/useCachedAssetPrice';
 import { useAccount } from '../../../hooks/useAccount';
+import { useDollarValue } from 'app/hooks/useDollarValue';
 import { WithdrawVesting } from './WithdrawVesting';
 import { VestGroup } from '../types';
+import { governanceToken } from 'app/constants';
 
 interface Props {
   vestingAddress: string;
@@ -69,6 +71,7 @@ export function VestingContract(props: Props) {
   const account = useAccount();
   const getStakes = useStaking_getStakes(props.vestingAddress);
   const lockedAmount = useStaking_balanceOf(props.vestingAddress);
+  const dollarValue = useDollarValue(governanceToken, lockedAmount.value);
   const [stakingPeriodStart, setStakingPeriodStart] = useState('');
   const WEIGHT_FACTOR = useStaking_WEIGHT_FACTOR();
   // const [weight, setWeight] = useState('');
@@ -83,18 +86,11 @@ export function VestingContract(props: Props) {
     Number(unlockDate),
     Math.round(now.getTime() / 1e3),
   );
-  const dollars = useCachedAssetPrice(Asset.SOV, Asset.USDT);
+
   const rbtc = useCachedAssetPrice(
     getAssetByVestingType(props.type),
     Asset.RBTC,
   );
-  const dollarValue = useMemo(() => {
-    if (lockedAmount === null) return '';
-    return bignumber(lockedAmount.value)
-      .mul(dollars.value)
-      .div(10 ** SOV.decimals)
-      .toFixed(0);
-  }, [dollars.value, lockedAmount, SOV.decimals]);
 
   const tokenAddress = getContract(
     getTokenContractNameByVestingType(props.type),
@@ -172,8 +168,8 @@ export function VestingContract(props: Props) {
                   {weiTo4(lockedAmount.value)} {t(translations.stake.og)}
                   <br />≈{' '}
                   <LoadableValue
-                    value={weiToUSD(dollarValue, 2)}
-                    loading={dollars.loading}
+                    value={weiToUSD(dollarValue.value, 2)}
+                    loading={dollarValue.loading}
                   />
                 </>
               )}
