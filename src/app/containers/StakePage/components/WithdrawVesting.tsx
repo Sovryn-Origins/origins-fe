@@ -1,14 +1,17 @@
 import React, { useCallback, useState } from 'react';
-import { isAddress } from 'web3-utils';
+import { isAddress, AbiItem } from 'web3-utils';
 import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { numberFromWei } from 'utils/blockchain/math-helpers';
 import { useAccount } from 'app/hooks/useAccount';
 import { useGetUnlockedVesting } from '../../../hooks/staking/useGetUnlockedVesting';
-import { vesting_withdraw } from 'utils/blockchain/requests/vesting';
+// import { vesting_withdraw } from 'utils/blockchain/requests/vesting';
 import { TxFeeCalculator } from 'app/components/TxFeeCalculator';
+import { TxDialog } from 'app/components/Dialogs/TxDialog';
 import { discordInvite } from 'utils/classifiers';
 import { useMaintenance } from 'app/hooks/useMaintenance';
+import { useSendToContractAddressTx } from 'app/hooks/useSendToContractAddressTx';
+import VestingABI from 'utils/blockchain/abi/Vesting.json';
 import { ErrorBadge } from 'app/components/Form/ErrorBadge';
 
 interface Props {
@@ -24,6 +27,11 @@ export function WithdrawVesting({ vesting, onCloseModal }: Props) {
   const [address, setAddress] = useState(account);
   const [sending, setSending] = useState(false);
   const { value, loading } = useGetUnlockedVesting('staking', vesting);
+  const { send, ...tx } = useSendToContractAddressTx(
+    vesting.toLowerCase(),
+    VestingABI as AbiItem[],
+    'withdrawTokens',
+  );
 
   const validate = () => {
     return (
@@ -36,15 +44,18 @@ export function WithdrawVesting({ vesting, onCloseModal }: Props) {
       e.preventDefault();
       setSending(true);
       try {
-        await vesting_withdraw(vesting.toLowerCase(), address.toLowerCase());
         onCloseModal();
+        if (!tx.loading) {
+          send([address.toLowerCase()], { from: account });
+        }
+        // await vesting_withdraw(vesting.toLowerCase(), address.toLowerCase());
         setSending(false);
       } catch (e) {
         console.error(e);
         setSending(false);
       }
     },
-    [address, vesting, onCloseModal],
+    [address, send, account, onCloseModal, tx],
   );
 
   return (
@@ -113,8 +124,8 @@ export function WithdrawVesting({ vesting, onCloseModal }: Props) {
           <button
             type="submit"
             className={`tw-uppercase tw-w-full tw-text-black tw-bg-primary tw-text-xl tw-font-extrabold tw-px-4 hover:tw-bg-opacity-80 tw-py-2 tw-rounded-lg tw-transition tw-duration-500 tw-ease-in-out ${
-              (!validate() || withdrawVestsLocked) &&
-              'tw-bg-opacity-25 tw-cursor-not-allowed'
+              !validate() ||
+              (withdrawVestsLocked && 'tw-bg-opacity-25 tw-cursor-not-allowed')
             }`}
             disabled={!validate() || withdrawVestsLocked}
           >
@@ -129,6 +140,7 @@ export function WithdrawVesting({ vesting, onCloseModal }: Props) {
           </button>
         </div>
       </form>
+      <TxDialog tx={tx} />
     </>
   );
 }

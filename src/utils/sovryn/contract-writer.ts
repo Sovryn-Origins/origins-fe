@@ -96,7 +96,9 @@ class ContractWriter {
       };
     } catch (e) {
       dispatch(txActions.setLoading(false));
-      dispatch(txActions.setTransactionRequestDialogError(e.message));
+      dispatch(
+        txActions.setTransactionRequestDialogError((e as Error).message),
+      );
       return {
         approveTx: null,
         nonce,
