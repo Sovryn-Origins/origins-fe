@@ -1,12 +1,11 @@
 // swap btn
 .swap-btn-container {
-  max-width: 250px;
-  margin: auto;
+  @apply tw-m-auto;
   margin-top: 23px;
 
   .swap-btn-helper {
     @apply tw-flex tw-items-center tw-justify-center
-      tw-text-lg tw-text-black tw-text-center tw-tracking-normal;
+      tw-text-base tw-text-black tw-text-center tw-uppercase tw-tracking-normal;
 
     img {
       @apply tw-ml-2 tw-cursor-pointer;

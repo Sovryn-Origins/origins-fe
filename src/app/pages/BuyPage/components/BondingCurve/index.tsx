@@ -38,7 +38,6 @@ import styles from './index.module.scss';
 import { useSwapsBonding } from '../../../../hooks/swap-network/useSwapBonding';
 import Web3 from 'web3';
 
-const s = translations.swapTradeForm;
 interface Option {
   key: Asset;
   label: string;
@@ -291,7 +290,9 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
                 <SwapAssetSelector
                   value={sourceToken}
                   items={sourceOptions}
-                  placeholder={t(s.fields.currency_placeholder)}
+                  placeholder={t(
+                    translations.swapTradeForm.fields.currency_placeholder,
+                  )}
                   onChange={value => setSourceToken(value.key)}
                 />
               </div>
@@ -319,7 +320,9 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
                 <SwapAssetSelector
                   value={targetToken}
                   items={targetOptions}
-                  placeholder={t(s.fields.currency_placeholder)}
+                  placeholder={t(
+                    translations.swapTradeForm.fields.currency_placeholder,
+                  )}
                   onChange={value => setTargetToken(value.key)}
                 />
               </div>
