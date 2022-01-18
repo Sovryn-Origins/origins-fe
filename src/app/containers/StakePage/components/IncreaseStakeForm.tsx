@@ -59,6 +59,15 @@ export function IncreaseStakeForm(props: Props) {
     [props],
   );
 
+  const selectAmountByPercent = useCallback(
+    percent => {
+      handleChangeAddAmount(
+        Number(fromWei((Number(props.ogBalance) * percent) / 100)).toFixed(4),
+      );
+    },
+    [props.ogBalance, handleChangeAddAmount],
+  );
+
   useEffect(() => {
     setInitialStep(false);
   }, [props, initialStep]);
@@ -152,31 +161,25 @@ export function IncreaseStakeForm(props: Props) {
 
             <div className="tw-flex tw-justify-between tw-rounded tw-mt-4 tw-mb-2">
               <div
-                onClick={() =>
-                  handleChangeAddAmount(fromWei(Number(props.ogBalance) * 0.25))
-                }
+                onClick={() => selectAmountByPercent(25)}
                 className="tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-primary hover:tw-bg-opacity-30 tw-w-1/5 tw-py-3 tw-text-center tw-text-xl tw-text-primary tw-tracking-tighter tw-bg-gray-3 tw-rounded-lg"
               >
                 25%
               </div>
               <div
-                onClick={() =>
-                  handleChangeAddAmount(fromWei(Number(props.ogBalance) * 0.5))
-                }
+                onClick={() => selectAmountByPercent(50)}
                 className="tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-primary hover:tw-bg-opacity-30 tw-w-1/5 tw-py-3 tw-text-center tw-text-xl tw-text-primary tw-tracking-tighter tw-bg-gray-3 tw-rounded-lg"
               >
                 50%
               </div>
               <div
-                onClick={() =>
-                  handleChangeAddAmount(fromWei(Number(props.ogBalance) * 0.75))
-                }
+                onClick={() => selectAmountByPercent(75)}
                 className="tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-primary hover:tw-bg-opacity-30 tw-w-1/5 tw-py-3 tw-text-center tw-text-xl tw-text-primary tw-tracking-tighter tw-bg-gray-3 tw-rounded-lg"
               >
                 75%
               </div>
               <div
-                onClick={() => handleChangeAddAmount(fromWei(props.ogBalance))}
+                onClick={() => selectAmountByPercent(100)}
                 className="tw-cursor-pointer tw-transition tw-duration-300 tw-ease-in-out hover:tw-bg-primary hover:tw-bg-opacity-30 tw-w-1/5 tw-py-3 tw-text-center tw-text-xl tw-text-primary tw-tracking-tighter tw-bg-gray-3 tw-rounded-lg"
               >
                 100%
