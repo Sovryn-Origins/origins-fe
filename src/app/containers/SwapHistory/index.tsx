@@ -192,7 +192,7 @@ export function SwapHistory({ tabState }) {
                 </td>
               </tr>
             )}
-            {onGoingTransactions}
+            {/* {onGoingTransactions} */}
             {currentHistory.map(item => {
               let assetFrom = {} as AssetDetails;
               let assetTo = {} as AssetDetails;

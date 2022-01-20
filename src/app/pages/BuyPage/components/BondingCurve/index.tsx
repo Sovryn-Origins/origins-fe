@@ -33,6 +33,7 @@ import { useMaintenance } from 'app/hooks/useMaintenance';
 import { discordInvite } from 'utils/classifiers';
 import { IPromotionLinkState } from 'types/promotion';
 import { useBondingCurvePrice } from 'app/hooks/bondingCurve/useBondingCurvePrice';
+import { useBondingCurvePlaceOrder } from 'app/hooks/bondingCurve/useBondingCurvePlaceOrder';
 
 import styles from './index.module.scss';
 import { useSwapsBonding } from '../../../../hooks/swap-network/useSwapBonding';
@@ -76,37 +77,36 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
   const [method, setMethod] = useState('buy');
   const [batchId, setBatchId] = useState(0);
   const [hash, setHash] = useState('');
-  const bondingCurvePrice = useBondingCurvePrice(
-    weiAmount,
-    sourceToken === Asset.SOV,
-  );
+  const isPurchase = useMemo(() => sourceToken === Asset.SOV, [sourceToken]);
+  const bondingCurvePrice = useBondingCurvePrice(weiAmount, isPurchase);
+  const { placeOrder, ...orderTx } = useBondingCurvePlaceOrder(isPurchase);
 
-  useEffect(() => {
-    const start = async () => {
-      const keys = Object.keys(transactions);
-      const transaction = transactions[keys[keys.length - 1]];
-      if (
-        transaction?.status === 'confirmed' &&
-        transaction?.type === 'bonding' &&
-        transaction?.customData?.stage === 'buy'
-      ) {
-        window.ethereum.enable();
-        const web3 = new Web3(Web3.givenProvider);
-        const receipt = await web3.eth.getTransactionReceipt(
-          transaction.transactionHash,
-        );
-        const blockNumber = receipt.blockNumber;
-        const id = Math.floor(blockNumber / 10) * 10;
-        setBatchId(id);
-        setHash(transaction.transactionHash);
-        setMethod('claim');
-      }
-      if (transaction?.customData?.stage !== 'buy') {
-        setMethod('buy');
-      }
-    };
-    start();
-  }, [transactions]);
+  // useEffect(() => {
+  //   const start = async () => {
+  //     const keys = Object.keys(transactions);
+  //     const transaction = transactions[keys[keys.length - 1]];
+  //     if (
+  //       transaction?.status === 'confirmed' &&
+  //       transaction?.type === 'bonding' &&
+  //       transaction?.customData?.stage === 'buy'
+  //     ) {
+  //       window.ethereum.enable();
+  //       const web3 = new Web3(Web3.givenProvider);
+  //       const receipt = await web3.eth.getTransactionReceipt(
+  //         transaction.transactionHash,
+  //       );
+  //       const blockNumber = receipt.blockNumber;
+  //       const id = Math.floor(blockNumber / 10) * 10;
+  //       setBatchId(id);
+  //       setHash(transaction.transactionHash);
+  //       setMethod('claim');
+  //     }
+  //     if (transaction?.customData?.stage !== 'buy') {
+  //       setMethod('buy');
+  //     }
+  //   };
+  //   start();
+  // }, [transactions]);
 
   useEffect(() => {
     async function getOptions() {
@@ -209,25 +209,25 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
 
   const { minReturn } = useSlippage(bondingCurvePrice.value, slippage);
 
-  const { send: sendExternal, ...txExternal } = useSwapsBonding(
-    sourceToken,
-    targetToken,
-    account,
-    account,
-    weiAmount,
-    '0',
-    minReturn,
-    '0x',
-    method,
-    batchId,
-    hash,
-  );
+  // const { send: sendExternal, ...txExternal } = useSwapsBonding(
+  //   sourceToken,
+  //   targetToken,
+  //   account,
+  //   account,
+  //   weiAmount,
+  //   '0',
+  //   minReturn,
+  //   '0x',
+  //   method,
+  //   batchId,
+  //   hash,
+  // );
 
-  const send = useCallback(() => sendExternal(), [sendExternal]);
+  // const send = useCallback(() => sendExternal(), [sendExternal]);
 
-  useEffect(() => {
-    if (method !== 'buy') send();
-  }, [method, send]);
+  // useEffect(() => {
+  //   if (method !== 'buy') send();
+  // }, [method, send]);
 
   const location = useLocation<IPromotionLinkState>();
   const history = useHistory<IPromotionLinkState>();
@@ -261,11 +261,13 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
   };
 
   // eslint-disable-next-line
-  const tx = useMemo(() => txExternal, [targetToken, sourceToken, txExternal]);
+  // const tx = useMemo(() => txExternal, [targetToken, sourceToken, txExternal]);
 
-  const callSend = () => {
-    setMethod('buy');
-    send();
+  const handleOnSwap = () => {
+    console.log('[weiAmount]', weiAmount);
+    placeOrder(weiAmount);
+    // setMethod('buy');
+    // send();
   };
 
   return (
@@ -370,7 +372,7 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
             )}
             <BuyButton
               disabled={false}
-              onClick={callSend}
+              onClick={handleOnSwap}
               text={t(translations.swap.cta)}
               className={'buy-btn'}
             />
@@ -380,7 +382,7 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
         <ComingSoon />
       )}
 
-      <TxDialog tx={tx} />
+      <TxDialog tx={orderTx} />
     </>
   );
 };

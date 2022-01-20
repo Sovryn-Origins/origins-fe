@@ -42,7 +42,7 @@ import OGMarketMakerAbi from './abi/OGMarketMaker.json';
 import MYNT_tokenAbi from './abi/Mynt_ABI.json';
 import MYNTMarketAbi from './abi/MyntMarketMaker.json';
 import ZERO_tokenAbi from './abi/Zero_ABI.json';
-import BONDING_Controller_Abi from './abi/BondingController.json';
+import MYNT_Controller_Abi from './abi/BondingController.json';
 import BancorFormulaAbi from './abi/BancorFormula.json';
 
 export const contracts = {
@@ -357,6 +357,10 @@ export const contracts = {
     address: '0x6979bd7aa099c6c0566c40e5B1FC88CB96D73254',
     abi: OGTokenAbi,
   },
+  OGMarketMaker: {
+    address: '',
+    abi: OGMarketMakerAbi,
+  },
   MYNT_token: {
     address: '0x139483E22575826183f5B56DD242F8F2c1aeF327',
     abi: MYNT_tokenAbi,
@@ -365,17 +369,13 @@ export const contracts = {
     address: '0xf75170ce8d4060b8D5fc24E996FA00A94bb8A232',
     abi: MYNTMarketAbi,
   },
+  MYNT_Controller: {
+    address: '0x6F62D2F571BcE7187CdFDD4b1E5E53cfD7d14dd2',
+    abi: MYNT_Controller_Abi,
+  },
   ZERO_token: {
     address: '0xAc5C5917e713581c8C8B78c7B12f2D67dA0323f0',
     abi: ZERO_tokenAbi,
-  },
-  OGMarketMaker: {
-    address: '',
-    abi: OGMarketMakerAbi,
-  },
-  BONDING_Controller: {
-    address: '0x6F62D2F571BcE7187CdFDD4b1E5E53cfD7d14dd2',
-    abi: BONDING_Controller_Abi,
   },
   BancorFormula: {
     address: '0x6cBb8d512389768d9809BcB3b76d71251a6769Da',

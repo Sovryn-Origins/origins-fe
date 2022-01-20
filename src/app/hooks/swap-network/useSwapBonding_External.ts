@@ -17,7 +17,7 @@ export function useSwapBonding_External(
   batchId: number,
 ) {
   const { send, ...rest } = useSendContractTx(
-    'BONDING_Controller',
+    'MYNT_Controller',
     stage === 'buy'
       ? sourceToken === 'SOV'
         ? 'openBuyOrder'
