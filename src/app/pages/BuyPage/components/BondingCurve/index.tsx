@@ -6,7 +6,7 @@ import { AssetRenderer } from 'app/components/AssetRenderer';
 import { useSelector } from 'react-redux';
 import { selectTransactions } from 'store/global/transactions-store/selectors';
 import {
-  fromWei,
+  // fromWei,
   weiToFixed,
 } from '../../../../../utils/blockchain/math-helpers';
 import { Asset } from '../../../../../types';
@@ -33,6 +33,7 @@ import { useMaintenance } from 'app/hooks/useMaintenance';
 import { discordInvite } from 'utils/classifiers';
 import { useSwapsExternal_getSwapExpectedReturn } from '../../../../hooks/swap-network/useSwapsExternal_getSwapExpectedReturn';
 import { IPromotionLinkState } from 'types/promotion';
+import { useBondingCurvePrice } from 'app/hooks/bondingCurve/useBondingCurvePrice';
 
 import styles from './index.module.scss';
 import { useSwapsBonding } from '../../../../hooks/swap-network/useSwapBonding';
@@ -76,6 +77,10 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
   const [method, setMethod] = useState('buy');
   const [batchId, setBatchId] = useState(0);
   const [hash, setHash] = useState('');
+  const bondingCurvePrice = useBondingCurvePrice(
+    weiAmount,
+    sourceToken === Asset.SOV,
+  );
 
   useEffect(() => {
     const start = async () => {
@@ -258,7 +263,7 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
     const _sourceToken = sourceToken;
     setSourceToken(targetToken);
     setTargetToken(_sourceToken);
-    setAmount(fromWei(rateByPath));
+    setAmount('0');
     setSwap(!swap);
   };
 
@@ -331,7 +336,7 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
               </div>
               <div className={styles.amount}>
                 <Input
-                  value={weiToFixed(rateByPath, 6)}
+                  value={weiToFixed(bondingCurvePrice.value, 6)}
                   readOnly={true}
                   appendElem={<AssetRenderer asset={targetToken} />}
                 />
