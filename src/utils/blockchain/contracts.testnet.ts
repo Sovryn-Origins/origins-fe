@@ -43,6 +43,7 @@ import MYNT_tokenAbi from './abi/Mynt_ABI.json';
 import MYNTMarketAbi from './abi/MyntMarketMaker.json';
 import ZERO_tokenAbi from './abi/Zero_ABI.json';
 import BONDING_Controller_Abi from './abi/BondingController.json';
+import BancorFormulaAbi from './abi/BancorFormula.json';
 
 export const contracts = {
   sovrynProtocol: {
@@ -381,5 +382,9 @@ export const contracts = {
   BONDING_Controller: {
     address: '0x6F62D2F571BcE7187CdFDD4b1E5E53cfD7d14dd2',
     abi: BONDING_Controller_Abi,
+  },
+  BancorFormula: {
+    address: '0xFE09Df5d6ddc053c4d1273Cf8F7eD1B02A0D24C8',
+    abi: BancorFormulaAbi,
   },
 };

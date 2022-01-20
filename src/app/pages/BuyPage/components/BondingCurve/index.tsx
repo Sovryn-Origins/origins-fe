@@ -254,7 +254,7 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
     }
   }, [tokenBalance, location.state, location.pathname, history]);
 
-  const onSwapAssert = () => {
+  const handleSwapAssets = () => {
     const _sourceToken = sourceToken;
     setSourceToken(targetToken);
     setTargetToken(_sourceToken);
@@ -311,7 +311,7 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
               <div
                 className={styles.swapRevert}
                 style={{ backgroundImage: `url(${swapIcon})` }}
-                onClick={onSwapAssert}
+                onClick={handleSwapAssets}
               />
             </div>
             <div className={styles.swapForm}>
@@ -332,7 +332,6 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
               <div className={styles.amount}>
                 <Input
                   value={weiToFixed(rateByPath, 6)}
-                  onChange={value => setAmount(value)}
                   readOnly={true}
                   appendElem={<AssetRenderer asset={targetToken} />}
                 />
