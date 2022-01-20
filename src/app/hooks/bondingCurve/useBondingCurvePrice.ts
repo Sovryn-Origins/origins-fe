@@ -7,7 +7,7 @@ const connectorWeight = 400000;
 
 export const useBondingCurvePrice = (amount: string, isPurchase: boolean) => {
   const [loading, setLoading] = useState(false);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState('0');
   const [treasuryBalance, setTreasuryBalance] = useState('');
   const [totalSupply, setTotalSupply] = useState('');
 

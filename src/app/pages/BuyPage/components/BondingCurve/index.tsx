@@ -31,7 +31,6 @@ import { contractReader } from '../../../../../utils/sovryn/contract-reader';
 import { ErrorBadge } from 'app/components/Form/ErrorBadge';
 import { useMaintenance } from 'app/hooks/useMaintenance';
 import { discordInvite } from 'utils/classifiers';
-import { useSwapsExternal_getSwapExpectedReturn } from '../../../../hooks/swap-network/useSwapsExternal_getSwapExpectedReturn';
 import { IPromotionLinkState } from 'types/promotion';
 import { useBondingCurvePrice } from 'app/hooks/bondingCurve/useBondingCurvePrice';
 
@@ -208,13 +207,7 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
     }
   }, [tokenBalance, swap, sourceToken, targetToken]);
 
-  const { value: rateByPath } = useSwapsExternal_getSwapExpectedReturn(
-    sourceToken,
-    targetToken,
-    weiAmount,
-  );
-
-  const { minReturn } = useSlippage(rateByPath, slippage);
+  const { minReturn } = useSlippage(bondingCurvePrice.value, slippage);
 
   const { send: sendExternal, ...txExternal } = useSwapsBonding(
     sourceToken,
@@ -279,7 +272,7 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
     <>
       <SlippageDialog
         isOpen={dialogOpen}
-        amount={rateByPath}
+        amount={bondingCurvePrice.value}
         value={slippage}
         asset={targetToken}
         onClose={() => setDialogOpen(false)}
