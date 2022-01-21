@@ -21,7 +21,7 @@ import { AssetRow, AssetRowData } from 'app/containers/SwapHistory';
 // import { useCachedAssetPrice } from 'app/hooks/trading/useCachedAssetPrice';
 import { useAccount } from 'app/hooks/useAccount';
 import { useTradeHistoryRetry } from 'app/hooks/useTradeHistoryRetry';
-import { bondHistory } from '../../hooks/useGetBondingCurveHistory';
+import { useGetBondingCurveHistory } from '../../hooks/useGetBondingCurveHistory';
 // import iconPending from 'assets/images/icon-pending.svg';
 // import iconRejected from 'assets/images/icon-rejected.svg';
 // import iconSuccess from 'assets/images/icon-success.svg';
@@ -40,37 +40,42 @@ export const BondingCurveHistory: React.FC = () => {
   const countOfLoadingHistory = useRef(0);
   const transactions = useSelector(selectTransactionArray);
   const account = useAccount();
-  const [history, setHistory] = useState([]) as any;
+  // const [history, setHistory] = useState([]) as any;
   const [currentHistory, setCurrentHistory] = useState([]) as any;
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
   const assets = AssetsDictionary.list();
   const [hasOngoingTransactions, setHasOngoingTransactions] = useState(false);
   const retry = useTradeHistoryRetry();
-
-  const getBondingCurveOrders = useCallback(async () => {
-    bondHistory
-      .getPastEvents('MYNT_MarketMaker', 'ClaimBuyOrder', {
-        fromBlock: 0,
-        toBlock: 'latest',
-      })
-      .then(res => {
-        setHistory([]);
-        setCurrentHistory([]);
-        setHistory(res.sort((x, y) => y.timestamp - x.timestamp));
-        setLoading(false);
-        countOfLoadingHistory.current++;
-      })
-      .catch(e => {});
-  }, []);
+  const { loading, value: history } = useGetBondingCurveHistory();
 
   useEffect(() => {
-    if (!account) return;
-    if (countOfLoadingHistory.current === 0) {
-      setLoading(true);
-    }
-    getBondingCurveOrders();
-  }, [account, getBondingCurveOrders, retry]);
+    console.log('[history]', history);
+  }, [loading, history]);
+
+  // const getBondingCurveOrders = useCallback(async () => {
+  //   bondHistory
+  //     .getPastEvents('MYNT_MarketMaker', 'ClaimBuyOrder', {
+  //       fromBlock: 0,
+  //       toBlock: 'latest',
+  //     })
+  //     .then(res => {
+  //       setHistory([]);
+  //       setCurrentHistory([]);
+  //       setHistory(res.sort((x, y) => y.timestamp - x.timestamp));
+  //       setLoading(false);
+  //       countOfLoadingHistory.current++;
+  //     })
+  //     .catch(e => {});
+  // }, []);
+
+  // useEffect(() => {
+  //   if (!account) return;
+  //   if (countOfLoadingHistory.current === 0) {
+  //     setLoading(true);
+  //   }
+  //   getBondingCurveOrders();
+  // }, [account, getBondingCurveOrders, retry]);
 
   const onPageChanged = data => {
     const { currentPage, pageLimit } = data;
