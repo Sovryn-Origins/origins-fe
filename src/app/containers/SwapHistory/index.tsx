@@ -33,7 +33,7 @@ import { useTradeHistoryRetry } from '../../hooks/useTradeHistoryRetry';
 import { Nullable } from 'types';
 import styles from './index.module.scss';
 
-interface AssetRowData {
+export interface AssetRowData {
   status: TxStatus;
   timestamp: number;
   transaction_hash: string;
@@ -185,7 +185,7 @@ interface AssetProps {
   itemTo: AssetDetails;
 }
 
-function AssetRow({ data, itemFrom, itemTo }: AssetProps) {
+export function AssetRow({ data, itemFrom, itemTo }: AssetProps) {
   const { t } = useTranslation();
   const dollars = useCachedAssetPrice(itemTo.asset, Asset.USDT);
   const dollarValue = useMemo(() => {
