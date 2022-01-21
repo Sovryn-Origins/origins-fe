@@ -8,11 +8,13 @@ import React, {
   useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 import { LinkToExplorer } from 'app/components/LinkToExplorer';
 import iconPending from 'assets/images/icon-pending.svg';
 import iconRejected from 'assets/images/icon-rejected.svg';
 import iconSuccess from 'assets/images/icon-success.svg';
+import { selectTransactionArray } from 'store/global/transactions-store/selectors';
 import { TxStatus } from 'store/global/transactions-store/types';
 import { getContractNameByAddress } from 'utils/blockchain/contract-helpers';
 import { numberFromWei } from 'utils/blockchain/math-helpers';
@@ -31,6 +33,7 @@ import { useCachedAssetPrice } from '../../hooks/trading/useCachedAssetPrice';
 import { useAccount } from '../../hooks/useAccount';
 import { useTradeHistoryRetry } from '../../hooks/useTradeHistoryRetry';
 import { Nullable } from 'types';
+import { bondHistory } from '../../hooks/useBondHistory';
 import styles from './index.module.scss';
 
 interface AssetRowData {
@@ -43,7 +46,8 @@ interface AssetRowData {
   };
 }
 
-export function SwapHistory() {
+export function SwapHistory({ tabState }) {
+  const transactions = useSelector(selectTransactionArray);
   const account = useAccount();
   const url = backendUrl[currentChainId];
   const [history, setHistory] = useState([]) as any;
@@ -51,9 +55,24 @@ export function SwapHistory() {
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
   const assets = AssetsDictionary.list();
+  const [hasOngoingTransactions, setHasOngoingTransactions] = useState(false);
   const retry = useTradeHistoryRetry();
 
   let cancelTokenSource = useRef<CancelTokenSource>();
+  const getBond = useCallback(async () => {
+    bondHistory
+      .getPastEvents('MYNT_MarketMaker', 'ClaimBuyOrder', {
+        fromBlock: 0,
+        toBlock: 'latest',
+      })
+      .then(res => {
+        setHistory([]);
+        setCurrentHistory([]);
+        setHistory(res.sort((x, y) => y.timestamp - x.timestamp));
+        setLoading(false);
+      })
+      .catch(e => {});
+  }, []);
 
   const getData = useCallback(() => {
     if (cancelTokenSource.current) {
@@ -80,8 +99,12 @@ export function SwapHistory() {
     setLoading(true);
     setHistory([]);
     setCurrentHistory([]);
-    getData();
-  }, [getData]);
+    if (tabState === true) {
+      getBond();
+    } else {
+      getData();
+    }
+  }, [getData, getBond, tabState]);
 
   //GET HISTORY
   useEffect(() => {
@@ -95,6 +118,42 @@ export function SwapHistory() {
     const offset = (currentPage - 1) * pageLimit;
     setCurrentHistory(history.slice(offset, offset + pageLimit));
   };
+
+  const onGoingTransactions = useMemo(() => {
+    return transactions.map(item => {
+      const { customData } = item;
+
+      if (!hasOngoingTransactions) {
+        setHasOngoingTransactions(true);
+      }
+
+      const assetFrom = assets.find(
+        currency => currency.asset === customData?.sourceToken,
+      );
+      const assetTo = assets.find(
+        currency => currency.asset === customData?.targetToken,
+      );
+
+      const data: AssetRowData = {
+        status: item.status,
+        timestamp: customData?.date,
+        transaction_hash: item.transactionHash,
+        returnVal: {
+          _fromAmount: customData?.amount,
+          _toAmount: customData?.minReturn || null,
+        },
+      };
+
+      return (
+        <AssetRow
+          key={item.transactionHash}
+          data={data}
+          itemFrom={assetFrom!}
+          itemTo={assetTo!}
+        />
+      );
+    });
+  }, [assets, hasOngoingTransactions, transactions]);
 
   return (
     <section>
@@ -126,14 +185,14 @@ export function SwapHistory() {
                 </td>
               </tr>
             )}
-            {history.length === 0 && !loading && (
+            {!hasOngoingTransactions && history.length === 0 && !loading && (
               <tr key={'empty'}>
                 <td className="tw-text-center" colSpan={99}>
                   {t(translations.swapHistory.emptyState)}
                 </td>
               </tr>
             )}
-
+            {/* {onGoingTransactions} */}
             {currentHistory.map(item => {
               let assetFrom = {} as AssetDetails;
               let assetTo = {} as AssetDetails;

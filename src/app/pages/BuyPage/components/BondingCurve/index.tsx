@@ -1,41 +1,41 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 import { translations } from 'locales/i18n';
 import { AssetRenderer } from 'app/components/AssetRenderer';
-import { useSelector } from 'react-redux';
-import { selectTransactions } from 'store/global/transactions-store/selectors';
-import {
-  // fromWei,
-  weiToFixed,
-} from '../../../../../utils/blockchain/math-helpers';
-import { Asset } from '../../../../../types';
-import { useWeiAmount } from '../../../../hooks/useWeiAmount';
-import { AssetsDictionary } from '../../../../../utils/dictionaries/assets-dictionary';
-import { SwapAssetSelector } from 'app/containers/SwapFormContainer/components/SwapAssetSelector/Loadable';
-import { AmountInput } from '../AmountInput';
-import comingIcon from '../../../../../assets/images/swap/coming.svg';
-import swapIcon from '../../../../../assets/images/buy/buy_exchange.svg';
-import settingIcon from '../../../../../assets/images/swap/ic_setting.svg';
 import { SlippageDialog } from 'app/components/Dialogs/SlippageDialog';
-import { useSlippage } from 'app/hooks/useSlippage';
-import { weiToNumberFormat } from 'utils/display-text/format';
-import { BuyButton } from 'app/pages/BuyPage/components/Button/buy';
-import { TxDialog } from 'app/components/Dialogs/TxDialog';
 import { Input } from 'app/components/Form/Input';
-import { AvailableBalance } from '../../../../components/AvailableBalance';
-import { useAccount } from '../../../../hooks/useAccount';
-import { getTokenContractName } from '../../../../../utils/blockchain/contract-helpers';
-import { Sovryn } from '../../../../../utils/sovryn';
-import { contractReader } from '../../../../../utils/sovryn/contract-reader';
+import { AvailableBalance } from 'app/components/AvailableBalance';
 import { ErrorBadge } from 'app/components/Form/ErrorBadge';
+import { SwapAssetSelector } from 'app/containers/SwapFormContainer/components/SwapAssetSelector/Loadable';
+import { useAccount } from 'app/hooks/useAccount';
+import { useWeiAmount } from 'app/hooks/useWeiAmount';
+import { useSlippage } from 'app/hooks/useSlippage';
 import { useMaintenance } from 'app/hooks/useMaintenance';
-import { discordInvite } from 'utils/classifiers';
-import { IPromotionLinkState } from 'types/promotion';
 import { useBondingCurvePrice } from 'app/hooks/bondingCurve/useBondingCurvePrice';
 import { useBondingCurvePlaceOrder } from 'app/hooks/bondingCurve/useBondingCurvePlaceOrder';
+import comingIcon from 'assets/images/swap/coming.svg';
+import swapIcon from 'assets/images/buy/buy_exchange.svg';
+import settingIcon from 'assets/images/swap/ic_setting.svg';
+import { selectTransactions } from 'store/global/transactions-store/selectors';
+import { Asset } from 'types';
+import { IPromotionLinkState } from 'types/promotion';
+import { weiToFixed } from 'utils/blockchain/math-helpers';
+import { AssetsDictionary } from 'utils/dictionaries/assets-dictionary';
+import { weiToNumberFormat } from 'utils/display-text/format';
+import { getTokenContractName } from 'utils/blockchain/contract-helpers';
+import { Sovryn } from 'utils/sovryn';
+import { contractReader } from 'utils/sovryn/contract-reader';
+import { discordInvite } from 'utils/classifiers';
+
+import { AmountInput } from '../AmountInput';
+import { BuyButton } from '../Button/buy';
+import { TxDialog } from '../TxDialog';
 
 import styles from './index.module.scss';
+
 import { useSwapsBonding } from '../../../../hooks/swap-network/useSwapBonding';
 import Web3 from 'web3';
 

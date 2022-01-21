@@ -3,15 +3,18 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { translations } from 'locales/i18n';
-import { Theme } from 'types/theme';
-import { Header } from '../../components/Header';
-import { Footer } from '../../components/Footer';
+
+import { Header } from 'app/components/Header';
+import { Footer } from 'app/components/Footer';
 import { Tab } from 'app/components/Tab';
-import { SkeletonRow } from '../../components/Skeleton/SkeletonRow';
-import { useAccount } from '../../hooks/useAccount';
+import { SkeletonRow } from 'app/components/Skeleton/SkeletonRow';
+import { SwapHistory } from 'app/containers/SwapHistory';
+import { useAccount } from 'app/hooks/useAccount';
+import { Theme } from 'types/theme';
+
 import { BuyFormContainer } from './components/BuyFormContainer';
 import { BondingCurve } from './components/BondingCurve';
-import { SwapHistory } from '../../containers/SwapHistory';
+import { BondingCurveHistory } from './components/BondingCurveHistory';
 import { BuyType } from './types';
 
 import styles from './index.module.scss';
@@ -60,7 +63,7 @@ export function BuyPage(props: Props) {
           <BondingCurve comingSoon={comingSoon} />
         )}
 
-        {!comingSoon || currentTab === BuyType.SOVRYN_SWAP ? (
+        {!comingSoon ? (
           <>
             <div>
               <div className={styles.swapHistoryTableContainer}>
@@ -69,8 +72,10 @@ export function BuyPage(props: Props) {
                     loadingText={t(translations.topUpHistory.walletHistory)}
                     className="tw-mt-2"
                   />
+                ) : currentTab === BuyType.SOVRYN_SWAP ? (
+                  <SwapHistory />
                 ) : (
-                  <SwapHistory tabState={currentTab} />
+                  <BondingCurveHistory />
                 )}
               </div>
             </div>

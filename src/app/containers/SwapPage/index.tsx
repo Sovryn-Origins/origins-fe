@@ -45,7 +45,7 @@ export function SwapPage(props: Props) {
                 className="tw-mt-2"
               />
             ) : (
-              <SwapHistory tabState={false} />
+              <SwapHistory />
             )}
           </div>
         </div>

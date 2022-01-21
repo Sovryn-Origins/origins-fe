@@ -15,7 +15,8 @@ export const useBondingCurvePlaceOrder = (isPurchase: boolean) => {
     placeOrder: async (weiAmount: string) => {
       const tx = await contractWriter.checkAndApprove(
         isPurchase ? Asset.SOV : Asset.MYNT,
-        getContract(isPurchase ? 'SOV_token' : 'MYNT_token').address,
+        // getContract(isPurchase ? 'SOV_token' : 'MYNT_token').address,
+        getContract('MYNT_MarketMaker').address,
         weiAmount,
       );
 
