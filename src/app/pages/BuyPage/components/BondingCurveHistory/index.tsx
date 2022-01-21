@@ -5,45 +5,41 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import axios, { CancelTokenSource } from 'axios';
-import { bignumber } from 'mathjs';
+
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import { translations } from 'locales/i18n';
 
-import { LinkToExplorer } from 'app/components/LinkToExplorer';
-import { DisplayDate } from 'app/components/ActiveUserLoanContainer/components/DisplayDate';
-import { AssetRenderer } from 'app/components/AssetRenderer';
-import { LoadableValue } from 'app/components/LoadableValue';
+// import { LinkToExplorer } from 'app/components/LinkToExplorer';
+// import { DisplayDate } from 'app/components/ActiveUserLoanContainer/components/DisplayDate';
+// import { AssetRenderer } from 'app/components/AssetRenderer';
+// import { LoadableValue } from 'app/components/LoadableValue';
 import { Pagination } from 'app/components/Pagination';
 import { SkeletonRow } from 'app/components/Skeleton/SkeletonRow';
 import { AssetRow, AssetRowData } from 'app/containers/SwapHistory';
-import { useCachedAssetPrice } from 'app/hooks/trading/useCachedAssetPrice';
+// import { useCachedAssetPrice } from 'app/hooks/trading/useCachedAssetPrice';
 import { useAccount } from 'app/hooks/useAccount';
 import { useTradeHistoryRetry } from 'app/hooks/useTradeHistoryRetry';
-import { bondHistory } from 'app/hooks/useBondHistory';
-import iconPending from 'assets/images/icon-pending.svg';
-import iconRejected from 'assets/images/icon-rejected.svg';
-import iconSuccess from 'assets/images/icon-success.svg';
+import { bondHistory } from '../../hooks/useGetBondingCurveHistory';
+// import iconPending from 'assets/images/icon-pending.svg';
+// import iconRejected from 'assets/images/icon-rejected.svg';
+// import iconSuccess from 'assets/images/icon-success.svg';
 import { selectTransactionArray } from 'store/global/transactions-store/selectors';
-import { TxStatus } from 'store/global/transactions-store/types';
-import { Asset } from 'types';
+// import { TxStatus } from 'store/global/transactions-store/types';
+// import { Asset } from 'types';
 import { getContractNameByAddress } from 'utils/blockchain/contract-helpers';
-import { numberFromWei } from 'utils/blockchain/math-helpers';
-import { backendUrl, currentChainId } from 'utils/classifiers';
+// import { numberFromWei } from 'utils/blockchain/math-helpers';
 import { AssetsDictionary } from 'utils/dictionaries/assets-dictionary';
-import { weiToUSD } from 'utils/display-text/format';
+// import { weiToUSD } from 'utils/display-text/format';
 import { AssetDetails } from 'utils/models/asset-details';
-
-import { Nullable } from 'types';
 
 import styles from './index.module.scss';
 
 export const BondingCurveHistory: React.FC = () => {
+  const countOfLoadingHistory = useRef(0);
   const transactions = useSelector(selectTransactionArray);
   const account = useAccount();
-  const url = backendUrl[currentChainId];
   const [history, setHistory] = useState([]) as any;
   const [currentHistory, setCurrentHistory] = useState([]) as any;
   const [loading, setLoading] = useState(false);
@@ -52,8 +48,7 @@ export const BondingCurveHistory: React.FC = () => {
   const [hasOngoingTransactions, setHasOngoingTransactions] = useState(false);
   const retry = useTradeHistoryRetry();
 
-  let cancelTokenSource = useRef<CancelTokenSource>();
-  const getBond = useCallback(async () => {
+  const getBondingCurveOrders = useCallback(async () => {
     bondHistory
       .getPastEvents('MYNT_MarketMaker', 'ClaimBuyOrder', {
         fromBlock: 0,
@@ -64,44 +59,18 @@ export const BondingCurveHistory: React.FC = () => {
         setCurrentHistory([]);
         setHistory(res.sort((x, y) => y.timestamp - x.timestamp));
         setLoading(false);
+        countOfLoadingHistory.current++;
       })
       .catch(e => {});
   }, []);
 
-  const getData = useCallback(() => {
-    if (cancelTokenSource.current) {
-      cancelTokenSource.current.cancel();
-    }
-    cancelTokenSource.current = axios.CancelToken.source();
-    axios
-      .get(`${url}/events/conversion-swap/${account}`, {
-        cancelToken: cancelTokenSource.current.token,
-      })
-      .then(res => {
-        setHistory(res.data.sort((x, y) => y.timestamp - x.timestamp));
-        setLoading(false);
-      })
-      .catch(e => {
-        console.log(e);
-        setHistory([]);
-        setCurrentHistory([]);
-        setLoading(false);
-      });
-  }, [url, account]);
-
-  const getHistory = useCallback(() => {
-    setLoading(true);
-    setHistory([]);
-    setCurrentHistory([]);
-    getBond();
-  }, [getBond]);
-
-  //GET HISTORY
   useEffect(() => {
-    if (account) {
-      getHistory();
+    if (!account) return;
+    if (countOfLoadingHistory.current === 0) {
+      setLoading(true);
     }
-  }, [account, getHistory, retry]);
+    getBondingCurveOrders();
+  }, [account, getBondingCurveOrders, retry]);
 
   const onPageChanged = data => {
     const { currentPage, pageLimit } = data;
@@ -195,7 +164,7 @@ export const BondingCurveHistory: React.FC = () => {
                   assetFrom = currency;
                 }
                 if (
-                  getContractNameByAddress(item.to_token)?.includes(
+                  getContractNameByAddress(item.to_token).includes(
                     currency.asset,
                   )
                 ) {

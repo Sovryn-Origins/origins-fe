@@ -3,6 +3,7 @@ import { getContract } from 'utils/blockchain/contract-helpers';
 import { contractWriter } from 'utils/sovryn/contract-writer';
 import { useSendContractTx } from 'app/hooks/useSendContractTx';
 import { useAccount } from 'app/hooks/useAccount';
+import { TxType } from 'store/global/transactions-store/types';
 
 export const useBondingCurvePlaceOrder = (isPurchase: boolean) => {
   const account = useAccount();
@@ -22,7 +23,14 @@ export const useBondingCurvePlaceOrder = (isPurchase: boolean) => {
 
       if (tx.rejected) return;
 
-      send([getContract('SOV_token').address, weiAmount], { from: account });
+      send(
+        [getContract('SOV_token').address, weiAmount],
+        { from: account },
+        {
+          approveTransactionHash: tx.approveTx,
+          type: TxType.BONDING,
+        },
+      );
     },
     ...rest,
   };

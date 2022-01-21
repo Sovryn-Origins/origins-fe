@@ -14,6 +14,7 @@ interface returnVal {
   _toToken: string;
   _trader: string;
 }
+
 interface History {
   returnVal: returnVal;
   beneficiary: string;
@@ -25,6 +26,7 @@ interface History {
   event: string;
   state: string;
 }
+
 class useBondHistory {
   private sovryn: SovrynNetwork;
   private contracts: { [address: string]: Contract } = {};

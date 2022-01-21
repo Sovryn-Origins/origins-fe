@@ -52,6 +52,7 @@ export const ethGenesisAddress = '0x0000000000000000000000000000000000000000';
 export const sovAnalyticsCookie = { name: 'SovAnalytics', value: 'optout' };
 
 export const originsSaleStorageKey = 'sovryn-origins.sales';
+export const buyStatusKey = 'sovryn-origins.buy-status';
 
 export const bondingCurveTreasuryAddress = {
   '30': '0x6FB7A6A5Bd3f800130443AE202A58Fdbe11B8D5C',

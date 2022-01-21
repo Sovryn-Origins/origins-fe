@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import { translations } from 'locales/i18n';
 import { AssetRenderer } from 'app/components/AssetRenderer';
@@ -14,12 +13,11 @@ import { useAccount } from 'app/hooks/useAccount';
 import { useWeiAmount } from 'app/hooks/useWeiAmount';
 import { useSlippage } from 'app/hooks/useSlippage';
 import { useMaintenance } from 'app/hooks/useMaintenance';
-import { useBondingCurvePrice } from 'app/hooks/bondingCurve/useBondingCurvePrice';
-import { useBondingCurvePlaceOrder } from 'app/hooks/bondingCurve/useBondingCurvePlaceOrder';
+import { useBondingCurvePrice } from '../../hooks/useBondingCurvePrice';
+import { useBondingCurvePlaceOrder } from '../../hooks/useBondingCurvePlaceOrder';
 import comingIcon from 'assets/images/swap/coming.svg';
 import swapIcon from 'assets/images/buy/buy_exchange.svg';
 import settingIcon from 'assets/images/swap/ic_setting.svg';
-import { selectTransactions } from 'store/global/transactions-store/selectors';
 import { Asset } from 'types';
 import { IPromotionLinkState } from 'types/promotion';
 import { weiToFixed } from 'utils/blockchain/math-helpers';
@@ -33,11 +31,9 @@ import { discordInvite } from 'utils/classifiers';
 import { AmountInput } from '../AmountInput';
 import { BuyButton } from '../Button/buy';
 import { TxDialog } from '../TxDialog';
+import { BuyStatus } from '../../types';
 
 import styles from './index.module.scss';
-
-import { useSwapsBonding } from '../../../../hooks/swap-network/useSwapBonding';
-import Web3 from 'web3';
 
 interface Option {
   key: Asset;
@@ -59,6 +55,7 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
   comingSoon = true,
 }) => {
   const { t } = useTranslation();
+  const account = useAccount();
   const { checkMaintenance, States } = useMaintenance();
   const swapLocked = checkMaintenance(States.SWAP_TRADES);
 
@@ -70,13 +67,14 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
   const [targetOptions, setTargetOptions] = useState<any[]>([]);
   const [slippage, setSlippage] = useState(0.5);
   const [swap, setSwap] = useState(true);
-  const account = useAccount();
+  const [buyStatus, setBuyStatus] = useState<BuyStatus>(BuyStatus.NONE);
+
   const weiAmount = useWeiAmount(amount);
   const [tokenBalance, setTokenBalance] = useState<any[]>([]);
-  const transactions = useSelector(selectTransactions);
-  const [method, setMethod] = useState('buy');
-  const [batchId, setBatchId] = useState(0);
-  const [hash, setHash] = useState('');
+  // const transactions = useSelector(selectTransactions);
+  // const [method, setMethod] = useState('buy');
+  // const [batchId, setBatchId] = useState(0);
+  // const [hash, setHash] = useState('');
   const isPurchase = useMemo(() => sourceToken === Asset.SOV, [sourceToken]);
   const bondingCurvePrice = useBondingCurvePrice(weiAmount, isPurchase);
   const { placeOrder, ...orderTx } = useBondingCurvePlaceOrder(isPurchase);
@@ -209,26 +207,6 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
 
   const { minReturn } = useSlippage(bondingCurvePrice.value, slippage);
 
-  // const { send: sendExternal, ...txExternal } = useSwapsBonding(
-  //   sourceToken,
-  //   targetToken,
-  //   account,
-  //   account,
-  //   weiAmount,
-  //   '0',
-  //   minReturn,
-  //   '0x',
-  //   method,
-  //   batchId,
-  //   hash,
-  // );
-
-  // const send = useCallback(() => sendExternal(), [sendExternal]);
-
-  // useEffect(() => {
-  //   if (method !== 'buy') send();
-  // }, [method, send]);
-
   const location = useLocation<IPromotionLinkState>();
   const history = useHistory<IPromotionLinkState>();
 
@@ -260,14 +238,8 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
     setSwap(!swap);
   };
 
-  // eslint-disable-next-line
-  // const tx = useMemo(() => txExternal, [targetToken, sourceToken, txExternal]);
-
   const handleOnSwap = () => {
-    console.log('[weiAmount]', weiAmount);
     placeOrder(weiAmount);
-    // setMethod('buy');
-    // send();
   };
 
   return (

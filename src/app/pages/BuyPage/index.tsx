@@ -26,7 +26,7 @@ const comingSoon = false;
 export function BuyPage(props: Props) {
   const { t } = useTranslation();
   const account = useAccount();
-  const [currentTab, setCurrentTab] = useState<BuyType>(BuyType.SOVRYN_SWAP);
+  const [currentTab, setCurrentTab] = useState<BuyType>(BuyType.BONDING_CURVE);
 
   return (
     <>
