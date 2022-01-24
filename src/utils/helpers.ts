@@ -242,6 +242,14 @@ export function dateByBlocks(
   );
 }
 
+export function timestampByBlocks(
+  startTime: number,
+  startBlock: number,
+  endBlock: number,
+) {
+  return startTime + getSecondsBetweenBlocks(startBlock, endBlock);
+}
+
 export const getBridgeChainId = (chain: Chain): ChainId | null =>
   BridgeNetworkDictionary.get(chain)?.chainId || null;
 

@@ -1,52 +1,38 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 
 import { translations } from 'locales/i18n';
 
 import { Pagination } from 'app/components/Pagination';
 import { SkeletonRow } from 'app/components/Skeleton/SkeletonRow';
-import { selectTransactionArray } from 'store/global/transactions-store/selectors';
 import { getContractNameByAddress } from 'utils/blockchain/contract-helpers';
 import { AssetsDictionary } from 'utils/dictionaries/assets-dictionary';
 import { AssetDetails } from 'utils/models/asset-details';
+import { contractReader } from 'utils/sovryn/contract-reader';
 
 import { AssetRow, AssetRowData } from './components/AssetRow';
 import { useGetBondingCurveHistory } from '../../hooks/useGetBondingCurveHistory';
+import { BlockInfo } from '../../types';
 
 import styles from './index.module.scss';
 
 export const BondingCurveHistory: React.FC = () => {
-  const transactions = useSelector(selectTransactionArray);
-  const [currentHistory, setCurrentHistory] = useState([]) as any;
   const { t } = useTranslation();
+  const [currentHistory, setCurrentHistory] = useState([]) as any;
+  const [currentBlock, setCurrentBlock] = useState<BlockInfo>({
+    number: 0,
+    timestamp: 0,
+  });
   const assets = AssetsDictionary.list();
   const [hasOngoingTransactions, setHasOngoingTransactions] = useState(false);
   const { loading, value: history } = useGetBondingCurveHistory();
 
-  // const getBondingCurveOrders = useCallback(async () => {
-  //   bondHistory
-  //     .getPastEvents('MYNT_MarketMaker', 'ClaimBuyOrder', {
-  //       fromBlock: 0,
-  //       toBlock: 'latest',
-  //     })
-  //     .then(res => {
-  //       setHistory([]);
-  //       setCurrentHistory([]);
-  //       setHistory(res.sort((x, y) => y.timestamp - x.timestamp));
-  //       setLoading(false);
-  //       countOfLoadingHistory.current++;
-  //     })
-  //     .catch(e => {});
-  // }, []);
-
-  // useEffect(() => {
-  //   if (!account) return;
-  //   if (countOfLoadingHistory.current === 0) {
-  //     setLoading(true);
-  //   }
-  //   getBondingCurveOrders();
-  // }, [account, getBondingCurveOrders, retry]);
+  useEffect(() => {
+    contractReader.blockNumber().then(number => {
+      const timestamp = Math.floor(Date.now() / 1000);
+      setCurrentBlock({ number, timestamp });
+    });
+  }, []);
 
   const onPageChanged = data => {
     const { currentPage, pageLimit } = data;
@@ -54,41 +40,42 @@ export const BondingCurveHistory: React.FC = () => {
     setCurrentHistory(history.slice(offset, offset + pageLimit));
   };
 
-  const onGoingTransactions = useMemo(() => {
-    return transactions.map(item => {
-      const { customData } = item;
+  // const onGoingTransactions = useMemo(() => {
+  //   return transactions.map(item => {
+  //     const { customData } = item;
 
-      if (!hasOngoingTransactions) {
-        setHasOngoingTransactions(true);
-      }
+  //     if (!hasOngoingTransactions) {
+  //       setHasOngoingTransactions(true);
+  //     }
 
-      const assetFrom = assets.find(
-        currency => currency.asset === customData?.sourceToken,
-      );
-      const assetTo = assets.find(
-        currency => currency.asset === customData?.targetToken,
-      );
+  //     const assetFrom = assets.find(
+  //       currency => currency.asset === customData?.sourceToken,
+  //     );
+  //     const assetTo = assets.find(
+  //       currency => currency.asset === customData?.targetToken,
+  //     );
 
-      const data: AssetRowData = {
-        status: item.status,
-        timestamp: customData?.date,
-        transaction_hash: item.transactionHash,
-        returnVal: {
-          _fromAmount: customData?.amount,
-          _toAmount: customData?.minReturn || null,
-        },
-      };
+  //     const data: AssetRowData = {
+  //       status: item.status,
+  //       timestamp: customData?.date,
+  //       transaction_hash: item.transactionHash,
+  //       returnVal: {
+  //         _fromAmount: customData?.amount,
+  //         _toAmount: customData?.minReturn || null,
+  //       },
+  //     };
 
-      return (
-        <AssetRow
-          key={item.transactionHash}
-          data={data}
-          itemFrom={assetFrom!}
-          itemTo={assetTo!}
-        />
-      );
-    });
-  }, [assets, hasOngoingTransactions, transactions]);
+  //     return (
+  //       <AssetRow
+  //         key={item.transactionHash}
+  //         data={data}
+  //         itemFrom={assetFrom!}
+  //         itemTo={assetTo!}
+  //         currentBlock={currentBlock}
+  //       />
+  //     );
+  //   });
+  // }, [assets, hasOngoingTransactions, transactions, currentBlock]);
 
   return (
     <section>
@@ -155,6 +142,7 @@ export const BondingCurveHistory: React.FC = () => {
                   data={item}
                   itemFrom={assetFrom}
                   itemTo={assetTo}
+                  currentBlock={currentBlock}
                 />
               );
             })}

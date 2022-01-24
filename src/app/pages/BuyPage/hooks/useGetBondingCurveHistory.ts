@@ -108,7 +108,7 @@ export const useGetBondingCurveHistory = () => {
   }, [account, generateReturnData]);
 
   const value = useMemo(
-    () => [...buyHistory, ...sellHistory].sort((a, b) => a.block - b.block),
+    () => [...buyHistory, ...sellHistory].sort((a, b) => b.block - a.block),
     [buyHistory, sellHistory],
   );
 

@@ -16,13 +16,16 @@ import { Asset, Nullable } from 'types';
 import { AssetDetails } from 'utils/models/asset-details';
 import { weiToFixed } from 'utils/blockchain/math-helpers';
 import { weiToUSD } from 'utils/display-text/format';
+import { timestampByBlocks } from 'utils/helpers';
 
 import { useBondingCurvePrice } from '../../../../hooks/useBondingCurvePrice';
+import { BlockInfo } from '../../../../types';
 
 import styles from './index.module.scss';
 
 export interface AssetRowData {
   status: TxStatus;
+  block: number;
   timestamp: number;
   transaction_hash: string;
   returnVal: {
@@ -35,9 +38,10 @@ interface AssetProps {
   data: AssetRowData;
   itemFrom: AssetDetails;
   itemTo: AssetDetails;
+  currentBlock: BlockInfo;
 }
 
-export function AssetRow({ data, itemFrom, itemTo }: AssetProps) {
+export function AssetRow({ data, itemFrom, itemTo, currentBlock }: AssetProps) {
   const { t } = useTranslation();
   const dollars = useCachedAssetPrice(itemTo.asset, Asset.USDT);
 
@@ -57,13 +61,23 @@ export function AssetRow({ data, itemFrom, itemTo }: AssetProps) {
     isPurchase,
   );
 
+  const timestamp = useMemo(
+    () =>
+      timestampByBlocks(
+        currentBlock.timestamp,
+        currentBlock.number,
+        data.block,
+      ),
+    [data, currentBlock],
+  );
+
   if (data.status !== 'confirmed') {
     return (
       <tr>
         <td className="tw-hidden lg:tw-table-cell">
           <DisplayDate
             className={styles.dateTime}
-            timestamp={new Date(data.timestamp).getTime().toString()}
+            timestamp={new Date(timestamp).getTime().toString()}
           />
         </td>
         <td className="tw-hidden lg:tw-table-cell">

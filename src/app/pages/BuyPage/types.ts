@@ -13,3 +13,8 @@ export enum BuyStatus {
   CLAIMING = 'claiming',
   FAILED = 'failed',
 }
+
+export interface BlockInfo {
+  number: number;
+  timestamp: number;
+}
