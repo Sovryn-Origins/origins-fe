@@ -17,7 +17,7 @@ export const useBondingCurvePrice = (amount: string, isPurchase: boolean) => {
       .then(result => {
         setTreasuryBalance(result);
       });
-  });
+  }, []);
 
   useEffect(() => {
     contractReader
@@ -50,7 +50,7 @@ export const useBondingCurvePrice = (amount: string, isPurchase: boolean) => {
       cancelled = true;
       // clearTimeout(retryTimer);
     };
-  });
+  }, [totalSupply, treasuryBalance, amount, isPurchase]);
 
   return useMemo(() => ({ loading, value }), [loading, value]);
 };

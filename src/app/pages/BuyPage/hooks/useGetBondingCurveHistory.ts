@@ -1,14 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
-import Web3 from 'web3';
-import { Contract } from 'web3-eth-contract';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useAccount } from 'app/hooks/useAccount';
-import { SovrynNetwork } from 'utils/sovryn/sovryn-network';
-import { Sovryn } from 'utils/sovryn/index';
-import { ContractName } from 'utils/types/contracts';
 import { getContract } from 'utils/blockchain/contract-helpers';
-import { contractReader } from 'utils/sovryn/contract-reader';
 import { eventReader } from 'utils/sovryn/event-reader';
+
 export type ReaderOption = { fromBlock: number; toBlock: number | 'latest' };
 
 interface returnVal {
@@ -33,9 +28,44 @@ interface History {
 
 export const useGetBondingCurveHistory = () => {
   const account = useAccount();
-  const [value, setHistory] = useState<History[]>([]);
+  const [buyHistory, setBuyHistory] = useState<History[]>([]);
+  const [sellHistory, setSellHistory] = useState<History[]>([]);
   const [loading, setLoading] = useState(false);
   const loadingCount = useRef(0);
+
+  const generateReturnData = useCallback(
+    (orderEvent: any): History => {
+      const fromTokenAddr =
+        orderEvent.event === 'OpenBuyOrder'
+          ? getContract('SOV_token').address
+          : getContract('MYNT_token').address;
+      const toTokenAddr =
+        orderEvent.event === 'OpenBuyOrder'
+          ? getContract('MYNT_token').address
+          : getContract('SOV_token').address;
+      const fromAmount =
+        orderEvent.returnValues.value || orderEvent.returnValues.amount;
+
+      return {
+        beneficiary: account,
+        returnVal: {
+          _fromAmount: fromAmount,
+          _fromToken: fromTokenAddr,
+          _toAmount: fromAmount,
+          _toToken: toTokenAddr,
+          _trader: account,
+        },
+        from_token: fromTokenAddr,
+        to_token: toTokenAddr,
+        timestamp: 0,
+        transaction_hash: orderEvent.transactionHash,
+        block: orderEvent.blockNumber,
+        event: orderEvent.event,
+        state: '',
+      };
+    },
+    [account],
+  );
 
   useEffect(() => {
     if (!account) return;
@@ -43,54 +73,44 @@ export const useGetBondingCurveHistory = () => {
     if (loadingCount.current === 0) {
       setLoading(true);
     }
-    Promise.all([
-      eventReader.getPastEvents('MYNT_MarketMaker', 'ClaimBuyOrder', {
+
+    eventReader
+      .getPastEvents('MYNT_MarketMaker', 'OpenBuyOrder', {
         buyer: account,
-      }),
-      eventReader.getPastEvents('MYNT_MarketMaker', 'ClaimSellOrder', {
-        seller: account,
-      }),
-    ])
-      .then(([buyOrders, sellOrders]) => {
-        console.log({ buyOrders, sellOrders });
-        setHistory(
-          [...buyOrders, ...sellOrders]
-            .sort((a, b) => b.blockNumber - a.blockNumber)
-            .map(orderEvent => {
-              const fromTokenAddr =
-                orderEvent.event === 'ClaimBuyOrder'
-                  ? getContract('SOV_token').address
-                  : getContract('MYNT_token').address;
-              const toTokenAddr =
-                orderEvent.event === 'ClaimBuyOrder'
-                  ? getContract('MYNT_token').address
-                  : getContract('SOV_token').address;
-              const fromAmount =
-                orderEvent.returnValues.value || orderEvent.returnValues.amount;
-              return {
-                beneficiary: account,
-                returnVal: {
-                  _fromAmount: fromAmount,
-                  _fromToken: fromTokenAddr,
-                  _toAmount: fromAmount,
-                  _toToken: toTokenAddr,
-                  _trader: account,
-                },
-                from_token: fromTokenAddr,
-                to_token: toTokenAddr,
-                timestamp: 0,
-                transaction_hash: orderEvent.transactionHash,
-                block: orderEvent.blockNumber,
-                event: orderEvent.event,
-                state: '',
-              };
-            }),
-        );
+      })
+      .then(buyOrders => {
+        setBuyHistory(buyOrders.map(generateReturnData));
       })
       .finally(() => {
+        loadingCount.current++;
         setLoading(false);
       });
-  }, [account]);
+  }, [account, generateReturnData]);
+
+  useEffect(() => {
+    if (!account) return;
+
+    if (loadingCount.current === 0) {
+      setLoading(true);
+    }
+
+    eventReader
+      .getPastEvents('MYNT_MarketMaker', 'OpenSellOrder', {
+        seller: account,
+      })
+      .then(sellOrders => {
+        setSellHistory(sellOrders.map(generateReturnData));
+      })
+      .finally(() => {
+        loadingCount.current++;
+        setLoading(false);
+      });
+  }, [account, generateReturnData]);
+
+  const value = useMemo(
+    () => [...buyHistory, ...sellHistory].sort((a, b) => a.block - b.block),
+    [buyHistory, sellHistory],
+  );
 
   return { value, loading };
 };
