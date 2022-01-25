@@ -80,7 +80,6 @@ export const useGetBondingCurveHistory = () => {
         seller: account,
       })
       .then(sellOrders => {
-        console.log('[SellOrder]', sellOrders);
         setSellHistory(sellOrders.map(generateReturnData));
       })
       .finally(() => {

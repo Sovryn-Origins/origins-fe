@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { bignumber } from 'mathjs';
 
@@ -8,6 +8,7 @@ import { AssetRenderer } from 'app/components/AssetRenderer';
 import { LoadableValue } from 'app/components/LoadableValue';
 import { LinkToExplorer } from 'app/components/LinkToExplorer';
 import { useCachedAssetPrice } from 'app/hooks/trading/useCachedAssetPrice';
+import { useGetTransactionReceipt } from 'app/hooks/useGetTransactionReceipt';
 import iconPending from 'assets/images/icon-pending.svg';
 import iconRejected from 'assets/images/icon-rejected.svg';
 import iconSuccess from 'assets/images/icon-success.svg';
@@ -55,16 +56,10 @@ export function AssetRow({ data, itemFrom, itemTo, currentBlock }: AssetProps) {
   }, [dollars.value, data.returnVal._toAmount, itemTo.decimals]);
 
   const isPurchase = useMemo(() => itemFrom.asset === Asset.SOV, [itemFrom]);
-
-  const { value: toWeiAmount, loading: loadingToAmount } = useBondingCurvePrice(
-    data.returnVal._fromAmount,
-    isPurchase,
-  );
-
-  const claimOrder = useGetBondingCurveClaimOrder(
-    data.returnVal.batchId,
-    isPurchase,
-  );
+  const blockMined10 = useMemo(() => currentBlock.number - data.block > 10, [
+    currentBlock,
+    data.block,
+  ]);
 
   const timestamp = useMemo(
     () =>
@@ -75,6 +70,33 @@ export function AssetRow({ data, itemFrom, itemTo, currentBlock }: AssetProps) {
       ),
     [data, currentBlock],
   );
+
+  const { value: toWeiAmount, loading: loadingToAmount } = useBondingCurvePrice(
+    data.returnVal._fromAmount,
+    isPurchase,
+  );
+
+  const {
+    value: claimOrder,
+    loading: loadingClaimOrder,
+  } = useGetBondingCurveClaimOrder(data.returnVal.batchId, isPurchase);
+
+  const { value: claimTransaction } = useGetTransactionReceipt(
+    claimOrder?.transactionHash,
+  );
+
+  const statusText = useMemo(() => {
+    if (!claimOrder) {
+      if (!blockMined10) {
+        return 'Pending';
+      }
+      return 'Claimable';
+    } else if (!claimTransaction) {
+      return 'Pending2';
+    } else {
+      return claimTransaction.status ? 'Success' : 'Failed';
+    }
+  }, [data, claimOrder, claimTransaction, blockMined10]);
 
   return (
     <tr>
@@ -129,10 +151,7 @@ export function AssetRow({ data, itemFrom, itemTo, currentBlock }: AssetProps) {
                 <>{t(translations.common.pending)}</>
               )} */}
 
-              <>
-                {t(translations.common.pending)}
-                {!claimOrder.loading && claimOrder.value ? 'claimable' : ''}
-              </>
+              {statusText}
             </p>
             <LinkToExplorer
               txHash={data.transaction_hash}

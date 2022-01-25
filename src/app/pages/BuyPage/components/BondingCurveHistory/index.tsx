@@ -1,38 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { translations } from 'locales/i18n';
 
 import { Pagination } from 'app/components/Pagination';
 import { SkeletonRow } from 'app/components/Skeleton/SkeletonRow';
+import { useBlockSync } from 'app/hooks/useAccount';
 import { getContractNameByAddress } from 'utils/blockchain/contract-helpers';
 import { AssetsDictionary } from 'utils/dictionaries/assets-dictionary';
 import { AssetDetails } from 'utils/models/asset-details';
-import { contractReader } from 'utils/sovryn/contract-reader';
 
 import { AssetRow, AssetRowData } from './components/AssetRow';
 import { useGetBondingCurveHistory } from '../../hooks/useGetBondingCurveHistory';
-import { BlockInfo } from '../../types';
 
 import styles from './index.module.scss';
+
+const assets = AssetsDictionary.list();
 
 export const BondingCurveHistory: React.FC = () => {
   const { t } = useTranslation();
   const [currentHistory, setCurrentHistory] = useState([]) as any;
-  const [currentBlock, setCurrentBlock] = useState<BlockInfo>({
-    number: 0,
-    timestamp: 0,
-  });
-  const assets = AssetsDictionary.list();
+  const blockSync = useBlockSync();
+  const timestamp = useMemo(() => Math.floor(Date.now() / 1e3), [blockSync]);
+  const currentBlock = useMemo(() => ({ number: blockSync, timestamp }), [
+    blockSync,
+    timestamp,
+  ]);
+
   const [hasOngoingTransactions, setHasOngoingTransactions] = useState(false);
   const { loading, value: history } = useGetBondingCurveHistory();
-
-  useEffect(() => {
-    contractReader.blockNumber().then(number => {
-      const timestamp = Math.floor(Date.now() / 1000);
-      setCurrentBlock({ number, timestamp });
-    });
-  }, []);
 
   const onPageChanged = data => {
     const { currentPage, pageLimit } = data;
@@ -151,7 +147,7 @@ export const BondingCurveHistory: React.FC = () => {
         {history.length > 0 && (
           <Pagination
             totalRecords={history.length}
-            pageLimit={6}
+            pageLimit={5}
             pageNeighbours={1}
             onChange={onPageChanged}
           />
