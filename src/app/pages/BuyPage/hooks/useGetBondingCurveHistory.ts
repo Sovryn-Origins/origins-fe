@@ -4,37 +4,17 @@ import { useAccount } from 'app/hooks/useAccount';
 import { getContract } from 'utils/blockchain/contract-helpers';
 import { eventReader } from 'utils/sovryn/event-reader';
 
-export type ReaderOption = { fromBlock: number; toBlock: number | 'latest' };
-
-interface returnVal {
-  _fromAmount: string;
-  _fromToken: string;
-  _toAmount: string;
-  _toToken: string;
-  _trader: string;
-}
-
-interface History {
-  returnVal: returnVal;
-  beneficiary: string;
-  from_token: string;
-  to_token: string;
-  timestamp: number;
-  transaction_hash: string;
-  block: number;
-  event: string;
-  state: string;
-}
+import { IOrderHistory } from '../types';
 
 export const useGetBondingCurveHistory = () => {
   const account = useAccount();
-  const [buyHistory, setBuyHistory] = useState<History[]>([]);
-  const [sellHistory, setSellHistory] = useState<History[]>([]);
+  const [buyHistory, setBuyHistory] = useState<IOrderHistory[]>([]);
+  const [sellHistory, setSellHistory] = useState<IOrderHistory[]>([]);
   const [loading, setLoading] = useState(false);
   const loadingCount = useRef(0);
 
   const generateReturnData = useCallback(
-    (orderEvent: any): History => {
+    (orderEvent: any): IOrderHistory => {
       const fromTokenAddr =
         orderEvent.event === 'OpenBuyOrder'
           ? getContract('SOV_token').address
@@ -54,6 +34,7 @@ export const useGetBondingCurveHistory = () => {
           _toAmount: fromAmount,
           _toToken: toTokenAddr,
           _trader: account,
+          batchId: orderEvent.returnValues.batchId,
         },
         from_token: fromTokenAddr,
         to_token: toTokenAddr,
@@ -99,6 +80,7 @@ export const useGetBondingCurveHistory = () => {
         seller: account,
       })
       .then(sellOrders => {
+        console.log('[SellOrder]', sellOrders);
         setSellHistory(sellOrders.map(generateReturnData));
       })
       .finally(() => {

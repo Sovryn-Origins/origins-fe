@@ -18,3 +18,24 @@ export interface BlockInfo {
   number: number;
   timestamp: number;
 }
+
+export interface IOrderReturnValue {
+  _fromAmount: string;
+  _fromToken: string;
+  _toAmount: string;
+  _toToken: string;
+  _trader: string;
+  batchId: number;
+}
+
+export interface IOrderHistory {
+  returnVal: IOrderReturnValue;
+  beneficiary: string;
+  from_token: string;
+  to_token: string;
+  timestamp: number;
+  transaction_hash: string;
+  block: number;
+  event: string;
+  state: string;
+}
