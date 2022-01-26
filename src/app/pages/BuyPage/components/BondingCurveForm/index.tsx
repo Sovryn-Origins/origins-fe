@@ -31,6 +31,7 @@ import { discordInvite } from 'utils/classifiers';
 import { AmountInput } from '../AmountInput';
 import { BuyButton } from '../Button/buy';
 import { TxDialog } from '../TxDialog';
+import { useClaimOrder } from '../../hooks/useClaimOrder';
 import { BuyStatus } from '../../types';
 
 import styles from './index.module.scss';
@@ -47,11 +48,11 @@ const tokens = [
   '0xAc5C5917e713581c8C8B78c7B12f2D67dA0323f0',
 ];
 
-interface IBondingCurveProps {
+interface IBondingCurveFormProps {
   comingSoon?: boolean;
 }
 
-export const BondingCurve: React.FC<IBondingCurveProps> = ({
+export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
   comingSoon = true,
 }) => {
   const { t } = useTranslation();
@@ -78,6 +79,7 @@ export const BondingCurve: React.FC<IBondingCurveProps> = ({
   const isPurchase = useMemo(() => sourceToken === Asset.SOV, [sourceToken]);
   const bondingCurvePrice = useBondingCurvePrice(weiAmount, isPurchase);
   const { placeOrder, ...orderTx } = useBondingCurvePlaceOrder(isPurchase);
+  const { claim, ...claimTx } = useClaimOrder();
 
   // useEffect(() => {
   //   const start = async () => {

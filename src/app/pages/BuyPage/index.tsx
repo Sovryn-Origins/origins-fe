@@ -7,25 +7,18 @@ import { translations } from 'locales/i18n';
 import { Header } from 'app/components/Header';
 import { Footer } from 'app/components/Footer';
 import { Tab } from 'app/components/Tab';
-import { SkeletonRow } from 'app/components/Skeleton/SkeletonRow';
-import { SwapHistory } from 'app/containers/SwapHistory';
-import { useAccount } from 'app/hooks/useAccount';
 import { Theme } from 'types/theme';
 
-import { BuyFormContainer } from './components/BuyFormContainer';
-import { BondingCurve } from './components/BondingCurve';
-import { BondingCurveHistory } from './components/BondingCurveHistory';
+import { BondingCurve } from './pages/BondingCurve';
+import { SovrynSwap } from './pages/SovrynSwap';
 import { BuyType } from './types';
 
 import styles from './index.module.scss';
 
-interface Props {}
-
 const comingSoon = false;
 
-export function BuyPage(props: Props) {
+export function BuyPage() {
   const { t } = useTranslation();
-  const account = useAccount();
   const [currentTab, setCurrentTab] = useState<BuyType>(BuyType.BONDING_CURVE);
 
   return (
@@ -57,31 +50,12 @@ export function BuyPage(props: Props) {
           </div>
         </div>
 
-        {currentTab === BuyType.SOVRYN_SWAP && <BuyFormContainer />}
+        {currentTab === BuyType.SOVRYN_SWAP && (
+          <SovrynSwap comingSoon={comingSoon} />
+        )}
 
         {currentTab === BuyType.BONDING_CURVE && (
           <BondingCurve comingSoon={comingSoon} />
-        )}
-
-        {!comingSoon ? (
-          <>
-            <div>
-              <div className={styles.swapHistoryTableContainer}>
-                {!account ? (
-                  <SkeletonRow
-                    loadingText={t(translations.topUpHistory.walletHistory)}
-                    className="tw-mt-2"
-                  />
-                ) : currentTab === BuyType.SOVRYN_SWAP ? (
-                  <SwapHistory />
-                ) : (
-                  <BondingCurveHistory />
-                )}
-              </div>
-            </div>
-          </>
-        ) : (
-          <></>
         )}
       </div>
       <Footer />
