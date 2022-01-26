@@ -1,10 +1,11 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { translations } from 'locales/i18n';
 
 import { Pagination } from 'app/components/Pagination';
 import { SkeletonRow } from 'app/components/Skeleton/SkeletonRow';
+import { IPaginationEvent } from 'app/components/Pagination';
 import { useBlockSync } from 'app/hooks/useAccount';
 import { getContractNameByAddress } from 'utils/blockchain/contract-helpers';
 import { AssetsDictionary } from 'utils/dictionaries/assets-dictionary';
@@ -16,10 +17,20 @@ import { useGetBondingCurveHistory } from '../../hooks/useGetBondingCurveHistory
 import styles from './index.module.scss';
 
 const assets = AssetsDictionary.list();
+const PAGE_LIMIT = 5;
+const initialPaginationParams: IPaginationEvent = {
+  currentPage: 1,
+  pageLimit: PAGE_LIMIT,
+  totalPages: 1,
+  totalRecords: PAGE_LIMIT,
+};
 
 export const BondingCurveHistory: React.FC = () => {
   const { t } = useTranslation();
-  const [currentHistory, setCurrentHistory] = useState([]) as any;
+  // const [currentHistory, setCurrentHistory] = useState([]) as any;
+  const [paginationParams, setPaginationParams] = useState<IPaginationEvent>(
+    initialPaginationParams,
+  );
   const blockSync = useBlockSync();
   const timestamp = useMemo(() => Math.floor(Date.now() / 1e3), [blockSync]);
   const currentBlock = useMemo(() => ({ number: blockSync, timestamp }), [
@@ -29,12 +40,22 @@ export const BondingCurveHistory: React.FC = () => {
 
   const [hasOngoingTransactions, setHasOngoingTransactions] = useState(false);
   const { loading, value: history } = useGetBondingCurveHistory();
-
-  const onPageChanged = data => {
-    const { currentPage, pageLimit } = data;
+  const currentHistory = useMemo(() => {
+    const { currentPage, pageLimit } = paginationParams;
     const offset = (currentPage - 1) * pageLimit;
-    setCurrentHistory(history.slice(offset, offset + pageLimit));
-  };
+    return history.slice(offset, offset + pageLimit);
+  }, [history, paginationParams]);
+
+  // const onPageChanged = useCallback(
+  //   data => {
+  //     const { currentPage, pageLimit } = data;
+  //     const offset = (currentPage - 1) * pageLimit;
+  //     setCurrentHistory(history.slice(offset, offset + pageLimit));
+  //   },
+  //   [history],
+  // );
+
+  const onPageChanged = (data: IPaginationEvent) => setPaginationParams(data);
 
   // const onGoingTransactions = useMemo(() => {
   //   return transactions.map(item => {
@@ -147,7 +168,7 @@ export const BondingCurveHistory: React.FC = () => {
         {history.length > 0 && (
           <Pagination
             totalRecords={history.length}
-            pageLimit={5}
+            pageLimit={PAGE_LIMIT}
             pageNeighbours={1}
             onChange={onPageChanged}
           />

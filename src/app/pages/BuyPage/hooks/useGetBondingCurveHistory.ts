@@ -88,10 +88,11 @@ export const useGetBondingCurveHistory = () => {
       });
   }, [account, generateReturnData]);
 
-  const value = useMemo(
-    () => [...buyHistory, ...sellHistory].sort((a, b) => b.block - a.block),
-    [buyHistory, sellHistory],
-  );
+  const value = useMemo(() => {
+    const history = [...buyHistory, ...sellHistory];
+    history.sort((a, b) => b.block - a.block);
+    return history;
+  }, [buyHistory, sellHistory]);
 
   return { value, loading };
 };
