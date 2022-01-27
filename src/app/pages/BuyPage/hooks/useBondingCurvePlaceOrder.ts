@@ -3,7 +3,7 @@ import { getContract } from 'utils/blockchain/contract-helpers';
 import { contractWriter } from 'utils/sovryn/contract-writer';
 import { useSendContractTx } from 'app/hooks/useSendContractTx';
 import { useAccount } from 'app/hooks/useAccount';
-// import { TxType } from 'store/global/transactions-store/types';
+import { TxType } from 'store/global/transactions-store/types';
 
 export const useBondingCurvePlaceOrder = (isPurchase: boolean) => {
   const account = useAccount();
@@ -28,7 +28,7 @@ export const useBondingCurvePlaceOrder = (isPurchase: boolean) => {
         { from: account },
         {
           approveTransactionHash: tx.approveTx,
-          // type: TxType.BONDING,
+          type: TxType.BONDING,
         },
       );
     },

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
 import { translations } from 'locales/i18n';
@@ -79,14 +79,36 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
   // const [hash, setHash] = useState('');
   // const isPurchase = useMemo(() => sourceToken === Asset.SOV, [sourceToken]);
   const bondingCurvePrice = useBondingCurvePrice(weiAmount, isPurchase);
+  const [orderHash, setOrderHash] = useState('');
+  const [openedOrder, setOpenedOrder] = useState<any>();
   const { placeOrder, ...orderTx } = useBondingCurvePlaceOrder(isPurchase);
   const { claim, ...claimTx } = useClaimOrder();
 
-  const isBatchFinished = useIsBatchFinished(orderTx.txHash);
+  const { isBatchFinished, blockNumber: orderBlockNumber } = useIsBatchFinished(
+    orderHash,
+  );
 
-  React.useEffect(() => {
-    console.log('[orderTx]', orderTx.status);
+  useEffect(() => {
+    if (orderTx.status === TxStatus.CONFIRMED) {
+      setOrderHash(orderTx.txHash);
+    }
   }, [orderTx.status]);
+
+  useEffect(() => {
+    if (isBatchFinished) {
+      const batchId = Math.floor(orderBlockNumber / 10) * 10;
+      claim(batchId, isPurchase);
+      setOrderHash('');
+    }
+  }, [isBatchFinished, orderBlockNumber, isPurchase]);
+
+  useEffect(() => {
+    console.log('[ClaimStatus]', claimTx);
+  }, [claimTx.status]);
+
+  useEffect(() => {
+    console.log('[orderHash]', orderHash);
+  }, [orderHash]);
 
   // const buyStatus = useMemo(() => {
   //   if (orderTx.status === TxStatus.NONE) {
@@ -132,6 +154,7 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
   };
 
   const handleOnSwap = () => {
+    setOrderHash('');
     placeOrder(weiAmount);
   };
 
