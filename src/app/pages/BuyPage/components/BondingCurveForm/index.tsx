@@ -1,6 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
 
 import { translations } from 'locales/i18n';
 import { AssetRenderer } from 'app/components/AssetRenderer';
@@ -8,8 +7,8 @@ import { SlippageDialog } from 'app/components/Dialogs/SlippageDialog';
 import { Input } from 'app/components/Form/Input';
 import { AvailableBalance } from 'app/components/AvailableBalance';
 import { ErrorBadge } from 'app/components/Form/ErrorBadge';
-import { SwapAssetSelector } from 'app/containers/SwapFormContainer/components/SwapAssetSelector/Loadable';
-import { useAccount } from 'app/hooks/useAccount';
+import { SwapAssetSelector } from 'app/containers/SwapFormContainer/components/SwapAssetSelector';
+import { useBlockSync } from 'app/hooks/useAccount';
 import { useWeiAmount } from 'app/hooks/useWeiAmount';
 import { useSlippage } from 'app/hooks/useSlippage';
 import { useMaintenance } from 'app/hooks/useMaintenance';
@@ -18,35 +17,34 @@ import { useBondingCurvePlaceOrder } from '../../hooks/useBondingCurvePlaceOrder
 import comingIcon from 'assets/images/swap/coming.svg';
 import swapIcon from 'assets/images/buy/buy_exchange.svg';
 import settingIcon from 'assets/images/swap/ic_setting.svg';
+import {
+  Transaction,
+  TxStatus,
+  TxType,
+} from 'store/global/transactions-store/types';
 import { Asset } from 'types';
-import { IPromotionLinkState } from 'types/promotion';
 import { weiToFixed } from 'utils/blockchain/math-helpers';
-import { AssetsDictionary } from 'utils/dictionaries/assets-dictionary';
 import { weiToNumberFormat } from 'utils/display-text/format';
-import { getTokenContractName } from 'utils/blockchain/contract-helpers';
-import { Sovryn } from 'utils/sovryn';
-import { contractReader } from 'utils/sovryn/contract-reader';
 import { discordInvite } from 'utils/classifiers';
 
 import { AmountInput } from '../AmountInput';
 import { BuyButton } from '../Button/buy';
 import { TxDialog } from '../TxDialog';
 import { useClaimOrder } from '../../hooks/useClaimOrder';
-import { BuyStatus } from '../../types';
+import { useIsBatchFinished } from '../../hooks/useIsBatchFinished';
+import { BuyStatus, sellAssets, buyAssets } from '../../types';
 
 import styles from './index.module.scss';
 
-interface Option {
-  key: Asset;
-  label: string;
-}
+const sellOptions = sellAssets.map(asset => ({
+  key: asset,
+  label: asset as string,
+}));
 
-const tokens = [
-  '0x6a9A07972D07e58F0daf5122d11E069288A375fb',
-  '0x010C233B4F94d35CaDb71D12D7058aAb58789e8f',
-  '0x139483e22575826183F5b56dd242f8f2C1AEf327',
-  '0xAc5C5917e713581c8C8B78c7B12f2D67dA0323f0',
-];
+const buyOptions = buyAssets.map(asset => ({
+  key: asset,
+  label: asset as string,
+}));
 
 interface IBondingCurveFormProps {
   comingSoon?: boolean;
@@ -56,7 +54,7 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
   comingSoon = true,
 }) => {
   const { t } = useTranslation();
-  const account = useAccount();
+  const blockSync = useBlockSync();
   const { checkMaintenance, States } = useMaintenance();
   const swapLocked = checkMaintenance(States.SWAP_TRADES);
 
@@ -64,22 +62,37 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
   const [amount, setAmount] = useState('');
   const [sourceToken, setSourceToken] = useState(Asset.MYNT);
   const [targetToken, setTargetToken] = useState(Asset.SOV);
-  const [sourceOptions, setSourceOptions] = useState<any[]>([]);
-  const [targetOptions, setTargetOptions] = useState<any[]>([]);
   const [slippage, setSlippage] = useState(0.5);
-  const [swap, setSwap] = useState(true);
-  const [buyStatus, setBuyStatus] = useState<BuyStatus>(BuyStatus.NONE);
+  const [isPurchase, setIsPurchase] = useState(false);
+  const sourceOptions = useMemo(() => (isPurchase ? buyOptions : sellOptions), [
+    isPurchase,
+  ]);
+  const targetOptions = useMemo(() => (isPurchase ? sellOptions : buyOptions), [
+    isPurchase,
+  ]);
+  // const [buyStatus, setBuyStatus] = useState<BuyStatus>(BuyStatus.NONE);
 
   const weiAmount = useWeiAmount(amount);
-  const [tokenBalance, setTokenBalance] = useState<any[]>([]);
   // const transactions = useSelector(selectTransactions);
   // const [method, setMethod] = useState('buy');
   // const [batchId, setBatchId] = useState(0);
   // const [hash, setHash] = useState('');
-  const isPurchase = useMemo(() => sourceToken === Asset.SOV, [sourceToken]);
+  // const isPurchase = useMemo(() => sourceToken === Asset.SOV, [sourceToken]);
   const bondingCurvePrice = useBondingCurvePrice(weiAmount, isPurchase);
   const { placeOrder, ...orderTx } = useBondingCurvePlaceOrder(isPurchase);
   const { claim, ...claimTx } = useClaimOrder();
+
+  const isBatchFinished = useIsBatchFinished(orderTx.txHash);
+
+  React.useEffect(() => {
+    console.log('[orderTx]', orderTx.status);
+  }, [orderTx.status]);
+
+  // const buyStatus = useMemo(() => {
+  //   if (orderTx.status === TxStatus.NONE) {
+  //     return BuyStatus.NONE;
+  //   } else if ()
+  // }, []);
 
   // useEffect(() => {
   //   const start = async () => {
@@ -108,136 +121,14 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
   //   start();
   // }, [transactions]);
 
-  useEffect(() => {
-    async function getOptions() {
-      try {
-        Promise.all(
-          tokens.map(async item => {
-            const asset = AssetsDictionary.getByTokenContractAddress(item);
-            if (!asset || !asset.hasAMM) {
-              return null;
-            }
-            let token: string = '';
-            if (account) {
-              if (asset.asset === Asset.SOV) {
-                token = await Sovryn.getWeb3().eth.getBalance(account);
-              } else {
-                token = await contractReader.call(
-                  getTokenContractName(asset.asset),
-                  'balanceOf',
-                  [account],
-                );
-              }
-            }
-            return {
-              key: asset.asset,
-              label: asset.symbol,
-              value: token,
-            };
-          }),
-        ).then(result => {
-          setTokenBalance(result.filter(item => item !== null) as Option[]);
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    }
-    if (tokens.length > 0) getOptions();
-  }, [account]);
-
-  useEffect(() => {
-    var newOptions = [...tokenBalance];
-    newOptions.forEach((item, index) => {
-      if (item.key === 'SOV') {
-        newOptions.splice(index, 1);
-      }
-    });
-    if (swap) {
-      if (newOptions) {
-        setSourceOptions(newOptions);
-      }
-      if (
-        !newOptions.find(item => item.key === sourceToken) &&
-        newOptions.length
-      ) {
-        setSourceToken(newOptions[0].key);
-      }
-    } else {
-      if (newOptions) {
-        if (newOptions.length > 0) setTargetOptions(newOptions);
-      }
-      if (
-        !newOptions.find(item => item.key === targetToken) &&
-        newOptions.length
-      ) {
-        setTargetToken(newOptions[0].key);
-      }
-    }
-  }, [tokenBalance, swap, sourceToken, targetToken]);
-
-  useEffect(() => {
-    var newOptions = [...tokenBalance];
-    var targetOption: any = [];
-    newOptions.forEach((item, index) => {
-      if (item.key === 'SOV') {
-        targetOption.push(item);
-      }
-    });
-
-    if (swap) {
-      if (targetOption) {
-        if (targetOption.length > 0) setTargetOptions(targetOption);
-      }
-      if (
-        !targetOption.find(item => item.key === targetToken) &&
-        targetOption.length
-      ) {
-        setTargetToken(targetOption[0].key);
-      }
-    } else {
-      if (targetOption) {
-        setSourceOptions(targetOption);
-      }
-      if (
-        !targetOption.find(item => item.key === sourceToken) &&
-        targetOption.length
-      ) {
-        setSourceToken(targetOption[0].key);
-      }
-    }
-  }, [tokenBalance, swap, sourceToken, targetToken]);
-
   const { minReturn } = useSlippage(bondingCurvePrice.value, slippage);
-
-  const location = useLocation<IPromotionLinkState>();
-  const history = useHistory<IPromotionLinkState>();
-
-  useEffect(() => {
-    if (location.state?.asset) {
-      const item = tokenBalance.find(
-        item => item.key === location.state?.asset,
-      );
-      if (item) {
-        setSourceToken(item.key);
-      }
-    }
-    if (location.state?.target) {
-      const item = tokenBalance.find(
-        item => item.key === location.state?.target,
-      );
-      if (item) {
-        setTargetToken(item.key);
-        history.replace(location.pathname);
-      }
-    }
-  }, [tokenBalance, location.state, location.pathname, history]);
 
   const handleSwapAssets = () => {
     const _sourceToken = sourceToken;
     setSourceToken(targetToken);
     setTargetToken(_sourceToken);
     setAmount('0');
-    setSwap(!swap);
+    setIsPurchase(!isPurchase);
   };
 
   const handleOnSwap = () => {

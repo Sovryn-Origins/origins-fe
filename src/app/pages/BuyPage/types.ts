@@ -1,3 +1,5 @@
+import { Asset } from 'types';
+
 export enum BuyType {
   SOVRYN_SWAP,
   BONDING_CURVE,
@@ -11,6 +13,7 @@ export enum BuyStatus {
   WAIT_FOR_BATCH = 'wait_for_batch',
   CLAIMABLE = 'claimable',
   CLAIMING = 'claiming',
+  SUCCESS = 'success',
   FAILED = 'failed',
 }
 
@@ -39,3 +42,7 @@ export interface IOrderHistory {
   event: string;
   state: string;
 }
+
+export const sellAssets = [Asset.MYNT, Asset.OG, Asset.ZERO];
+
+export const buyAssets = [Asset.SOV];

@@ -1,17 +1,17 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useMemo } from 'react';
+// import { useTranslation } from 'react-i18next';
 import { bignumber } from 'mathjs';
 
-import { translations } from 'locales/i18n';
+// import { translations } from 'locales/i18n';
 import { DisplayDate } from 'app/components/ActiveUserLoanContainer/components/DisplayDate';
 import { AssetRenderer } from 'app/components/AssetRenderer';
 import { LoadableValue } from 'app/components/LoadableValue';
 import { LinkToExplorer } from 'app/components/LinkToExplorer';
 import { useCachedAssetPrice } from 'app/hooks/trading/useCachedAssetPrice';
 import { useGetTransactionReceipt } from 'app/hooks/useGetTransactionReceipt';
-import iconPending from 'assets/images/icon-pending.svg';
+// import iconPending from 'assets/images/icon-pending.svg';
 import iconRejected from 'assets/images/icon-rejected.svg';
-import iconSuccess from 'assets/images/icon-success.svg';
+// import iconSuccess from 'assets/images/icon-success.svg';
 import { TxStatus } from 'store/global/transactions-store/types';
 import { Asset, Nullable } from 'types';
 import { AssetDetails } from 'utils/models/asset-details';
@@ -44,7 +44,7 @@ interface AssetProps {
 }
 
 export function AssetRow({ data, itemFrom, itemTo, currentBlock }: AssetProps) {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const dollars = useCachedAssetPrice(itemTo.asset, Asset.USDT);
 
   const dollarValue = useMemo(() => {
@@ -96,7 +96,7 @@ export function AssetRow({ data, itemFrom, itemTo, currentBlock }: AssetProps) {
     } else {
       return claimTransaction.status ? 'Success' : 'Failed';
     }
-  }, [data, claimOrder, claimTransaction, blockMined10]);
+  }, [claimOrder, claimTransaction, blockMined10]);
 
   return (
     <tr>

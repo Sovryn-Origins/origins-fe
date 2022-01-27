@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { translations } from 'locales/i18n';
@@ -11,7 +11,7 @@ import { getContractNameByAddress } from 'utils/blockchain/contract-helpers';
 import { AssetsDictionary } from 'utils/dictionaries/assets-dictionary';
 import { AssetDetails } from 'utils/models/asset-details';
 
-import { AssetRow, AssetRowData } from './components/AssetRow';
+import { AssetRow } from './components/AssetRow';
 import { useGetBondingCurveHistory } from '../../hooks/useGetBondingCurveHistory';
 
 import styles from './index.module.scss';
@@ -45,15 +45,6 @@ export const BondingCurveHistory: React.FC = () => {
     const offset = (currentPage - 1) * pageLimit;
     return history.slice(offset, offset + pageLimit);
   }, [history, paginationParams]);
-
-  // const onPageChanged = useCallback(
-  //   data => {
-  //     const { currentPage, pageLimit } = data;
-  //     const offset = (currentPage - 1) * pageLimit;
-  //     setCurrentHistory(history.slice(offset, offset + pageLimit));
-  //   },
-  //   [history],
-  // );
 
   const onPageChanged = (data: IPaginationEvent) => setPaginationParams(data);
 
