@@ -81,11 +81,11 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
     if (
       orderTx.status === TxStatus.FAILED ||
       claimTx.status === TxStatus.FAILED
-    )
+    ) {
       return BuyStatus.FAILED;
+    }
 
     if (orderTx.status === TxStatus.PENDING) return BuyStatus.OPENING;
-
     if (orderHash && !isBatchFinished) return BuyStatus.WAIT_FOR_BATCH;
 
     if (isBatchFinished) {
@@ -101,14 +101,6 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
       setOrderHash(orderTx.txHash);
     }
   }, [orderTx]);
-
-  useEffect(() => {
-    if (isBatchFinished) {
-      const batchId = Math.floor(orderBlockNumber / 10) * 10;
-      claim(batchId, isPurchase);
-      setOrderHash('');
-    }
-  }, [isBatchFinished, orderBlockNumber, isPurchase, claim]);
 
   const handleSwapAssets = () => {
     const _sourceToken = sourceToken;

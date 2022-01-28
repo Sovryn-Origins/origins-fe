@@ -8,12 +8,8 @@
 }
 
 .dialog h1 {
-  margin-bottom: 30px;
-  text-transform: none;
-  text-align: center;
-  font-size: 1.75rem;
-  line-height: 1.25;
-  font-weight: 600;
+  @apply tw-text-2xl tw-text-center tw-uppercase tw-font-normal tw-leading-30px;
+  margin-bottom: 1.875rem;
 }
 
 .dialog button[data-close] {
@@ -31,6 +27,7 @@
   transition: opacity;
   will-change: opacity;
 }
+
 .dialog button[data-close]:hover {
   opacity: 0.8;
 }

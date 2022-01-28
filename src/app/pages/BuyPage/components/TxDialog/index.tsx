@@ -144,6 +144,7 @@ export function TxDialog({
           </StyledStatus>
           <div style={{ maxWidth: 200 }} className="tw-mx-auto tw-w-full">
             <ConfirmButton
+              primary={true}
               onClick={onStartClaim}
               text={t(translations.common.close)}
             />
