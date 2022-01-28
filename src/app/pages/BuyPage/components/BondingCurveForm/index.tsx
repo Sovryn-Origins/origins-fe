@@ -85,6 +85,7 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
       return BuyStatus.FAILED;
     }
 
+    if (claimTx.status === TxStatus.CONFIRMED) return BuyStatus.SUCCESS;
     if (orderTx.status === TxStatus.PENDING) return BuyStatus.OPENING;
     if (orderHash && !isBatchFinished) return BuyStatus.WAIT_FOR_BATCH;
 
@@ -101,6 +102,10 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
       setOrderHash(orderTx.txHash);
     }
   }, [orderTx]);
+
+  const handleOnSwapSuccess = useCallback(() => {
+    setOrderHash('');
+  }, []);
 
   const handleSwapAssets = () => {
     const _sourceToken = sourceToken;
@@ -235,11 +240,11 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
       )}
 
       <TxDialog
-        tx={orderTx}
         openOrderTx={orderTx}
         claimOrderTx={claimTx}
         buyStatus={buyStatus}
         onStartClaim={startClaimOrder}
+        onSwapSuccess={handleOnSwapSuccess}
       />
     </>
   );

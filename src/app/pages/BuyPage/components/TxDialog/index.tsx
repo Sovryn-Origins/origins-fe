@@ -31,21 +31,21 @@ import { BuyStatus } from '../../types';
 import styles from './index.module.scss';
 
 interface Props {
-  tx: ResetTxResponseInterface;
   openOrderTx: ResetTxResponseInterface;
   claimOrderTx: ResetTxResponseInterface;
   buyStatus: BuyStatus;
   onStartClaim: () => void;
+  onSwapSuccess: () => void;
   onUserConfirmed?: () => void;
   onSuccess?: () => void;
 }
 
 export function TxDialog({
-  // tx,
   openOrderTx,
   claimOrderTx,
   buyStatus,
   onStartClaim,
+  onSwapSuccess,
   onUserConfirmed,
   onSuccess,
 }: Props) {
@@ -69,7 +69,8 @@ export function TxDialog({
   const close = useCallback(() => {
     openOrderTx.reset();
     claimOrderTx.reset();
-  }, [openOrderTx, claimOrderTx]);
+    onSwapSuccess();
+  }, [openOrderTx, claimOrderTx, onSwapSuccess]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const wallet = useMemo(() => detectWeb3Wallet(), [address]);
@@ -146,7 +147,7 @@ export function TxDialog({
             <ConfirmButton
               primary={true}
               onClick={onStartClaim}
-              text={t(translations.common.close)}
+              text={t(translations.common.claim)}
             />
           </div>
         </>

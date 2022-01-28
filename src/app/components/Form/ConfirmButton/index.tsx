@@ -19,7 +19,8 @@ export function ConfirmButton(props: Props) {
       onClick={props.onClick}
       disabled={props.disabled}
       className={classNames(styles.button, props.className, {
-        primary: props.primary,
+        [styles.primary]: props.primary,
+        [styles.default]: !props.primary,
       })}
     >
       {props.text}
