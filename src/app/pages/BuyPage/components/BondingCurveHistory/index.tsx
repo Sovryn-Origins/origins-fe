@@ -27,12 +27,16 @@ const initialPaginationParams: IPaginationEvent = {
 
 export const BondingCurveHistory: React.FC = () => {
   const { t } = useTranslation();
-  // const [currentHistory, setCurrentHistory] = useState([]) as any;
+
   const [paginationParams, setPaginationParams] = useState<IPaginationEvent>(
     initialPaginationParams,
   );
+
   const blockSync = useBlockSync();
+
+  // eslint-disable-next-line
   const timestamp = useMemo(() => Math.floor(Date.now() / 1e3), [blockSync]);
+
   const currentBlock = useMemo(() => ({ number: blockSync, timestamp }), [
     blockSync,
     timestamp,
@@ -40,6 +44,7 @@ export const BondingCurveHistory: React.FC = () => {
 
   const [hasOngoingTransactions, setHasOngoingTransactions] = useState(false);
   const { loading, value: history } = useGetBondingCurveHistory();
+
   const currentHistory = useMemo(() => {
     const { currentPage, pageLimit } = paginationParams;
     const offset = (currentPage - 1) * pageLimit;

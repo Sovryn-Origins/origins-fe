@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Asset } from 'types';
 import { getContract } from 'utils/blockchain/contract-helpers';
 import { contractWriter } from 'utils/sovryn/contract-writer';
@@ -7,10 +8,11 @@ import { TxType } from 'store/global/transactions-store/types';
 
 export const useBondingCurvePlaceOrder = (isPurchase: boolean) => {
   const account = useAccount();
-  const { send, ...rest } = useSendContractTx(
-    'MYNT_Controller',
-    isPurchase ? 'openBuyOrder' : 'openSellOrder',
+  const methodName = useMemo(
+    () => (isPurchase ? 'openBuyOrder' : 'openSellOrder'),
+    [isPurchase],
   );
+  const { send, ...rest } = useSendContractTx('MYNT_Controller', methodName);
 
   return {
     placeOrder: async (weiAmount: string) => {
@@ -29,6 +31,9 @@ export const useBondingCurvePlaceOrder = (isPurchase: boolean) => {
         {
           approveTransactionHash: tx.approveTx,
           type: TxType.BONDING,
+          customData: {
+            methodName,
+          },
         },
       );
     },

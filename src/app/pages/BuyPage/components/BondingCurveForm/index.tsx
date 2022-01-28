@@ -8,7 +8,6 @@ import { Input } from 'app/components/Form/Input';
 import { AvailableBalance } from 'app/components/AvailableBalance';
 import { ErrorBadge } from 'app/components/Form/ErrorBadge';
 import { SwapAssetSelector } from 'app/containers/SwapFormContainer/components/SwapAssetSelector';
-import { useBlockSync } from 'app/hooks/useAccount';
 import { useWeiAmount } from 'app/hooks/useWeiAmount';
 import { useSlippage } from 'app/hooks/useSlippage';
 import { useMaintenance } from 'app/hooks/useMaintenance';
@@ -17,11 +16,7 @@ import { useBondingCurvePlaceOrder } from '../../hooks/useBondingCurvePlaceOrder
 import comingIcon from 'assets/images/swap/coming.svg';
 import swapIcon from 'assets/images/buy/buy_exchange.svg';
 import settingIcon from 'assets/images/swap/ic_setting.svg';
-import {
-  Transaction,
-  TxStatus,
-  TxType,
-} from 'store/global/transactions-store/types';
+import { TxStatus } from 'store/global/transactions-store/types';
 import { Asset } from 'types';
 import { weiToFixed } from 'utils/blockchain/math-helpers';
 import { weiToNumberFormat } from 'utils/display-text/format';
@@ -54,7 +49,6 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
   comingSoon = true,
 }) => {
   const { t } = useTranslation();
-  const blockSync = useBlockSync();
   const { checkMaintenance, States } = useMaintenance();
   const swapLocked = checkMaintenance(States.SWAP_TRADES);
 
@@ -70,17 +64,12 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
   const targetOptions = useMemo(() => (isPurchase ? sellOptions : buyOptions), [
     isPurchase,
   ]);
-  // const [buyStatus, setBuyStatus] = useState<BuyStatus>(BuyStatus.NONE);
 
   const weiAmount = useWeiAmount(amount);
-  // const transactions = useSelector(selectTransactions);
-  // const [method, setMethod] = useState('buy');
-  // const [batchId, setBatchId] = useState(0);
-  // const [hash, setHash] = useState('');
-  // const isPurchase = useMemo(() => sourceToken === Asset.SOV, [sourceToken]);
   const bondingCurvePrice = useBondingCurvePrice(weiAmount, isPurchase);
+  const { minReturn } = useSlippage(bondingCurvePrice.value, slippage);
+
   const [orderHash, setOrderHash] = useState('');
-  const [openedOrder, setOpenedOrder] = useState<any>();
   const { placeOrder, ...orderTx } = useBondingCurvePlaceOrder(isPurchase);
   const { claim, ...claimTx } = useClaimOrder();
 
@@ -88,11 +77,30 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
     orderHash,
   );
 
+  const buyStatus: BuyStatus = useMemo(() => {
+    if (
+      orderTx.status === TxStatus.FAILED ||
+      claimTx.status === TxStatus.FAILED
+    )
+      return BuyStatus.FAILED;
+
+    if (orderTx.status === TxStatus.PENDING) return BuyStatus.OPENING;
+
+    if (orderHash && !isBatchFinished) return BuyStatus.WAIT_FOR_BATCH;
+
+    if (isBatchFinished) {
+      if (claimTx.status === TxStatus.NONE) return BuyStatus.CLAIMABLE;
+      if (claimTx.status === TxStatus.PENDING) return BuyStatus.CLAIMING;
+    }
+
+    return BuyStatus.NONE;
+  }, [orderTx.status, claimTx.status, orderHash, isBatchFinished]);
+
   useEffect(() => {
     if (orderTx.status === TxStatus.CONFIRMED) {
       setOrderHash(orderTx.txHash);
     }
-  }, [orderTx.status]);
+  }, [orderTx]);
 
   useEffect(() => {
     if (isBatchFinished) {
@@ -100,50 +108,7 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
       claim(batchId, isPurchase);
       setOrderHash('');
     }
-  }, [isBatchFinished, orderBlockNumber, isPurchase]);
-
-  useEffect(() => {
-    console.log('[ClaimStatus]', claimTx);
-  }, [claimTx.status]);
-
-  useEffect(() => {
-    console.log('[orderHash]', orderHash);
-  }, [orderHash]);
-
-  // const buyStatus = useMemo(() => {
-  //   if (orderTx.status === TxStatus.NONE) {
-  //     return BuyStatus.NONE;
-  //   } else if ()
-  // }, []);
-
-  // useEffect(() => {
-  //   const start = async () => {
-  //     const keys = Object.keys(transactions);
-  //     const transaction = transactions[keys[keys.length - 1]];
-  //     if (
-  //       transaction?.status === 'confirmed' &&
-  //       transaction?.type === 'bonding' &&
-  //       transaction?.customData?.stage === 'buy'
-  //     ) {
-  //       window.ethereum.enable();
-  //       const web3 = new Web3(Web3.givenProvider);
-  //       const receipt = await web3.eth.getTransactionReceipt(
-  //         transaction.transactionHash,
-  //       );
-  //       const blockNumber = receipt.blockNumber;
-  //       const id = Math.floor(blockNumber / 10) * 10;
-  //       setBatchId(id);
-  //       setHash(transaction.transactionHash);
-  //       setMethod('claim');
-  //     }
-  //     if (transaction?.customData?.stage !== 'buy') {
-  //       setMethod('buy');
-  //     }
-  //   };
-  //   start();
-  // }, [transactions]);
-
-  const { minReturn } = useSlippage(bondingCurvePrice.value, slippage);
+  }, [isBatchFinished, orderBlockNumber, isPurchase, claim]);
 
   const handleSwapAssets = () => {
     const _sourceToken = sourceToken;
@@ -270,7 +235,12 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
         <ComingSoon />
       )}
 
-      <TxDialog tx={orderTx} />
+      <TxDialog
+        tx={orderTx}
+        openOrderTx={orderTx}
+        claimOrderTx={claimTx}
+        buyStatus={buyStatus}
+      />
     </>
   );
 };

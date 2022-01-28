@@ -7,9 +7,7 @@ export enum BuyType {
 
 export enum BuyStatus {
   NONE = 'none',
-  APPROVE = 'approve',
-  // PENDING = 'pending',
-  PLACE_ORDER = 'place_order',
+  OPENING = 'opening',
   WAIT_FOR_BATCH = 'wait_for_batch',
   CLAIMABLE = 'claimable',
   CLAIMING = 'claiming',

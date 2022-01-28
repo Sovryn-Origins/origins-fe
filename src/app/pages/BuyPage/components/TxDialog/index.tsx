@@ -13,6 +13,7 @@ import { usePrevious } from 'app/hooks/usePrevious';
 import txFailed from 'assets/images/failed-tx.svg';
 import txConfirm from 'assets/images/confirm-tx.svg';
 import txPending from 'assets/images/pending-tx.svg';
+import txWaitForBatch from 'assets/images/wait-tx.svg';
 // import txPending from 'assets/images/buy-pending-tx.svg';
 import closeImg from 'assets/images/closeImg.svg';
 import wMetamask from 'assets/wallets/metamask.svg';
@@ -25,34 +26,48 @@ import wWalletConnect from 'assets/wallets/walletconnect.svg';
 import { selectTransactions } from 'store/global/transactions-store/selectors';
 import { TxStatus } from 'store/global/transactions-store/types';
 import { detectWeb3Wallet, prettyTx } from 'utils/helpers';
+
+import { BuyStatus } from '../../types';
 import styles from './index.module.scss';
 
 interface Props {
   tx: ResetTxResponseInterface;
+  openOrderTx: ResetTxResponseInterface;
+  claimOrderTx: ResetTxResponseInterface;
+  buyStatus: BuyStatus;
   onUserConfirmed?: () => void;
   onSuccess?: () => void;
 }
 
-export function TxDialog({ tx, onUserConfirmed, onSuccess }: Props) {
+export function TxDialog({
+  // tx,
+  openOrderTx,
+  claimOrderTx,
+  buyStatus,
+  onUserConfirmed,
+  onSuccess,
+}: Props) {
   const transactions = useSelector(selectTransactions);
   const { t } = useTranslation();
   const { address } = useWalletContext();
-  const close = useCallback(() => tx.reset(), [tx]);
+
+  const tx = useMemo(
+    () =>
+      ![TxStatus.NONE, TxStatus.CONFIRMED].includes(openOrderTx.status)
+        ? openOrderTx
+        : claimOrderTx,
+    [openOrderTx, claimOrderTx],
+  );
+
+  const close = useCallback(() => {
+    openOrderTx.reset();
+    claimOrderTx.reset();
+  }, [openOrderTx, claimOrderTx]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const wallet = useMemo(() => detectWeb3Wallet(), [address]);
 
   const oldStatus = usePrevious(tx.status);
-
-  // const [bonding, setBonding] = useState(null);
-
-  useEffect(() => {
-    const keys = Object.keys(transactions);
-    const transaction = transactions[keys[keys.length - 1]];
-    if (transaction?.type === 'bonding') {
-      // setBonding(transaction);
-    }
-  }, [transactions]);
 
   useEffect(() => {
     if (
@@ -78,78 +93,99 @@ export function TxDialog({ tx, onUserConfirmed, onSuccess }: Props) {
   return (
     <Dialog
       isCloseButtonShown={false}
-      isOpen={tx.status !== TxStatus.NONE}
+      isOpen={
+        tx.status !== TxStatus.NONE || buyStatus === BuyStatus.WAIT_FOR_BATCH
+      }
       onClose={close}
       className={styles.dialog}
     >
-      {tx.status === TxStatus.PENDING_FOR_USER && (
+      {buyStatus !== BuyStatus.WAIT_FOR_BATCH &&
+        tx.status === TxStatus.PENDING_FOR_USER && (
+          <>
+            <h1>{t(translations.buySovPage.txDialog.pendingUser.title)}</h1>
+            <WalletLogo wallet={wallet} />
+            <p
+              className="tw-text-center tw-mx-auto tw-w-full"
+              style={{ maxWidth: 266 }}
+            >
+              {t(translations.buySovPage.txDialog.pendingUser.text, {
+                walletName: getWalletName(wallet),
+              })}
+            </p>
+          </>
+        )}
+      {buyStatus === BuyStatus.WAIT_FOR_BATCH && (
         <>
-          <h1>{t(translations.buySovPage.txDialog.pendingUser.title)}</h1>
-          <WalletLogo wallet={wallet} />
-          <p
-            className="tw-text-center tw-mx-auto tw-w-full"
-            style={{ maxWidth: 266 }}
-          >
-            {t(translations.buySovPage.txDialog.pendingUser.text, {
-              walletName: getWalletName(wallet),
-            })}
-          </p>
-        </>
-      )}
-      {[
-        TxStatus.PENDING,
-        TxStatus.CONFIRMED,
-        TxStatus.FAILED,
-        TxStatus.CLAIMING,
-        TxStatus.CLAIMABLE,
-      ].includes(tx.status) && (
-        <ModalWrap>
-          <CloseButton data-close="" onClick={close}>
-            {/* <span className="tw-sr-only">Close Dialog</span> */}
-            <img src={closeImg} alt="close" />
-          </CloseButton>
           <h1>{t(translations.buySovPage.txDialog.txStatus.title)}</h1>
-          <StatusComponent
-            status={tx.status}
-            bond={getLastTransaction(transactions)}
-          />
-
-          {!!tx.txHash && (
-            <StyledHashContainer>
-              <StyledHash>
-                <strong>Hash:</strong> {prettyTx(tx.txHash)}
-              </StyledHash>
-              <ExplorerLink>
-                <LinkToExplorer
-                  txHash={tx.txHash}
-                  text={t(translations.buySovPage.txDialog.txStatus.cta)}
-                  className="tw-text-blue"
-                />
-              </ExplorerLink>
-            </StyledHashContainer>
-          )}
-
-          {!tx.txHash && tx.status === TxStatus.FAILED && (
-            <>
-              <p className="tw-text-center">
-                {t(translations.buySovPage.txDialog.txStatus.aborted)}
-              </p>
-              {wallet === 'ledger' && (
-                <p className="tw-text-center">
-                  {t(translations.buySovPage.txDialog.txStatus.abortedLedger)}
-                </p>
-              )}
-            </>
-          )}
-
+          <StyledStatus>
+            <img className="" src={txWaitForBatch} alt="Wait For Batch" />
+            <p>
+              {t(translations.buySovPage.txDialog.txStatus.waitingForClaiming)}
+            </p>
+          </StyledStatus>
           <div style={{ maxWidth: 200 }} className="tw-mx-auto tw-w-full">
             <ConfirmButton
               onClick={close}
               text={t(translations.common.close)}
             />
           </div>
-        </ModalWrap>
+        </>
       )}
+      {buyStatus !== BuyStatus.WAIT_FOR_BATCH &&
+        [
+          TxStatus.PENDING,
+          TxStatus.CONFIRMED,
+          TxStatus.FAILED,
+          TxStatus.CLAIMING,
+          TxStatus.CLAIMABLE,
+        ].includes(tx.status) && (
+          <ModalWrap>
+            <CloseButton data-close="" onClick={close}>
+              {/* <span className="tw-sr-only">Close Dialog</span> */}
+              <img src={closeImg} alt="close" />
+            </CloseButton>
+            <h1>{t(translations.buySovPage.txDialog.txStatus.title)}</h1>
+            <StatusComponent
+              status={tx.status}
+              bond={getLastTransaction(transactions)}
+            />
+
+            {!!tx.txHash && (
+              <StyledHashContainer>
+                <StyledHash>
+                  <strong>Hash:</strong> {prettyTx(tx.txHash)}
+                </StyledHash>
+                <ExplorerLink>
+                  <LinkToExplorer
+                    txHash={tx.txHash}
+                    text={t(translations.buySovPage.txDialog.txStatus.cta)}
+                    className="tw-text-blue"
+                  />
+                </ExplorerLink>
+              </StyledHashContainer>
+            )}
+
+            {!tx.txHash && tx.status === TxStatus.FAILED && (
+              <>
+                <p className="tw-text-center">
+                  {t(translations.buySovPage.txDialog.txStatus.aborted)}
+                </p>
+                {wallet === 'ledger' && (
+                  <p className="tw-text-center">
+                    {t(translations.buySovPage.txDialog.txStatus.abortedLedger)}
+                  </p>
+                )}
+              </>
+            )}
+
+            <div style={{ maxWidth: 200 }} className="tw-mx-auto tw-w-full">
+              <ConfirmButton
+                onClick={close}
+                text={t(translations.common.close)}
+              />
+            </div>
+          </ModalWrap>
+        )}
     </Dialog>
   );
 }
@@ -211,16 +247,18 @@ function getStatus(tx: TxStatus, bonding: any) {
 }
 
 const StyledStatus = styled.div`
-  width: 100px;
   margin: 0 auto 35px;
   text-align: center;
   img {
     width: 100px;
     height: 100px;
+    margin: auto;
   }
   p {
     font-size: 1rem;
     font-weight: 500;
+    text-align: center;
+    text-transform: uppercase;
   }
 `;
 
