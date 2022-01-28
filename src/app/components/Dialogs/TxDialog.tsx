@@ -95,13 +95,9 @@ export function TxDialog({ tx, onUserConfirmed, onSuccess }: Props) {
           </p>
         </>
       )}
-      {[
-        TxStatus.PENDING,
-        TxStatus.CONFIRMED,
-        TxStatus.FAILED,
-        TxStatus.CLAIMING,
-        TxStatus.CLAIMABLE,
-      ].includes(tx.status) && (
+      {[TxStatus.PENDING, TxStatus.CONFIRMED, TxStatus.FAILED].includes(
+        tx.status,
+      ) && (
         <ModalWrap>
           <CloseButton data-close="" onClick={close}>
             {/* <span className="tw-sr-only">Close Dialog</span> */}
@@ -203,9 +199,6 @@ function getStatus(tx: TxStatus, bonding: any) {
       return <Trans i18nKey={translations.common.confirmed} />;
     }
   }
-  // if(tx === TxStatus.CLAIMABLE){
-  //   return <Trans i18nKey={translations.common.claiming} />;
-  // }
   return <Trans i18nKey={translations.common.pending} />;
 }
 

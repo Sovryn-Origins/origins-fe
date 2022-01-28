@@ -59,8 +59,6 @@ export enum TxStatus {
   PENDING = 'pending',
   CONFIRMED = 'confirmed',
   FAILED = 'failed',
-  CLAIMABLE = 'claimable',
-  CLAIMING = 'claiming',
 }
 
 export interface Transactions {
