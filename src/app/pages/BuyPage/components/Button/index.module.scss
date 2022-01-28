@@ -1,5 +1,5 @@
 //buy button
-.buy-btn {
+.buyBtn {
     @apply tw-mx-auto tw-block tw-border tw-border-solid tw-text-white tw-uppercase tw-leading-4 tw-rounded-lg tw-font-normal tw-text-xl;
     width: 9.688rem;
     height: 3.125rem;
@@ -13,7 +13,7 @@
     }
 }
 //close button
-.close-btn{
+.closeBtn{
     @apply tw-w-full tw-border-solid tw-border tw-text-xl 
     tw-font-extrabold tw-rounded-xl tw-uppercase tw-leading-4;
     background: rgba(254, 192, 4, 0.05);
@@ -26,7 +26,7 @@
     }
 }
 //confirm button
-.confirm-btn{
+.confirmBtn{
     @apply tw-border-solid tw-border tw-text-black tw-text-sm  tw-font-extrabold tw-rounded-xl tw-uppercase tw-leading-4;
     margin: 40px auto 0 auto; 
     padding: 0.75rem 4rem;

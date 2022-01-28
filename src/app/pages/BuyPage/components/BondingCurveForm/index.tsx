@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
 import { translations } from 'locales/i18n';
@@ -118,10 +118,17 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
     setIsPurchase(!isPurchase);
   };
 
-  const handleOnSwap = () => {
+  const handleOnSwap = useCallback(() => {
     setOrderHash('');
     placeOrder(weiAmount);
-  };
+  }, [weiAmount, placeOrder]);
+
+  const startClaimOrder = useCallback(() => {
+    if (!isBatchFinished) return;
+    const batchId = Math.floor(orderBlockNumber / 10) * 10;
+    claim(batchId, isPurchase);
+    setOrderHash('');
+  }, [isBatchFinished, orderBlockNumber, isPurchase, claim]);
 
   return (
     <>
@@ -240,6 +247,7 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
         openOrderTx={orderTx}
         claimOrderTx={claimTx}
         buyStatus={buyStatus}
+        onStartClaim={startClaimOrder}
       />
     </>
   );

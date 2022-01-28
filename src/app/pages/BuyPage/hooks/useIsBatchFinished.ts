@@ -13,7 +13,6 @@ export const useIsBatchFinished = (txHash: string) => {
 
   useEffect(() => {
     if (blockNumber === 0) return;
-    console.log('[BatchMonitor]', blockSync, blockNumber);
   }, [blockSync, blockNumber]);
 
   useEffect(() => {

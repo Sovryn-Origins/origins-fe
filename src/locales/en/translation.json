@@ -1836,7 +1836,8 @@
         "aborted": "Transaction was aborted by user.",
         "abortedLedger": "Make sure \"Contract data\" is set to \"Allowed\" in your Ledger app settings",
         "cta": "View in Tracker",
-        "waitingForClaiming": "Waiting For Claiming"
+        "waitingForClaiming": "Waiting For Claiming",
+        "claimable": "Claimable"
       }
     },
     "promotions": {

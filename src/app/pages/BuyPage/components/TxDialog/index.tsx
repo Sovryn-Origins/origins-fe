@@ -35,6 +35,7 @@ interface Props {
   openOrderTx: ResetTxResponseInterface;
   claimOrderTx: ResetTxResponseInterface;
   buyStatus: BuyStatus;
+  onStartClaim: () => void;
   onUserConfirmed?: () => void;
   onSuccess?: () => void;
 }
@@ -44,6 +45,7 @@ export function TxDialog({
   openOrderTx,
   claimOrderTx,
   buyStatus,
+  onStartClaim,
   onUserConfirmed,
   onSuccess,
 }: Props) {
@@ -57,6 +59,11 @@ export function TxDialog({
         ? openOrderTx
         : claimOrderTx,
     [openOrderTx, claimOrderTx],
+  );
+
+  const isInNonTransaction = useMemo(
+    () => [BuyStatus.WAIT_FOR_BATCH, BuyStatus.CLAIMABLE].includes(buyStatus),
+    [buyStatus],
   );
 
   const close = useCallback(() => {
@@ -93,27 +100,24 @@ export function TxDialog({
   return (
     <Dialog
       isCloseButtonShown={false}
-      isOpen={
-        tx.status !== TxStatus.NONE || buyStatus === BuyStatus.WAIT_FOR_BATCH
-      }
+      isOpen={tx.status !== TxStatus.NONE || isInNonTransaction}
       onClose={close}
       className={styles.dialog}
     >
-      {buyStatus !== BuyStatus.WAIT_FOR_BATCH &&
-        tx.status === TxStatus.PENDING_FOR_USER && (
-          <>
-            <h1>{t(translations.buySovPage.txDialog.pendingUser.title)}</h1>
-            <WalletLogo wallet={wallet} />
-            <p
-              className="tw-text-center tw-mx-auto tw-w-full"
-              style={{ maxWidth: 266 }}
-            >
-              {t(translations.buySovPage.txDialog.pendingUser.text, {
-                walletName: getWalletName(wallet),
-              })}
-            </p>
-          </>
-        )}
+      {!isInNonTransaction && tx.status === TxStatus.PENDING_FOR_USER && (
+        <>
+          <h1>{t(translations.buySovPage.txDialog.pendingUser.title)}</h1>
+          <WalletLogo wallet={wallet} />
+          <p
+            className="tw-text-center tw-mx-auto tw-w-full"
+            style={{ maxWidth: 266 }}
+          >
+            {t(translations.buySovPage.txDialog.pendingUser.text, {
+              walletName: getWalletName(wallet),
+            })}
+          </p>
+        </>
+      )}
       {buyStatus === BuyStatus.WAIT_FOR_BATCH && (
         <>
           <h1>{t(translations.buySovPage.txDialog.txStatus.title)}</h1>
@@ -131,7 +135,22 @@ export function TxDialog({
           </div>
         </>
       )}
-      {buyStatus !== BuyStatus.WAIT_FOR_BATCH &&
+      {buyStatus === BuyStatus.CLAIMABLE && (
+        <>
+          <h1>{t(translations.buySovPage.txDialog.txStatus.title)}</h1>
+          <StyledStatus>
+            <img className="" src={txWaitForBatch} alt="Claimable" />
+            <p>{t(translations.buySovPage.txDialog.txStatus.claimable)}</p>
+          </StyledStatus>
+          <div style={{ maxWidth: 200 }} className="tw-mx-auto tw-w-full">
+            <ConfirmButton
+              onClick={onStartClaim}
+              text={t(translations.common.close)}
+            />
+          </div>
+        </>
+      )}
+      {!isInNonTransaction &&
         [
           TxStatus.PENDING,
           TxStatus.CONFIRMED,
