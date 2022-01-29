@@ -128,7 +128,7 @@ export function TxDialog({
               {t(translations.buySovPage.txDialog.txStatus.waitingForClaiming)}
             </p>
           </StyledStatus>
-          <div style={{ maxWidth: 200 }} className="tw-mx-auto tw-w-full">
+          <div className="tw-flex tw-justify-center">
             <ConfirmButton
               onClick={close}
               text={t(translations.common.close)}
@@ -143,7 +143,7 @@ export function TxDialog({
             <img className="" src={txWaitForBatch} alt="Claimable" />
             <p>{t(translations.buySovPage.txDialog.txStatus.claimable)}</p>
           </StyledStatus>
-          <div style={{ maxWidth: 200 }} className="tw-mx-auto tw-w-full">
+          <div className="tw-flex tw-justify-center">
             <ConfirmButton
               primary={true}
               onClick={onStartClaim}
@@ -170,7 +170,8 @@ export function TxDialog({
             {!!tx.txHash && (
               <StyledHashContainer>
                 <StyledHash>
-                  <strong>Hash:</strong> {prettyTx(tx.txHash)}
+                  <strong>Hash:</strong>{' '}
+                  <span className="tw-text-primary">{prettyTx(tx.txHash)}</span>
                 </StyledHash>
                 <ExplorerLink>
                   <LinkToExplorer
@@ -195,7 +196,7 @@ export function TxDialog({
               </>
             )}
 
-            <div style={{ maxWidth: 200 }} className="tw-mx-auto tw-w-full">
+            <div className="tw-flex tw-justify-center">
               <ConfirmButton
                 onClick={close}
                 text={t(translations.common.close)}
@@ -264,11 +265,12 @@ const StyledStatus = styled.div`
   margin: 0 auto 35px;
   text-align: center;
   img {
-    width: 100px;
-    height: 100px;
+    width: 5rem;
+    height: 5rem;
     margin: auto;
   }
   p {
+    margin-top: 2.813rem;
     font-size: 1rem;
     font-weight: 500;
     text-align: center;
@@ -284,6 +286,7 @@ const StyledHashContainer = styled.div`
 
 const StyledHash = styled.div`
   text-align: center;
+  text-transform: uppercase;
   font-size: 0.875rem;
   font-weight: 300;
   margin-bottom: 35px;
@@ -301,6 +304,7 @@ const ExplorerLink = styled.div.attrs(_ => ({
   a {
     text-decoration: underline !important;
     font-weight: 500 !important;
+    text-transform: uppercase;
     &:hover {
       text-decoration: none !important;
     }

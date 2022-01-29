@@ -16,7 +16,10 @@ export const useIsBatchFinished = (txHash: string) => {
   }, [blockSync, blockNumber]);
 
   useEffect(() => {
-    if (!txHash) return;
+    if (!txHash) {
+      setBlockNumber(0);
+      return;
+    }
     Sovryn.getWeb3()
       .eth.getTransactionReceipt(txHash)
       .then(tx => {
