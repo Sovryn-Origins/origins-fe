@@ -32,6 +32,7 @@ export const useGetBondingCurveClaimOrder = (
         },
       )
       .then(([claimEvent]) => {
+        console.log('[claimEvent]', claimEvent);
         setValue(claimEvent);
       })
       .finally(() => {

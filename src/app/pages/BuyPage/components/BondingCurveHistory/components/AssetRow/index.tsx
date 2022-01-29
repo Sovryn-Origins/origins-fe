@@ -46,16 +46,37 @@ interface AssetProps {
 export function AssetRow({ data, itemFrom, itemTo, currentBlock }: AssetProps) {
   // const { t } = useTranslation();
   const dollars = useCachedAssetPrice(itemTo.asset, Asset.USDT);
+  const isPurchase = useMemo(() => itemFrom.asset === Asset.SOV, [itemFrom]);
+
+  const {
+    value: claimOrder,
+    loading: loadingClaimOrder,
+  } = useGetBondingCurveClaimOrder(data.returnVal.batchId, isPurchase);
+
+  const {
+    value: toWeiAmountBondingCurve,
+    loading: loadingToAmount,
+  } = useBondingCurvePrice(data.returnVal._fromAmount, isPurchase);
+
+  const claimedWeiAmount = useMemo(() => {
+    if (!claimOrder || !claimOrder.returnValues) return '';
+    return claimOrder && claimOrder.event === 'ClaimBuyOrder'
+      ? claimOrder.returnValues.amount
+      : claimOrder.returnValues.value;
+  }, [claimOrder]);
+
+  const toWeiAmount = useMemo(
+    () => claimedWeiAmount || toWeiAmountBondingCurve,
+    [claimedWeiAmount, toWeiAmountBondingCurve],
+  );
 
   const dollarValue = useMemo(() => {
-    //if (data.returnVal._toAmount === null) return '';
-    return bignumber(data.returnVal._toAmount)
+    return bignumber(toWeiAmount)
       .mul(dollars.value)
       .div(10 ** itemTo.decimals)
       .toFixed(0);
-  }, [dollars.value, data.returnVal._toAmount, itemTo.decimals]);
+  }, [dollars.value, itemTo.decimals, toWeiAmount]);
 
-  const isPurchase = useMemo(() => itemFrom.asset === Asset.SOV, [itemFrom]);
   const blockMined10 = useMemo(() => currentBlock.number - data.block > 10, [
     currentBlock,
     data.block,
@@ -70,16 +91,6 @@ export function AssetRow({ data, itemFrom, itemTo, currentBlock }: AssetProps) {
       ),
     [data, currentBlock],
   );
-
-  const { value: toWeiAmount, loading: loadingToAmount } = useBondingCurvePrice(
-    data.returnVal._fromAmount,
-    isPurchase,
-  );
-
-  const {
-    value: claimOrder,
-    loading: loadingClaimOrder,
-  } = useGetBondingCurveClaimOrder(data.returnVal.batchId, isPurchase);
 
   const { value: claimTransaction } = useGetTransactionReceipt(
     claimOrder?.transactionHash,

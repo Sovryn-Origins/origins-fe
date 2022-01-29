@@ -121,7 +121,7 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
     ) {
       setOrderHash(openOrderTx.txHash);
     }
-  }, [openOrderTx]);
+  }, [openOrderTx, prevOpenOrderTxStatus]);
 
   const handleOnSwapSuccess = useCallback(() => {
     setOrderHash('');
