@@ -77,6 +77,11 @@ export function AssetRow({ data, itemFrom, itemTo, currentBlock }: AssetProps) {
       .toFixed(0);
   }, [dollars.value, itemTo.decimals, toWeiAmount]);
 
+  const txAddress = useMemo(
+    () => claimOrder?.transactionHash || data.transaction_hash,
+    [data, claimOrder],
+  );
+
   const blockMined10 = useMemo(() => currentBlock.number - data.block > 10, [
     currentBlock,
     data.block,
@@ -165,7 +170,7 @@ export function AssetRow({ data, itemFrom, itemTo, currentBlock }: AssetProps) {
               {statusText}
             </p>
             <LinkToExplorer
-              txHash={data.transaction_hash}
+              txHash={txAddress}
               className="tw-text-primary tw-text-base tw-font-inter tw-font-normal tw-whitespace-nowrap"
             />
           </div>
