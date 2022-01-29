@@ -11,6 +11,7 @@ import { SwapAssetSelector } from 'app/containers/SwapFormContainer/components/S
 import { useWeiAmount } from 'app/hooks/useWeiAmount';
 import { useSlippage } from 'app/hooks/useSlippage';
 import { useMaintenance } from 'app/hooks/useMaintenance';
+import { usePrevious } from 'app/hooks/usePrevious';
 import { useBondingCurvePrice } from '../../hooks/useBondingCurvePrice';
 import { useBondingCurvePlaceOrder } from '../../hooks/useBondingCurvePlaceOrder';
 import comingIcon from 'assets/images/swap/coming.svg';
@@ -70,8 +71,9 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
   const { minReturn } = useSlippage(bondingCurvePrice.value, slippage);
 
   const [orderHash, setOrderHash] = useState('');
-  const { placeOrder, ...orderTx } = useBondingCurvePlaceOrder(isPurchase);
-  const { claim, ...claimTx } = useClaimOrder();
+  const { placeOrder, ...openOrderTx } = useBondingCurvePlaceOrder(isPurchase);
+  const { claim, ...claimOrderTx } = useClaimOrder();
+  const prevOpenOrderTxStatus = usePrevious(openOrderTx.status);
 
   const { isBatchFinished, blockNumber: orderBlockNumber } = useIsBatchFinished(
     orderHash,
@@ -79,29 +81,47 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
 
   const buyStatus: BuyStatus = useMemo(() => {
     if (
-      orderTx.status === TxStatus.FAILED ||
-      claimTx.status === TxStatus.FAILED
+      openOrderTx.status === TxStatus.FAILED ||
+      claimOrderTx.status === TxStatus.FAILED
     ) {
       return BuyStatus.FAILED;
     }
 
-    if (claimTx.status === TxStatus.CONFIRMED) return BuyStatus.SUCCESS;
-    if (orderTx.status === TxStatus.PENDING) return BuyStatus.OPENING;
+    if (claimOrderTx.status === TxStatus.CONFIRMED) return BuyStatus.SUCCESS;
+    if (openOrderTx.status === TxStatus.PENDING) return BuyStatus.OPENING;
     if (orderHash && !isBatchFinished) return BuyStatus.WAIT_FOR_BATCH;
 
-    if (isBatchFinished) {
-      if (claimTx.status === TxStatus.NONE) return BuyStatus.CLAIMABLE;
-      if (claimTx.status === TxStatus.PENDING) return BuyStatus.CLAIMING;
+    if (isBatchFinished && orderHash) {
+      if (claimOrderTx.status === TxStatus.NONE) return BuyStatus.CLAIMABLE;
+      if (claimOrderTx.status === TxStatus.PENDING) return BuyStatus.CLAIMING;
     }
 
     return BuyStatus.NONE;
-  }, [orderTx.status, claimTx.status, orderHash, isBatchFinished]);
+  }, [openOrderTx.status, claimOrderTx.status, orderHash, isBatchFinished]);
+
+  //////////// --------- DEBUG ------------
+  useEffect(() => {
+    console.log('[buyStatus]', buyStatus);
+  }, [buyStatus]);
+  useEffect(() => console.log('[OpenStatus]', openOrderTx.status), [
+    openOrderTx.status,
+  ]);
+  useEffect(() => console.log('[ClaimStatus]', claimOrderTx.status), [
+    claimOrderTx.status,
+  ]);
+  useEffect(() => console.log('[orderhash]', orderHash), [orderHash]);
+  useEffect(() => console.log('[isBatchFinished]', isBatchFinished), [
+    isBatchFinished,
+  ]);
 
   useEffect(() => {
-    if (orderTx.status === TxStatus.CONFIRMED) {
-      setOrderHash(orderTx.txHash);
+    if (
+      openOrderTx.status === TxStatus.CONFIRMED &&
+      prevOpenOrderTxStatus !== TxStatus.CONFIRMED
+    ) {
+      setOrderHash(openOrderTx.txHash);
     }
-  }, [orderTx]);
+  }, [openOrderTx]);
 
   const handleOnSwapSuccess = useCallback(() => {
     setOrderHash('');
@@ -240,8 +260,8 @@ export const BondingCurveForm: React.FC<IBondingCurveFormProps> = ({
       )}
 
       <TxDialog
-        openOrderTx={orderTx}
-        claimOrderTx={claimTx}
+        openOrderTx={openOrderTx}
+        claimOrderTx={claimOrderTx}
         buyStatus={buyStatus}
         onStartClaim={startClaimOrder}
         onSwapSuccess={handleOnSwapSuccess}
