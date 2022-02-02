@@ -721,9 +721,6 @@
       "title": "Obter empréstimos"
     }
   },
-  "activeUserBorrows": {
-    "text": "Você não tem empréstimos a devolver."
-  },
   "activeUserLoans": {
     "text": "Você não tem operações de compra ou venda abertas.",
     "info": {
@@ -757,17 +754,6 @@
       "history": "Devolvidos"
     },
     "walletNote": "A carteira precisa estar conectada."
-  },
-  "borrowHistory": {
-    "table": {
-      "headers": {
-        "borrowAmount": "Valor do empréstimo",
-        "collateralAmount": "Colateral",
-        "interestAPR": "Juros anual",
-        "timestamp": "Data"
-      }
-    },
-    "no_items": "Histórico vázio."
   },
   "rskConnectTutorial": {
     "browser_wallet": "Carteira de computador",
@@ -1153,15 +1139,6 @@
       }
     }
   },
-  "activeBorrowTable": {
-    "headers": {
-      "borrowAmount": "Quantidade",
-      "collateralAmount": "Colateral",
-      "interestAPR": "Juros anual",
-      "endTimestamp": "Devolver até"
-    },
-    "repayButton": "Devolver"
-  },
   "repayPositionForm": {
     "title": "Devolver empréstimo",
     "labels": {
@@ -1303,8 +1280,9 @@
     "title": "Sacar SOV",
     "subtitle": "Esta transação requer rBTC para pagar as taxas.",
     "amount": "Quantidade:",
-    "receiver": "Receber SOV em:",
-    "calculating": "Calculando..."
+    "receiver": "Receber {{asset}} em:",
+    "calculating": "Calculando...",
+    "schedule": "Programação de desbloqueio"
   },
   "rewardPage": {
     "availableRewards": "Disponíveis:",
@@ -1373,7 +1351,7 @@
     "tradeForm": {
       "labels": {
         "pair": "Par de negociação:",
-        "asset": "Ativo de garantia:",
+        "asset": "Ativo:",
         "leverage": "Alavancagem:",
         "amount": "Quantidade:",
         "balance": "Saldo disponível: <0/> <1/>",
@@ -1440,68 +1418,6 @@
       "noResults": "Sem resultados",
       "placeholder": "Selecionar item"
     }
-  },
-  "liquidityMining": {
-    "deposit": "Adicionar",
-    "withdraw": "Retirar",
-    "meta": {
-      "title": "Minerar liquidez"
-    },
-    "explainer": {
-      "earnSOV": "Earn SOV by depositing liquidity into the USDT/BTC liquidity pool",
-      "startDate": "Start date: 1st April 2021, 12.00 UTC",
-      "endDate": "End date: 1st May 2021, 12.00 UTC",
-      "rewardPoolUSDT": "Reward pool for depositing USDT: 25,000 SOV",
-      "rewardPoolRBTC": "Reward pool for depositing RBTC: 25,000 SOV",
-      "yourShare": "Your share of the pool is calculated by:",
-      "yourShare_N": "liquidity added by you * number of blocks held",
-      "yourShare_D": "total liquidity added * number of blocks held",
-      "airDrop": "Rewards will be deposited into liquidity providers' wallets on or before 8th May 2021"
-    },
-    "historyTable": {
-      "title": "Histórico",
-      "emptyState": "Histórico vázio.",
-      "tableHeaders": {
-        "time": "Data e hora",
-        "pool": "Pool",
-        "action": "Ação",
-        "asset": "Ativo",
-        "liquidityAmount": "Quantidade",
-        "transactionHash": "ID transação",
-        "status": "Status"
-      },
-      "txType": {
-        "added": "Adicionar liquidez",
-        "removed": "Retirar liquidez"
-      }
-    },
-    "rowTable": {
-      "noLiquidityProvided": "Adicione liquidez e ganhe rendimentos",
-      "tableHeaders": {
-        "totalEarned": "Total ganho",
-        "balance": "Saldo atual",
-        "pl": "L/P",
-        "rewards": "Bônus"
-      }
-    },
-    "modals": {
-      "deposit": {
-        "title": "Adicionar liquidez",
-        "cta": "Depositar",
-        "asset": "Ativo:",
-        "amount": "Quantidade:"
-      },
-      "withdraw": {
-        "title": "Retirar liquidez",
-        "cta": "Resgatar",
-        "amount": "Quantidade:",
-        "asset": "Ativo:",
-        "reward": "Bônus:"
-      }
-    },
-    "lootDropLink": "Saiba mais",
-    "chartOverlayText": "Juros anual% Em breve!",
-    "recalibration": "Próximo ajuste em {{date}}"
   },
   "landingPage": {
     "meta": {

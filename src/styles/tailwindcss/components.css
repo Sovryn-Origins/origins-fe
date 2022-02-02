@@ -9,7 +9,7 @@
 
   .tw-header-link,
   .tw-header-link:visited {
-    @apply tw-font-body tw-normal-case tw-no-underline tw-text-sov-white tw-text-base tw-no-underline tw-transition;
+    @apply tw-font-rowdies tw-normal-case tw-no-underline tw-text-sov-white tw-text-base tw-transition;
   }
 
   .tw-header-link:hover,

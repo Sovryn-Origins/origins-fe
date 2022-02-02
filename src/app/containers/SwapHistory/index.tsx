@@ -8,21 +8,18 @@ import React, {
   useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 
 import { LinkToExplorer } from 'app/components/LinkToExplorer';
 import iconPending from 'assets/images/icon-pending.svg';
 import iconRejected from 'assets/images/icon-rejected.svg';
 import iconSuccess from 'assets/images/icon-success.svg';
-import { selectTransactionArray } from 'store/global/transactions-store/selectors';
-import { TxStatus, TxType } from 'store/global/transactions-store/types';
+import { TxStatus } from 'store/global/transactions-store/types';
 import { getContractNameByAddress } from 'utils/blockchain/contract-helpers';
 import { numberFromWei } from 'utils/blockchain/math-helpers';
 import { backendUrl, currentChainId } from 'utils/classifiers';
 import { AssetsDictionary } from 'utils/dictionaries/assets-dictionary';
 import { weiToUSD } from 'utils/display-text/format';
 import { AssetDetails } from 'utils/models/asset-details';
-
 import { translations } from '../../../locales/i18n';
 import { Asset } from '../../../types';
 import { DisplayDate } from '../../components/ActiveUserLoanContainer/components/DisplayDate';
@@ -34,8 +31,9 @@ import { useCachedAssetPrice } from '../../hooks/trading/useCachedAssetPrice';
 import { useAccount } from '../../hooks/useAccount';
 import { useTradeHistoryRetry } from '../../hooks/useTradeHistoryRetry';
 import { Nullable } from 'types';
+import styles from './index.module.scss';
 
-interface AssetRowData {
+export interface AssetRowData {
   status: TxStatus;
   timestamp: number;
   transaction_hash: string;
@@ -46,7 +44,6 @@ interface AssetRowData {
 }
 
 export function SwapHistory() {
-  const transactions = useSelector(selectTransactionArray);
   const account = useAccount();
   const url = backendUrl[currentChainId];
   const [history, setHistory] = useState([]) as any;
@@ -54,7 +51,6 @@ export function SwapHistory() {
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
   const assets = AssetsDictionary.list();
-  const [hasOngoingTransactions, setHasOngoingTransactions] = useState(false);
   const retry = useTradeHistoryRetry();
 
   let cancelTokenSource = useRef<CancelTokenSource>();
@@ -63,7 +59,6 @@ export function SwapHistory() {
     if (cancelTokenSource.current) {
       cancelTokenSource.current.cancel();
     }
-
     cancelTokenSource.current = axios.CancelToken.source();
     axios
       .get(`${url}/events/conversion-swap/${account}`, {
@@ -85,7 +80,6 @@ export function SwapHistory() {
     setLoading(true);
     setHistory([]);
     setCurrentHistory([]);
-
     getData();
   }, [getData]);
 
@@ -102,53 +96,11 @@ export function SwapHistory() {
     setCurrentHistory(history.slice(offset, offset + pageLimit));
   };
 
-  const onGoingTransactions = useMemo(() => {
-    return transactions
-      .filter(
-        tx =>
-          tx.type === TxType.CONVERT_BY_PATH &&
-          [TxStatus.FAILED, TxStatus.PENDING].includes(tx.status),
-      )
-      .map(item => {
-        const { customData } = item;
-
-        if (!hasOngoingTransactions) {
-          setHasOngoingTransactions(true);
-        }
-
-        const assetFrom = assets.find(
-          currency => currency.asset === customData?.sourceToken,
-        );
-        const assetTo = assets.find(
-          currency => currency.asset === customData?.targetToken,
-        );
-
-        const data: AssetRowData = {
-          status: item.status,
-          timestamp: customData?.date,
-          transaction_hash: item.transactionHash,
-          returnVal: {
-            _fromAmount: customData?.amount,
-            _toAmount: customData?.minReturn || null,
-          },
-        };
-
-        return (
-          <AssetRow
-            key={item.transactionHash}
-            data={data}
-            itemFrom={assetFrom!}
-            itemTo={assetTo!}
-          />
-        );
-      });
-  }, [assets, hasOngoingTransactions, transactions]);
-
   return (
     <section>
-      <div className="sovryn-table tw-p-4 tw-mb-12">
+      <div className="sovryn-table tw-p-4 tw-mb-12 tw-bg-gray-1 tw-rounded-lg tw-border-4 tw-border-solid tw-border-black">
         <table className="tw-w-full">
-          <thead>
+          <thead className={styles.header}>
             <tr>
               <th className="tw-hidden lg:tw-table-cell">
                 {t(translations.swapHistory.tableHeaders.time)}
@@ -174,14 +126,14 @@ export function SwapHistory() {
                 </td>
               </tr>
             )}
-            {!hasOngoingTransactions && history.length === 0 && !loading && (
+            {history.length === 0 && !loading && (
               <tr key={'empty'}>
                 <td className="tw-text-center" colSpan={99}>
                   {t(translations.swapHistory.emptyState)}
                 </td>
               </tr>
             )}
-            {onGoingTransactions}
+
             {currentHistory.map(item => {
               let assetFrom = {} as AssetDetails;
               let assetTo = {} as AssetDetails;
@@ -233,80 +185,93 @@ interface AssetProps {
   itemTo: AssetDetails;
 }
 
-function AssetRow({ data, itemFrom, itemTo }: AssetProps) {
+export function AssetRow({ data, itemFrom, itemTo }: AssetProps) {
   const { t } = useTranslation();
   const dollars = useCachedAssetPrice(itemTo.asset, Asset.USDT);
   const dollarValue = useMemo(() => {
-    if (data.returnVal._toAmount === null) return '';
+    //if (data.returnVal._toAmount === null) return '';
+    if (data.status !== 'confirmed') return null;
     return bignumber(data.returnVal._toAmount)
       .mul(dollars.value)
       .div(10 ** itemTo.decimals)
       .toFixed(0);
-  }, [dollars.value, data.returnVal._toAmount, itemTo.decimals]);
+  }, [dollars.value, data.returnVal._toAmount, itemTo.decimals, data.status]);
 
-  return (
-    <tr>
-      <td className="tw-hidden lg:tw-table-cell">
-        <DisplayDate
-          timestamp={new Date(data.timestamp).getTime().toString()}
-        />
-      </td>
-      <td className="tw-hidden lg:tw-table-cell">
-        <img
-          className="tw-hidden lg:tw-inline tw-mr-2"
-          style={{ height: '40px' }}
-          src={itemFrom.logoSvg}
-          alt={itemFrom.asset}
-        />{' '}
-        <AssetRenderer asset={itemFrom.asset} />
-      </td>
-      <td>{numberFromWei(data.returnVal._fromAmount)}</td>
-      <td>
-        <img
-          className="tw-joddem lg:tw-inline tw-mr-2"
-          style={{ height: '40px' }}
-          src={itemTo.logoSvg}
-          alt={itemTo.asset}
-        />{' '}
-        <AssetRenderer asset={itemTo.asset} />
-      </td>
-      <td className="tw-hidden lg:tw-table-cell">
-        <div>{numberFromWei(data.returnVal._toAmount)}</div>≈{' '}
-        <LoadableValue
-          value={weiToUSD(dollarValue || '0')}
-          loading={dollars.loading}
-        />
-      </td>
-      <td>
-        <div className="tw-flex tw-items-center tw-justify-between tw-p-0">
-          <div>
-            {!data.status && (
-              <p className="tw-m-0">{t(translations.common.confirmed)}</p>
-            )}
-            {data.status === TxStatus.FAILED && (
-              <p className="tw-m-0">{t(translations.common.failed)}</p>
-            )}
-            {data.status === TxStatus.PENDING && (
-              <p className="tw-m-0">{t(translations.common.pending)}</p>
-            )}
-            <LinkToExplorer
-              txHash={data.transaction_hash}
-              className="tw-text-primary tw-font-normal tw-whitespace-nowrap"
-            />
+  if (data.status !== 'confirmed') {
+    return (
+      <tr>
+        <td className="tw-hidden lg:tw-table-cell">
+          <DisplayDate
+            className={styles.dateTime}
+            timestamp={new Date(data.timestamp).getTime().toString()}
+          />
+        </td>
+        <td className="tw-hidden lg:tw-table-cell">
+          <img
+            className={styles.assetImg}
+            src={itemFrom.logoSvg}
+            alt={itemFrom.asset}
+          />{' '}
+          <AssetRenderer className={styles.assetLabel} asset={itemFrom.asset} />
+        </td>
+        <td className="tw-font-inter tw-text-base">
+          {numberFromWei(data.returnVal._fromAmount)}
+        </td>
+        <td>
+          <img
+            className={styles.assetImg}
+            style={{ height: '40px' }}
+            src={itemTo.logoSvg}
+            alt={itemTo.asset}
+          />{' '}
+          <AssetRenderer className={styles.assetLabel} asset={itemTo.asset} />
+        </td>
+        <td className="tw-hidden lg:tw-table-cell tw-font-inter tw-text-base">
+          <div className="tw-font-inter">
+            {numberFromWei(data.returnVal._toAmount)}
           </div>
-          <div className="tw-hidden sm:tw-block lg:tw-hidden xl:tw-block">
-            {!data.status && (
-              <img src={iconSuccess} title="Confirmed" alt="Confirmed" />
-            )}
-            {data.status === TxStatus.FAILED && (
-              <img src={iconRejected} title="Failed" alt="Failed" />
-            )}
-            {data.status === TxStatus.PENDING && (
-              <img src={iconPending} title="Pending" alt="Pending" />
-            )}
+          ≈{' '}
+          <LoadableValue
+            value={weiToUSD(dollarValue || '0')}
+            loading={dollars.loading}
+          />
+        </td>
+        <td>
+          <div className="tw-flex tw-items-center tw-justify-between tw-p-0">
+            <div>
+              <p className="tw-m-0 tw-font-inter tw-text-base">
+                {!data.status && <>{t(translations.common.confirmed)}</>}
+                {data.status === TxStatus.FAILED && (
+                  <>{t(translations.common.failed)}</>
+                )}
+                {data.status === TxStatus.PENDING && (
+                  <>{t(translations.common.pending)}</>
+                )}
+              </p>
+              <LinkToExplorer
+                txHash={data.transaction_hash}
+                className="tw-text-primary tw-text-base tw-font-inter tw-font-normal tw-whitespace-nowrap"
+              />
+            </div>
+            <div className="tw-hidden sm:tw-block lg:tw-hidden xl:tw-block">
+              {!data.status && (
+                <img src={iconSuccess} title="Confirmed" alt="Confirmed" />
+              )}
+              {data.status === TxStatus.FAILED && (
+                <img src={iconRejected} title="Failed" alt="Failed" />
+              )}
+              {data.status === TxStatus.PENDING && (
+                <img
+                  src={iconPending}
+                  title="Pending"
+                  alt="Pending"
+                  className="tw-animate-spin"
+                />
+              )}
+            </div>
           </div>
-        </div>
-      </td>
-    </tr>
-  );
+        </td>
+      </tr>
+    );
+  } else return null;
 }

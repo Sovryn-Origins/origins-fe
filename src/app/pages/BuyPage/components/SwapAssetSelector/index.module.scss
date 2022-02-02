@@ -1,0 +1,16 @@
+.caretElement {
+  @apply tw-absolute tw-flex tw-items-center;
+  right: 21px;
+  height: 13px;
+  width: 22px;
+}
+
+.button {
+  @apply tw-relative tw-w-full tw-flex tw-flex-row tw-justify-between tw-items-center tw-p-0 tw-text-base tw-text-sov-white;
+  height: 43px;
+  background-color: #222222;
+  // border: 1px solid #575757;
+  border: none;
+  border-radius: 0.5rem;
+  font-family: 'Montserrat', sans-serif;
+}

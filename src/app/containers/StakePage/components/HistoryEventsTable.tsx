@@ -1,19 +1,10 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import styled from 'styled-components/macro';
-import iconSuccess from 'assets/images/icon-success.svg';
-import iconRejected from 'assets/images/icon-rejected.svg';
-import iconPending from 'assets/images/icon-pending.svg';
 import { Pagination } from '../../../components/Pagination';
-import { Asset } from '../../../../types';
-import { useCachedAssetPrice } from '../../../hooks/trading/useCachedAssetPrice';
-import { weiToUSD } from 'utils/display-text/format';
-import { bignumber } from 'mathjs';
-import { AssetsDictionary } from 'utils/dictionaries/assets-dictionary';
-import { LoadableValue } from '../../../components/LoadableValue';
 import { numberFromWei } from 'utils/blockchain/math-helpers';
 import { StyledTable } from './StyledTable';
 import { LinkToExplorer } from '../../../components/LinkToExplorer';
@@ -38,7 +29,7 @@ export function HistoryEventsTable() {
   const account = useAccount();
   const { chainId } = useSelector(selectWalletProvider);
   const [eventsHistory, setEventsHistory] = useState<HistoryItem[]>([]);
-  const [isHistoryLoading, seIsHistoryLoading] = useState(false);
+  const [isHistoryLoading, setIsHistoryLoading] = useState(false);
   const [currentHistory, setCurrentHistory] = useState<HistoryItem[]>([]);
   const onPageChanged = data => {
     const { currentPage, pageLimit } = data;
@@ -48,39 +39,39 @@ export function HistoryEventsTable() {
 
   const getHistory = useCallback(() => {
     if (chainId) {
-      seIsHistoryLoading(true);
+      setIsHistoryLoading(true);
       axios
         .get(`${backendUrl[chainId]}/events/stake/${account}`)
         .then(({ data }) => {
           setEventsHistory(data?.events);
-          seIsHistoryLoading(false);
+          setIsHistoryLoading(false);
         });
     }
   }, [account, chainId]);
 
   return (
     <>
-      <div className="history-table tw-bg-gray-1 tw-rounded-b tw-mb-10">
-        <p className="tw-font-normal tw-text-lg tw-ml-6 tw-mb-1 tw-mt-16">
+      <div className="history-table tw-max-w-none tw-bg-gray-1 tw-rounded-b tw-mb-10">
+        <p className="tw-font-normal tw-text-xl tw-font-rowdies tw-uppercase tw-mb-2 tw-mt-12">
           {t(translations.stake.history.title)}
         </p>
-        <div className="tw-rounded-lg tw-sovryn-table tw-pt-1 tw-pb-0 tw-pr-5 tw-pl-5 tw-mb-5">
+        <div className="tw-rounded-lg tw-sovryn-table tw-pt-1 tw-pb-0 tw-mb-5">
           <StyledTable className="tw-w-full">
             <thead>
-              <tr>
-                <th className="tw-text-left assets">
+              <tr className="tw-capitalize tw-font-rowdies tw-font-light tw-leading-30px">
+                <th className="tw-text-left tw-text-lg tw-pl-0 assets">
                   {t(translations.stake.history.stakingDate)}
                 </th>
-                <th className="tw-text-left">
+                <th className="tw-text-left tw-text-lg">
                   {t(translations.stake.history.action)}
                 </th>
-                <th className="tw-text-left">
+                <th className="tw-text-left tw-text-lg">
                   {t(translations.stake.history.stakedAmount)}
                 </th>
-                <th className="tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-text-left tw-text-lg tw-hidden lg:tw-table-cell">
                   {t(translations.stake.history.hash)}
                 </th>
-                <th className="tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-text-left tw-text-lg tw-hidden lg:tw-table-cell">
                   {t(translations.stake.history.status)}
                 </th>
               </tr>
@@ -111,7 +102,7 @@ export function HistoryEventsTable() {
                       <td colSpan={5} className="tw-text-center tw-font-normal">
                         <button
                           type="button"
-                          className="tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-no-underline hover:tw-bg-primary hover:tw-bg-opacity-30 tw-mr-1 xl:tw-mr-7 tw-px-4 tw-py-2 tw-transition tw-duration-500 tw-ease-in-out tw-rounded-full tw-border tw-border-primary tw-text-sm tw-font-light tw-font-body"
+                          className="tw-bg-primary tw-bg-opacity-40 tw-text-black tw-leading-30px tw-tracking-normal hover:tw-text-gray-1 hover:tw-no-underline hover:tw-bg-primary hover:tw-bg-opacity-30 tw-mr-1 xl:tw-mr-7 tw-px-4 tw-py-2 tw-transition tw-duration-500 tw-ease-in-out tw-rounded-lg tw-border tw-border-primary tw-text-sm tw-font-light tw-font-rowdies tw-uppercase"
                           onClick={getHistory}
                         >
                           {t(translations.stake.history.viewHistory)}
@@ -165,34 +156,18 @@ const getActionName = action => {
 
 const HistoryTableAsset: React.FC<HistoryAsset> = ({ item }) => {
   const { t } = useTranslation();
-  const SOV = AssetsDictionary.get(Asset.SOV);
-  const dollars = useCachedAssetPrice(Asset.SOV, Asset.USDT);
-  const dollarValue = useMemo(() => {
-    if (!item.amount) return '';
-    return bignumber(item.amount)
-      .mul(dollars.value)
-      .div(10 ** SOV.decimals)
-      .toFixed(0);
-  }, [dollars.value, item.amount, SOV.decimals]);
   return (
-    <tr>
-      <td>
+    <tr className="tw-text-base">
+      <td className="tw-font-inter">
         {dayjs
           .tz(item.timestamp * 1e3, 'UTC')
           .tz(dayjs.tz.guess())
-          .format('L - LTS Z')}
+          .format('L - HH:mm:ss')}
       </td>
-      <td>{getActionName(item.action)}</td>
-      <td className="tw-text-left tw-font-normal">
+      <td className="tw-font-inter">{getActionName(item.action)}</td>
+      <td className="tw-text-left tw-font-normal tw-font-inter">
         {item.action !== t(translations.stake.actions.delegate) ? (
-          <>
-            {numberFromWei(item.amount)} SOV
-            <br />≈{' '}
-            <LoadableValue
-              value={weiToUSD(dollarValue)}
-              loading={dollars.loading}
-            />
-          </>
+          <>{numberFromWei(item.amount)} OG</>
         ) : (
           <>-</>
         )}
@@ -201,35 +176,26 @@ const HistoryTableAsset: React.FC<HistoryAsset> = ({ item }) => {
         <LinkToExplorer
           txHash={item.txHash}
           startLength={6}
-          className="tw-text-secondary hover:tw-underline"
+          className="hover:tw-underline tw-font-inter"
         />
       </td>
       <td>
         <div className="tw-flex tw-items-center tw-justify-between lg:tw-w-5/6 tw-p-0">
           <div>
             {!item.status && (
-              <p className="tw-m-0">{t(translations.common.confirmed)}</p>
+              <p className="tw-m-0 tw-font-inter">
+                {t(translations.common.executed)}
+              </p>
             )}
             {item.status === TxStatus.FAILED && (
-              <p className="tw-m-0">{t(translations.common.failed)}</p>
+              <p className="tw-m-0 tw-font-inter">
+                {t(translations.common.failed)}
+              </p>
             )}
             {item.status === TxStatus.PENDING && (
-              <p className="tw-m-0">{t(translations.common.pending)}</p>
-            )}
-            <LinkToExplorer
-              txHash={item.txHash}
-              className="tw-text-primary tw-font-normal tw-whitespace-nowrap"
-            />
-          </div>
-          <div>
-            {!item.status && (
-              <img src={iconSuccess} title="Confirmed" alt="Confirmed" />
-            )}
-            {item.status === TxStatus.FAILED && (
-              <img src={iconRejected} title="Failed" alt="Failed" />
-            )}
-            {item.status === TxStatus.PENDING && (
-              <img src={iconPending} title="Pending" alt="Pending" />
+              <p className="tw-m-0 tw-font-inter">
+                {t(translations.common.pending)}
+              </p>
             )}
           </div>
         </div>

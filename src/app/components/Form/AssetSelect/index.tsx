@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Nullable } from 'types';
+import { Theme } from 'types/theme';
 import { Asset } from 'types/asset';
 import { Select } from 'app/components/Form/Select';
 import { Option } from 'app/components/Form/Select/types';
@@ -13,12 +14,16 @@ interface IAssetSelectProps {
   value: Nullable<Asset>;
   onChange: (value: Asset, item: Option<Asset, string, string>) => void;
   options: Asset[];
+  placeholder?: React.ReactNode;
+  theme?: Theme;
 }
 
 export const AssetSelect: React.FC<IAssetSelectProps> = ({
   value,
   onChange,
   options,
+  theme = Theme.DARK,
+  placeholder,
 }) => {
   const selectOptions = useMemo(() => {
     return options.map(item => {
@@ -34,6 +39,8 @@ export const AssetSelect: React.FC<IAssetSelectProps> = ({
       options={selectOptions}
       itemRenderer={renderItem}
       valueRenderer={valueRenderer}
+      placeholder={placeholder}
+      theme={theme}
     />
   );
 };

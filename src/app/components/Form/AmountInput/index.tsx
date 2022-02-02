@@ -1,11 +1,13 @@
 import { bignumber } from 'mathjs';
 import React, { useMemo } from 'react';
+import cn from 'classnames';
 
 import { Asset } from '../../../../types';
 import { fromWei } from '../../../../utils/blockchain/math-helpers';
 import { AssetRenderer } from '../../AssetRenderer';
 import { useAssetBalanceOf } from '../../../hooks/useAssetBalanceOf';
 import { Input } from '../Input';
+import { AssetSelect } from 'app/components/AssetSelect';
 import {
   stringToFixedPrecision,
   toNumberFormat,
@@ -17,10 +19,14 @@ interface Props {
   decimalPrecision?: number;
   asset?: Asset;
   assetString?: string;
+  selectable?: boolean;
+  onSelectAsset?: (asset: Asset) => void;
   subText?: string;
   placeholder?: string;
   maxAmount?: string;
   readonly?: boolean;
+  theme?: 'dark' | 'white';
+  showAmountSelector?: boolean;
 }
 
 export function AmountInput({
@@ -30,9 +36,13 @@ export function AmountInput({
   decimalPrecision = 6,
   asset,
   assetString,
+  selectable = false,
+  onSelectAsset,
   subText,
   maxAmount,
   readonly,
+  theme = 'dark',
+  showAmountSelector = true,
 }: Props) {
   return (
     <>
@@ -43,22 +53,37 @@ export function AmountInput({
         placeholder={placeholder}
         appendElem={
           asset || assetString ? (
-            <AssetRenderer asset={asset} assetString={assetString} />
+            selectable ? (
+              <AssetSelect
+                selected={asset}
+                selectedAssetString={assetString}
+                onChange={onSelectAsset}
+              />
+            ) : (
+              <AssetRenderer
+                className="tw-text-black tw-font-rowdies tw-text-lg"
+                asset={asset}
+                assetString={assetString}
+              />
+            )
           ) : null
         }
-        className="tw-rounded-lg"
+        className={cn('tw-rounded-lg', `theme-${theme}`)}
         readOnly={readonly}
+        leftDivider={selectable}
       />
       {subText && (
         <div className="tw-text-xs tw-mt-1 tw-font-thin">{subText}</div>
       )}
-      {!readonly && (asset || maxAmount !== undefined) && (
-        <AmountSelector
-          asset={asset}
-          maxAmount={maxAmount}
-          onChange={onChange}
-        />
-      )}
+      {showAmountSelector &&
+        !readonly &&
+        (asset || maxAmount !== undefined) && (
+          <AmountSelector
+            asset={asset}
+            maxAmount={maxAmount}
+            onChange={onChange}
+          />
+        )}
     </>
   );
 }
@@ -117,7 +142,7 @@ export function AmountSelectorButton(props: AmountButtonProps) {
   return (
     <button
       onClick={props.onClick}
-      className="tw-text-secondary tw-bg-secondary tw-bg-opacity-0 tw-font-medium tw-text-xs tw-leading-none tw-px-4 tw-py-1 tw-text-center tw-w-full tw-transition hover:tw-bg-opacity-25"
+      className="tw-text-secondary tw-bg-secondary tw-bg-opacity-0 tw-font-medium tw-font-rowdies tw-text-xs tw-leading-none tw-px-4 tw-py-1 tw-text-center tw-w-full tw-transition hover:tw-bg-opacity-25"
     >
       {props.text}
     </button>

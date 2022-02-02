@@ -39,7 +39,7 @@ export const VestedItem: React.FC<VestedItemProps> = ({
 
   return (
     <tr>
-      <td>
+      <td className="tw-font-inter tw-text-base">
         <img
           className="tw-inline tw-mr-2 tw-h-8 tw-w-8"
           src={logoSvg}
@@ -47,19 +47,19 @@ export const VestedItem: React.FC<VestedItemProps> = ({
         />{' '}
         {vesting.label || symbol}
       </td>
-      <td className="tw-text-right">
+      <td className="tw-text-left tw-font-inter tw-text-base">
         <LoadableValue
           loading={loading}
           value={weiToNumberFormat(value.balance, 4)}
         />
       </td>
-      <td className="tw-text-right">
+      <td className="tw-text-left tw-font-inter tw-text-base">
         <LoadableValue
           value={weiToUSD(dollarValue.value)}
           loading={dollarValue.loading || loading}
         />
       </td>
-      <td className="tw-text-right">
+      <td className="tw-text-left">
         {withdrawLocked ? (
           <Tooltip
             position="bottom"
@@ -69,13 +69,13 @@ export const VestedItem: React.FC<VestedItemProps> = ({
             content={<>{t(translations.maintenance.withdrawVests)}</>}
           >
             <ActionButton
-              className="tw-inline-block tw-cursor-not-allowed"
+              className="tw-inline-block tw-cursor-not-allowed tw-uppercase"
               text={t(translations.userAssets.actions.withdraw)}
             />
           </Tooltip>
         ) : (
           <ActionButton
-            className="tw-inline-block"
+            className="tw-inline-block tw-uppercase"
             text={t(translations.userAssets.actions.withdraw)}
             onClick={handleOnWithdraw}
             disabled={loading}

@@ -1,6 +1,10 @@
 .header {
-  @apply tw-fixed tw-top-0 tw-left-0 tw-right-0 tw-z-20
-    tw-bg-black;
+  @apply tw-fixed tw-top-0 tw-left-0 tw-right-0 tw-z-20 tw-bg-no-repeat tw-bg-cover tw-bg-left-bottom;
+  background-origin: border-box;
+
+  @screen xl {
+    @apply tw-px-24;
+  }
 
   & > div:first-child {
     min-height: 70px;
@@ -11,21 +15,74 @@
   }
 
   select {
-    @apply tw-text-base tw-font-body tw-font-thin 
-      tw-bg-transparent;
+    @apply tw-text-base tw-font-body tw-font-thin tw-bg-transparent;
   }
 }
 
 // blueprintjs override
 :global(.bp3-popover).header-nav-popover :global(.bp3-popover-content) {
-  @apply tw-bg-black tw-border-0 
-    tw-overflow-hidden;
+  @apply tw-bg-black tw-border-0 tw-overflow-hidden;
 
   & :global(.bp3-menu) {
     @apply tw-p-0;
-    
+
     & a {
       @apply tw-font-normal;
     }
   }
+}
+
+.logo {
+  @apply tw-my-0 tw-mr-0 tw-ml-4;
+  width: 8.125rem;
+  height: 2rem;
+
+  #Alpha tspan {
+    font-family: Orbitron-Medium, Orbitron;
+  }
+
+  @screen xl {
+    @apply tw-m-0;
+    width: 13.5rem;
+    height: 3.313rem;
+  }
+}
+
+.menu {
+  @apply tw-absolute tw-inset-0 tw-w-full tw-h-full tw-overflow-y-auto tw-flex tw-flex-col tw-justify-start tw-bg-black tw-text-left
+    tw-pt-16 tw-pr-8 tw-pb-8;
+  transition: transform 0.3s ease-in-out;
+  z-index: 9;
+  transform: translateX(-100%);
+
+  &.open {
+    transform: translateX(0);
+  }
+
+  li {
+    list-style-type: none;
+  }
+  a {
+    font-size: 1.25rem;
+    padding: 1.5rem 0;
+    font-weight: bold;
+    letter-spacing: 0.5rem;
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s linear;
+    text-align: center;
+  }
+}
+
+.menuWrapper {
+  @apply tw-pt-2 tw-mr-2;
+  border-bottom: none;
+
+  &.selected {
+    border-bottom: 4px solid #FEC004;
+  }
+
+  @screen 2xl {
+    @apply tw-mr-3;
+  }  
 }

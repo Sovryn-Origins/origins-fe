@@ -50,20 +50,20 @@ export function useSendToContractAddressTx(
         .sendByAddress(address, abi, methodName, args, config)
         .then(e => {
           const transactionHash = e as string;
-          dispatch(
-            actions.addTransaction({
-              transactionHash: transactionHash,
-              approveTransactionHash: options?.approveTransactionHash || null,
-              type: options?.type || TxType.OTHER,
-              status: TxStatus.PENDING,
-              loading: true,
-              to: address,
-              from: account,
-              value: (config?.value as string) || '0',
-              asset: options?.asset || null,
-              assetAmount: options?.assetAmount || null,
-            }),
-          );
+          const txData = {
+            transactionHash: transactionHash,
+            approveTransactionHash: options?.approveTransactionHash || null,
+            type: options?.type || TxType.OTHER,
+            status: TxStatus.PENDING,
+            loading: true,
+            to: address,
+            from: account,
+            value: (config?.value as string) || '0',
+            asset: options?.asset || null,
+            assetAmount: options?.assetAmount || null,
+          };
+          dispatch(actions.addTransaction(txData));
+          setTx(txData);
           setTxId(transactionHash);
           dispatch(actions.closeTransactionRequestDialog());
         })

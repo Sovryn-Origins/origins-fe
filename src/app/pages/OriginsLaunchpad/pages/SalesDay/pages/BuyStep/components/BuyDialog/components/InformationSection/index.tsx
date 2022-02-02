@@ -1,22 +1,17 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { AssetSymbolRenderer } from 'app/components/AssetSymbolRenderer';
-import { Asset } from 'types';
-import { BuyInformationWrapper } from './styled';
+import { AcceptedCurrencies } from 'app/components/AcceptedCurrencies';
+import { AssetRenderer } from 'app/components/AssetRenderer';
 import { InfoItem } from './InfoItem';
-import { AllocationRemaining } from './AllocationRemaining';
-import { toNumberFormat, weiToNumberFormat } from 'utils/display-text/format';
+import { weiToNumberFormat } from 'utils/display-text/format';
 import { ISaleInformation } from '../../../../../../../../types';
-import { btcInSatoshis } from 'app/constants';
+import styles from './index.module.scss';
 
 interface IInformationSectionProps {
   saleName: string;
   info: ISaleInformation;
 }
-
-const depositRateToSatoshis = (depositRate: number) =>
-  toNumberFormat(btcInSatoshis / depositRate);
 
 export const InformationSection: React.FC<IInformationSectionProps> = ({
   saleName,
@@ -25,29 +20,22 @@ export const InformationSection: React.FC<IInformationSectionProps> = ({
   const { t } = useTranslation();
 
   return (
-    <BuyInformationWrapper>
-      <div className="tw-mb-8 tw-text-left">
-        <div className="tw-text-xs tw-tracking-normal tw-mb-3">
-          {t(
-            translations.originsLaunchpad.saleDay.buyStep.buyInformationLabels
-              .depositLimits,
-          )}
-          :
-        </div>
-        <div className="tw-text-xs">
-          <div>
-            • MIN:{' '}
-            {info.minAmount === '0'
-              ? '0'
-              : weiToNumberFormat(info.minAmount, 4)}{' '}
-            <AssetSymbolRenderer asset={Asset.RBTC} />
-          </div>
-          <div>
-            • MAX: {weiToNumberFormat(info.maxAmount, 4)}{' '}
-            <AssetSymbolRenderer asset={Asset.RBTC} />
-          </div>
-        </div>
-      </div>
+    <div className={styles.buyInformationWrapper}>
+      <InfoItem
+        label={t(
+          translations.originsLaunchpad.saleDay.buyStep.buyInformationLabels
+            .totalDepositReceived,
+        )}
+        value={
+          <>
+            <span className="tw-pr-4">
+              {weiToNumberFormat(info.totalDepositReceived)}
+            </span>
+            <AssetRenderer assetString={saleName} />
+          </>
+        }
+        className="tw-border-2 tw-border-solid tw-border-yellow-3 tw-rounded-lg tw-px-5 tw-py-8"
+      />
 
       <InfoItem
         label={t(
@@ -55,21 +43,6 @@ export const InformationSection: React.FC<IInformationSectionProps> = ({
             .saleAllocation,
         )}
         value={`${weiToNumberFormat(info.totalSaleAllocation)} ${saleName}`}
-      />
-
-      <InfoItem
-        label={t(
-          translations.originsLaunchpad.saleDay.buyStep.buyInformationLabels
-            .allocationRemaining,
-        )}
-        value={
-          <AllocationRemaining
-            totalSaleAllocation={info.totalSaleAllocation}
-            remainingTokens={info.remainingTokens}
-            saleName={saleName}
-          />
-        }
-        className="tw-text-primary"
       />
 
       <InfoItem
@@ -83,9 +56,9 @@ export const InformationSection: React.FC<IInformationSectionProps> = ({
       <InfoItem
         label={t(
           translations.originsLaunchpad.saleDay.buyStep.buyInformationLabels
-            .price,
+            .tokenSaleEndTime,
         )}
-        value={`${depositRateToSatoshis(info.depositRate)} Sats`}
+        value={info.saleEnd}
       />
 
       <InfoItem
@@ -95,19 +68,11 @@ export const InformationSection: React.FC<IInformationSectionProps> = ({
         )}
         value={
           <>
-            <AssetSymbolRenderer asset={info.depositToken} />
+            <AcceptedCurrencies />
           </>
         }
-      />
-
-      <InfoItem
-        label={t(
-          translations.originsLaunchpad.saleDay.buyStep.buyInformationLabels
-            .tokenSaleEndTime,
-        )}
-        value={info.saleEnd}
         isLastItem={true}
       />
-    </BuyInformationWrapper>
+    </div>
   );
 };

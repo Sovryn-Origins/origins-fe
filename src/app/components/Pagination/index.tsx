@@ -8,7 +8,7 @@ import {
 } from './index.utils';
 import styles from './index.module.scss';
 
-interface ChangeEvent {
+export interface IPaginationEvent {
   currentPage: number;
   totalPages: number;
   pageLimit: number;
@@ -19,7 +19,7 @@ interface IPaginationProps {
   totalRecords: number;
   pageLimit: number;
   pageNeighbours: number;
-  onChange: (value: ChangeEvent) => void;
+  onChange: (value: IPaginationEvent) => void;
   className?: string;
 }
 

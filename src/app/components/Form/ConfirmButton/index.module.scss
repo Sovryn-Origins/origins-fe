@@ -1,0 +1,26 @@
+.button {
+  @apply tw-mx-auto tw-mb-0 tw-font-rowdies tw-font-normal tw-text-black tw-text-sm tw-py-3 tw-px-16 tw-rounded-lg tw-uppercase tw-leading-none tw-border-solid;
+  margin-top: 2.5rem;
+  height: 3.125rem;
+  transition: background-color 0.3s;
+
+  &:disabled {
+    @apply tw-opacity-25;
+  }
+}
+
+.default {
+  @apply tw-bg-trade-long tw-border-trade-long;
+
+  &:hover {
+    @apply tw-bg-trade-long-75;
+  }
+}
+
+.primary {
+  @apply tw-bg-primary tw-border-primary;
+
+  &:hover {
+    @apply tw-bg-primary-75;
+  }
+}

@@ -6,10 +6,15 @@
     "close": "Close",
     "for": "for",
     "confirm": "Confirm",
+    "executed": "Executed",
     "cancel": "Cancel",
     "fee": "Tx Fee: {{amount}} (r)BTC",
     "pending": "Pending",
     "confirmed": "Confirmed",
+    "open_buy": "Waiting for claiming",
+    "claimable": "claimable",
+    "claiming": "claiming",
+    "claim": "claim",
     "failed": "Failed",
     "deposit": "Deposit",
     "withdraw": "Withdraw",
@@ -58,7 +63,8 @@
     "withdrawVests": "Sorry, withdrawing vests is currently under maintenance, please check our discord (link in footer) for updates.",
     "withdrawVestsModal": "Sorry, withdrawing vests is currently under maintenance, please check our <0>discord</0> for updates.",
     "claimRewards": "Sorry, claiming rewards is currently under maintenance, please check our <0>discord</0> for updates.",
-    "claimOrigins": "Sorry, origins claim is currently under maintenance, please check our <0>discord</0> for updates."
+    "claimOrigins": "Sorry, origins claim is currently under maintenance, please check our <0>discord</0> for updates.",
+    "bridgeSteps": "Sorry, cross-chain transfers are currently under maintenance, please check our <0>discord</0> for updates."
   },
   "homePage": {
     "title": "Home Page",
@@ -234,7 +240,7 @@
     "title": "Sovryn Tips"
   },
   "footer": {
-    "title": "Powered by <0>Bitcoin</0>",
+    "title": "ORIGINS IS POWERED BY SOVRYN",
     "notice_1": "Only you control and have access to your wealth, any actions you take could cause a potential loss of funds.",
     "notice_2": "Particularly please be sure to check all transaction fee prices before proceeding as third party wallets may automatically present high fees.",
     "notice_3": "Please visit our <0>FAQ</0> if you have any questions.",
@@ -251,6 +257,7 @@
   },
   "mainMenu": {
     "buySov": "Buy SOV",
+    "buy": "Buy",
     "trade": "Trade",
     "swap": "Swap",
     "marginTrade": "Margin",
@@ -301,51 +308,42 @@
       }
     },
     "saleDay": {
-      "title": "{{token}} Origins Pre-Sale",
+      "title": "Buy Tokens",
       "engageWalletScreen": {
-        "dialogTitle": "Welcome to the {{token}} Origins Pre-Sale",
+        "dialogTitle": "WELCOME TO THE SOVRYN ORIGINS SOV STAKERS PRE-SALE",
         "buttonText": "Engage Wallet",
         "dialogFooter1": "Engage a browser, mobile or hardware wallet connected to the <0>RSK Mainnet</0>",
-        "dialogFooter2": "Don’t have a wallet? Sovryn recommends <0>Liquality wallet</0>"
+        "dialogFooter2": "Don’t have a wallet? Sovryn Origins recommends <0>Liquality wallet</0>"
       },
       "accessCodeVerificationStep": {
-        "dialogTitle": "Welcome to the {{token}} Origins Pre-Sale",
+        "dialogTitle": "Welcome to the Sovryn Origins SOV Stakers Pre-Sale",
         "verified": {
-          "privateSale": "You have been given whitelist access to participate in the FISH Origins pre-sale.",
-          "publicSale": "You have been given access to participate in the FISH Origins pre-sale."
+          "privateSale": "You have been given whitelist access to participate in Sovryn Origins SOV Stakers Pre-Sale",
+          "publicSale": "You have been given access to participate in the Sovryn Origins SOV Stakers Pre-Sale"
         },
-        "notVerified": "The $FISH public pre-sale will open at 14:00 UTC, get your RBTC ready!",
+        "notVerified": "The {{token}} public pre-sale will open at 14:00 UTC, get your RBTC ready!",
         "cta": "Continue",
         "notVerifiedFooter": "<0>Supposed to be whitelisted?</0>"
       },
       "importantInformationStep": {
         "privateSale": {
-          "title": "Important Information about the the FISH Private Pre-Sale Process and Terms",
+          "title": "IMPORTANT INFORMATION ABOUT THE SOVRYN ORIGINS SOV STAKERS  PRE-SALE PROCESS AND TERMS",
           "information": {
-            "1": "You have been whitelisted for the Blockchain Whispers' Private FISH pre-sale! Welcome and thanks for your support!",
-            "2": "The amount of FISH available for purchase per wallet is 28,571 FISH at a maximum purchase price of 0.041 rBTC - Do not transfer more than this amount.",
-            "3": "It is highly recommended to send funds from an address directly owned by you (EOA).",
-            "4": "Amounts sent in excess of the limit will be automatically returned to the address from which they were sent. Please note that if you are sending funds from an Exchange address, you may not be able to access your purchased FISH tokens or any excess purchase amount that is automatically returned.",
-            "5": "FISH tokens purchased as part of this private pre-sale, will vest linearly for approximately 10 months from the time they are claimed.",
-            "6": "IMPORTANT - You will need to actively claim your FISH tokens on the Origins interface, from August 28 at 14:00 UTC. Your vesting period will begin only once you have claimed your tokens.",
-            "7": "A FISH AMM pool will be available on Sovryn. FISH can be used to vote in BabelFish governance as soon as it begins to vest and after BabelFish governance has been launched.",
-            "8": "For any questions, please ask the community in Discord or Telegram channels."
+            "1": "YOU HAVE BEEN WHITELISTED FOR THE SOVRYN ORIGINS SOV STAKERS  PRE-SALE! WELCOME AND THANKS FOR YOUR SUPPORT!",
+            "2": "THE AMOUNT OF OG TOKEN AVAILABLE FOR PURCHASE PER WALLET IS {{amount}} {{token}} AT A MAXIMUM PURCHASE PRICE OF 5K USD - DO NOT TRANSFER MORE THAN THIS AMOUNT.",
+            "3": "IT IS HIGHLY RECOMMENDED TO SEND FUNDS FROM AN ADDRESS DIRECTLY OWNED BY YOU (EOA).",
+            "4": "AMOUNTS SENT IN EXCESS OF THE LIMIT WILL BE AUTOMATICALLY RETURNED TO THE ADDRESS FROM WHICH THEY WERE SENT. PLEASE NOTE THAT IF YOU ARE SENDING FUNDS FROM AN EXCHANGE ADDRESS, YOU MAY NOT BE ABLE TO ACCESS YOUR PURCHASED OG TOKENS OR ANY EXCESS PURCHASE AMOUNT THAT IS AUTOMATICALLY RETURNED."
           },
-          "checkboxText": "I have read and understand that I am responsible for my own Sovrynity",
+          "checkboxText": "I HAVE READ AND UNDERSTAND THAT I AM RESPONSIBLE FOR MY OWN SOVEREIGNTY",
           "submitButtonText": "I Understand"
         },
         "publicSale": {
-          "title": "Important Information about the the FISH Public Pre-Sale Process and Terms",
+          "title": "Caution… No Really",
           "information": {
-            "1": "Welcome to the BabelFish FISH token pre-sale. Thank you kindly for your support!",
-            "2": "The amount of FISH available for purchase per wallet is 27,272 FISH at a maximum purchase price of 0.062 rBTC - Do not transfer more than this amount.",
-            "3": "It is highly recommended to send funds from an address directly owned by you (EOA).",
-            "4": "Amounts sent in excess of the limit will be automatically returned to the address from which they were sent. Please note that if you are sending funds from an Exchange address, you may not be able to access your purchased FISH tokens or any excess purchase amount that is automatically returned.",
-            "5": "Half the FISH purchased will vest (be liquid) upon completion of the pre-sale, the other half will vest linearly for approximately 10 consecutive months from the time they are claimed.",
-            "6": "IMPORTANT - You will need to actively claim your FISH tokens on the Origins interface, from August 28 at 14:00 UTC. Your vesting period will begin only once you have claimed your tokens.",
-            "7": "The FISH tokens that are immediately vested will be available for withdrawal from August 28, at 14:00 UTC.",
-            "8": "A FISH AMM pool will be available on Sovryn. FISH can be used to vote in BabelFish governance as soon as it begins to vest and after BabelFish governance has been launched.",
-            "9": "For any questions, please ask the community in Discord or Telegram channels."
+            "1": "Only you control and have access to your wealth, any actions you take could cause a potential loss of funds.",
+            "2": "Particularly please be sure to check all transaction fee prices before proceeding as third party wallets may automatically present high fees.",
+            "3": "Please visit our <0>{{FAQ}}</0> if you have any questions.",
+            "4": "If you’re new to DeFi, here is the <0>{{WIKI}}</0> on how to use SOVRYN origins."
           },
           "checkboxText": "I have read and understand that I am responsible for my own Sovrynity",
           "submitButtonText": "I Understand"
@@ -353,20 +351,23 @@
       },
       "buyStep": {
         "buyInformationLabels": {
-          "depositLimits": "Deposit limits",
-          "saleAllocation": "Pre-Sale Allocation",
+          "saleAllocation": "Sale Allocation",
           "allocationRemaining": "Allocation Remaining",
           "participatingWallets": "Participating Wallets",
           "price": "Price",
           "acceptedCurrencies": "Accepted currencies",
-          "tokenSaleEndTime": "Token Pre-Sale End Time"
+          "tokenSaleEndTime": "Token Pre-Sale End Time",
+          "totalDepositReceived": "Total Deposit Received"
         },
         "buyDialog": {
           "enterAmount": "Enter Amount",
           "tokenReceived": "{{token}} Received",
           "transactionFee": "Transaction Fee",
           "buyButton": "Buy {{token}}",
-          "isOverMaxLimit": "You cannot deposit more than max limit"
+          "isOverMaxLimit": "You cannot deposit more than max limit",
+          "isOutOfLimit": "Your input is out of limit",
+          "depositLimits": "Deposit Limits",
+          "yourTotalDeposit": "Your Total Deposit"
         },
         "instructions": {
           "title": "Instructions",
@@ -380,20 +381,34 @@
         "amountSent": "Amount Sent",
         "amountReceived": "Amount Received",
         "txHash": "Tx Hash"
+      },
+      "saleSummary": {
+        "tabs": {
+          "upcoming": "UPCOMING SALES ON ORIGINS",
+          "live": "LIVE SALES ON ORIGINS",
+          "previous": "PREVIOUS SALES ON ORIGINS"
+        }
       }
     }
   },
   "originsClaim": {
+    "walletConnectTitle": "Claim Tokens",
     "meta": {
       "title": "Origins Claim",
       "description": "Claim your Origins Purchases"
     },
+    "walletConnect": {
+      "title": "Claim Tokens",
+      "description": "Please connect with your wallet to use Claim"
+    },
     "claimForm": {
-      "title": "Claim FISH Balance",
-      "availble": "Total FISH Available:",
+      "title": "Claim Tokens",
+      "selectToken": "Select Token",
+      "availble": "Available",
       "cta": "Claim",
       "note": "Withdrawal will be available at {{date}}.",
-      "unlockedNote": "You will instantly receive {{amount}} FISH tokens to your wallet."
+      "unlockedNote": "You will instantly receive {{amount}} OG tokens to your wallet.",
+      "chooseToken": "Choose Token"
     },
     "vestForm": {
       "title": "Locked Balance",
@@ -500,15 +515,20 @@
     "title": "Staking/Vesting",
     "meta": "Staking/Vesting",
     "connect": "Please connect with your wallet to use staking.",
-    "total": "Total staked SOV",
+    "total": "Total Staked OG",
     "votingPower": "Combined Voting Power",
     "viewGovernance": "View Governance",
-    "addStake": "Add New Stake",
+    "addStake": "Add New Stakes",
     "feeTitle": "Total earned fees Available",
-    "noUnlockedSov": "You don't have unlocked SOV",
+    "noUnlockedOg": "You don't have unlocked OG",
     "txFee": "Tx Fee",
     "sov": "SOV",
+    "og": "OG",
     "days": "days",
+    "connectWalletWarning": {
+      "title": "staking/vesting",
+      "alert": "please connect with your wallet to use staking"
+    },
     "delegation": {
       "delegateTo": "Delegate To",
       "delegatedTo": "Delegated To",
@@ -516,8 +536,9 @@
       "address": "Enter or paste address"
     },
     "withdraw": {
-      "title": "Unstake SOV",
+      "title": "Unstake",
       "amountCurrentlyStaked": "Amount Currently Staked",
+      "votingPower": "Voting Power",
       "amountToUnstake": "Amount to Unstake",
       "receiveSovAt": "Receive SOV at",
       "unlockedSov": "Unlocked SOV",
@@ -531,16 +552,17 @@
       "loading": "Loading..."
     },
     "staking": {
-      "title": "Stake SOV",
+      "title": "Stake OG",
       "amountToStake": "Amount to Stake",
       "amountPlaceholder": "Enter amount",
       "votingPowerReceived": "Voting Power received"
     },
     "extending": {
-      "title": "Extend SOV Stake",
+      "title": "Extend OG Stake",
       "previousUntil": "Previous until",
       "amountToStake": "Amount to Stake",
-      "votingPowerReceived": "Voting Power received",
+      "newVotingPower": "New Voting Power",
+      "amountCurrentlyStaked": "Amount Currently Staked",
       "willAddedVote": "Will be added to your vote",
       "balance": "Balance"
     },
@@ -577,6 +599,7 @@
       "lockedAmount": "Locked Amount",
       "votingPower": "Voting power",
       "votingDelegation": "Voting Delegation",
+      "stakingDate": "Staking Date",
       "stakingPeriod": "Staking Period",
       "unlockDate": "Unlock Date"
     },
@@ -589,6 +612,7 @@
       "stakingPeriod": "Vesting Period",
       "unlockDate": "Unlock Date",
       "fees": "Fees Earned",
+      "revenue": "Revenue",
       "noVestingContracts": "You don't have any vesting contracts.",
       "assetType": {
         "genesis": "Genesis SOV",
@@ -602,16 +626,83 @@
       "title": "Actions",
       "increase": "Increase",
       "extend": "Extend",
+      "extendStake": "Extend Stake",
+      "unstake": "Unstake",
+      "delegate": "Delegate",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "withdraw": "Withdraw",
+      "addToStake": "Add To Stake"
+    },
+    "dateSelector": {
+      "noneAvailable": "No available dates.",
+      "selectDelegate": "Choose delegate period:",
+      "selectYear": "Select Year:",
+      "selectNewStakingDate": "Select New Staking Date"
+    },
+    "loading": "Loading, please wait...",
+    "nostake": "No stakes yet."
+  },
+  "vesting": {
+    "withdraw": {
+      "title": "Withdraw",
+      "receiveOgAt": "Receive OG at",
+      "unlockedOg": "Unlocked OG",
+      "loading": "Loading..."
+    }
+  },
+  "governance": {
+    "title": "Sovryn Origins Bitocracy",
+    "meta": "Staking/Vesting",
+    "connect": "Please connect with your wallet to use bitocracy.",
+    "proposals": {
+      "mainTitle": "Governance Proposals",
+      "title": "Title",
+      "startBlock": "Start Block",
+      "voteStatus": "Vote Status",
+      "votingEnds": "Voting Ends",
+      "asset": "Asset",
+      "lockedAmount": "Locked Amount",
+      "votingDelegation": "Voting Delegation",
+      "stakingPeriod": "Staking Period",
+      "unlockDate": "Unlock Date"
+    },
+    "proposalDetail": {
+      "VotingEnds": "Voting ends",
+      "IUnderstandConfirm": "I understand that this vote will be registered on the governance proposal.",
+      "IUnderstand": "I Understand",
+      "proposedBy": "Proposed By",
+      "proposedOn": "Proposed On",
+      "deadline": "Deadline",
+      "verifyOnGithub": "Verify On Github",
+      "resolved": "Resolved",
+      "voteCaster": {
+        "voteCast": "Vote Cast",
+        "voteFor": "Vote For",
+        "voteAgainst": "Vote Against",
+        "youWillCastVotesFor": "You will cast {{votes}} votes for",
+        "youWillCastVotesAgainst": "You will cast {{votes}} votes against",
+        "youVotedFor": "You Voted {{votes}} for",
+        "youVotedAgainst": "You Voted {{votes}} against"
+      },
+      "transactions": {
+        "title": "Transaction(s)",
+        "target": "Target",
+        "signature": "Signature",
+        "calldata": "Calldata",
+        "value": "value",
+        "copiedCalldata": "Calldata was copied to clipboard."
+      }
+    },
+    "actions": {
+      "title": "Actions",
+      "increase": "Increase",
+      "extend": "Extend",
       "unstake": "Unstake",
       "delegate": "Delegate",
       "confirm": "Confirm",
       "cancel": "Cancel",
       "withdraw": "Withdraw"
-    },
-    "dateSelector": {
-      "noneAvailable": "No available dates.",
-      "selectDelegate": "Choose delegate period:",
-      "selectYear": "Select Year:"
     },
     "loading": "Loading, please wait...",
     "nostake": "No stakes yet."
@@ -727,9 +818,6 @@
       "title": "Borrow"
     }
   },
-  "activeUserBorrows": {
-    "text": "You do not have any active loans."
-  },
   "activeUserLoans": {
     "text": "You do not have any active trades.",
     "info": {
@@ -763,17 +851,6 @@
       "history": "Repaid"
     },
     "walletNote": "Connect your wallet first!"
-  },
-  "borrowHistory": {
-    "table": {
-      "headers": {
-        "borrowAmount": "Borrowed",
-        "collateralAmount": "Collateral",
-        "interestAPR": "Interest APY",
-        "timestamp": "Date"
-      }
-    },
-    "no_items": "Your borrow history is empty."
   },
   "wrongNetworkDialog": {
     "title": "Change to RSK Network",
@@ -1022,8 +1099,8 @@
       "description": "Information about connected wallet"
     },
     "tabs": {
-      "userAssets": "Assets",
-      "vestedAssets": "Vested Assets",
+      "unlocked": "Unlocked",
+      "vested": "Vested",
       "userNFTS": "NFTS"
     }
   },
@@ -1108,6 +1185,7 @@
     "title": "Vested History",
     "tableHeaders": {
       "time": "Date/Time",
+      "asset": "Asset",
       "vestingSchedule": "Type",
       "amount": "Amount",
       "hash": "Transaction Hash",
@@ -1224,15 +1302,6 @@
       }
     }
   },
-  "activeBorrowTable": {
-    "headers": {
-      "borrowAmount": "Borrowed",
-      "collateralAmount": "Collateral",
-      "interestAPR": "Interest APY",
-      "endTimestamp": "Payback until"
-    },
-    "repayButton": "Repay"
-  },
   "repayPositionForm": {
     "title": "Repay Loan",
     "labels": {
@@ -1274,19 +1343,11 @@
     }
   },
   "notifyDialog": {
-    "heading": "Caution… No Really",
-    "acceptTerms": "I have read and understand that I am responsible for my own Sovrynity",
+    "heading": "Disclaimer",
+    "acceptTerms": "I HAVE READ AND UNDERSTAND THAT I AM RESPONSIBLE FOR MY OWN SOVEREIGNTY",
     "salesBtn": "I Understand",
     "generalAlert": {
-      "p1": "SOVRYN is a decentralized bitcoin trading and lending platform, the first of its kind!",
-      "p2": "Only you control and have access to your wealth, any actions you take could cause a potential loss of funds.",
-      "p3": "Make sure to check all transaction fee prices before proceeding as third party wallets may automatically present high fees.",
-      "p4_1": "Please visit our ",
-      "p4_2": "FAQ",
-      "p4_3": " if you have any questions.",
-      "p5_1": "If you’re new to DeFi, here is the ",
-      "p5_2": "tutorial",
-      "p5_3": " on how to use SOVRYN."
+      "p1": "SOVRYN ORIGINS IS A DECENTRALIZED LAUNCHPAD ENABLING PROTOCOLS / PLATFORMS TO KICKSTART THEIR COMMUNITIES AND RAISE BITCOIN NATIVE COMMUNITY FUNDING. ONLY YOU CONTROL AND HAVE ACCESS TO YOUR WEALTH, ANY ACTIONS YOU TAKE COULD CAUSE A POTENTIAL LOSS OF FUNDS. MAKE SURE TO CHECK ALL TRANSACTION FEE PRICES BEFORE PROCEEDING AS THIRD-PARTY WALLETS MAY AUTOMATICALLY PRESENT HIGH FEES."
     },
     "metamaskAlert": {
       "p1": "We noticed you have MetaMask installed.",
@@ -1487,73 +1548,60 @@
       "placeholder": "Select item"
     }
   },
-  "liquidityMining": {
-    "deposit": "Deposit",
-    "withdraw": "Withdraw",
-    "meta": {
-      "title": "Yield Farm"
-    },
-    "explainer": {
-      "earnSOV": "Earn SOV by depositing liquidity into the USDT/BTC liquidity pool",
-      "startDate": "Start date: 1st April 2021, 12.00 UTC",
-      "endDate": "End date: 1st May 2021, 12.00 UTC",
-      "rewardPoolUSDT": "Reward pool for depositing USDT: 25,000 SOV",
-      "rewardPoolRBTC": "Reward pool for depositing RBTC: 25,000 SOV",
-      "yourShare": "Your share of the pool is calculated by:",
-      "yourShare_N": "liquidity added by you * number of blocks held",
-      "yourShare_D": "total liquidity added * number of blocks held",
-      "airDrop": "Rewards will be deposited into liquidity providers' wallets on or before 8th May 2021",
-      "comingSoon": "Coming Soon"
-    },
-    "historyTable": {
-      "title": "Liquidity History",
-      "emptyState": "History is empty.",
-      "tableHeaders": {
-        "time": "Date/Time",
-        "pool": "Pool",
-        "action": "Action",
-        "asset": "Asset",
-        "liquidityAmount": "Liquidity Amount",
-        "transactionHash": "Transaction Hash",
-        "status": "Status"
-      },
-      "txType": {
-        "added": "Added",
-        "removed": "Removed"
-      }
-    },
-    "rowTable": {
-      "noLiquidityProvided": "Add liquidity and earn income",
-      "tableHeaders": {
-        "totalEarned": "Total Earned",
-        "balance": "Balance",
-        "pl": "P/L",
-        "rewards": "Rewards"
-      }
-    },
-    "modals": {
-      "deposit": {
-        "title": "Deposit Liquidity",
-        "cta": "Deposit",
-        "amount": "Amount:"
-      },
-      "withdraw": {
-        "title": "Withdraw Liquidity",
-        "cta": "Withdraw",
-        "amount": "Amount:",
-        "reward": "Reward:"
-      }
-    },
-    "lootDropLink": "Learn more",
-    "chartOverlayText": "APY% Coming Soon!",
-    "recalibration": "Next recalibration on {{date}}"
-  },
   "landingPage": {
     "meta": {
-      "title": "Welcome to Sovryn",
+      "title": "Welcome to Sovryn Origins",
       "description": "The Decentralized Bitcoin Trading And Lending Platform"
     },
-    "welcomeTitle": "Welcome to Sovryn",
+    "welcomeTitle": "Welcome to Sovryn Origins",
+    "promotions": {
+      "title": "Promotions",
+      "learnMore": "Learn more",
+      "sections": {
+        "lending": "Lending",
+        "borrowing": "Borrowing",
+        "yieldFarming": "Yield Farming",
+        "marginTrading": "Margin Trading",
+        "swap": "Swap",
+        "spotTrading": "Spot Trading"
+      }
+    },
+    "tokensTable": {
+      "title": "Tokens Listed On Origins",
+      "columns": {
+        "asset": "Asset",
+        "price": "Price",
+        "percentOfDay": "24h%",
+        "percentOf7Days": "7d%",
+        "marketCap": "Market Cap",
+        "circulatingSupply": "Circulating Supply"
+      }
+    },
+    "omgItsOG": "OMG  It's  OG",
+    "its": "It's",
+    "bondingCurve": {
+      "bondingCurve": "Bonding Curve",
+      "description": "OG Tokens are managed by bonding curve contracts. A bonding curve is a mathematical curve that defines a relationship between price and token supply. ie, the token price increases as the supply of the token increases and vice-versa.",
+      "whybondingCurve": "Why Bonding Curve?",
+      "characters": [
+        {
+          "title": "Instant liquidity",
+          "description": "Buy or Sell tokens instantaneously at any time, the bonding curve acts as an automated market maker."
+        },
+        {
+          "title": "Deterministic price",
+          "description": "The buy and sell prices of tokens increase and decrease with the number of tokens minted or burned."
+        },
+        {
+          "title": "Continuous price",
+          "description": "The price of token n is less than token n+1 and more than token n-1."
+        }
+      ],
+      "extraDescription": [
+        "Each subsequent buyer will have to pay a slightly higher price for each token, generating a potential profit for the early investors. As more people find out about the project and buying continues, the value of each token gradually increases along the bonding curve.",
+        "You can “buy up” a curve, meaning you mint (buy) new tokens, and because this increases the current token supply, the price moves up. You can also “sell down” a curve, meaning that as you are burning (selling) tokens, you are driving the price down by decreasing the supply."
+      ]
+    },
     "welcomeMessage": "The decentralized bitcoin trading and lending platform",
     "tradingVolume": {
       "dayVolumeTitle": "24 Hour Volume",
@@ -1580,18 +1628,6 @@
       "subtotal": "Sub total",
       "total": "Total"
     },
-    "promotions": {
-      "title": "Promotions",
-      "learnMore": "Learn more",
-      "sections": {
-        "lending": "Lending",
-        "borrowing": "Borrowing",
-        "yieldFarming": "Yield Farming",
-        "marginTrading": "Margin Trading",
-        "swap": "Swap",
-        "spotTrading": "Spot Trading"
-      }
-    },
     "lendBorrow": "LEND & BORROW ASSETS",
     "ammpool": {
       "title": "AMM Pools",
@@ -1617,14 +1653,15 @@
       }
     },
     "cryptocurrencyPrices": {
-      "title": "CRYPTOCURRENCY PRICES BY 24H CHANGE",
+      "title": "Tokens Listed On Sovryn Origins",
       "asset": "Asset",
       "price": "Price",
       "24h": "24h%",
       "7d": "7d%",
       "marketCap": "Market Cap",
       "marketCapTooltip": "Market cap is calculated as circulating supply * current USD price. <br /> <br /> For SOV, circulating supply = total supply (100m) - tokens in vesting contracts, <0>not including </0> tokens in adoption and development fund contracts. <br /> <br /> For rBTC, circulating supply = BTC locked in the RSK 2 Way Peg <br /> <br /> For all other tokens, circulating supply = total supply <br /> <br /> For tokens that have come across a bridge from another chain, the circulating supply is the supply of that token on the RSK chain. For example, the circulating supply of ETHs is not equal to the circulating supply of ETH on ethereum.",
-      "circulatingSupply": "Circulating Supply"
+      "circulatingSupply": "Circulating Supply",
+      "circulatingSupplyTooltip": "Circulating Supply Tooltip"
     }
   },
   "BridgeDepositPage": {
@@ -1799,7 +1836,9 @@
         "title": "Transaction Status",
         "aborted": "Transaction was aborted by user.",
         "abortedLedger": "Make sure \"Contract data\" is set to \"Allowed\" in your Ledger app settings",
-        "cta": "View in Tracker"
+        "cta": "View in Tracker",
+        "waitingForClaiming": "Waiting For Claiming",
+        "claimable": "Claimable"
       }
     },
     "promotions": {
@@ -1861,6 +1900,23 @@
     },
     "title": "Buy SOV exclusively on Sovryn!",
     "earn": "Earning with Sovryn"
+  },
+  "buyPage": {
+    "meta": {
+      "title": "Buy SOV!",
+      "description": "Buy SOV!"
+    },
+    "tab": {
+      "sovrynSwap": "Sovryn Swap",
+      "bondingCurve": "Bonding Curve"
+    },
+    "banner": {
+      "title": "Buy SOV!",
+      "cta": "Buy SOV",
+      "send": "send",
+      "receive": "receive"
+    },
+    "title": "Buy SOV exclusively on Sovryn!"
   },
   "addToMargin": {
     "title": "Add to Margin",

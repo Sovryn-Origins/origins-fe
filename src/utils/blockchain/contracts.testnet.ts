@@ -35,6 +35,15 @@ import LockedFundAbi from './abi/LockedFund.json';
 import BabelfishAggregatorAbi from './abi/BabelfishAggregator.json';
 import SwapsExternalAbi from './abi/SwapsExternalAbi.json';
 import nftAbi from './abi/nftAbi.json';
+import multicallABI from './abi/multicall.json';
+import GovernorAdminABI from './abi/GovernorAdmin.json';
+import OGTokenAbi from './abi/OG.json';
+import OGMarketMakerAbi from './abi/OGMarketMaker.json';
+import MYNT_tokenAbi from './abi/Mynt_ABI.json';
+import MYNTMarketAbi from './abi/MyntMarketMaker.json';
+import ZERO_tokenAbi from './abi/Zero_ABI.json';
+import MYNT_Controller_Abi from './abi/BondingController.json';
+import BancorFormulaAbi from './abi/BancorFormula.json';
 
 export const contracts = {
   sovrynProtocol: {
@@ -228,12 +237,12 @@ export const contracts = {
     blockNumber: 1218836,
   },
   vesting: {
-    address: '0x80ec7ADd6CC1003BBEa89527ce93722e1DaD5c2a',
+    address: '0x6390E950096C49FF615D78FdF69EC287dE9Cd293',
     abi: VestingAbi,
     blockNumber: 1218836,
   },
   vestingRegistry: {
-    address: '0x80ec7ADd6CC1003BBEa89527ce93722e1DaD5c2a',
+    address: '0xF5DBc29B1FA3Ce5467a22F93daF5bC45748B8C0E',
     abi: VestingRegistryAbi,
     blockNumber: 1218836,
   },
@@ -252,7 +261,7 @@ export const contracts = {
     abi: VestingRegistryAbi,
   },
   staking: {
-    address: '0xc37A85e35d7eECC82c4544dcba84CF7E61e1F1a3',
+    address: '0xfde370d9cC48F871172db7374327086c7F890c83',
     abi: StakingAbi,
     blockNumber: 1218836,
   },
@@ -298,11 +307,11 @@ export const contracts = {
     abi: LiquidityMiningAbi,
   },
   lockedSov: {
-    address: '0xC59a6aEF32b4C76c8CA989498eD230043f3D9ec0',
+    address: '0x7476d0245384C4106C2ebdF20b559a3Db85b1C6F',
     abi: LockedSovAbi,
   },
   feeSharingProxy: {
-    address: '0x740E6f892C0132D659Abcd2B6146D237A4B6b653',
+    address: '0xFAd185a605403d3F4e45C8b6605F035612B23AaE',
     abi: feeSharingProxyAbi,
   },
   stakingRewards: {
@@ -323,11 +332,11 @@ export const contracts = {
     blockNumber: 1218836,
   },
   originsBase: {
-    address: '0xef0CF4969a9c0F55716327a63E05BCF9c7a7b472',
+    address: '0xD5815A8326D436796e7D87df37EF249db5eE2034',
     abi: OriginsBaseAbi,
   },
   lockedFund: {
-    address: '0xF5655Fb1d8A97828dF5Ab095DF81789db03B8dC0',
+    address: '0xF43f43aA08E93b9ec4A4c7009108b6c5BDcd148F',
     abi: LockedFundAbi,
   },
   vestingRegistryFISH: {
@@ -341,5 +350,41 @@ export const contracts = {
   sovrynNFT: {
     address: '0x576ae218aecfd4cbd2dbe07250b47e26060932b1', // todo
     abi: nftAbi,
+  },
+  multicall: {
+    address: '0x9e469e1fc7fb4c5d17897b68eaf1afc9df39f103',
+    abi: multicallABI,
+  },
+  governorAdmin: {
+    address: '0x6e22f07d4edc6b13b07b7369f11371e7e5286de6',
+    abi: GovernorAdminABI as any,
+  },
+  OG_token: {
+    address: '0x010C233B4F94d35CaDb71D12D7058aAb58789e8f',
+    abi: OGTokenAbi,
+  },
+  OGMarketMaker: {
+    address: '',
+    abi: OGMarketMakerAbi,
+  },
+  MYNT_token: {
+    address: '0x139483E22575826183f5B56DD242F8F2c1aeF327',
+    abi: MYNT_tokenAbi,
+  },
+  MYNT_MarketMaker: {
+    address: '0xf75170ce8d4060b8D5fc24E996FA00A94bb8A232',
+    abi: MYNTMarketAbi,
+  },
+  MYNT_Controller: {
+    address: '0x6F62D2F571BcE7187CdFDD4b1E5E53cfD7d14dd2',
+    abi: MYNT_Controller_Abi,
+  },
+  ZERO_token: {
+    address: '0xAc5C5917e713581c8C8B78c7B12f2D67dA0323f0',
+    abi: ZERO_tokenAbi,
+  },
+  BancorFormula: {
+    address: '0xFE09Df5d6ddc053c4d1273Cf8F7eD1B02A0D24C8',
+    abi: BancorFormulaAbi,
   },
 };

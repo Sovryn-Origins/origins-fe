@@ -1,0 +1,4 @@
+.truncatedWrapper {
+  @apply tw-absolute tw-left-0 tw-bottom-0 tw-whitespace-nowrap tw-overflow-hidden;
+  width: calc(100% - 5rem);
+}

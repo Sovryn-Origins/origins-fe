@@ -1,41 +1,33 @@
 import React from 'react';
-import styled, { css } from 'styled-components/macro';
+import classNames from 'classnames';
 import { Text } from '@blueprintjs/core';
+import { Theme } from 'types/theme';
+import styles from './index.module.scss';
 
 interface Props {
   text: string;
   active: boolean;
   onClick: () => void;
+  theme?: Theme;
+  textClassName?: string;
 }
 
 export function Tab(props: Props) {
   return (
-    <StyledTab active={props.active} onClick={() => props.onClick()}>
-      <Text ellipsize>{props.text}</Text>
-    </StyledTab>
+    <button
+      className={classNames('btn', styles.tab, {
+        'tw-text-white hover:tw-text-sov-white': props.theme !== Theme.LIGHT,
+        'tw-text-black hover:tw-text-gray-4': props.theme === Theme.LIGHT,
+        [styles.active]: props.active,
+      })}
+      onClick={() => props.onClick()}
+    >
+      <Text
+        className={classNames('tw-font-rowdies', props.textClassName)}
+        ellipsize
+      >
+        {props.text}
+      </Text>
+    </button>
   );
 }
-
-interface StyledProps {
-  active: boolean;
-}
-const StyledTab = styled.button.attrs(_ => ({
-  type: 'button',
-  className: 'btn hover:tw-text-gray-9',
-}))`
-  color: var(--sov-white);
-  padding: 5px 10px;
-  background: transparent;
-  font-size: 1.125rem;
-  font-weight: 100;
-  font-family: Montserrat;
-  text-transform: none;
-  ${(props: StyledProps) =>
-    props.active &&
-    css`
-      font-weight: 400;
-      &:hover {
-        color: var(--white);
-      }
-    `}
-`;

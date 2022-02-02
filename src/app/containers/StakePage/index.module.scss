@@ -1,0 +1,10 @@
+.cardTitle {
+  @apply tw-uppercase tw-font-rowdies tw-mt-6 tw-mb-12;
+  font-size: 2rem;
+  line-height: 1.875rem;
+}
+
+.addNewStake {
+  @apply tw-bg-primary tw-font-normal tw-bg-opacity-40 hover:tw-text-gray-1 focus:tw-outline-none focus:tw-bg-opacity-50 hover:tw-bg-opacity-40 tw-text-sm tw-text-black tw-py-3 tw-px-8 tw-border tw-transition-colors tw-duration-300 tw-ease-in-out tw-border-primary tw-rounded-lg tw-font-rowdies tw-uppercase;
+  line-height: 1.875rem;
+}

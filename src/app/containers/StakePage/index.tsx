@@ -1,25 +1,16 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Rsk3 from '@rsksmart/rsk3';
 import { Spinner, Tooltip } from '@blueprintjs/core';
 import { bignumber } from 'mathjs';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import {
-  numberFromWei,
-  weiTo4,
-  toWei,
-  fromWei,
-} from 'utils/blockchain/math-helpers';
-import { getContract } from 'utils/blockchain/contract-helpers';
-import { numberToUSD, weiToUSD } from 'utils/display-text/format';
+import { weiTo4, toWei, fromWei } from 'utils/blockchain/math-helpers';
 import { contractReader } from 'utils/sovryn/contract-reader';
-import { AssetsDictionary } from 'utils/dictionaries/assets-dictionary';
 import {
   staking_allowance,
   staking_approve,
-  staking_withdrawFee,
-  staking_numTokenCheckpoints,
 } from 'utils/blockchain/requests/staking';
 import { Asset } from '../../../types';
 import { Modal } from '../../components/Modal';
@@ -28,21 +19,18 @@ import { Footer } from '../../components/Footer';
 import { CurrentVests } from './components/CurrentVests';
 import { CurrentStakes } from './components/CurrentStakes';
 import { DelegateForm } from './components/DelegateForm';
-import { LoadableValue } from '../../components/LoadableValue';
 import { ExtendStakeForm } from './components/ExtendStakeForm';
 import { IncreaseStakeForm } from './components/IncreaseStakeForm';
 import { WithdrawForm } from './components/WithdrawForm';
 import { useWeiAmount } from '../../hooks/useWeiAmount';
 import { useAssetBalanceOf } from '../../hooks/useAssetBalanceOf';
 import { HistoryEventsTable } from './components/HistoryEventsTable';
-import { useCachedAssetPrice } from '../../hooks/trading/useCachedAssetPrice';
 import { useStaking_getStakes } from '../../hooks/staking/useStaking_getStakes';
 import { useStaking_kickoffTs } from '../../hooks/staking/useStaking_kickoffTs';
 import { useStaking_balanceOf } from '../../hooks/staking/useStaking_balanceOf';
 import { useStaking_WEIGHT_FACTOR } from '../../hooks/staking/useStaking_WEIGHT_FACTOR';
 import { useAccount, useIsConnected } from '../../hooks/useAccount';
 import { useStaking_getCurrentVotes } from '../../hooks/staking/useStaking_getCurrentVotes';
-import { useStaking_getAccumulatedFees } from '../../hooks/staking/useStaking_getAccumulatedFees';
 import { useStaking_computeWeightByDate } from '../../hooks/staking/useStaking_computeWeightByDate';
 import { StakeForm } from './components/StakeForm';
 import { TxDialog } from 'app/components/Dialogs/TxDialog';
@@ -53,9 +41,8 @@ import { useStakeExtend } from '../../hooks/staking/useStakeExtend';
 import { useStakeDelegate } from '../../hooks/staking/useStakeDelegate';
 import { useVestingDelegate } from '../../hooks/staking/useVestingDelegate';
 import { useMaintenance } from 'app/hooks/useMaintenance';
-import { ContractName } from 'utils/types/contracts';
-import { AssetDetails } from 'utils/models/asset-details';
-import { getUSDSum } from '../../../utils/helpers';
+import { ConnectWalletWarning } from 'app/components/ConnectWalletWarning';
+import styles from './index.module.scss';
 
 const now = new Date();
 
@@ -74,14 +61,13 @@ export const StakePage: React.FC = () => {
       </Helmet>
       <Header />
       <main>
-        <div className="tw-bg-gray-1 tw-tracking-normal">
-          <div className="tw-container tw-mx-auto tw-px-6">
-            <h2 className="tw-text-sov-white tw-pt-8 tw-pb-5 tw-pl-10">
-              {t(translations.stake.title)}
-            </h2>
-            <div className="tw-w-full tw-bg-gray-1 tw-text-center tw-rounded-b tw-shadow tw-p-3">
-              <i>{t(translations.stake.connect)}</i>
-            </div>
+        <div className="tw-tracking-normal">
+          <div className="tw-container tw-mx-auto tw-px-6 tw-mb-44 tw-pt-2">
+            <ConnectWalletWarning
+              className="tw-mt-16"
+              title={t(translations.stake.connectWalletWarning.title)}
+              description={t(translations.stake.connectWalletWarning.alert)}
+            />
           </div>
         </div>
       </main>
@@ -93,7 +79,8 @@ export const StakePage: React.FC = () => {
 const InnerStakePage: React.FC = () => {
   const { t } = useTranslation();
   const account = useAccount();
-  const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState('0');
+  const [stakedAmount, setStakedAmount] = useState('');
   const weiAmount = useWeiAmount(amount);
   const [weight, setWeight] = useState('');
   const kickoffTs = useStaking_kickoffTs();
@@ -124,15 +111,8 @@ const InnerStakePage: React.FC = () => {
     Number(lockDate),
     Math.round(now.getTime() / 1e3),
   );
-  const [assetsUsd, setAssetsUsd] = useState<{
-    [assets: string]: number;
-  }>({});
-  const usdTotal = useMemo(() => getUSDSum(Object.values(assetsUsd)), [
-    assetsUsd,
-  ]);
-  const assets = AssetsDictionary.list();
-  const { value: sovBalance, loading: sovBalanceLoading } = useAssetBalanceOf(
-    Asset.SOV,
+  const { value: ogBalance, loading: ogBalanceLoading } = useAssetBalanceOf(
+    Asset.OG,
   );
   const { increase, ...increaseTx } = useStakeIncrease();
   const { stake, ...stakeTx } = useStakeStake();
@@ -148,7 +128,11 @@ const InnerStakePage: React.FC = () => {
   const stakingLocked = checkMaintenance(States.STAKING);
 
   useEffect(() => {
-    if (timestamp && weiAmount && (stakeForm || increaseForm || extendForm)) {
+    if (
+      timestamp &&
+      weiAmount &&
+      (stakeForm || increaseForm || extendForm || withdrawForm)
+    ) {
       setLockDate(timestamp);
       setWeight(getWeight.value);
       setVotingPower(
@@ -168,6 +152,7 @@ const InnerStakePage: React.FC = () => {
     timestamp,
     increaseForm,
     extendForm,
+    withdrawForm,
   ]);
 
   //Form Validations
@@ -176,8 +161,8 @@ const InnerStakePage: React.FC = () => {
     const num = toWei(amount);
     if (!num || bignumber(num).lessThanOrEqualTo(0)) return false;
     if (!timestamp || timestamp < Math.round(now.getTime() / 1e3)) return false;
-    return bignumber(num).lessThanOrEqualTo(sovBalance);
-  }, [loading, amount, sovBalance, timestamp, stakeTx.loading]);
+    return bignumber(num).lessThanOrEqualTo(ogBalance);
+  }, [loading, amount, ogBalance, timestamp, stakeTx.loading]);
 
   const validateDelegateForm = useCallback(() => {
     if (loading) return false;
@@ -187,10 +172,10 @@ const InnerStakePage: React.FC = () => {
 
   const validateIncreaseForm = useCallback(() => {
     if (loading || increaseTx.loading) return false;
-    const num = toWei(amount);
+    const num = bignumber(toWei(amount)).sub(toWei(stakedAmount));
     if (!num || bignumber(num).lessThanOrEqualTo(0)) return false;
-    return bignumber(num).lessThanOrEqualTo(sovBalance);
-  }, [loading, amount, sovBalance, increaseTx.loading]);
+    return bignumber(num).lessThanOrEqualTo(ogBalance);
+  }, [loading, amount, stakedAmount, ogBalance, increaseTx.loading]);
 
   const validateWithdrawForm = useCallback(
     amount => {
@@ -201,6 +186,7 @@ const InnerStakePage: React.FC = () => {
     },
     [withdrawAmount, loading],
   );
+
   const validateExtendTimeForm = useCallback(() => {
     if (loading || extendTx.loading || timestamp === prevTimestamp)
       return false;
@@ -240,7 +226,7 @@ const InnerStakePage: React.FC = () => {
         let nonce = await contractReader.nonce(account);
         const allowance = (await staking_allowance(account)) as string;
         if (bignumber(allowance).lessThan(weiAmount)) {
-          await staking_approve(sovBalance);
+          await staking_approve(ogBalance);
           nonce += 1;
         }
         if (!stakeTx.loading) {
@@ -255,7 +241,7 @@ const InnerStakePage: React.FC = () => {
     },
     [
       weiAmount,
-      sovBalance,
+      ogBalance,
       account,
       timestamp,
       stakeForm,
@@ -295,14 +281,17 @@ const InnerStakePage: React.FC = () => {
       try {
         e.preventDefault();
         setLoading(true);
+        const increaseAmount = bignumber(weiAmount)
+          .sub(toWei(stakedAmount))
+          .toFixed();
         let nonce = await contractReader.nonce(account);
         const allowance = (await staking_allowance(account)) as string;
-        if (bignumber(allowance).lessThan(weiAmount)) {
-          await staking_approve(weiAmount);
+        if (bignumber(allowance).lessThan(increaseAmount)) {
+          await staking_approve(increaseAmount);
           nonce += 1;
         }
         if (!increaseTx.loading) {
-          increase(weiAmount, timestamp, nonce);
+          increase(increaseAmount, timestamp, nonce);
           setLoading(false);
           setIncreaseForm(!increaseForm);
         }
@@ -312,7 +301,15 @@ const InnerStakePage: React.FC = () => {
         console.error(e);
       }
     },
-    [weiAmount, account, timestamp, increaseForm, increaseTx.loading, increase],
+    [
+      weiAmount,
+      account,
+      timestamp,
+      increaseForm,
+      increaseTx.loading,
+      increase,
+      stakedAmount,
+    ],
   );
 
   const handleExtendTimeSubmit = useCallback(
@@ -328,18 +325,13 @@ const InnerStakePage: React.FC = () => {
     [prevTimestamp, timestamp, extendForm, extendTx.loading, extend],
   );
 
-  const updateUsdTotal = useCallback(
-    (asset: AssetDetails, e: number) =>
-      setAssetsUsd(assetsUsd => ({ ...assetsUsd, [asset.asset]: e })),
-    [],
-  );
-
   const onDelegate = useCallback((a, b) => {
     setTimestamp(b);
     setIsStakeDelegate(true);
     setAmount(fromWei(a));
     setDelegateForm(delegateForm => !delegateForm);
   }, []);
+
   const onExtend = useCallback((a, b) => {
     setPrevTimestamp(b);
     setTimestamp(b);
@@ -349,15 +341,18 @@ const InnerStakePage: React.FC = () => {
     setIncreaseForm(false);
     setWithdrawForm(false);
   }, []);
+
   const onIncrease = useCallback((a, b) => {
     setTimestamp(b);
     setAmount(fromWei(a));
+    setStakedAmount(fromWei(a));
     setUntil(b);
     setStakeForm(false);
     setExtendForm(false);
     setIncreaseForm(true);
     setWithdrawForm(false);
   }, []);
+
   const onUnstake = useCallback((a, b) => {
     setAmount(fromWei(a));
     setWithdrawAmount('0');
@@ -384,23 +379,27 @@ const InnerStakePage: React.FC = () => {
       </Helmet>
       <Header />
       <main>
-        <div className="tw-bg-gray-1 tw-tracking-normal">
-          <div className="tw-container tw-mx-auto tw-px-6">
-            <h2 className="tw-text-sov-white tw-pt-8 tw-pb-5 tw-pl-10">
+        <div className="tw-tracking-normal">
+          <div className="tw-container tw-mx-auto tw-px-6 tw-mb-44">
+            <h2
+              className="tw-text-black tw-mb-6 tw-pl-10 tw-text-center tw-text-xl tw-font-rowdies tw-font-semibold tw-uppercase"
+              style={{ marginTop: '4.5rem', lineHeight: '30px' }}
+            >
               {t(translations.stake.title)}
             </h2>
-            <div className="lg:tw-flex tw-items-stretch tw-justify-around tw-mt-2">
-              <div className="tw-staking-box tw-bg-gray-3 tw-p-8 tw-pb-6 tw-mb-5 tw-rounded-2xl lg:tw-w-1/3 lg:tw-mx-2 lg:tw-mb-0 2xl:tw-w-1/4">
-                <p className="tw-text-lg tw--mt-1">
+            <div className="tw-max-w-screen-lg tw-mx-auto lg:tw-flex tw-items-stretch tw-justify-around tw-mt-2 tw-py-8 tw-px-4 tw-bg-gray-1 tw-border-solid tw-border-4 tw-border-black tw-rounded-lg">
+              <div className="tw-staking-box tw-bg-gray-3 tw-p-8 tw-pb-6 tw-mb-5 tw-rounded-lg lg:tw-w-1/2 lg:tw-mx-2 lg:tw-mb-0">
+                <p className="tw-text-base tw--mt-1 tw-mb-0 tw-font-rowdies tw-uppercase">
                   {t(translations.stake.total)}
                 </p>
-                <p className="xl:tw-text-4xl tw-text-3xl tw-mt-2 tw-mb-6">
-                  {weiTo4(balanceOf.value)} SOV
+                <div className={styles.cardTitle}>
+                  {weiTo4(balanceOf.value)} OG
                   {balanceOf.loading && (
                     <Spinner size={20} className="tw-inline-block tw-m-2" />
                   )}
-                </p>
+                </div>
                 <Modal
+                  className="lg:tw-max-w-3xl"
                   show={stakeForm}
                   content={
                     <>
@@ -410,7 +409,7 @@ const InnerStakePage: React.FC = () => {
                         timestamp={timestamp}
                         onChangeAmount={e => setAmount(e)}
                         onChangeTimestamp={e => setTimestamp(e)}
-                        sovBalance={sovBalance}
+                        ogBalance={ogBalance}
                         isValid={validateStakeForm()}
                         kickoff={kickoffTs}
                         stakes={dates}
@@ -420,13 +419,13 @@ const InnerStakePage: React.FC = () => {
                     </>
                   }
                 />
-                {sovBalance !== '0' && !stakingLocked ? (
+                {ogBalance !== '0' && !stakingLocked ? (
                   <button
                     type="button"
-                    className="tw-bg-primary tw-font-normal tw-bg-opacity-10 hover:tw-text-primary focus:tw-outline-none focus:tw-bg-opacity-50 hover:tw-bg-opacity-40 tw-transition tw-duration-500 tw-ease-in-out tw-text-lg tw-text-primary tw-py-3 tw-px-8 tw-border tw-transition-colors tw-duration-300 tw-ease-in-out tw-border-primary tw-rounded-xl"
+                    className={styles.addNewStake}
                     onClick={() => {
                       setTimestamp(0);
-                      setAmount('');
+                      setAmount('0');
                       setStakeForm(!stakeForm);
                       setExtendForm(false);
                       setIncreaseForm(false);
@@ -445,7 +444,7 @@ const InnerStakePage: React.FC = () => {
                       <>
                         {stakingLocked
                           ? t(translations.maintenance.staking)
-                          : t(translations.stake.noUnlockedSov)}
+                          : t(translations.stake.noUnlockedOg)}
                       </>
                     }
                   >
@@ -458,45 +457,25 @@ const InnerStakePage: React.FC = () => {
                   </Tooltip>
                 )}
               </div>
-              <div className="tw-staking-box tw-bg-gray-3 tw-p-8 tw-pb-6 tw-mb-5 tw-rounded-2xl tw-text-sm tw-w-full lg:tw-w-1/3 lg:tw-mb-0 lg:tw-mx-2 2xl:tw-w-1/4 ">
-                <p className="tw-text-lg tw--mt-1">
-                  {t(translations.stake.feeTitle)}
-                </p>
-                <p className="tw-text-4xl tw-mt-2 tw-mb-6">
-                  ≈ {numberToUSD(usdTotal)}
-                </p>
-                {assets.map((item, i) => {
-                  if (item.asset === 'CSOV') return '';
-                  return (
-                    <FeeBlock
-                      usdTotal={updateUsdTotal}
-                      key={item.asset}
-                      contractToken={item}
-                    />
-                  );
-                })}
-              </div>
-              <div className="tw-staking-box tw-bg-gray-3 tw-p-8 tw-pb-6 tw-mb-5 tw-rounded-2xl lg:tw-w-1/3 lg:tw-mx-2 lg:tw-mb-0 2xl:tw-w-1/4">
-                <p className="tw-text-lg tw--mt-1">
+              <div className="tw-staking-box tw-bg-gray-3 tw-p-8 tw-pb-6 tw-mb-5 tw-rounded-lg lg:tw-w-1/2 lg:tw-mx-2 lg:tw-mb-0">
+                <p className="tw-text-base tw--mt-1 tw-font-rowdies tw-uppercase">
                   {t(translations.stake.votingPower)}
                 </p>
-                <p className="xl:tw-text-4xl tw-text-3xl tw-mt-2 tw-mb-6">
+                <div className={styles.cardTitle}>
                   {weiTo4(voteBalance.value)}
                   {voteBalance.loading && (
                     <Spinner size={20} className="tw-inline-block tw-m-2" />
                   )}
-                </p>
+                </div>
                 <div className="tw-flex tw-flex-col tw-items-start">
-                  <div className="tw-bg-primary tw-font-normal tw-bg-opacity-10 tw-hover:text-primary tw-focus:outline-none tw-focus:bg-opacity-50 hover:tw-bg-opacity-40 tw-transition tw-duration-500 tw-ease-in-out tw-px-8 tw-py-3 tw-text-lg tw-text-primary tw-border tw-transition-colors tw-duration-300 tw-ease-in-out tw-border-primary tw-rounded-xl hover:tw-no-underline tw-no-underline tw-inline-block">
-                    <a
-                      href="https://bitocracy.sovryn.app/"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="hover:tw-no-underline"
-                    >
+                  <Link
+                    to="/governance"
+                    className="tw-font-normal tw-bg-opacity-40 hover:tw-bg-opacity-40 tw-transition tw-duration-500 tw-ease-in-out tw-text-sm tw-leading-30px tw-border tw-border-primary tw-rounded-lg hover:tw-no-underline tw-no-underline tw-inline-block tw-uppercase tw-bg-primary tw-px-8 tw-py-3 tw-text-black tw-font-rowdies"
+                  >
+                    <span className="">
                       {t(translations.stake.viewGovernance)}
-                    </a>
-                  </div>
+                    </span>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -520,14 +499,16 @@ const InnerStakePage: React.FC = () => {
                 </>
               }
             />
-            <CurrentStakes
-              onDelegate={onDelegate}
-              onExtend={onExtend}
-              onIncrease={onIncrease}
-              onUnstake={onUnstake}
-            />
-            <CurrentVests onDelegate={onDelegateVest} />
-            <HistoryEventsTable />
+            <div className="tw-bg-gray-1 tw-rounded-lg tw-border-4 tw-border-sold tw-border-black tw-py-6 tw-px-4 tw-mt-16">
+              <CurrentStakes
+                onDelegate={onDelegate}
+                onExtend={onExtend}
+                onIncrease={onIncrease}
+                onUnstake={onUnstake}
+              />
+              <CurrentVests onDelegate={onDelegateVest} />
+              <HistoryEventsTable />
+            </div>
           </div>
           <TxDialog tx={increaseTx} />
           <TxDialog tx={stakeTx} />
@@ -540,15 +521,17 @@ const InnerStakePage: React.FC = () => {
               <>
                 {increaseForm === true && (
                   <Modal
+                    className="lg:tw-max-w-3xl"
                     show={increaseForm}
                     content={
                       <>
                         <IncreaseStakeForm
                           handleSubmit={handleIncreaseStakeSubmit}
                           amount={amount}
+                          currentStakedAmount={stakedAmount}
                           timestamp={timestamp}
                           onChangeAmount={e => setAmount(e)}
-                          sovBalance={sovBalance}
+                          ogBalance={ogBalance}
                           isValid={validateIncreaseForm()}
                           balanceOf={balanceOf}
                           votePower={votingPower}
@@ -560,6 +543,7 @@ const InnerStakePage: React.FC = () => {
                 )}
                 {extendForm === true && (
                   <Modal
+                    className="lg:tw-max-w-3xl"
                     show={extendForm}
                     content={
                       <>
@@ -569,8 +553,8 @@ const InnerStakePage: React.FC = () => {
                             amount={amount}
                             timestamp={0}
                             onChangeTimestamp={e => setTimestamp(e)}
-                            sovBalance={sovBalance}
-                            isSovBalanceLoading={sovBalanceLoading}
+                            ogBalance={ogBalance}
+                            isOgBalanceLoading={ogBalanceLoading}
                             kickoff={kickoffTs}
                             isValid={validateExtendTimeForm()}
                             stakes={dates}
@@ -586,6 +570,7 @@ const InnerStakePage: React.FC = () => {
                 )}
                 {withdrawForm === true && (
                   <Modal
+                    className="lg:tw-max-w-3xl"
                     show={withdrawForm}
                     content={
                       <>
@@ -598,6 +583,7 @@ const InnerStakePage: React.FC = () => {
                           balanceOf={balanceOf}
                           isValid={validateWithdrawForm(amount)}
                           onCloseModal={() => setWithdrawForm(!withdrawForm)}
+                          votePower={votingPower}
                         />
                       </>
                     }
@@ -609,84 +595,6 @@ const InnerStakePage: React.FC = () => {
         </div>
       </main>
       <Footer />
-    </>
-  );
-};
-
-interface IFeeBlockProps {
-  contractToken: AssetDetails;
-  usdTotal: (asset: AssetDetails, value: number) => void;
-}
-
-const FeeBlock: React.FC<IFeeBlockProps> = ({ contractToken, usdTotal }) => {
-  const account = useAccount();
-  const { t } = useTranslation();
-  const token =
-    contractToken.asset +
-    (contractToken.asset === Asset.SOV ? '_token' : '_lending');
-  const dollars = useCachedAssetPrice(contractToken.asset, Asset.USDT);
-  const tokenAddress = getContract(token as ContractName)?.address;
-  const currency = useStaking_getAccumulatedFees(account, tokenAddress);
-  const dollarValue = useMemo(() => {
-    if (currency.value === null) return '';
-    return bignumber(currency.value)
-      .mul(dollars.value)
-      .div(10 ** contractToken.decimals)
-      .toFixed(0);
-  }, [dollars.value, currency.value, contractToken.decimals]);
-
-  const handleWithdrawFee = useCallback(
-    async e => {
-      e.preventDefault();
-      try {
-        const numTokenCheckpoints = (await staking_numTokenCheckpoints(
-          tokenAddress,
-        )) as string;
-        await staking_withdrawFee(tokenAddress, numTokenCheckpoints, account);
-      } catch (e) {
-        console.error(e);
-      }
-    },
-    [tokenAddress, account],
-  );
-
-  useEffect(() => {
-    usdTotal(contractToken, Number(weiTo4(dollarValue)));
-  }, [contractToken, dollarValue, usdTotal]);
-
-  return (
-    <>
-      {Number(currency.value) > 0 && (
-        <div className="tw-flex tw-justify-between tw-items-center tw-mb-1 tw-mt-1 tw-leading-6">
-          <div className="tw-w-1/5">
-            {contractToken.asset !== Asset.SOV ? (
-              <Tooltip
-                content={
-                  <>{contractToken.asset} will be sent to the lending pool.</>
-                }
-              >
-                <>i{contractToken.asset} (?)</>
-              </Tooltip>
-            ) : (
-              <>{contractToken.asset}</>
-            )}
-          </div>
-          <div className="tw-w-1/2 tw-ml-6">
-            {numberFromWei(currency.value).toFixed(4)} ≈{' '}
-            <LoadableValue
-              value={weiToUSD(dollarValue)}
-              loading={dollars.loading}
-            />
-          </div>
-          <button
-            onClick={handleWithdrawFee}
-            type="button"
-            className="tw-text-primary hover:tw-text-primary tw-p-0 tw-text-normal tw-lowercase hover:tw-underline tw-font-medium tw-font-body tw-tracking-normal"
-          >
-            {t(translations.userAssets.actions.withdraw)}
-          </button>
-        </div>
-      )}
     </>
   );
 };

@@ -11,6 +11,30 @@ export interface ISaleInformation {
   depositType: DepositType;
   verificationType: VerificationType;
   totalSaleAllocation: number;
+  isSaleActive: boolean;
+  totalDepositReceived: string;
+  myTotalDeposit: string;
+}
+
+export enum SaleType {
+  upcoming = 'upcoming',
+  live = 'live',
+  previous = 'previous',
+}
+
+export type ISaleSummary = {
+  [key in SaleType]: ISaleDetails[];
+};
+
+export interface ISaleDetails {
+  saleName: string;
+  saleAllocation: string;
+  totalRaised: string;
+  participatingWallets: string;
+  date: string;
+  saleDuration: string;
+  backgroundImage: string;
+  price: string;
 }
 
 export enum DepositType {
@@ -22,4 +46,5 @@ export enum VerificationType {
   None = '0',
   Everyone = '1',
   ByAddress = '2',
+  ByStake = '3',
 }

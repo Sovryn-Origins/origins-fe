@@ -13,7 +13,7 @@ import { BuyButton, Img } from './styled';
 import styles from 'app/components/Dialogs/dialog.module.scss';
 import image from 'assets/images/arrow-down.svg';
 import { weiToFixed } from 'utils/blockchain/math-helpers';
-import { TxFeeCalculator } from 'app/pages/MarginTradePage/components/TxFeeCalculator';
+import { TxFeeCalculator } from 'app/components/TxFeeCalculator';
 import { useAccount } from 'app/hooks/useAccount';
 import { useUnWrap } from '../../hooks/portfolio/useUnWrap';
 import { TxDialog } from '../Dialogs/TxDialog';

@@ -1,32 +1,71 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import cn from 'classnames';
+import { bignumber } from 'mathjs';
 import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Input } from 'app/components/Form/Input';
 import { AssetRenderer } from 'app/components/AssetRenderer';
-import { Asset } from 'types';
+import { FormGroup } from 'app/components/Form/FormGroup';
 import { Button } from 'app/components/Button';
-import { useSendContractTx } from '../../../../hooks/useSendContractTx';
-import { TxType } from 'store/global/transactions-store/types';
+import { Asset } from 'types';
 import { useCacheCallWithValue } from 'app/hooks/useCacheCallWithValue';
 import { TxDialog } from 'app/components/Dialogs/TxDialog';
 import { weiToNumberFormat } from '../../../../../utils/display-text/format';
 import { useMaintenance } from 'app/hooks/useMaintenance';
 import { ErrorBadge } from 'app/components/Form/ErrorBadge';
-import { discordInvite, gasLimit } from 'utils/classifiers';
-import { bignumber } from 'mathjs';
+import { discordInvite } from 'utils/classifiers';
+import { useGetSaleStats } from '../../hooks/useGetSaleStats';
+import { useClaimAndWithdraw } from '../../hooks/useClaimAndWithdraw';
+import { useBlockSync } from 'app/hooks/useAccount';
 
 interface IClaimFormProps {
   address: string;
   className?: string;
 }
+
+interface ITierRow {
+  tier: number;
+  name: string;
+}
+
+const tierRows: ITierRow[] = [
+  { tier: 1, name: 'OG - SOV Stakers Round' },
+  { tier: 2, name: 'OG - Public Round' },
+];
+
+const token = Asset.OG;
+
 export const ClaimForm: React.FC<IClaimFormProps> = ({
   className,
   address,
 }) => {
   const { t } = useTranslation();
+  const [tierId, setTierId] = useState(0);
   const { checkMaintenance, States } = useMaintenance();
+  const blockSync = useBlockSync();
   const rewardsLocked = checkMaintenance(States.CLAIM_REWARDS);
+  const saleStats = useGetSaleStats(tierId);
+  const currentTS = useRef(Math.floor(Date.now() / 1000));
+
+  const { send, ...tx } = useClaimAndWithdraw({ tierId, address });
+
+  const availableAmount = useMemo(() => {
+    const {
+      totalTokenOnTier,
+      tokenSoldPerTier,
+      tokenBoughtByAddress,
+    } = saleStats;
+    if (bignumber(tokenSoldPerTier).equals('0')) return '0';
+
+    const distributedAmount = bignumber(totalTokenOnTier)
+      .mul(tokenBoughtByAddress)
+      .div(tokenSoldPerTier);
+
+    return bignumber(tokenBoughtByAddress).lessThan(distributedAmount)
+      ? tokenBoughtByAddress
+      : distributedAmount;
+    // eslint-disable-next-line
+  }, [saleStats, blockSync]);
 
   const { value: getWaitedTS } = useCacheCallWithValue(
     'lockedFund',
@@ -48,69 +87,62 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
     address,
   );
 
-  const balance = useMemo(
-    () => bignumber(getVestedBalance).add(getWaitedUnlockedBalance).toFixed(0),
-    [getVestedBalance, getWaitedUnlockedBalance],
-  );
-
   const unlockTime = useMemo(() => Number(getWaitedTS) * 1000, [getWaitedTS]);
-
-  const [fn, args] = useMemo(() => {
-    let fn = 'withdrawWaitedUnlockedBalance';
-    let args: string[] = [address];
-    if (
-      parseFloat(getVestedBalance) > 0 &&
-      parseFloat(getWaitedUnlockedBalance) > 0
-    ) {
-      fn = 'withdrawAndStakeTokens';
-      args = [address];
-    } else if (parseFloat(getWaitedUnlockedBalance) > 0) {
-      fn = 'withdrawWaitedUnlockedBalance';
-      args = [address];
-    } else if (parseFloat(getVestedBalance) > 0) {
-      fn = 'createVestingAndStake';
-      args = [];
-    }
-    return [fn, args];
-  }, [getVestedBalance, getWaitedUnlockedBalance, address]);
-
-  const { send, ...tx } = useSendContractTx('lockedFund', fn);
-
-  const handleSubmit = useCallback(() => {
-    send(
-      args,
-      {
-        from: address,
-        gas: gasLimit[TxType.LOCKED_FUND_WAITED_CLAIM],
-      },
-      {
-        type: TxType.LOCKED_FUND_WAITED_CLAIM,
-      },
-    );
-  }, [args, address, send]);
 
   return (
     <div
       className={cn(
         className,
-        'tw-trading-form-card tw-bg-black tw-rounded-3xl tw-p-8 tw-mx-auto xl:tw-mx-0 tw-flex tw-flex-col',
+        'tw-trading-form-card tw-max-w-xl tw-bg-gray-3 tw-rounded-lg tw-py-8 tw-px-6 tw-mx-auto xl:tw-mx-0 tw-flex tw-flex-col',
       )}
     >
-      <div className="text-center tw-text-xl">
+      <div className="text-center tw-text-xl tw-uppercase tw-font-rowdies">
         {t(translations.originsClaim.claimForm.title)}
       </div>
-      <div className="tw-px-8 tw-mt-6 tw-flex-1 tw-flex tw-flex-col tw-justify-center">
+      <div className="tw-px-8 tw-mt-10 tw-flex-1 tw-flex tw-flex-col tw-justify-center">
         <div>
-          <div className="tw-text-sm tw-mb-1">
-            {t(translations.originsClaim.claimForm.availble)}
-          </div>
-          <Input
-            value={weiToNumberFormat(balance, 4)}
-            readOnly={true}
-            appendElem={<AssetRenderer asset={Asset.FISH} />}
-          />
+          <FormGroup
+            label={t(translations.originsClaim.claimForm.selectToken)}
+            labelClassName="tw-text-base tw-leading-8 tw-mb-4 tw-uppercase tw-font-rowdies"
+            className="tw-mb-12"
+          >
+            <select
+              className="tw-font-rowdies tw-text-lg tw-leading-8 tw-text-gray-6 tw-w-full tw-py-2 tw-px-2 tw-rounded-lg"
+              value={tierId}
+              onChange={e => setTierId(Number(e.target.value))}
+            >
+              <option
+                className="tw-text-left tw-font-inter tw-text-gray-6"
+                style={{ fontSize: 13 }}
+                value={0}
+              >
+                {t(translations.originsClaim.claimForm.chooseToken)}
+              </option>
+              {tierRows.map(tierRow => (
+                <option
+                  key={tierRow.name}
+                  className="tw-text-black tw-font-rowdies tw-leading-8"
+                  value={tierRow.tier}
+                >
+                  {tierRow.name}
+                </option>
+              ))}
+            </select>
+          </FormGroup>
+          <FormGroup
+            label={t(translations.originsClaim.claimForm.availble)}
+            labelClassName="tw-text-base tw-leading-8 tw-mb-4 tw-uppercase tw-font-rowdies"
+          >
+            <Input
+              className="tw-max-w-none"
+              inputClassName="tw-font-rowdies tw-font-normal"
+              value={weiToNumberFormat(availableAmount, 4)}
+              readOnly={false}
+              appendElem={token ? <AssetRenderer asset={token} /> : undefined}
+            />
+          </FormGroup>
         </div>
-        <div className={!rewardsLocked ? 'tw-mt-10' : undefined}>
+        <div className={!rewardsLocked ? 'tw-mt-12' : undefined}>
           {rewardsLocked && (
             <ErrorBadge
               content={
@@ -131,23 +163,26 @@ export const ClaimForm: React.FC<IClaimFormProps> = ({
             />
           )}
           {!rewardsLocked && (
-            <Button
-              disabled={
-                parseFloat(balance) === 0 ||
-                !balance ||
-                rewardsLocked ||
-                new Date().getTime() < unlockTime
-              }
-              onClick={handleSubmit}
-              className="tw-w-full tw-mb-4"
-              text={t(translations.originsClaim.claimForm.cta)}
-            />
+            <div className="tw-flex tw-justify-center">
+              <Button
+                disabled={
+                  !tierId ||
+                  availableAmount === '0' ||
+                  saleStats.saleEndTS > currentTS.current
+                }
+                onClick={send}
+                className="tw-mx-auto tw-uppercase tw-text-sm tw-leading-8"
+                text={t(translations.originsClaim.claimForm.cta)}
+              />
+            </div>
           )}
 
-          <div className="tw-text-tiny tw-font-thin">
-            {t(translations.originsClaim.claimForm.note, {
-              date: new Date(unlockTime).toLocaleString(),
-            })}
+          <div className="tw-text-sm tw-text-center tw-leading-8 tw-font-light tw-font-rowdies tw-uppercase tw-mt-8">
+            {token &&
+              tierId > 0 &&
+              t(translations.originsClaim.claimForm.note, {
+                date: new Date(unlockTime).toLocaleString(),
+              })}
             {parseFloat(getWaitedUnlockedBalance) > 0 && (
               <div className="tw-mt-1">
                 {t(translations.originsClaim.claimForm.unlockedNote, {

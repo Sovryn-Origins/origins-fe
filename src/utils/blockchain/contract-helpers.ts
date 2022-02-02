@@ -36,7 +36,7 @@ export const getContract = (contractName: ContractName) =>
 export const getContractNameByAddress = (address: string): ContractName => {
   return Object.keys(Sovryn.contracts).find(
     key =>
-      Sovryn.contracts[key].options.address.toLowerCase() ===
+      (Sovryn.contracts[key].options.address || '').toLowerCase() ===
       address.toLowerCase(),
   ) as ContractName;
 };

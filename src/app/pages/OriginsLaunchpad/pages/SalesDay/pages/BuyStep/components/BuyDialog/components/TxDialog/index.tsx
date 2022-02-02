@@ -4,18 +4,18 @@ import { ResetTxResponseInterface } from 'app/hooks/useSendContractTx';
 import { TxStatus } from 'store/global/transactions-store/types';
 import { detectWeb3Wallet, prettyTx } from 'utils/helpers';
 import { LinkToExplorer } from 'app/components/LinkToExplorer';
-import styles from './dialog.module.scss';
 import { useWalletContext } from '@sovryn/react-wallet';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { ConfirmButton } from 'app/pages/BuySovPage/components/Button/confirm';
+import { ConfirmButton } from 'app/components/Form/ConfirmButton';
 import { usePrevious } from 'app/hooks/usePrevious';
 import { AssetSymbolRenderer } from 'app/components/AssetSymbolRenderer';
 import { weiToFixed } from 'utils/blockchain/math-helpers';
 import { DisplayDate } from 'app/components/ActiveUserLoanContainer/components/DisplayDate';
-import { CloseButton } from './styled';
 import { StatusComponent } from './StatusComponent';
 import { WalletLogo, getWalletName } from './WalletLogo';
+
+import styles from './dialog.module.scss';
 
 interface ITxDialogProps {
   tx: ResetTxResponseInterface;
@@ -52,9 +52,9 @@ export const TxDialog: React.FC<ITxDialogProps> = ({ tx, onUserConfirmed }) => {
       onClose={close}
       className={styles.dialog}
     >
-      <CloseButton onClick={close}>
+      <button className={styles.closeButton} onClick={close}>
         <span className="tw-sr-only">Close Dialog</span>
-      </CloseButton>
+      </button>
       {tx.status === TxStatus.PENDING_FOR_USER && (
         <>
           <div className="tw-mb-24 tw-normal-case tw-text-center tw-text-2xl tw-font-semibold">
@@ -72,14 +72,11 @@ export const TxDialog: React.FC<ITxDialogProps> = ({ tx, onUserConfirmed }) => {
         tx.status,
       ) && (
         <>
-          <div className="tw-text-2xl tw-font-medium tw-tracking-normal tw-mx-auto">
-            {t(translations.buySovPage.txDialog.txStatus.title)}
-          </div>
           <StatusComponent status={tx.status} />
 
           {!!tx.txHash && (
-            <div className="tw-w-full tw-flex tw-justify-between tw-text-sm tw-font-extralight tw-tracking-normal">
-              <div>
+            <div className="tw-w-full tw-flex tw-justify-between tw-text-xs tw-font-extralight tw-tracking-normal tw-px-6">
+              <div className="tw-uppercase">
                 <div className="tw-mb-3.5">
                   {t(translations.originsLaunchpad.saleDay.txDialog.dateTime)}:
                 </div>
@@ -99,7 +96,7 @@ export const TxDialog: React.FC<ITxDialogProps> = ({ tx, onUserConfirmed }) => {
                 </div>
               </div>
 
-              <div>
+              <div className="tw-uppercase">
                 <div className="tw-mb-3.5">
                   <DisplayDate
                     timestamp={new Date(txData?.customData?.date)
@@ -147,7 +144,7 @@ export const TxDialog: React.FC<ITxDialogProps> = ({ tx, onUserConfirmed }) => {
             </>
           )}
 
-          <div className="tw-w-full">
+          <div className="tw-w-full tw-flex tw-justify-center">
             <ConfirmButton
               onClick={close}
               text={t(translations.common.close)}

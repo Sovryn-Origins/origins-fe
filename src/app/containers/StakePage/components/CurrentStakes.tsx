@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { bignumber } from 'mathjs';
-import { Asset } from '../../../../types';
 import dayjs from 'dayjs';
-import logoSvg from 'assets/images/tokens/sov.svg';
+import type { RevertInstructionError } from 'web3-core-helpers';
+import { Tooltip, Spinner } from '@blueprintjs/core';
+import { Asset } from 'types';
 import { useAccount } from '../../../hooks/useAccount';
 import { weiToUSD } from 'utils/display-text/format';
 import { StyledTable } from './StyledTable';
@@ -11,15 +11,12 @@ import { AddressBadge } from '../../../components/AddressBadge';
 import { contractReader } from 'utils/sovryn/contract-reader';
 import { LoadableValue } from '../../../components/LoadableValue';
 import { useTranslation } from 'react-i18next';
-import { AssetsDictionary } from 'utils/dictionaries/assets-dictionary';
-import { useCachedAssetPrice } from '../../../hooks/trading/useCachedAssetPrice';
+import { useDollarValue } from '../../../hooks/useDollarValue';
 import { useStaking_getStakes } from '../../../hooks/staking/useStaking_getStakes';
 import { useStaking_WEIGHT_FACTOR } from '../../../hooks/staking/useStaking_WEIGHT_FACTOR';
 import { weiTo4 } from 'utils/blockchain/math-helpers';
 import { useStaking_computeWeightByDate } from '../../../hooks/staking/useStaking_computeWeightByDate';
 import { useMaintenance } from 'app/hooks/useMaintenance';
-import { Tooltip, Spinner } from '@blueprintjs/core';
-import type { RevertInstructionError } from 'web3-core-helpers';
 
 interface StakeItem {
   stakedAmount: string;
@@ -80,11 +77,11 @@ export const CurrentStakes: React.FC<ICurrentStakesProps> = props => {
 
   return (
     <>
-      <p className="tw-font-semibold tw-text-lg tw-ml-6 tw-mb-4 tw-mt-6">
+      <p className="tw-font-rowdies tw-text-xl tw-uppercase">
         {t(translations.stake.currentStakes.title)}
       </p>
       <div className="tw-bg-gray-1 tw-rounded-b tw-shadow">
-        <div className="tw-sovryn-table tw-relative tw-rounded-lg tw-border tw-pt-1 tw-pb-0 tw-pr-5 tw-pl-5 tw-mb-5 tw-max-h-96 tw-overflow-y-auto">
+        <div className="tw-sovryn-table tw-relative tw-rounded-lg tw-pt-1 tw-pb-0 tw-mb-5 tw-max-h-96 tw-overflow-y-auto">
           {stakeLoad && (
             <Spinner
               size={20}
@@ -93,34 +90,34 @@ export const CurrentStakes: React.FC<ICurrentStakesProps> = props => {
           )}
           <StyledTable className="tw-w-full tw-text-sov-white">
             <thead>
-              <tr>
-                <th className="tw-text-left assets">
-                  {t(translations.stake.currentStakes.asset)}
-                </th>
-                <th className="tw-text-left">
+              <tr className="tw-leading-30px">
+                <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left tw-pl-0">
                   {t(translations.stake.currentStakes.lockedAmount)}
                 </th>
-                <th className="tw-text-left tw-font-normal tw-hidden lg:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentStakes.votingPower)}
                 </th>
-                <th className="tw-text-left tw-font-normal tw-hidden lg:tw-table-cell">
-                  {t(translations.stake.currentStakes.votingDelegation)}
+                <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left tw-hidden lg:tw-table-cell">
+                  {t(translations.stake.currentStakes.stakingDate)}
                 </th>
-                <th className="tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentStakes.stakingPeriod)}
                 </th>
-                <th className="tw-text-left tw-hidden lg:tw-table-cell">
+                <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left tw-hidden lg:tw-table-cell">
                   {t(translations.stake.currentStakes.unlockDate)}
                 </th>
-                <th className="tw-text-left tw-hidden md:tw-table-cell tw-w-1/5">
+                <th className="tw-font-rowdies tw-font-light tw-text-lg tw-text-left tw-hidden md:tw-table-cell tw-w-1/5">
                   {t(translations.stake.actions.title)}
                 </th>
               </tr>
             </thead>
-            <tbody className="tw-mt-5 tw-font-montserrat tw-text-xs">
+            <tbody className="tw-mt-5 tw-font-inter tw-text-base">
               {!stakesArray?.length && (
                 <tr key="empty">
-                  <td colSpan={99} className="tw-text-center tw-font-normal">
+                  <td
+                    colSpan={99}
+                    className="tw-text-center tw-font-rowdies tw-font-normal tw-text-base"
+                  >
                     {t(translations.stake.nostake)}
                   </td>
                 </tr>
@@ -158,14 +155,13 @@ const AssetRow: React.FC<IAssetRowProps> = ({
   onIncrease,
   onExtend,
   onUnstake,
-  onDelegate,
 }) => {
   const { t } = useTranslation();
   const { checkMaintenances, States } = useMaintenance();
   const {
     [States.STAKING]: stakingLocked,
     [States.UNSTAKING]: unstakingLocked,
-    [States.DELEGATE_STAKES]: delegateStakesLocked,
+    // [States.DELEGATE_STAKES]: delegateStakesLocked,
   } = checkMaintenances();
 
   const now = new Date();
@@ -181,12 +177,8 @@ const AssetRow: React.FC<IAssetRowProps> = ({
     Math.round(now.getTime() / 1e3),
   );
 
-  const SOV = AssetsDictionary.get(Asset.SOV);
-  const dollars = useCachedAssetPrice(Asset.SOV, Asset.USDT);
-  const dollarValue = bignumber(Number(item.stakedAmount))
-    .mul(dollars.value)
-    .div(10 ** SOV.decimals)
-    .toFixed(0);
+  const dollarValue = useDollarValue(Asset.OG, item.stakedAmount);
+
   useEffect(() => {
     setWeight(getWeight.value);
     if (Number(WEIGHT_FACTOR.value) && Number(weight)) {
@@ -199,25 +191,15 @@ const AssetRow: React.FC<IAssetRowProps> = ({
 
   return (
     <tr>
-      <td>
-        <div className="assetname tw-flex tw-items-center">
-          <div>
-            <img src={logoSvg} className="tw-ml-3 tw-mr-3" alt="sov" />
-          </div>
-          <div className="tw-text-sm tw-font-normal tw-hidden xl:tw-block tw-pl-3">
-            {t(translations.stake.sov)}
-          </div>
-        </div>
-      </td>
-      <td className="tw-text-left tw-font-normal">
-        {weiTo4(item.stakedAmount)} {t(translations.stake.sov)}
+      <td className="tw-text-left tw-font-normal tw-font-inter">
+        {weiTo4(item.stakedAmount)} {t(translations.stake.og)}
         <br />≈{' '}
         <LoadableValue
-          value={weiToUSD(dollarValue)}
-          loading={dollars.loading}
+          value={weiToUSD(dollarValue.value, 2)}
+          loading={dollarValue.loading}
         />
       </td>
-      <td className="tw-text-left tw-hidden lg:tw-table-cell tw-font-normal">
+      <td className="tw-text-left tw-hidden lg:tw-table-cell tw-font-normal tw-font-inter">
         {weiTo4(votingPower)}
       </td>
       <td className="tw-text-left tw-hidden lg:tw-table-cell tw-font-normal">
@@ -225,24 +207,24 @@ const AssetRow: React.FC<IAssetRowProps> = ({
           <AddressBadge
             txHash={item.delegate}
             startLength={6}
-            className="tw-text-secondary"
+            className="tw-text-secondary tw-font-inter"
           />
         )}
         {!item.delegate && (
-          <p className="tw-m-0">
+          <p className="tw-m-0 tw-font-inter">
             {t(translations.stake.delegation.noDelegate)}
           </p>
         )}
       </td>
-      <td className="tw-text-left tw-hidden lg:tw-table-cell tw-font-normal">
+      <td className="tw-text-left tw-hidden lg:tw-table-cell tw-font-normal tw-font-inter">
         {locked && t(translations.common.unit.day, { count: stakingPeriod })}
       </td>
       <td className="tw-text-left tw-hidden lg:tw-table-cell tw-font-normal">
-        <p className="tw-m-0">
+        <p className="tw-m-0 tw-font-inter">
           {dayjs
             .tz(parseInt(item.unlockDate) * 1e3, 'UTC')
             .tz(dayjs.tz.guess())
-            .format('L - LTS Z')}
+            .format('L - LTS')}
         </p>
       </td>
       <td className="md:tw-text-left lg:tw-text-right tw-hidden md:tw-table-cell">
@@ -258,7 +240,7 @@ const AssetRow: React.FC<IAssetRowProps> = ({
               >
                 <button
                   type="button"
-                  className="tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-montserrat tw-bg-transparent hover:tw-bg-opacity-0 tw-opacity-50 tw-cursor-not-allowed hover:tw-bg-transparent"
+                  className="tw-border tw-border-primary tw-border-solid tw-rounded-lg tw-px-4 tw-py-2 tw-text-primary tw-text-sm tw-uppercase tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-rowdies tw-bg-transparent hover:tw-bg-opacity-0 tw-opacity-50 tw-cursor-not-allowed hover:tw-bg-transparent"
                 >
                   {t(translations.stake.actions.increase)}
                 </button>
@@ -272,7 +254,7 @@ const AssetRow: React.FC<IAssetRowProps> = ({
               >
                 <button
                   type="button"
-                  className="tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-montserrat tw-bg-transparent hover:tw-bg-opacity-0 tw-opacity-50 tw-cursor-not-allowed hover:tw-bg-transparent"
+                  className="tw-border tw-border-primary tw-border-solid tw-rounded-lg tw-px-4 tw-py-2 tw-text-primary tw-text-sm tw-uppercase tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-rowdies tw-bg-transparent hover:tw-bg-opacity-0 tw-opacity-50 tw-cursor-not-allowed hover:tw-bg-transparent"
                 >
                   {t(translations.stake.actions.extend)}
                 </button>
@@ -282,7 +264,7 @@ const AssetRow: React.FC<IAssetRowProps> = ({
             <>
               <button
                 type="button"
-                className={`tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-montserrat ${
+                className={`tw-border tw-border-primary tw-border-solid tw-rounded-lg tw-px-4 tw-py-2 tw-text-primary tw-text-sm tw-uppercase tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-rowdies ${
                   !locked &&
                   'tw-bg-transparent hover:tw-bg-opacity-0 tw-opacity-50 tw-cursor-not-allowed hover:tw-bg-transparent'
                 }`}
@@ -295,7 +277,7 @@ const AssetRow: React.FC<IAssetRowProps> = ({
               </button>
               <button
                 type="button"
-                className="tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-montserrat"
+                className="tw-border tw-border-primary tw-border-solid tw-rounded-lg tw-px-4 tw-py-2 tw-text-primary tw-text-sm tw-uppercase tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-rowdies"
                 onClick={() =>
                   onExtend(Number(item.stakedAmount), Number(item.unlockDate))
                 }
@@ -315,7 +297,7 @@ const AssetRow: React.FC<IAssetRowProps> = ({
             >
               <button
                 type="button"
-                className="tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-montserrat tw-bg-transparent hover:tw-bg-opacity-0 tw-opacity-50 tw-cursor-not-allowed hover:tw-bg-transparent"
+                className="tw-border tw-border-primary tw-border-solid tw-rounded-lg tw-px-4 tw-py-2 tw-text-primary tw-text-sm tw-uppercase tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-rowdies tw-bg-transparent hover:tw-bg-opacity-0 tw-opacity-50 tw-cursor-not-allowed hover:tw-bg-transparent"
               >
                 {t(translations.stake.actions.unstake)}
               </button>
@@ -323,41 +305,12 @@ const AssetRow: React.FC<IAssetRowProps> = ({
           ) : (
             <button
               type="button"
-              className="tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-montserrat"
+              className="tw-border tw-border-primary tw-border-solid tw-rounded-lg tw-px-4 tw-py-2 tw-text-primary tw-text-sm tw-uppercase tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-rowdies"
               onClick={() =>
                 onUnstake(item.stakedAmount, Number(item.unlockDate))
               }
             >
               {t(translations.stake.actions.unstake)}
-            </button>
-          )}
-
-          {delegateStakesLocked ? (
-            <Tooltip
-              position="bottom"
-              hoverOpenDelay={0}
-              hoverCloseDelay={0}
-              interactionKind="hover"
-              content={<>{t(translations.maintenance.delegateStakes)}</>}
-            >
-              <button
-                type="button"
-                className="tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-montserrat tw-bg-transparent hover:tw-bg-opacity-0 tw-opacity-50 tw-cursor-not-allowed hover:tw-bg-transparent"
-              >
-                {t(translations.stake.actions.delegate)}
-              </button>
-            </Tooltip>
-          ) : (
-            <button
-              className={`tw-text-primary tw-tracking-normal hover:tw-text-primary hover:tw-underline tw-mr-1 xl:tw-mr-4 tw-p-0 tw-font-normal tw-font-montserrat ${
-                !locked && 'tw-opacity-50 tw-cursor-not-allowed'
-              }`}
-              onClick={() =>
-                onDelegate(Number(item.stakedAmount), Number(item.unlockDate))
-              }
-              disabled={!locked}
-            >
-              {t(translations.stake.actions.delegate)}
             </button>
           )}
         </div>

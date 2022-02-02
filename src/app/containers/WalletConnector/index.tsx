@@ -1,17 +1,14 @@
+import React from 'react';
 import { Icon, Menu, MenuItem, Popover, Spinner } from '@blueprintjs/core';
 import { useWalletContext } from '@sovryn/react-wallet';
 import blockies from 'ethereum-blockies';
-import React from 'react';
+import classNames from 'classnames';
+
 import { useTranslation } from 'react-i18next';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import classNames from 'classnames';
 import { toastSuccess } from 'utils/toaster';
-import styled from 'styled-components/macro';
-
 import { translations } from 'locales/i18n';
 import { prettyTx } from 'utils/helpers';
-
-import { media } from '../../../styles/media';
 
 import styles from './index.module.scss';
 
@@ -46,19 +43,22 @@ const WalletConnectorContainer: React.FC<Props> = props => {
   };
 
   return (
-    <div className="tw-justify-center tw-items-center tw-hidden md:tw-flex">
+    <div className="tw-justify-center tw-items-center tw-flex">
       {!connected && !address ? (
-        <StyledButton
+        <button
           onClick={() => connect()}
-          className="tw-flex tw-justify-center tw-items-center tw-bg-primary-25 hover:tw-opacity-75"
+          className={classNames(
+            styles.button,
+            'tw-flex tw-justify-center tw-items-center tw-bg-primary hover:tw-opacity-90',
+          )}
         >
           {connecting && <Spinner size={22} />}
           {!connecting && (
-            <span className="tw-hidden xl:tw-inline tw-truncate">
+            <span className="tw-hidden xl:tw-inline tw-truncate tw-uppercase tw-leading-30px">
               {t(translations.wallet.connect_btn)}
             </span>
           )}
-        </StyledButton>
+        </button>
       ) : (
         <div className={simpleViewClass}>
           <Popover
@@ -102,9 +102,9 @@ const WalletConnectorContainer: React.FC<Props> = props => {
                   />
                 </span>
               </div>
-              <StyledButton className="xl:tw-hidden">
+              <button className={classNames(styles.button, 'xl:tw-hidden')}>
                 <Icon icon="user" />
-              </StyledButton>
+              </button>
             </>
           </Popover>
         </div>
@@ -114,36 +114,3 @@ const WalletConnectorContainer: React.FC<Props> = props => {
 };
 
 export default WalletConnectorContainer;
-
-const StyledButton = styled.button.attrs(({ className }) => ({
-  type: 'button',
-  className: classNames(className, 'xl:tw-text-primary'),
-}))`
-  border: none;
-  background: none;
-  color: var(--white);
-  width: 48px;
-  height: 48px;
-  text-align: center;
-  ${media.xl`
-    border: 1px solid;
-    white-space: nowrap;
-    width: auto;
-    margin: 0;
-    height: 40px;
-    padding: 5px 26px;
-    font-weight: 100;
-    font-size: 1.125rem;
-    font-family: 'Montserrat';
-    letter-spacing: -1px;
-    text-transform: capitalize;
-    transition: all .3s;
-    border-radius: 0.75rem;
-    &:hover {
-      background: rgba(254,192,4, 0.25) !important;
-    }
-    &:active, &:focus {
-      background: rgba(254,192,4, 0.5) !important;
-    }
-  `}
-`;

@@ -1,14 +1,17 @@
 @import './custom-variables';
 
 .sovryn-border {
-  @apply tw-border tw-border-sov-white tw-rounded-lg;
+  @apply tw-border-t tw-border-sov-white;
 }
 
 @mixin table-header {
-  @apply tw-text-base tw-text-sov-white;
+  @apply tw-text-lg tw-text-sov-white;
   font-family: inherit;
   font-weight: inherit;
   padding: 0 22px;
+  &:first-child {
+    padding: 0;
+  }
   height: 45px;
   @media (max-width: 441px) {
     padding: 0 15px;

@@ -1,0 +1,44 @@
+.table {
+  @apply tw-w-full;
+
+  td {
+    @apply tw-font-inter;
+  }
+
+  thead {
+    tr {
+      th {
+        @apply tw-text-base tw-text-white tw-font-normal tw-pb-4;
+        line-height: 1.875rem;
+
+        &:first-child {
+          @apply tw-pl-4;
+        }
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      height: 2.75rem;
+
+      &:nth-child(odd) {
+        @apply tw-bg-gray-1;
+      }
+
+      td {
+        &:first-child {
+          @apply tw-rounded-l-lg tw-pl-4;
+        }
+
+        &:last-child {
+          @apply tw-rounded-r-lg;
+        }
+
+        &:only-child {
+          @apply tw-rounded-lg;
+        }
+      }
+    }
+  }
+}

@@ -5,8 +5,8 @@ import txPending from 'assets/images/pending-tx.svg';
 import { TxStatus } from 'store/global/transactions-store/types';
 import { Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { StatusImage } from './styled';
-import cn from 'classnames';
+import classNames from 'classnames';
+import styles from './dialog.module.scss';
 
 const getStatusImage = (tx: TxStatus) => {
   if (tx === TxStatus.FAILED) return txFailed;
@@ -29,17 +29,21 @@ interface IStatusComponentProps {
 export const StatusComponent: React.FC<IStatusComponentProps> = ({
   status,
 }) => (
-  <div className="tw-text-center tw-mx-auto tw-my-8">
-    <StatusImage
+  <div className="tw-text-center tw-mx-auto tw-my-4">
+    <img
       src={getStatusImage(status)}
-      className={cn(
-        'tw-max-w-full',
-        'tw-mx-auto',
+      className={classNames(
+        styles.statusImage,
         status === TxStatus.PENDING && 'tw-animate-spin',
       )}
       alt="Status"
     />
-    <p className="tw-text-base tw-tracking-normal tw-italic tw-mt-4">
+
+    <div className="tw-text-2xl tw-font-medium tw-tracking-normal tw-mx-auto tw-mt-14 tw-uppercase tw-font-rowdies">
+      <Trans i18nKey={translations.buySovPage.txDialog.txStatus.title} />
+    </div>
+
+    <p className="tw-text-base tw-uppercase tw-tracking-normal tw-mt-12">
       {getStatus(status)}
     </p>
   </div>

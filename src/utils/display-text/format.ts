@@ -142,3 +142,5 @@ export const stringToFixedPrecision = (value: string, precision: number) => {
 
   return value;
 };
+
+export const btcToSatoshi = (value: number) => value * 1e9;

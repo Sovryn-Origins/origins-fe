@@ -1,0 +1,169 @@
+.styledTable {
+  @apply tw-font-normal tw-font-inter tw-w-full;
+
+  &.sovryn-table-mobile {
+    @apply tw-text-xs;
+    @media (max-width: 335px) {
+      font-size: 11px;
+    }
+  }
+  .table-header div {
+    @apply tw-font-light tw-text-white tw-text-base;
+    padding: 0 22px;
+    height: 43px;
+  }
+  thead tr,
+  .table-header:not(.sub-header) {
+    height: 40px;
+    th {
+      @apply tw-font-rowdies tw-font-light tw-text-lg tw-text-white tw-leading-30px tw-p-0 tw-tracking-normal;
+      height: 45px;
+    }
+  }
+  tbody {
+    tr {
+      td {
+        @apply tw-font-inter tw-bg-gray-2;
+
+        &:first-child {
+          border-radius: 6px 0 0 6px;
+        }
+
+        &:last-child {
+          border-radius: 0 6px 6px 0;
+        }
+
+        &:only-child {
+          border-radius: 6px;
+        }
+      }
+      &:nth-child(odd) {
+        td {
+          @apply tw-bg-gray-3;
+        }
+      }
+      &:nth-child(even) {
+        td {
+          @apply tw-bg-gray-1;
+        }
+      }
+    }
+  }
+  &.table-small {
+    thead tr {
+      height: 30px;
+      th {
+        height: 30px;
+        padding: 0 20px;
+      }
+    }
+    tbody tr {
+      height: 30px;
+      td {
+        padding: 0 20px;
+      }
+      &:nth-child(even) {
+        td {
+          background-color: #101010;
+          &:first-child {
+            border-radius: 8px 0 0 8px;
+          }
+
+          &:last-child {
+            border-radius: 0 6px 6px 0;
+          }
+
+          &:only-child {
+            border-radius: 6px;
+          }
+        }
+      }
+    }
+  }
+  tbody tr,
+  .mobile-row {
+    height: 50px;
+
+    td {
+      @apply tw-text-white tw-text-base;
+      padding: 10px 0px;
+      line-height: 27px;
+      &:first-child {
+        a {
+          @apply tw-hidden;
+        }
+      }
+      a {
+        @apply tw-text-yellow-3;
+      }
+    }
+
+    &:first-of-type {
+      border-top: none;
+    }
+
+    &.table-header {
+      height: 60%;
+
+      > td {
+        @apply tw-font-light tw-text-white tw-text-base tw-pt-5;
+        height: 45px;
+      }
+    }
+  }
+  .mobile-row {
+    @apply tw-content-center;
+  }
+}
+
+.styledBar {
+  @apply tw-relative tw-w-full tw-flex tw-flex-nowrap;
+  max-width: 60%;
+  margin: 0 30px;
+  top: -10px;
+  height: 34px;
+
+  @screen xl {
+    max-width: 750px;
+  }
+}
+
+.progressCircle {
+  @apply tw-absolute tw-block tw-bottom-0;
+  width: 3.438rem;
+  height: 3.438rem;
+  border-radius: 100%;
+  top: -10px;
+  border: 11px solid white;
+  transition: all 0.3s;
+  margin: 0 -27.5px;
+}
+
+.progressBlue {
+  @apply tw-w-full;
+  border-radius: 1.5rem 0 0 1.5rem;
+  background: rgb(78, 205, 196);
+  margin-left: -27.5px;
+  background: linear-gradient(
+    90deg,
+    rgba(78, 205, 196, 1) 0%,
+    #6CAEA7 100%
+  );
+}  
+
+.progressRed {
+  @apply tw-w-1/2 tw-bg-black;
+  border-radius: 0 24px 24px 0;
+  // margin-left: 3.438rem;
+  margin-right: -1.719rem;
+  background: linear-gradient(
+    90deg,
+    #6CAEA7 0%,
+    rgba(205, 78, 78, 1) 100%
+  );
+}
+
+.title {
+  @apply tw-text-black tw-text-center tw-font-rowdies tw-text-xl tw-leading-30px tw-uppercase tw-pb-12 tw-tracking-normal;
+  padding-top: 4.5rem;
+}

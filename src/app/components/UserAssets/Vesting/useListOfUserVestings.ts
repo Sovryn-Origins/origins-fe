@@ -3,7 +3,7 @@ import { Asset } from 'types/asset';
 import { useAccount } from '../../../hooks/useAccount';
 import { useEffect, useState } from 'react';
 import { ethGenesisAddress } from '../../../../utils/classifiers';
-import { bridgeNetwork } from '../../../pages/BridgeDepositPage/utils/bridge-network';
+import { bridgeNetwork } from 'utils/blockchain/bridge-network';
 import { getContract } from '../../../../utils/blockchain/contract-helpers';
 import { Chain } from '../../../../types';
 

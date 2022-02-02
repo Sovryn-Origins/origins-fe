@@ -1,0 +1,10 @@
+.wrapper {
+  @apply tw-overflow-hidden tw--mb-8;
+  margin-top: 8.125rem;
+}
+
+.image {
+  @apply tw-w-full tw-bg-no-repeat tw-bg-cover;
+  padding-top: 45%;
+  margin-bottom: -13%;
+}

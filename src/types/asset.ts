@@ -6,6 +6,7 @@ export enum Asset {
   DOC = 'DOC',
   RDOC = 'RDOC',
   USDT = 'USDT',
+  RUSDT = 'RUSDT',
   XUSD = 'XUSD',
   BPRO = 'BPRO',
   SOV = 'SOV',
@@ -13,4 +14,24 @@ export enum Asset {
   BNB = 'BNBS',
   FISH = 'FISH',
   RIF = 'RIF',
+  OG = 'OG',
+  MYNT = 'MYNT',
+  ZERO = 'ZERO',
 }
+
+export const AcceptedCurrencies: Array<Asset> = [
+  Asset.RBTC,
+  Asset.RUSDT,
+  Asset.XUSD,
+  Asset.SOV,
+];
+
+export const TradingAssets = [
+  Asset.USDT,
+  Asset.RBTC,
+  Asset.SOV,
+  Asset.FISH,
+  Asset.MYNT,
+  Asset.ZERO,
+  Asset.OG,
+];

@@ -1,0 +1,9 @@
+.cardImage {
+  @apply tw-mb-4 tw-bg-center tw-bg-contain tw-bg-no-repeat;
+  width: 14.063rem;
+  height: 18.75rem;
+
+  @screen md {
+    @apply tw-mb-0;
+  }
+}

@@ -135,14 +135,14 @@ class EventReader {
       return this.sovryn.databaseContracts[contractName]
         .getPastEvents(eventName, {
           ...options,
-          ...{ filter },
+          filter,
         })
         .then(e =>
           e
             .map(e => ({
               ...e,
-              returnValues: (e as any).returnVal,
-              event: (e as any)?.eventName,
+              returnValues: (e as any).returnValues || (e as any).returnVal,
+              event: (e as any)?.event || (e as any)?.eventName,
             }))
             .filter(item => !!item.returnValues),
         );

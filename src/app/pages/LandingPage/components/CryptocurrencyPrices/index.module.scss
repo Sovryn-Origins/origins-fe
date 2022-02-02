@@ -1,0 +1,9 @@
+.wrapper {
+  @apply tw-bg-gray-1 tw-border-solid tw-border-black tw-rounded-lg tw-px-4 tw-pt-8 tw-pb-4;
+  border-width: 5px;
+}
+
+.title {
+  @apply tw-font-rowdies tw-not-italic tw-font-normal tw-text-xl tw-uppercase tw-text-white;
+  line-height: 30px;
+}

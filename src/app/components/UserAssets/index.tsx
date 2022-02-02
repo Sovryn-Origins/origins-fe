@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { bignumber } from 'mathjs';
+import classNames from 'classnames';
 import { translations } from '../../../locales/i18n';
 import { ActionButton } from 'app/components/Form/ActionButton';
 import { getTokenContractName } from '../../../utils/blockchain/contract-helpers';
@@ -30,6 +31,17 @@ import { ConversionDialog } from './ConversionDialog';
 import { BridgeLink } from './BridgeLink';
 import { UnWrapDialog } from './UnWrapDialog';
 import { useDollarValue } from '../../hooks/useDollarValue';
+import styles from './index.module.scss';
+
+const listingAssets = [
+  Asset.RBTC,
+  Asset.SOV,
+  Asset.XUSD,
+  Asset.FISH,
+  Asset.OG,
+  Asset.ZERO,
+  Asset.MYNT,
+];
 
 export function UserAssets() {
   const { t } = useTranslation();
@@ -43,9 +55,9 @@ export function UserAssets() {
 
   const assets = useMemo(
     () =>
-      AssetsDictionary.list().filter(
-        item => ![Asset.CSOV].includes(item.asset),
-      ),
+      AssetsDictionary.list()
+        .filter(item => ![Asset.CSOV].includes(item.asset))
+        .filter(item => listingAssets.includes(item.asset)),
     [],
   );
 
@@ -67,18 +79,30 @@ export function UserAssets() {
 
   return (
     <>
-      <div className="sovryn-border sovryn-table tw-pt-1 tw-pb-4 tw-pr-4 tw-pl-4 tw-mb-12">
+      <div className="sovryn-border sovryn-table tw-pt-6 tw-pb-4">
         <table className="tw-w-full">
           <thead>
             <tr>
-              <th>{t(translations.userAssets.tableHeaders.asset)}</th>
-              <th className="tw-text-right">
+              <th className={styles.headCell}>
+                {t(translations.userAssets.tableHeaders.asset)}
+              </th>
+              <th className={styles.headCell}>
                 {t(translations.userAssets.tableHeaders.totalBalance)}
               </th>
-              <th className="tw-text-right tw-hidden md:tw-table-cell">
+              <th
+                className={classNames(
+                  styles.headCell,
+                  'tw-hidden md:tw-table-cell',
+                )}
+              >
                 {t(translations.userAssets.tableHeaders.dollarBalance)}
               </th>
-              <th className="tw-text-right tw-hidden md:tw-table-cell">
+              <th
+                className={classNames(
+                  styles.headCell,
+                  'tw-hidden md:tw-table-cell',
+                )}
+              >
                 {t(translations.userAssets.tableHeaders.action)}
               </th>
             </tr>
@@ -239,42 +263,55 @@ function AssetRow({
   return (
     <tr key={item.asset}>
       <td>
-        <AssetRenderer asset={item.asset} showImage />
+        <AssetRenderer
+          className={styles.assetString}
+          asset={item.asset}
+          showImage
+        />
       </td>
-      <td className="tw-text-right">
+      <td className="tw-text-left tw-text-base tw-font-inter">
         <LoadableValue value={weiToNumberFormat(tokens, 4)} loading={loading} />
       </td>
-      <td className="tw-text-right tw-hidden md:tw-table-cell">
+      <td className="tw-text-left tw-text-base tw-font-inter tw-hidden md:tw-table-cell">
         <LoadableValue
           value={weiToUSD(dollarValue.value)}
           loading={dollarValue.loading}
         />
       </td>
-      <td className="tw-text-right tw-hidden md:tw-table-cell">
+      <td className="tw-text-left tw-hidden md:tw-table-cell">
         <div className="tw-w-full tw-flex tw-flex-row tw-space-x-4 tw-justify-end">
           {item.asset === Asset.RBTC && (
             <ActionButton
+              textClassName="tw-uppercase tw-leading-30px"
               text={t(translations.userAssets.actions.buy)}
               onClick={() => onTransack()}
             />
           )}
           {item.asset === Asset.RBTC && (
             <ActionButton
+              textClassName="tw-uppercase tw-leading-30px"
               text={t(translations.userAssets.actions.fastBtc)}
               onClick={() => onFastBtc()}
             />
           )}
           {[Asset.USDT, Asset.RDOC].includes(item.asset) && (
             <ActionButton
+              textClassName="tw-uppercase tw-leading-30px"
               text={t(translations.userAssets.actions.convert)}
               onClick={() => onConvert(item.asset)}
             />
           )}
           {[Asset.SOV, Asset.ETH, Asset.XUSD, Asset.BNB].includes(
             item.asset,
-          ) && <BridgeLink asset={item.asset} />}
+          ) && (
+            <BridgeLink
+              textClassName="tw-uppercase tw-leading-30px"
+              asset={item.asset}
+            />
+          )}
           {item.asset === Asset.WRBTC && (
             <ActionButton
+              textClassName="tw-uppercase tw-leading-30px"
               text={t(translations.userAssets.actions.unwrap)}
               onClick={onUnWrap}
             />

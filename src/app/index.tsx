@@ -8,7 +8,7 @@
 
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 import { currentNetwork } from 'utils/classifiers';
 import { useAppTheme } from './hooks/app/useAppTheme';
@@ -27,29 +27,22 @@ import { MaintenancePage } from './containers/MaintenancePage';
 import { WalletProvider } from './containers/WalletProvider';
 
 import { NotFoundPage } from './components/NotFoundPage/Loadable';
-import { EmailPage } from './containers/EmailPage';
 import { WalletPage } from './containers/WalletPage/Loadable';
-
-import { SwapPage } from './containers/SwapPage/Loadable';
-import { RewardPage } from './pages/RewardPage/Loadable';
-import { BorrowPage } from './pages/BorrowPage/Loadable';
-import { LendingPage } from './pages/LendingPage/Loadable';
 import { StakePage } from './containers/StakePage/Loadable';
-
+import { GovernancePage } from './containers/GovernancePage/Loadable';
 import { LandingPage } from './pages/LandingPage/Loadable';
-import { BuySovPage } from './pages/BuySovPage/Loadable';
+import { BridgeDepositPage } from './pages/BridgeDepositPage/Loadable';
+import { BridgeWithdrawPage } from './pages/BridgeWithdrawPage/Loadable';
+import { BuyPage } from './pages/BuyPage/Loadable';
 
-import { LiquidityMiningPage } from './pages/LiquidityMining/Loadable';
-import { MarginTradePage } from './pages/MarginTradePage/Loadable';
-import { SpotTradingPage } from './pages/SpotTradingPage/Loadable';
 import { OriginsLaunchpadPage } from './pages/OriginsLaunchpad/Loadable';
 import { OriginsClaimPage } from './pages/OriginsClaimPage/Loadable';
 import { usePriceFeeds_tradingPairRates } from './hooks/price-feeds/usePriceFeeds_tradingPairRates';
-import { BridgeDepositPage } from './pages/BridgeDepositPage/Loadable';
-import { BridgeWithdrawPage } from './pages/BridgeWithdrawPage/Loadable';
 
 const title =
-  currentNetwork !== 'mainnet' ? `Sovryn ${currentNetwork}` : 'Sovryn';
+  currentNetwork !== 'mainnet'
+    ? `Sovryn Origins ${currentNetwork}`
+    : 'Sovryn Origins';
 
 export function App() {
   useAppTheme();
@@ -78,19 +71,12 @@ export function App() {
           <NetworkRibbon />
           <Switch>
             <Route exact path="/" component={LandingPage} />
-            <Route exact path="/buy-sov" component={BuySovPage} />
-            <Route exact path="/trade" component={MarginTradePage} />
-            <Route exact path="/swap" component={SwapPage} />
-            <Route exact path="/spot" component={SpotTradingPage} />
-            <Route exact path="/lend" component={LendingPage} />
-            <Route exact path="/borrow" component={BorrowPage} />
             <Route exact path="/stake" component={StakePage} />
-            <Redirect exact from="/liquidity" to="/yield-farm" />
-            <Route exact path="/yield-farm" component={LiquidityMiningPage} />
-            <Route exact path="/reward" component={RewardPage} />
+            <Route path="/governance" component={GovernancePage} />
             <Route exact path="/wallet" component={WalletPage} />
-            <Route exact path="/origins" component={OriginsLaunchpadPage} />
-            <Route exact path="/origins/claim" component={OriginsClaimPage} />
+            <Route path="/launchpad" component={OriginsLaunchpadPage} />
+            <Route exact path="/claim" component={OriginsClaimPage} />
+            <Route exact path="/buy" component={BuyPage} />
             <Route
               exact
               path="/cross-chain/deposit"
@@ -100,16 +86,6 @@ export function App() {
               exact
               path="/cross-chain/withdraw"
               component={BridgeWithdrawPage}
-            />
-            <Route
-              exact
-              path="/optin-success"
-              render={props => <EmailPage {...props} type="OPTIN" />}
-            />
-            <Route
-              exact
-              path="/unsubscribe"
-              render={props => <EmailPage {...props} type="UNSUBSCRIBE" />}
             />
             <Route component={NotFoundPage} />
           </Switch>

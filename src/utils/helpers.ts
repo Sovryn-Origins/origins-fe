@@ -1,10 +1,11 @@
 import { utils } from '@rsksmart/rsk3';
 import { bignumber } from 'mathjs';
-import { currentChainId } from './classifiers';
+import { blockTime, currentChainId } from './classifiers';
 import { gas } from './blockchain/gas-price';
-import { Asset } from '../types';
+import { Asset, Chain, ChainId } from '../types';
 import { ProviderType } from '@sovryn/wallet';
 import { walletService } from '@sovryn/react-wallet';
+import { BridgeNetworkDictionary } from 'app/pages/BridgeDepositPage/dictionaries/bridge-network-dictionary';
 
 export const isObjectEmpty = (obj: {}) => {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
@@ -22,6 +23,14 @@ export const prettyTx = (
   return `${start} ··· ${end}`;
 };
 
+export const kFormatter = num => {
+  return Math.abs(num) > 999
+    ? `${Number(
+        Math.sign(num) * Math.floor(Math.abs(num) / 1000),
+      ).toLocaleString()}k`
+    : `${Number(Math.sign(num) * Math.abs(num)).toLocaleString()}`;
+};
+
 export const handleNumberInput = (value, onlyPositive = true) => {
   return handleNumber(value.currentTarget.value, onlyPositive);
 };
@@ -35,7 +44,10 @@ export const handleNumber = (value, onlyPositive = true) => {
     return value;
   }
 
-  let number = value.replace(',', '.').replace(/[^\d.-]/g, '');
+  if (value.indexOf('.') === -1) {
+    value = value.replace(',', '.');
+  }
+  let number = value.replace(/[^\d.-]/g, '');
 
   if (onlyPositive) {
     number = number.replace('-', '');
@@ -208,3 +220,43 @@ export const abbreviateNumber = (
 };
 
 export const isNullOrUndefined = val => val === undefined || val === null;
+
+export function printDate(timestamp: number) {
+  return new Date(timestamp).toLocaleString();
+}
+
+export function getSecondsBetweenBlocks(
+  startBlock: number,
+  endBlock: number,
+): number {
+  return (Number(endBlock) - Number(startBlock)) * blockTime;
+}
+
+export function dateByBlocks(
+  startTime: number,
+  startBlock: number,
+  endBlock: number,
+) {
+  return printDate(
+    (Number(startTime) + getSecondsBetweenBlocks(startBlock, endBlock)) * 1000,
+  );
+}
+
+export function timestampByBlocks(
+  startTime: number,
+  startBlock: number,
+  endBlock: number,
+) {
+  return startTime + getSecondsBetweenBlocks(startBlock, endBlock);
+}
+
+export const getBridgeChainId = (chain: Chain): ChainId | null =>
+  BridgeNetworkDictionary.get(chain)?.chainId || null;
+
+export const getBridgeChain = (chainId: ChainId): Chain | null =>
+  BridgeNetworkDictionary.getByChainId(chainId)?.chain || null;
+
+export const getSupportedBridgeChainIds = () =>
+  BridgeNetworkDictionary.networks.map(item => item.chainId).filter(unique);
+
+export const unique = (value, index, self) => self.indexOf(value) === index;

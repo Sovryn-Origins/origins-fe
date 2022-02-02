@@ -1,8 +1,8 @@
 import React from 'react';
-import { DialogWrapper } from './styled';
 import { InformationSection } from './components/InformationSection';
 import { BuySection } from './components/BuySection';
 import { ISaleInformation } from 'app/pages/OriginsLaunchpad/types';
+import styles from './index.module.scss';
 
 interface IBuyDialogProps {
   saleName: string;
@@ -15,14 +15,16 @@ export const BuyDialog: React.FC<IBuyDialogProps> = ({
   saleInformation,
   tierId,
 }) => (
-  <DialogWrapper>
+  <div className={styles.wrapper}>
     <InformationSection saleName={saleName} info={saleInformation} />
     <BuySection
       saleName={saleName}
       depositRate={saleInformation.depositRate}
-      sourceToken={saleInformation.depositToken}
+      depositToken={saleInformation.depositToken}
       tierId={tierId}
       maxAmount={saleInformation.maxAmount}
+      minAmount={saleInformation.minAmount}
+      myTotalDeposit={saleInformation.myTotalDeposit}
     />
-  </DialogWrapper>
+  </div>
 );

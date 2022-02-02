@@ -2,28 +2,20 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import iconNewTab from 'assets/images/iconNewTab.svg';
-import { usePageViews } from 'app/hooks/useAnalytics';
-import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { MenuItem, Menu as BPMenu, Position, Popover } from '@blueprintjs/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+
+import { usePageViews } from 'app/hooks/useAnalytics';
 import { translations } from 'locales/i18n';
-import {
-  reducer as lendBorrowReducer,
-  sliceKey as lendBorrowSlice,
-} from '../../pages/BorrowPage/slice';
-import { lendBorrowSovrynSaga } from '../../pages/BorrowPage/saga';
 import WalletConnector from '../../containers/WalletConnector';
 import { LanguageToggle } from '../LanguageToggle';
-import { currentNetwork } from 'utils/classifiers';
-import styles from './index.module.scss';
-import { StyledBurger, StyledLogo, StyledMenu } from './styled';
+import { Burger } from './components/Burger';
+import iconNewTab from 'assets/images/iconNewTab.svg';
+import headerBG from 'assets/images/header-background.svg';
+import { ReactComponent as LogoSVG } from 'assets/images/origins-logo.svg';
 
-const bridgeURL =
-  currentNetwork === 'mainnet'
-    ? 'https://bridge.sovryn.app'
-    : 'https://bridge.test.sovryn.app/';
+import styles from './index.module.scss';
 
 export function Header() {
   const { t } = useTranslation();
@@ -33,62 +25,24 @@ export function Header() {
   const node = useRef(null);
 
   usePageViews();
-  useInjectReducer({ key: lendBorrowSlice, reducer: lendBorrowReducer });
-  useInjectSaga({ key: lendBorrowSlice, saga: lendBorrowSovrynSaga });
 
-  const Menu = ({ open, setOpen }) => {
-    return <StyledMenu open={open}>{menuItems}</StyledMenu>;
-  };
-  const Burger = ({ open, setOpen }) => {
+  const Menu = ({ open }) => {
     return (
-      <StyledBurger open={open} onClick={() => setOpen(!open)}>
-        <div />
-        <div />
-        <div />
-      </StyledBurger>
+      <nav className={classNames(styles.menu, open && styles.open)}>
+        {menuItems}
+      </nav>
     );
   };
+
   const pages = [
-    { to: '/buy-sov', title: t(translations.mainMenu.buySov), exact: true },
-    {
-      to: '/swap',
-      title: t(translations.mainMenu.swap),
-    },
-    {
-      to: '/spot',
-      title: t(translations.mainMenu.spotTrade),
-    },
-    {
-      to: '/trade',
-      title: t(translations.mainMenu.marginTrade),
-    },
-    {
-      to: '/lend',
-      title: t(translations.mainMenu.lend),
-    },
-    {
-      to: '/borrow',
-      title: t(translations.mainMenu.borrow),
-    },
-    { to: '/yield-farm', title: t(translations.mainMenu.yieldFarm) },
-    {
-      to: 'https://bitocracy.sovryn.app',
-      title: t(translations.mainMenu.governance),
-    },
     { to: '/stake', title: t(translations.mainMenu.staking) },
-    { to: '/reward', title: t(translations.mainMenu.reward) },
+    { to: '/governance', title: t(translations.mainMenu.governance) },
     { to: '/wallet', title: t(translations.mainMenu.wallet) },
-    {
-      to: bridgeURL,
-      title: t(translations.mainMenu.bridge),
-    },
-    { to: '/origins', title: t(translations.mainMenu.origins) },
-    { to: '/origins/claim', title: t(translations.mainMenu.originsClaim) },
-    {
-      to: 'https://wiki.sovryn.app/en/sovryn-dapp/faq-dapp',
-      title: t(translations.mainMenu.help),
-    },
+    { to: '/launchpad', title: t(translations.mainMenu.origins) },
+    { to: '/claim', title: t(translations.mainMenu.originsClaim) },
+    { to: '/buy', title: t(translations.mainMenu.buy) },
   ];
+
   const menuItems = pages.map((item, index) => {
     let link: {
       to: string;
@@ -105,12 +59,14 @@ export function Header() {
           href={link.to}
           target="_blank"
           rel="noreferrer noopener"
+          className="tw-font-normal tw-uppercase"
         />
       );
     }
 
     return (
       <MenuItem
+        className="tw-font-normal tw-uppercase"
         key={index}
         text={link.title}
         onClick={() => {
@@ -140,20 +96,28 @@ export function Header() {
   };
 
   const SECTION_TYPE = {
-    TRADE: 'trade',
-    FINANCE: 'finance',
+    // TRADE: 'trade',
+    // FINANCE: 'finance',
+    // ORIGINS: 'origins',
     BITOCRACY: 'bitocracy',
-    ORIGINS: 'origins',
+    PORTFOLIO: 'portfolio',
+    LAUNCHPAD: 'launchpad',
+    CLAIM: 'claim',
+    BUY: 'buy',
   };
 
   const isSectionOpen = (section: string) => {
     const paths = {
-      [SECTION_TYPE.TRADE]: ['/buy-sov', '/trade', '/swap'],
-      [SECTION_TYPE.FINANCE]: ['/lend', '/yield-farm'],
-      [SECTION_TYPE.BITOCRACY]: ['/stake'],
-      [SECTION_TYPE.ORIGINS]: ['/origins', '/origins/claim'],
+      [SECTION_TYPE.BITOCRACY]: ['/stake', '/governance'],
+      [SECTION_TYPE.PORTFOLIO]: ['/wallet'],
+      [SECTION_TYPE.LAUNCHPAD]: ['/launchpad'],
+      [SECTION_TYPE.CLAIM]: ['/claim'],
+      [SECTION_TYPE.BUY]: ['/buy'],
     };
-    return section && paths[section].includes(location.pathname);
+    return (
+      !!section &&
+      paths[section].some(prefix => location.pathname.includes(prefix))
+    );
   };
 
   useEffect(() => {
@@ -175,121 +139,41 @@ export function Header() {
 
   return (
     <>
-      <header className={classNames(styles.header, open && styles.open)}>
-        <div className="tw-container tw-flex tw-justify-between tw-items-center tw-pt-2 tw-pb-2 tw-px-4 tw-mx-auto">
+      <header
+        className={classNames(styles.header, open && styles.open)}
+        style={{
+          backgroundImage: `url(${headerBG})`,
+        }}
+      >
+        <div className="tw-container tw-flex tw-justify-between tw-items-center tw-pt-2 tw-pb-6 tw-px-4 tw-mx-auto">
           <div className="xl:tw-hidden">
             <div ref={node}>
               <Burger open={open} setOpen={setOpen} />
-              <Menu open={open} setOpen={setOpen} />
+              <Menu open={open} />
             </div>
           </div>
           <div className="xl:tw-flex tw-flex-row tw-items-center">
             <div className="tw-mr-5 2xl:tw-mr-20">
               <Link to="/">
-                <StyledLogo />
+                <LogoSVG className={styles.logo} />
               </Link>
             </div>
-            <div className="tw-hidden xl:tw-flex tw-flex-row tw-flex-nowrap tw-space-x-4 2xl:tw-space-x-10">
+            <div className="tw-hidden xl:tw-flex tw-flex-row tw-flex-nowrap tw-space-x-4 2xl:tw-space-x-10 tw-ml-8">
               <NavPopover
                 content={
                   <BPMenu>
-                    <MenuItem
-                      text={t(translations.mainMenu.buySov)}
-                      className="bp3-popover-dismiss"
-                      onClick={() => {
-                        history.push('/buy-sov');
-                      }}
-                    />
-                    <MenuItem
-                      text={t(translations.mainMenu.swap)}
-                      className="bp3-popover-dismiss"
-                      onClick={() => {
-                        history.push('/swap');
-                      }}
-                    />
-                    <MenuItem
-                      text={t(translations.mainMenu.spotTrade)}
-                      className="bp3-popover-dismiss"
-                      onClick={() => {
-                        history.push('/spot');
-                      }}
-                    />
-                    <MenuItem
-                      text={t(translations.mainMenu.marginTrade)}
-                      className="bp3-popover-dismiss"
-                      onClick={() => {
-                        history.push('/trade');
-                      }}
-                    />
-                  </BPMenu>
-                }
-              >
-                <div
-                  className={`tw-flex-shrink-0 tw-flex tw-flex-row tw-items-center ${
-                    isSectionOpen(SECTION_TYPE.TRADE) && 'tw-font-bold'
-                  }`}
-                >
-                  <span className="tw-mr-2 2xl:tw-mr-3 tw-cursor-pointer">
-                    {t(translations.mainMenu.trade)}
-                  </span>
-                  <FontAwesomeIcon icon={faChevronDown} size="xs" />
-                </div>
-              </NavPopover>
-              <NavPopover
-                content={
-                  <BPMenu>
-                    <MenuItem
-                      text={t(translations.mainMenu.lend)}
-                      className="bp3-popover-dismiss"
-                      onClick={() => history.push('/lend')}
-                    />
-                    <MenuItem
-                      text={t(translations.mainMenu.borrow)}
-                      className="bp3-popover-dismiss"
-                      onClick={() => history.push('/borrow')}
-                    />
-                    <MenuItem
-                      text={t(translations.mainMenu.yieldFarm)}
-                      className="bp3-popover-dismiss"
-                      onClick={() => history.push('/yield-farm')}
-                    />
-                  </BPMenu>
-                }
-              >
-                <div
-                  className={`tw-flex-shrink-0 tw-flex tw-flex-row tw-items-center ${
-                    isSectionOpen(SECTION_TYPE.FINANCE) && 'tw-font-bold'
-                  }`}
-                >
-                  <span className="tw-mr-2 2xl:tw-mr-3 tw-cursor-pointer">
-                    {t(translations.mainMenu.finance)}
-                  </span>
-                  <FontAwesomeIcon icon={faChevronDown} size="xs" />
-                </div>
-              </NavPopover>
-              <NavPopover
-                content={
-                  <BPMenu>
-                    <MenuItem
-                      text={t(translations.mainMenu.staking)}
-                      className="bp3-popover-dismiss"
-                      onClick={() => {
-                        history.push('/stake');
-                      }}
-                    />
-                    <MenuItem
-                      icon={
-                        <img
-                          src={iconNewTab}
-                          alt="newTab"
-                          className="tw-w-4 tw-h-4"
-                        />
-                      }
-                      href="https://bitocracy.sovryn.app/"
-                      target="_blank"
-                      text={t(translations.mainMenu.governance)}
-                      className="bp3-popover-dismiss"
-                    />
+                    <NavLink
+                      className="tw-block tw-header-link tw-px-1 tw-uppercase"
+                      to="/stake"
+                    >
+                      {t(translations.mainMenu.staking)}
+                    </NavLink>
+                    <NavLink
+                      className="tw-block tw-header-link tw-px-1 tw-uppercase"
+                      to="/governance"
+                    >
+                      {t(translations.mainMenu.governance)}
+                    </NavLink>
                     <MenuItem
                       icon={
                         <img
@@ -301,7 +185,7 @@ export function Header() {
                       href="https://forum.sovryn.app/"
                       target="_blank"
                       text={t(translations.mainMenu.forum)}
-                      className="bp3-popover-dismiss"
+                      className="bp3-popover-dismiss tw-uppercase"
                     />
                   </BPMenu>
                 }
@@ -311,72 +195,78 @@ export function Header() {
                     isSectionOpen(SECTION_TYPE.BITOCRACY) && 'font-weight-bold'
                   }`}
                 >
-                  <span className="tw-mr-2 2xl:tw-mr-3 tw-cursor-pointer">
-                    {t(translations.mainMenu.bitocracy)}
-                  </span>
+                  <div
+                    className={classNames(styles.menuWrapper, {
+                      [styles.selected]: isSectionOpen(SECTION_TYPE.BITOCRACY),
+                    })}
+                  >
+                    <span className="tw-cursor-pointer tw-px-1 tw-uppercase">
+                      {t(translations.mainMenu.bitocracy)}
+                    </span>
+                  </div>
                   <FontAwesomeIcon icon={faChevronDown} size="xs" />
                 </div>
               </NavPopover>
-              <NavLink
-                className="tw-header-link tw-mr-2 2xl:tw-mr-3"
-                to="/reward"
+              <div
+                className={classNames(styles.menuWrapper, {
+                  [styles.selected]: isSectionOpen(SECTION_TYPE.PORTFOLIO),
+                })}
               >
-                {t(translations.mainMenu.rewards)}
-              </NavLink>
-
-              <NavLink
-                className="tw-header-link tw-mr-2 2xl:tw-mr-3"
-                to="/wallet"
-              >
-                {t(translations.mainMenu.wallet)}
-              </NavLink>
-              <a
-                href={bridgeURL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="tw-header-link"
-              >
-                {t(translations.mainMenu.bridge)}
-              </a>
-              <NavPopover
-                content={
-                  <BPMenu>
-                    <MenuItem
-                      text={t(translations.mainMenu.launchpad)}
-                      className="bp3-popover-dismiss"
-                      onClick={() => history.push('/origins')}
-                    />
-                    <MenuItem
-                      text={t(translations.mainMenu.claim)}
-                      className="bp3-popover-dismiss"
-                      onClick={() => history.push('/origins/claim')}
-                    />
-                  </BPMenu>
-                }
-              >
-                <div
-                  className={`tw-flex-shrink-0 tw-flex tw-flex-row tw-items-center ${
-                    isSectionOpen(SECTION_TYPE.ORIGINS) && 'tw-font-bold'
-                  }`}
+                <NavLink
+                  className="tw-header-link tw-px-1 tw-uppercase"
+                  to="/wallet"
                 >
-                  <span className="tw-mr-2 2xl:tw-mr-3 tw-cursor-pointer">
-                    {t(translations.mainMenu.origins)}
-                  </span>
-                  <FontAwesomeIcon icon={faChevronDown} size="xs" />
-                </div>
-              </NavPopover>
+                  {t(translations.mainMenu.wallet)}
+                </NavLink>
+              </div>
+              <div
+                className={classNames(styles.menuWrapper, {
+                  [styles.selected]: isSectionOpen(SECTION_TYPE.LAUNCHPAD),
+                })}
+              >
+                <NavLink
+                  className="tw-header-link tw-px-1 tw-uppercase"
+                  to="/launchpad"
+                >
+                  {t(translations.mainMenu.launchpad)}
+                </NavLink>
+              </div>
+              <div
+                className={classNames(styles.menuWrapper, {
+                  [styles.selected]: isSectionOpen(SECTION_TYPE.CLAIM),
+                })}
+              >
+                <NavLink
+                  className="tw-header-link tw-px-1 tw-uppercase"
+                  to="/claim"
+                >
+                  {t(translations.mainMenu.claim)}
+                </NavLink>
+              </div>
+              <div
+                className={classNames(styles.menuWrapper, {
+                  [styles.selected]: isSectionOpen(SECTION_TYPE.BUY),
+                })}
+              >
+                <NavLink
+                  className="tw-header-link tw-px-1 tw-uppercase"
+                  to="/buy"
+                >
+                  {t(translations.mainMenu.buy)}
+                </NavLink>
+              </div>
             </div>
           </div>
           <div className="tw-flex tw-justify-start tw-items-center">
             <a
-              href="https://wiki.sovryn.app/en/sovryn-dapp/faq-dapp"
+              href="https://docs.origins.xyz/en/latest/"
               target="_blank"
               rel="noopener noreferrer"
-              className="tw-header-link tw-hidden xl:tw-block"
+              className="tw-header-link tw-hidden xl:tw-block tw-px-4 tw-uppercase"
             >
               {t(translations.mainMenu.help)}
             </a>
-            <div className="2xl:tw-mr-4">
+            <div className="2xl:tw-mr-4 tw-pr-4">
               <LanguageToggle />
             </div>
             <WalletConnector simpleView={false} />

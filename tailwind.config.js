@@ -26,6 +26,9 @@ module.exports = {
     fontFamily: {
       body: ['Montserrat', 'sans-serif'],
       orbitron: ['Orbitron', 'sans-serif'],
+      rowdies: ['Rowdies', 'sans-serif'],
+      consolas: ['Consolas', 'sans-serif'],
+      inter: ['Inter', 'sans-serif'],
     },
     fontSize: {
       tiny: '.625rem', //  10px
@@ -89,9 +92,11 @@ module.exports = {
       'warning-50': '#A5222280',
       'warning-25': '#A5222240',
       'warning-10': '#A522221a',
+      error: '#FF5757',
 
       'yellow-1': '#F5E884',
       'yellow-2': '#DEB258',
+      'yellow-3': '#FEC004',
       'blue-1': '#8EDBDB',
       'blue-2': '#628CB5',
       'orange-1': '#F7B199',
@@ -112,6 +117,9 @@ module.exports = {
       minWidth: theme => theme('width'),
       maxWidth: theme => theme('width'),
       height: {},
+      lineHeight: {
+        '30px': '1.875rem',
+      },
       minHeight: theme => theme('height'),
       maxHeight: theme => theme('height'),
       borderRadius: {

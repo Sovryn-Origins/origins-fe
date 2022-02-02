@@ -1,0 +1,16 @@
+.saleListPane {
+  @apply tw-bg-center tw-bg-no-repeat tw-bg-cover  tw-bg-gray-2
+    tw-flex tw-flex-col tw-justify-center tw-items-center tw-rounded-lg tw-py-6 tw-px-4;
+  border: 5px solid #000000;
+  background-origin: border-box;
+
+  @screen xl {
+    @apply tw-flex-row tw-flex-wrap tw-justify-evenly tw-p-4;
+    max-width: 1100px;
+  }
+
+  @screen 2xl {
+    @apply tw-justify-between tw-p-10;
+    max-width: none;
+  }
+}

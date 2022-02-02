@@ -19,6 +19,6 @@ export const CaretElement = styled.div`
   right: 21px;
   display: flex;
   align-items: center;
-  height: 13px;
-  width: 22px;
+  height: 6px;
+  width: 12px;
 `;

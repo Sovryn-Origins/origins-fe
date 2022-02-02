@@ -1,5 +1,5 @@
 import React from 'react';
-import { Instructions } from './components/Instructions';
+// import { Instructions } from './components/Instructions';
 import { BuyDialog } from './components/BuyDialog';
 import { ISaleInformation } from 'app/pages/OriginsLaunchpad/types';
 
@@ -15,13 +15,12 @@ export const BuyStep: React.FC<IBuyStepProps> = ({
   tierId,
 }) => (
   <>
-    <div className="tw-flex">
+    <div className="tw-flex tw-justify-center">
       <BuyDialog
         tierId={tierId}
         saleInformation={saleInformation}
         saleName={saleName}
       />
-      <Instructions saleName={saleName} />
     </div>
   </>
 );

@@ -1,0 +1,19 @@
+.styledBar {
+  @apply tw-w-full tw-flex tw-flex-nowrap tw-overflow-hidden tw-rounded-lg;
+  max-width: 100px;
+  margin: 5px 0 5px auto;
+}
+
+.progressBlue {
+  height: 10px;
+  background: linear-gradient(90deg,
+      rgba(78, 205, 196, 1) 0%,
+      rgba(0, 0, 0, 1) 100%);
+}
+
+.progressRed {
+  height: 10px;
+  background: linear-gradient(90deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(205, 78, 78, 1) 100%);
+}

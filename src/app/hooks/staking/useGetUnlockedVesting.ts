@@ -72,7 +72,7 @@ export function useGetUnlockedVesting(
       } catch (e) {
         setAmount('0');
         setLoading(false);
-        setError(e.message);
+        setError((e as Error).message);
       }
 
       return value;

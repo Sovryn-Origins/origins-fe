@@ -1,10 +1,12 @@
 import React from 'react';
-import imgLargeNFT from 'assets/images/OriginsLaunchpad/FishSale/large_NFT.svg';
+import { useHistory, useRouteMatch } from 'react-router-dom';
+// import imgLargeNFT from 'assets/images/OriginsLaunchpad/FishSale/large_NFT.svg';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { DialogTitle, DialogWrapper } from './styled';
 import { ActionButton } from 'app/components/Form/ActionButton';
 import { useIsAddressVerified } from 'app/pages/OriginsLaunchpad/hooks/useIsAddressVerified';
+import saleStorage from '../../storage';
+import styles from './index.module.scss';
 
 interface IAccessCodeVerificationStepProps {
   tierId: number;
@@ -12,27 +14,36 @@ interface IAccessCodeVerificationStepProps {
   onVerified?: () => void;
 }
 
+const currentStep = 1;
+
 export const AccessCodeVerificationStep: React.FC<IAccessCodeVerificationStepProps> = ({
   tierId,
   saleName,
   onVerified,
 }) => {
+  const history = useHistory();
+  const { url } = useRouteMatch();
   const { t } = useTranslation();
   const isVerified = useIsAddressVerified(tierId);
 
+  React.useEffect(() => {
+    const { step } = saleStorage.getData();
+    if (step > currentStep && isVerified) {
+      history.push(url.replace(`/${currentStep}`, `/${step}`));
+    }
+  }, [isVerified, history, url]);
+
   return (
     <>
-      <img src={imgLargeNFT} alt="Dialog NFT" />
-      <DialogWrapper>
+      <div className={styles.dialogWrapper}>
         <div className="tw-max-w-lg">
-          <DialogTitle>
+          <div className="tw-text-3xl tw-tracking-normal tw-mb-20 tw-text-center tw-uppercase">
             {t(
               translations.originsLaunchpad.saleDay.accessCodeVerificationStep
                 .dialogTitle,
-              { token: saleName },
             )}
-          </DialogTitle>
-          <div className="tw-text-xl tw-font-extralight tw-mb-32">
+          </div>
+          <div className="tw-text-xl tw-font-extralight tw-mb-32 tw-text-center">
             {isVerified
               ? t(
                   translations.originsLaunchpad.saleDay
@@ -43,6 +54,7 @@ export const AccessCodeVerificationStep: React.FC<IAccessCodeVerificationStepPro
               : t(
                   translations.originsLaunchpad.saleDay
                     .accessCodeVerificationStep.notVerified,
+                  { token: saleName },
                 )}
           </div>
 
@@ -60,28 +72,7 @@ export const AccessCodeVerificationStep: React.FC<IAccessCodeVerificationStepPro
             </div>
           )}
         </div>
-
-        {/* {!isVerified && (
-          <div>
-            <Trans
-              i18nKey={
-                translations.originsLaunchpad.saleDay.accessCodeVerificationStep
-                  .notVerifiedFooter
-              }
-              components={[
-                <a
-                  href="#!"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="tw-text-secondary tw-text-underline"
-                >
-                  Don't have a code?
-                </a>,
-              ]}
-            />
-          </div>
-        )} */}
-      </DialogWrapper>
+      </div>
     </>
   );
 };

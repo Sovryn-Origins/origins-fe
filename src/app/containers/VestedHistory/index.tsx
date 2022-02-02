@@ -118,7 +118,6 @@ export function VestedHistory() {
         setLoading(false);
       }
     }
-
     getHistory();
   }, [
     account,
@@ -132,23 +131,23 @@ export function VestedHistory() {
   ]);
 
   return (
-    <div className="sovryn-table tw-p-4 tw-mb-12">
+    <div className="sovryn-table">
       <table className="tw-w-full">
         <thead>
           <tr>
-            <th className="tw-text-left assets">
+            <th className="tw-text-left tw-font-light assets">
               {t(translations.vestedHistory.tableHeaders.time)}
             </th>
-            <th className="tw-text-left">
-              {t(translations.vestedHistory.tableHeaders.vestingSchedule)}
+            <th className="tw-text-left tw-font-light">
+              {t(translations.vestedHistory.tableHeaders.asset)}
             </th>
-            <th className="tw-text-left">
+            <th className="tw-text-left tw-font-light">
               {t(translations.vestedHistory.tableHeaders.amount)}
             </th>
-            <th className="tw-text-left tw-hidden lg:tw-table-cell">
+            <th className="tw-text-left tw-font-light tw-hidden lg:tw-table-cell">
               {t(translations.vestedHistory.tableHeaders.hash)}
             </th>
-            <th className="tw-text-left tw-hidden lg:tw-table-cell">
+            <th className="tw-text-left tw-font-light tw-hidden lg:tw-table-cell">
               {t(translations.vestedHistory.tableHeaders.status)}
             </th>
           </tr>
@@ -156,7 +155,7 @@ export function VestedHistory() {
         <tbody className="tw-mt-5 tw-font-body tw-text-xs">
           {loading && (
             <tr key={'loading'}>
-              <td colSpan={99}>
+              <td className="tw-text-base" colSpan={99}>
                 <SkeletonRow
                   loadingText={t(translations.topUpHistory.loading)}
                 />
@@ -169,7 +168,7 @@ export function VestedHistory() {
             eventsHistoryVestingOrigin.length === 0 &&
             !loading && (
               <tr key={'empty'}>
-                <td className="tw-text-center" colSpan={99}>
+                <td className="tw-text-center tw-text-base" colSpan={99}>
                   History is empty.
                 </td>
               </tr>
@@ -216,10 +215,7 @@ const HisoryTableAsset: React.FC<HisoryAsset> = ({ item }) => {
   return (
     <tr>
       <td>
-        {dayjs
-          .tz(item.eventDate, 'UTC')
-          .tz(dayjs.tz.guess())
-          .format('L - LTS Z')}
+        {dayjs.tz(item.eventDate, 'UTC').tz(dayjs.tz.guess()).format('L - LTS')}
       </td>
       <td className="tw-text-left tw-font-normal tw-tracking-normal">
         <div className="assetname tw-flex tw-items-center">

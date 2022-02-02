@@ -47,6 +47,10 @@ export enum TxType {
   CROSS_CHAIN_DEPOSIT = 'cross_chain_deposit',
   CROSS_CHAIN_WITHDRAW = 'cross_chain_withdraw',
   UNWRAP_WRBTC = 'unwrap_wrbtc',
+  ALLOWANCE = 'allowance',
+  CLAIMING = 'claiming',
+  CLAIMABLE = 'claimable',
+  BONDING = 'bonding',
 }
 
 export enum TxStatus {

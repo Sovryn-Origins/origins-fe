@@ -1,13 +1,15 @@
 import React from 'react';
+import classNames from 'classnames';
 
 interface Props {
   content: React.ReactNode;
+  className?: string;
 }
 
-export function ErrorBadge(props: Props) {
+export function ErrorBadge({ content, className = 'tw-py-4 tw-my-3' }: Props) {
   return (
-    <div className="tw-py-4 tw-my-3 tw-text-xs tw-text-warning">
-      {props.content}
+    <div className={classNames('tw-text-xs tw-text-warning', className)}>
+      {content}
     </div>
   );
 }

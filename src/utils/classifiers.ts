@@ -29,12 +29,12 @@ export const readNodes = {
 
 export const fastBtcApis = {
   30: 'https://fastbtc.sovryn.app/',
-  31: 'https://api.test.sovryn.app/fastbtc',
+  31: 'https://fastbtc.test.sovryn.app/',
 };
 
 export const databaseRpcNodes = {
-  30: 'https://backend.sovryn.app/rpc',
-  31: 'https://api.test.sovryn.app/rpc',
+  30: 'wss://mainnet.sovryn.app/websocket',
+  31: 'wss://testnet.sovryn.app/ws',
 };
 
 export const backendUrl = {
@@ -42,11 +42,22 @@ export const backendUrl = {
   31: 'https://api.test.sovryn.app',
 };
 
+export const rpcNodes = {
+  30: 'https://mainnet.sovryn.app/rpc',
+  31: 'https://testnet.sovryn.app/rpc',
+};
+
 export const ethGenesisAddress = '0x0000000000000000000000000000000000000000';
 
 export const sovAnalyticsCookie = { name: 'SovAnalytics', value: 'optout' };
 
-export const chartStorageKey = 'sovryn.charts';
+export const originsSaleStorageKey = 'sovryn-origins.sales';
+export const buyStatusKey = 'sovryn-origins.buy-status';
+
+export const bondingCurveTreasuryAddress = {
+  '30': '0x6FB7A6A5Bd3f800130443AE202A58Fdbe11B8D5C',
+  '31': '0xc70882018136aaC283D287302932da56371d6514',
+};
 
 export const gasLimit = {
   [TxType.TRADE]: 3750000,
@@ -72,6 +83,10 @@ export const gasLimit = {
   [TxType.UNWRAP_WRBTC]: 50000,
   [TxType.STAKING_WITHDRAW]: 500000,
   [TxType.DEPOSIT_COLLATERAL]: 150000,
+  [TxType.BONDING]: 5000000,
 };
 
 export const discordInvite = 'https://discord.gg/kBTNx4zjRf'; //unlimited use, no-expiry invite
+
+// Block time in seconds
+export const blockTime = 30;

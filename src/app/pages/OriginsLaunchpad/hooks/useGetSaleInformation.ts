@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Asset } from 'types';
+import { useAccount, useBlockSync } from 'app/hooks/useAccount';
 import { assetByTokenAddress } from 'utils/blockchain/contract-helpers';
 import { contractReader } from 'utils/sovryn/contract-reader';
 import { DepositType, ISaleInformation, VerificationType } from '../types';
@@ -11,6 +12,9 @@ const timestampToString = (timestamp: number) =>
   });
 
 export const useGetSaleInformation = (tierId: number) => {
+  const account = useAccount();
+  const blockSync = useBlockSync();
+
   const [saleInfo, setSaleInfo] = useState<ISaleInformation>({
     minAmount: '0',
     maxAmount: '0',
@@ -22,12 +26,16 @@ export const useGetSaleInformation = (tierId: number) => {
     depositType: DepositType.RBTC,
     verificationType: VerificationType.None,
     totalSaleAllocation: 0,
+    isSaleActive: false,
+    totalDepositReceived: '0',
+    myTotalDeposit: '0',
   });
 
   useEffect(() => {
     contractReader
       .call('originsBase', 'readTierPartA', [tierId])
       .then(result => {
+        const currentTS = Math.floor(Date.now() / 1000);
         setSaleInfo(prevValue => ({
           ...prevValue,
           minAmount: result['_minAmount'],
@@ -35,6 +43,9 @@ export const useGetSaleInformation = (tierId: number) => {
           remainingTokens: result['_remainingTokens'],
           saleStart: result['_saleStartTS'],
           saleEnd: timestampToString(result['_saleEnd']),
+          isSaleActive:
+            currentTS > Number(result['_saleStartTS']) &&
+            currentTS < Number(result['_saleEnd']),
           depositRate: result['_depositRate'],
         }));
       });
@@ -51,7 +62,7 @@ export const useGetSaleInformation = (tierId: number) => {
           participatingWallets: result,
         })),
       );
-  }, [tierId]);
+  }, [tierId, blockSync]);
 
   useEffect(() => {
     contractReader
@@ -78,7 +89,33 @@ export const useGetSaleInformation = (tierId: number) => {
           totalSaleAllocation: result,
         }));
       });
-  }, [tierId]);
+  }, [tierId, blockSync]);
+
+  useEffect(() => {
+    contractReader
+      .call<string>('originsBase', 'getTokensSoldPerTier', [tierId])
+      .then(result => {
+        setSaleInfo(prevValue => ({
+          ...prevValue,
+          totalDepositReceived: result,
+        }));
+      });
+  }, [tierId, blockSync]);
+
+  useEffect(() => {
+    if (!account) return;
+    contractReader
+      .call<string>('originsBase', 'getTokensBoughtByAddressOnTier', [
+        account,
+        tierId,
+      ])
+      .then(result => {
+        setSaleInfo(prevValue => ({
+          ...prevValue,
+          myTotalDeposit: result,
+        }));
+      });
+  }, [account, tierId, blockSync]);
 
   return saleInfo;
 };

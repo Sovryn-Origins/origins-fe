@@ -1,0 +1,11 @@
+.assetSelectItemWrapper {
+  @apply tw-cursor-pointer tw-px-3 tw-py-1 tw-text-black;
+  min-width: 150px;
+  transition: all 0.3s;
+  &:nth-child(odd) {
+    @apply tw-bg-sov-white;
+  }
+  &:hover {
+    background-color: #c8c8c8;
+  }
+}

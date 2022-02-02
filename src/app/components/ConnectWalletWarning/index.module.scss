@@ -1,0 +1,9 @@
+.title {
+  @apply tw-font-semibold tw-font-rowdies tw-text-center tw-uppercase tw-mt-10 tw-mb-0;
+  font-size: 32px;
+}
+
+.alert {
+  @apply tw-font-rowdies tw-font-normal tw-text-base tw-text-center tw-text-white tw-leading-30px tw-uppercase tw-mx-auto tw-mt-11 tw-mb-2;
+  max-width: 20.125rem;
+}

@@ -1,12 +1,9 @@
 import { WalletProviderState } from 'app/containers/WalletProvider/types';
 import { FastBtcFormState } from 'app/containers/FastBtcForm/types';
-import { LendBorrowSovrynState } from 'app/pages/BorrowPage/types';
 import { EventsStoreState } from '../store/global/events-store/types';
 import { TransactionsStoreState } from '../store/global/transactions-store/types';
 import { MaintenanceStoreState } from '../store/global/maintenance-store/types';
 import { FastBtcDialogState } from 'app/containers/FastBtcDialog/types';
-import { MarginTradePageState } from 'app/pages/MarginTradePage/types';
-import { SpotTradingPageState } from 'app/pages/SpotTradingPage/types';
 import { BridgeDepositPageState } from 'app/pages/BridgeDepositPage/types';
 import { BridgeWithdrawPageState } from 'app/pages/BridgeWithdrawPage/types';
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
@@ -18,13 +15,10 @@ import { BridgeWithdrawPageState } from 'app/pages/BridgeWithdrawPage/types';
 export interface RootState {
   walletProvider?: WalletProviderState;
   fastBtcForm?: FastBtcFormState;
-  lendBorrowSovryn?: LendBorrowSovrynState;
   eventsState?: EventsStoreState;
   transactionsState?: TransactionsStoreState;
   maintenanceState?: MaintenanceStoreState;
   fastBtcDialog?: FastBtcDialogState;
-  marginTradePage?: MarginTradePageState;
-  spotTradingPage?: SpotTradingPageState;
   bridgeDepositPage?: BridgeDepositPageState;
   bridgeWithdrawPage?: BridgeWithdrawPageState;
   // [INSERT NEW REDUCER KEY ABOVE] < Needed for generating containers seamlessly

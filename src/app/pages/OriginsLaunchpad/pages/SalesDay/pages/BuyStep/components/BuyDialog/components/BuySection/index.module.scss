@@ -1,0 +1,28 @@
+.buyWrapper {
+  @apply tw-h-full tw-rounded-xl tw-py-2 tw-pr-2 tw-pl-0;
+  width: 64%;
+  box-shadow: -11px 0px 25px #00000026;
+}
+
+.buyInnerWrapper {
+  @apply tw-bg-white tw-h-full tw-rounded-lg tw-pt-8;
+  padding-top: 32px;
+}
+
+
+.buyButton {
+  @apply tw-w-full tw-text-white tw-text-xl tw-font-normal tw-bg-trade-long tw-uppercase
+    tw-border tw-border-solid tw-border-trade-long;
+  height: 50px;
+  border-radius: 0.625rem;
+  transition: opacity 0.3s;
+  padding: initial;
+
+  &:hover {
+    @apply tw-opacity-75;
+  }
+
+  &:disabled {
+    @apply tw-cursor-not-allowed tw-opacity-70;
+  }
+}

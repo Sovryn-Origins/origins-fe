@@ -1,10 +1,13 @@
 @layer components {
   .tw-input-wrapper {
     height: 2.5rem;
-    max-width: 340px;
+    max-width: 450px;
     @apply tw-bg-sov-white tw-flex tw-flex-row tw-justify-center tw-items-center tw-space-x-4 tw-rounded;
     @apply tw-font-semibold tw-font-body tw-text-black;
     @apply tw-w-full;
+  }
+  .tw-input-wrapper.theme-white {
+    @apply tw-bg-white tw-border-2 tw-border-solid;
   }
 
   .tw-input {
@@ -21,12 +24,19 @@
     @apply tw-text-black;
     @apply tw-mr-5 !important;
   }
+  .tw-input-append.tw-append-selectable {
+    @apply tw-mr-0 !important;
+    min-width: 150px;
+  }  
 
   .tw-input-wrapper.readonly {
     @apply tw-bg-transparent tw-text-sov-white tw-border tw-border-gray-6;
   }
   .tw-input-wrapper.readonly .tw-input {
     @apply tw-text-sov-white;
+  }
+  .tw-input-wrapper.readonly.theme-white .tw-input {
+    @apply tw-text-black;
   }
   .tw-input-wrapper.readonly .tw-input-append {
     @apply tw-text-sov-white;

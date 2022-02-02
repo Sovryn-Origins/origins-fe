@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classnames';
 import { Asset } from '../../../types';
 import { AssetsDictionary } from '../../../utils/dictionaries/assets-dictionary';
 import styles from './index.module.scss';
@@ -41,13 +42,15 @@ export function getAssetSymbol(asset: Asset) {
 interface IAssetSymbolRenderer {
   asset?: Asset;
   assetString?: string;
+  className?: string;
 }
 
 export const AssetSymbolRenderer: React.FC<IAssetSymbolRenderer> = ({
   asset,
   assetString,
+  className,
 }) => (
-  <span className={styles.symbol}>
+  <span className={cn(styles.symbol, className)}>
     {asset ? getAssetSymbol(asset) : assetString}
   </span>
 );
