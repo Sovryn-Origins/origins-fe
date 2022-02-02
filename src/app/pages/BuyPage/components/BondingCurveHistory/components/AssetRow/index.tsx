@@ -21,7 +21,7 @@ import { timestampByBlocks } from 'utils/helpers';
 
 import { useBondingCurvePrice } from '../../../../hooks/useBondingCurvePrice';
 import { useGetBondingCurveClaimOrder } from '../../../../hooks/useGetBondingCurveClaimOrder';
-import { BlockInfo, IOrderHistory } from '../../../../types';
+import { BlockInfo, IOrderHistory, BuyStatus } from '../../../../types';
 
 import styles from './index.module.scss';
 
@@ -53,6 +53,11 @@ export function AssetRow({ data, itemFrom, itemTo, currentBlock }: AssetProps) {
     loading: loadingClaimOrder,
   } = useGetBondingCurveClaimOrder(data.returnVal.batchId, isPurchase);
 
+  const isBatchFinished = useMemo(() => currentBlock.number - data.block > 10, [
+    currentBlock,
+    data.block,
+  ]);
+
   const {
     value: toWeiAmountBondingCurve,
     loading: loadingToAmount,
@@ -77,15 +82,10 @@ export function AssetRow({ data, itemFrom, itemTo, currentBlock }: AssetProps) {
       .toFixed(0);
   }, [dollars.value, itemTo.decimals, toWeiAmount]);
 
-  const txAddress = useMemo(
+  const txHash = useMemo(
     () => claimOrder?.transactionHash || data.transaction_hash,
     [data, claimOrder],
   );
-
-  const blockMined10 = useMemo(() => currentBlock.number - data.block > 10, [
-    currentBlock,
-    data.block,
-  ]);
 
   const timestamp = useMemo(
     () =>
@@ -97,22 +97,40 @@ export function AssetRow({ data, itemFrom, itemTo, currentBlock }: AssetProps) {
     [data, currentBlock],
   );
 
+  const { value: openTransaction } = useGetTransactionReceipt(
+    data.transaction_hash,
+  );
+
   const { value: claimTransaction } = useGetTransactionReceipt(
     claimOrder?.transactionHash,
   );
 
-  const statusText = useMemo(() => {
-    if (!claimOrder) {
-      if (!blockMined10) {
-        return 'Pending';
-      }
-      return 'Claimable';
-    } else if (!claimTransaction) {
-      return 'Pending2';
-    } else {
-      return claimTransaction.status ? 'Success' : 'Failed';
+  const buyStatus = useMemo(() => {
+    if (!openTransaction) return BuyStatus.OPENING;
+    if (!openTransaction?.status || !claimTransaction?.status) {
+      return BuyStatus.FAILED;
     }
-  }, [claimOrder, claimTransaction, blockMined10]);
+    if (openTransaction?.status) {
+      if (!isBatchFinished) return BuyStatus.WAIT_FOR_BATCH;
+      if (isBatchFinished) {
+        if (!claimTransaction) return BuyStatus.CLAIMABLE;
+        return BuyStatus.SUCCESS;
+      }
+    }
+    return BuyStatus.NONE;
+  }, [openTransaction, claimTransaction, isBatchFinished]);
+
+  const statusText = useMemo(() => {
+    const statusTextMap = {
+      [BuyStatus.OPENING]: 'Pending',
+      [BuyStatus.WAIT_FOR_BATCH]: 'Pending',
+      [BuyStatus.CLAIMABLE]: 'Claimable',
+      [BuyStatus.CLAIMING]: 'Pending',
+      [BuyStatus.SUCCESS]: 'Confirmed',
+      [BuyStatus.FAILED]: 'Failed',
+    };
+    return statusTextMap[buyStatus];
+  }, [buyStatus]);
 
   return (
     <tr>
@@ -170,7 +188,7 @@ export function AssetRow({ data, itemFrom, itemTo, currentBlock }: AssetProps) {
               {statusText}
             </p>
             <LinkToExplorer
-              txHash={txAddress}
+              txHash={txHash}
               className="tw-text-primary tw-text-base tw-font-inter tw-font-normal tw-whitespace-nowrap"
             />
           </div>
